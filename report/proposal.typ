@@ -47,7 +47,7 @@
 
 = Summary
 
-Under BERDO, residential buildings with 15 or more units and nonresidential
+Under the Boston's Building Emissions Reduction and Disclosure Ordinance (BERDO), residential buildings with 15 or more units and nonresidential
 buildings of 20,000 sq ft or more in Boston have to report their energy use
 every year and meet emissions limits that step down over time, reaching net
 zero by 2050 @berdo. An owner with several of these buildings, such as a
