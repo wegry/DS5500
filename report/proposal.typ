@@ -64,7 +64,7 @@ than the two estimates added together. And under BERDO, _when_ a building gets
 under its limit matters as much as _whether_ it does, since each building has
 its own first compliance year and the limits keep tightening after that.
 
-Our goal is, therefore, to develop a decision-support tool that helps building owners determine which decarbonization projects to implement and when (Fig. 1). Rather than simply ranking projects individually, the tool will produce a multi-year investment roadmap that considers limited annual capital, financial returns, emissions reduction, and building-specific BERDO emissions requirements.
+Our goal is, therefore, to develop a decision-support tool that helps building owners determine which decarbonization projects to implement and when (@fig:pipeline). Rather than simply ranking projects individually, the tool will produce a multi-year investment roadmap that considers limited annual capital, financial returns, emissions reduction, and building-specific BERDO emissions requirements.
 
 = Proposed Plan
 
