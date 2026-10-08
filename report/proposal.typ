@@ -188,6 +188,6 @@ model to be quietly wrong.
 
 == Which Emission Factor
 BERDO scores electricity with its own emission factors, which aren't the same
-as the hourly ISO-NE intensity from Electricity Maps, or the marginal plant
+as the hourly ISO New England reported intensity, or the marginal plant
 that actually ramps up to serve new load from a heat pump. A plan can be compliant on paper and still do less for the actual grid.
 We'll report both instead of picking whichever one flatters the result.
