@@ -1,13 +1,13 @@
 // Optimizing Corporate Decarbonization Investments
 // Expanded from Konstantinos Theodoropoulos' solo pitch (DS5500, Fall 2026).
-// Build: typst compile decarbonization_pitch.typ
+// Build: typst compile proposal.typ
 
 #import "@preview/charged-ieee:0.1.4": ieee
 
 // ---- 1 & 2: name and title ------------------------------------------------
 
 #show: ieee.with(
-  title: [Optimizing Corporate Decarbonization Investments: Which Projects to Fund, and in What Year],
+  title: [Optimizing University Decarbonization Investments: Which Projects to Fund, and in What Year],
   // One combined entry keeps the author block to two short lines instead of
   // a full column per author. PDF metadata is set separately below.
   authors: (
@@ -52,7 +52,7 @@ Under the Boston's Building Emissions Reduction and Disclosure Ordinance (BERDO)
 buildings of 20,000 sq ft or more in Boston have to report their energy use
 every year and meet emissions limits that step down over time, reaching net
 zero by 2050 @berdo. An owner with several of these buildings, such as a
-university, a hospital system, or a property company, has a list of candidate
+university, has a list of candidate
 projects: heat pumps, envelope upgrades, LED retrofits, rooftop solar,
 switching off fuel oil, etc. They don't have the capital to do all of them at once,
 so somebody has to pick an order. The standard tool for that is a marginal
@@ -76,7 +76,7 @@ obtaining proprietary data. *BERDO disclosures* @berdo provide the building-leve
 starting point, including property type, floor area, energy use, emissions by
 fuel, and projected first compliance year. We will clean and screen these data
 for missing values, outliers, and campus-level reporting before selecting a
-portfolio of buildings for analysis. *ComStock* @comstock will then be matched
+portfolio of university buildings for analysis. *ComStock* @comstock will then be matched
 to the selected buildings by characteristics such as property type and climate
 to estimate the energy impacts of candidate retrofit measures and packages.
 Technology cost and performance assumptions will be drawn from the *Annual
@@ -189,41 +189,3 @@ Our plan is to complete the project over 7-8 weeks. Once agreed on the input for
 ]
 \
 Each team memeber will document their work and contribute to the presentations and reports.
-
-
-// ---- 5: risks / challenges ------------------------------------------------
-
-= Risks and Challenges
-
-== Self-Reported Data
-BERDO numbers are reported by building owners. Some buildings are missing
-years, some report whole campuses together, and some values will just be
-wrong. We'll need to screen for outliers and decide how to handle campuses
-before any building goes into the model.
-
-== Matching Buildings to Upgrades
-ComStock's buildings are representative, not real. A Boston office building
-from 1920 on district steam may not look much like any ComStock office, so
-the savings we attach to it could be off. Validating that match, against
-buildings whose reported energy use changed after a known retrofit, is where
-the consulting data would help most.
-
-== Uncertainty in the Future
-Energy prices, realized savings, and the grid mix in 2035 are all forecasts. A
-deterministic optimizer will happily overfit to whichever one it's handed. We
-plan to solve across the AEO and Cambium scenarios and report which decisions
-hold up in all of them, rather than the best plan for one future.
-Scenario-based stochastic programming is the likely formulation, but it grows
-fast with the number of scenarios.
-
-== Projects Interact
-Savings aren't additive, and modeling every combination of projects blows up
-the problem size. ComStock's packages cover some combinations. The rest need
-an approximation, and that approximation is the most likely place for the
-model to be quietly wrong.
-
-== Which Emission Factor
-BERDO scores electricity with its own emission factors, which aren't the same
-as the hourly ISO New England reported intensity, or the marginal plant
-that actually ramps up to serve new load from a heat pump. A plan can be compliant on paper and still do less for the actual grid.
-We'll report both instead of picking whichever one flatters the result.
