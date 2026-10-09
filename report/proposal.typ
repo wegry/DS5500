@@ -186,8 +186,6 @@ Our plan is to complete the project over ~7 weeks. Once agreed on the input form
     [*Finalize and submit*: resolve remaining issues, check reproducibility, finalize the report and final presentation.],
   )
 ]
-\
-Each team member will document their work and contribute to the presentations and reports.
 
 
 // ---- 5: risks / challenges ------------------------------------------------
