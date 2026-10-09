@@ -154,7 +154,7 @@ Initial exploration also identified data-quality issues that will inform preproc
 
 // Add dated milestones and measurable deliverables here once the course
 // schedule and preliminary BERDO analysis are finalized.
-Our plan is to complete the project over 7-8 weeks. Once agreed on the input format, we are going to run data preparation, optimization, and baseline development in parallel. We will first test the data preparation and both planning methods on a few buildngs before applying them to a larger sample.
+Our plan is to complete the project over ~7 weeks. Once agreed on the input format, we are going to run data preparation, optimization, and baseline development in parallel. We will first test the data preparation and both planning methods on a few buildings before applying them to a larger sample.
 
 #[
   #set par(justify: false)
@@ -168,7 +168,7 @@ Our plan is to complete the project over 7-8 weeks. Once agreed on the input for
     table.header([*Timeline*], [*Milestone and deliverable*]),
 
     [10/07 - 10/11],
-    [*Explore data amd define scope*: check BERDO and ComStock coverage, select inital buildings and upgrades, agree on shared columns.],
+    [*Explore data and define scope*: check BERDO and ComStock coverage, select initial buildings and upgrades, agree on shared columns.],
 
     [10/12 - 10/18],
     [*Build a small working example*: match a few buildings and prepare initial upgrade estimates; connect this sample to early versions of the optimizer and MACC baseline.],
@@ -180,11 +180,11 @@ Our plan is to complete the project over 7-8 weeks. Once agreed on the input for
     [*Evaluate results*: compare financial value, emissions, and spending; check how the results change if upgrades cost more, energy prices change, or energy savings are lower than expected.],
 
     [11/09 - 11/15],
-    [*Prepare drafts*: ccomplete the main figures, document methods and limitations; draft the report and final presentation.],
+    [*Prepare drafts*: complete the main figures, document methods and limitations; draft the report and final presentation.],
 
     [11/16 - 11/22],
     [*Finalize and submit*: resolve remaining issues, check reproducibility, finalize the report and final presentation.],
   )
 ]
 \
-Each team memeber will document their work and contribute to the presentations and reports.
+Each team member will document their work and contribute to the presentations and reports.
