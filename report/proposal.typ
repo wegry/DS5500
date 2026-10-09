@@ -78,7 +78,7 @@ fuel, and projected first compliance year. We will clean and screen these data
 for missing values, outliers, and campus-level reporting before selecting a
 portfolio of university buildings for analysis. *ComStock* @comstock will then be matched
 to the selected buildings by characteristics such as property type and climate
-to estimate the energy impacts of candidate retrofit measures and packages.
+to estimate the energy impacts of candidate retrofit measures and packages. ComStock may be tricky to reconcile with Boston's older and denser building stock.
 Technology cost and performance assumptions will be drawn from the *Annual
 Technology Baseline* @atb, energy-price projections from the *EIA Annual Energy
 Outlook* @aeo, and grid-emissions factors from *Cambium* @cambium and *EPA
