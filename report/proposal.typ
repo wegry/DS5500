@@ -1,6 +1,6 @@
 // Optimizing Corporate Decarbonization Investments
 // Expanded from Konstantinos Theodoropoulos' solo pitch (DS5500, Fall 2026).
-// Build: typst compile decarbonization_pitch.typ
+// Build: typst compile proposal.typ
 
 #import "@preview/charged-ieee:0.1.4": ieee
 
@@ -13,7 +13,10 @@
   authors: (
     (
       name: "Konstantinos Theodoropoulos, Zachary Wegrzyniak, and Kateryna Lysytsyna",
-      department: [DS5500 Data Science Capstone, Northeastern University],
+      department: [
+        DS5500 Data Science Capstone, Northeastern University \
+        #link("https://github.com/wegry/DS5500")[github.com/wegry/DS5500]
+      ],
     ),
   ),
   // abstract: [
@@ -48,11 +51,11 @@
 
 = Summary
 
-Under the Boston's Building Emissions Reduction and Disclosure Ordinance (BERDO), residential buildings with 15 or more units and nonresidential
+Under Boston's Building Emissions Reduction and Disclosure Ordinance (BERDO), residential buildings with 15 or more units and nonresidential
 buildings of 20,000 sq ft or more in Boston have to report their energy use
 every year and meet emissions limits that step down over time, reaching net
 zero by 2050 @berdo. An owner with several of these buildings, such as a
-university, a hospital system, or a property company, has a list of candidate
+university, have a list of candidate
 projects: heat pumps, envelope upgrades, LED retrofits, rooftop solar,
 switching off fuel oil, etc. They don't have the capital to do all of them at once,
 so somebody has to pick an order. The standard tool for that is a marginal
@@ -146,9 +149,9 @@ additional modeling effort is justified.
 
 = Preliminary Results
 
-Preliminary exploration of the 2026 BERDO dataset supports the feasibility of the proposed analysis. The dataset contains 5,592 building records representing 58 distinct building types, along with detailed information on property size, ownership, BERDO compliance timing, and emissions by energy source. Ownership information is available for nearly all buildings, with only 18 records lacking a listed owner and 3,178 individual property owners represented. BERDO also identifies 37 building portfolios, with reported total gross floor areas ranging from approximately 80,000 to 17.6 million square feet, excluding the Boston Housing Authority portfolio at approximately 146 million square feet. "College / University" as the `Largest Property Type` has seven `Owners` listed.
+Preliminary exploration of the 2026 BERDO dataset supports the feasibility of our proposal. The dataset contains 5,592 building records representing 58 distinct building types, along with detailed information on property size, ownership, BERDO compliance timing, and emissions by energy source. Ownership information is available for nearly all buildings, with only 18 records lacking an owner and 3,178 individual property owners represented. BERDO also identifies 37 building portfolios, with reported total gross floor areas ranging from approximately 80,000 to 17.6 million square feet, excluding the Boston Housing Authority portfolio at approximately 146 million square feet. "College / University" types (field `Largest Property Type`) have seven distinct universities.
 
-Initial exploration also identified data-quality issues that will inform preprocessing and portfolio selection. Some source-specific emissions fields are missing even when they may be applicable, and repeated ownership information is not always populated consistently. The BERDO portfolio groupings themselves will also require validation before use, as preliminary inspection revealed some unexpected differences in reported portfolio size. We will evaluate missingness and verify the portfolio definitions before selecting buildings or portfolios with sufficiently complete and consistent data. If needed, we will contact the City of Boston BERDO team to clarify how portfolio groupings are defined and confirm whether the published groupings are appropriate for our analysis.
+Initial exploration also identified data-quality issues that will inform preprocessing and portfolio selection. Some source-specific emissions fields are missing even when they may be applicable, and repeated ownership information is not always populated consistently. The BERDO portfolio groupings themselves will also require validation before use, as preliminary inspection revealed some unexpected differences in reported portfolio size. We will evaluate missingness and verify the portfolio definitions before selecting buildings or portfolios with sufficiently complete and consistent data. If needed, we will contact the City of Boston BERDO team to clarify how portfolio groupings are to confirm whether the published groupings are appropriate for our analysis.
 
 = Project Milestones
 
