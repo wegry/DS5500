@@ -12,7 +12,7 @@
   // a full column per author. PDF metadata is set separately below.
   authors: (
     (
-      name: "Konstantinos Theodoropoulos and Zachary Wegrzyniak",
+      name: "Konstantinos Theodoropoulos, Zachary Wegrzyniak, and Kateryna Lysytsyna",
       department: [DS5500 Data Science Capstone, Northeastern University],
     ),
   ),
@@ -41,6 +41,7 @@
 #set document(author: (
   "Konstantinos Theodoropoulos",
   "Zachary Wegrzyniak",
+  "Kateryna Lysytsyna",
 ))
 
 // ---- 3: goal / outcome ----------------------------------------------------
