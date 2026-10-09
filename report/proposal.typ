@@ -134,8 +134,7 @@ an extension if time permits.
 == Evaluation
 
 To determine whether the added complexity of optimization provides practical
-value, we will compare the resulting roadmap against a Marginal Abatement Cost
-Curve (MACC) baseline applied to the same buildings and candidate projects.
+value, we will compare the resulting roadmap against a MACC baseline applied to the same buildings and candidate projects.
 The two approaches will be evaluated on financial performance, cumulative
 emissions reductions, BERDO compliance, and capital deployment over the
 planning horizon. The final output will be a year-by-year investment roadmap
