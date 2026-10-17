@@ -1,0 +1,50 @@
+property_type,building_use,evidence_buildings
+Adult Education,Education,1
+College/University,College/University,29
+Convention Center,Assembly,1
+Courthouse,Services,6
+Data Center,Technology/Science,4
+Distribution Center,Storage,4
+Fast Food Restaurant,Food Sales & Service,1
+Financial Office,Office,5
+Fitness Center/Health Club/Gym,Assembly,1
+Food Sales,Food Sales & Service,1
+Hospital (General Medical & Surgical),Healthcare,2
+Hotel,Lodging,33
+Ice/Curling Rink,Assembly,3
+K-12 School,Education,10
+Laboratory,Technology/Science,8
+Manufacturing/Industrial Plant,Manufacturing/Industrial,17
+Medical Office,Healthcare,4
+Movie Theater,Assembly,1
+Multifamily Housing,Multifamily housing,444
+Museum,Assembly,3
+Non-Refrigerated Warehouse,Storage,9
+Office,Office,107
+Other,Manufacturing/Industrial,2
+Other - Education,Education,3
+Other - Entertainment/Public Assembly,Assembly,1
+Other - Lodging/Residential,Lodging,2
+Other - Mall,Retail,1
+Other - Public Services,Services,1
+Other - Recreation,Assembly,2
+Other - Utility,Services,1
+Other/Specialty Hospital,Healthcare,2
+Performing Arts,Assembly,6
+Prison/Incarceration,Lodging,3
+Race Track,Assembly,1
+Refrigerated Warehouse,Storage,2
+Residence Hall/Dormitory,Lodging,2
+Residential Care Facility,Healthcare,1
+Retail Store,Retail,11
+Self-Storage Facility,Storage,14
+Senior Living Community,Healthcare,8
+Social/Meeting Hall,Assembly,1
+Stadium (Open),Assembly,1
+Strip Mall,Retail,7
+Supermarket/Grocery Store,Food Sales & Service,15
+Urgent Care/Clinic/Other Outpatient,Healthcare,3
+Vehicle Dealership,Retail,2
+Vocational School,Education,1
+Wastewater Treatment Plant,Services,1
+Worship Facility,Assembly,13

@@ -1,0 +1,79 @@
+building_use,period_start,period_end,standard_kgco2e_sqft
+Assembly,2025,2029,7.8
+Assembly,2030,2034,4.6
+Assembly,2035,2039,3.3
+Assembly,2040,2044,2.1
+Assembly,2045,2049,1.1
+Assembly,2050,,0.0
+College/University,2025,2029,10.2
+College/University,2030,2034,5.3
+College/University,2035,2039,3.8
+College/University,2040,2044,2.5
+College/University,2045,2049,1.2
+College/University,2050,,0.0
+Education,2025,2029,3.9
+Education,2030,2034,2.4
+Education,2035,2039,1.8
+Education,2040,2044,1.2
+Education,2045,2049,0.6
+Education,2050,,0.0
+Food Sales & Service,2025,2029,17.4
+Food Sales & Service,2030,2034,10.9
+Food Sales & Service,2035,2039,8.0
+Food Sales & Service,2040,2044,5.4
+Food Sales & Service,2045,2049,2.7
+Food Sales & Service,2050,,0.0
+Healthcare,2025,2029,15.4
+Healthcare,2030,2034,10.0
+Healthcare,2035,2039,7.4
+Healthcare,2040,2044,4.9
+Healthcare,2045,2049,2.4
+Healthcare,2050,,0.0
+Lodging,2025,2029,5.8
+Lodging,2030,2034,3.7
+Lodging,2035,2039,2.7
+Lodging,2040,2044,1.8
+Lodging,2045,2049,0.9
+Lodging,2050,,0.0
+Manufacturing/Industrial,2025,2029,23.9
+Manufacturing/Industrial,2030,2034,15.3
+Manufacturing/Industrial,2035,2039,10.9
+Manufacturing/Industrial,2040,2044,6.7
+Manufacturing/Industrial,2045,2049,3.2
+Manufacturing/Industrial,2050,,0.0
+Multifamily housing,2025,2029,4.1
+Multifamily housing,2030,2034,2.4
+Multifamily housing,2035,2039,1.8
+Multifamily housing,2040,2044,1.1
+Multifamily housing,2045,2049,0.6
+Multifamily housing,2050,,0.0
+Office,2025,2029,5.3
+Office,2030,2034,3.2
+Office,2035,2039,2.4
+Office,2040,2044,1.6
+Office,2045,2049,0.8
+Office,2050,,0.0
+Retail,2025,2029,7.1
+Retail,2030,2034,3.4
+Retail,2035,2039,2.4
+Retail,2040,2044,1.5
+Retail,2045,2049,0.7
+Retail,2050,,0.0
+Services,2025,2029,7.5
+Services,2030,2034,4.5
+Services,2035,2039,3.3
+Services,2040,2044,2.2
+Services,2045,2049,1.1
+Services,2050,,0.0
+Storage,2025,2029,5.4
+Storage,2030,2034,2.8
+Storage,2035,2039,1.8
+Storage,2040,2044,1.0
+Storage,2045,2049,0.4
+Storage,2050,,0.0
+Technology/Science,2025,2029,19.2
+Technology/Science,2030,2034,11.1
+Technology/Science,2035,2039,7.8
+Technology/Science,2040,2044,5.1
+Technology/Science,2045,2049,2.5
+Technology/Science,2050,,0.0
