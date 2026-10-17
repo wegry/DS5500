@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: stg_berdo__portfolios
+    columns:
+      - name: portfolio_id
+        data_tests: [unique, not_null]
+  - name: stg_comstock__baseline
+    columns:
+      - name: comstock_key
+        data_tests: [unique, not_null]
+      - name: weight
+        data_tests: [not_null]
+  - name: int_comstock_archetypes
+    columns:
+      - name: comstock_type
+        data_tests: [unique, not_null]
+  - name: int_school_buildings
+    columns:
+      - name: berdo_id
+        data_tests: [unique, not_null]
+  - name: school_berdo_comstock
+    columns:
+      - name: match_key
+        data_tests: [unique, not_null]
+      - name: comstock_type
+        data_tests: [not_null]

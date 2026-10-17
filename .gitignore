@@ -219,3 +219,10 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 *.pdf
+
+# dbt
+dbt/*.duckdb
+dbt/*.duckdb.wal
+dbt/.user.yml
+dbt/target/
+**/logs/

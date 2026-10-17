@@ -1,0 +1,7 @@
+ds5500:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: ds5500.duckdb
+      threads: 4

@@ -1,0 +1,22 @@
+name: ds5500
+version: "0.1.0"
+profile: ds5500
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+
+vars:
+  # Case-insensitive substring of BERDO "Parcel Owner Name"; change to model another school
+  school_pattern: wentworth
+  berdo_xlsx: ../data/raw/2026-berdo-data-disclosure-9.30.26.xlsx
+  # Suffolk County (G2500250) baseline from ComStock 2025 release 3
+  comstock_url: https://oedi-data-lake.s3.amazonaws.com/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2025/comstock_amy2018_release_3/metadata_and_annual_results/by_state_and_county/basic/parquet/state=MA/county=G2500250/MA_G2500250_upgrade0_basic.parquet
+
+models:
+  ds5500:
+    staging:
+      +materialized: table
+    intermediate:
+      +materialized: view
+    marts:
+      +materialized: table

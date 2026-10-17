@@ -1,0 +1,37 @@
+berdo_type,comstock_type
+"College/University",SecondarySchool
+"College/University",PrimarySchool
+"College/University",MediumOffice
+"College/University",LargeOffice
+"K-12 School",SecondarySchool
+"K-12 School",PrimarySchool
+"Other - Education",SecondarySchool
+"Other - Education",PrimarySchool
+"Vocational School",SecondarySchool
+"Adult Education",SecondarySchool
+"Pre-school/Daycare",PrimarySchool
+"Office",SmallOffice
+"Office",MediumOffice
+"Office",LargeOffice
+"Financial Office",SmallOffice
+"Financial Office",MediumOffice
+"Financial Office",LargeOffice
+"Bank Branch",SmallOffice
+"Residence Hall/Dormitory",SmallHotel
+"Residence Hall/Dormitory",LargeHotel
+"Hotel",SmallHotel
+"Hotel",LargeHotel
+"Retail Store",RetailStandalone
+"Strip Mall",RetailStripmall
+"Supermarket/Grocery Store",Grocery
+"Food Sales",Grocery
+"Hospital (General Medical & Surgical)",Hospital
+"Medical Office",Outpatient
+"Urgent Care/Clinic/Other Outpatient",Outpatient
+"Ambulatory Surgical Center",Outpatient
+"Non-Refrigerated Warehouse",Warehouse
+"Distribution Center",Warehouse
+"Self-Storage Facility",Warehouse
+"Restaurant",FullServiceRestaurant
+"Other - Restaurant/Bar",FullServiceRestaurant
+"Fast Food Restaurant",QuickServiceRestaurant

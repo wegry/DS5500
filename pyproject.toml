@@ -3,6 +3,7 @@ name = "ds5500"
 version = "0.1.0"
 requires-python = ">=3.14"
 dependencies = [
+    "dbt>=2",
     "fastexcel>=0.21.0",
     "marimo>=0.25.1",
     "polars>=2.0.0",
