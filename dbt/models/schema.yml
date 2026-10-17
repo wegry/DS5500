@@ -4,8 +4,9 @@ seeds:
   - name: berdo_emissions_standards
     description: >
       BERDO emissions standards (kgCO2e/sq ft/yr) by building use and 5-year period, from
-      Table 2 of City of Boston, "Complying with BERDO's Emissions Standard" (Feb 2024).
-      period_end is null for 2050 onward (net zero).
+      Table 2 of City of Boston, "Complying with BERDO's Emissions Standard" (Feb 2024),
+      matching the table on https://www.boston.gov/departments/environment/berdo
+      (checked 2026-10-17). period_end is null for 2050 onward (net zero).
   - name: berdo_property_type_uses
     description: >
       Portfolio Manager property type -> BERDO building use, derived from the 2026
