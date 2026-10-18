@@ -15,8 +15,9 @@ def _():
 
 @app.cell
 def _(Path):
-    DATA = Path(r"C:\Users\lkata\Downloads\DS5500\data\raw\btb")
-    data_comstock = Path(r"C:\Users\lkata\Downloads\DS5500\data\raw\comstock")
+    DATA = Path(__file__).resolve().parent.parent / "data" / "raw" / "btb"
+    BTB_XLSX = DATA / "btb2024_commercial_dataset_and_sources.xlsx"
+    data_comstock = Path(__file__).resolve().parent.parent / "data" / "raw" / "comstock"
     sorted(file.name for file in DATA.glob("*.xlsx"))
     return DATA, data_comstock
 
