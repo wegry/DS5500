@@ -43,3 +43,9 @@ highs:
   type: web
   title: "HiGHS: High Performance Software for Linear Optimization"
   url: https://highs.dev
+
+berdo-standards:
+  type: web
+  author: City of Boston
+  title: Building Emissions Reduction and Disclosure Ordinance
+  url: https://www.boston.gov/departments/environment/berdo

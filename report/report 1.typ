@@ -25,6 +25,7 @@
     ),
   ),
   abstract: [
+    #todo[Update to narrow focus to offices]
     Boston's Building Emissions Reduction and Disclosure Ordinance (BERDO)
     requires large buildings to cut their emissions on a fixed schedule, down
     to net zero by 2050. Owners have more candidate retrofit projects than
@@ -57,12 +58,11 @@
 = Introduction
 
 Under Boston's Building Emissions Reduction and Disclosure Ordinance (BERDO), residential buildings with 15 or more units and nonresidential
-buildings of 20,000 sq ft or more in Boston have to report their energy use
+buildings of 20,000 sq ft or more have to report their energy use
 every year and meet emissions limits that step down over time, reaching net
-zero by 2050 @berdo. An owner with several of these buildings, such as a
-university, have a list of candidate
+zero by 2050 (@fig:berdo-limits) @berdo. The owner of one of these buildings, say an office, has a list of candidate
 projects: heat pumps, envelope upgrades, LED retrofits, rooftop solar,
-switching off fuel oil, etc. They don't have the capital to do all of them at once,
+switching off fuel oil, etc. If a retrofit is not economical, the owner can instead pay a non-compliance fee. Either way, the owner does not have the capital to do all of the updates at once,
 so somebody has to pick an order. The standard tool for that is a marginal
 abatement cost curve (MACC), which ranks projects by dollars per ton of
 CO#sub[2] avoided and funds them from the cheapest on down.
@@ -94,7 +94,7 @@ eGRID* @egrid. Anonymized project data from a sustainability consulting firm,
 if available, will be used only for real-world validation of modeled costs and
 savings rather than as a requirement for the project.
 
-== Methods
+== Methods #todo[Change name]
 
 Using these inputs, we will construct a set of candidate decarbonization
 projects for the selected building portfolio. Each project will include an
@@ -169,7 +169,7 @@ Initial exploration also identified data-quality issues that will inform preproc
 
 // ---- 10: statement of contributions ---------------------------------------
 
-#heading(numbering: none)[Statement of Contributions]
+= Statement of Contributions
 
 - *Konstantinos Theodoropoulos:* #todo[contributions]
 - *Zachary Wegrzyniak:* #todo[contributions]
@@ -181,9 +181,20 @@ Initial exploration also identified data-quality issues that will inform preproc
 
 // ---- 12: appendix ---------------------------------------------------------
 
-#heading(numbering: none)[Appendix]
+// Changing the page's columns starts a new page, and one column lets the
+// appendix figures sit in order without floating.
+#set page(columns: 1)
+
+= Appendix
 
 Source code is available at
 #link("https://github.com/wegry/DS5500")[github.com/wegry/DS5500].
+
+#figure(
+  image("figures/berdo-emissions-standards.png", width: 65%),
+  caption: [BERDO emissions standards (kgCO#sub[2]e/ft#super[2]/year) by
+    building use for each five-year compliance period, reaching zero in 2050
+    @berdo-standards.],
+) <fig:berdo-limits>
 
 #todo[supplementary figures, tables, and technical details.]
