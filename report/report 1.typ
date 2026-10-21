@@ -5,6 +5,9 @@
 
 #import "@preview/charged-ieee:0.1.4": ieee
 
+// Red placeholder so unfinished rubric sections stand out in the PDF.
+#let todo(body) = text(fill: red)[*TODO:* #body]
+
 // ---- 1 & 2: name and title ------------------------------------------------
 
 #show: ieee.with(
@@ -16,30 +19,31 @@
       name: "Konstantinos Theodoropoulos, Zachary Wegrzyniak, and Kateryna Lysytsyna",
       department: [
         DS5500 Data Science Capstone, Northeastern University \
-        #link("https://github.com/wegry/DS5500")[github.com/wegry/DS5500]
+        #link("https://github.com/wegry/DS5500")[github.com/wegry/DS5500] \
+        Sponsor: Konstantinos Theodoropoulos
       ],
     ),
   ),
-  // abstract: [
-  //   Boston's Building Emissions Reduction and Disclosure Ordinance (BERDO)
-  //   requires large buildings to cut their emissions on a fixed schedule, down
-  //   to net zero by 2050. Owners have more candidate retrofit projects than
-  //   capital, and the usual way to choose between them is to rank projects by
-  //   cost per ton avoided. That ignores both interactions between projects and
-  //   the timing of each investment. We propose a decision-support tool that
-  //   picks the portfolio and the schedule together with a multi-period
-  //   mixed-integer program. It is built on real BERDO disclosures for about
-  //   5,600 Boston buildings, plus public upgrade, price, and grid emissions
-  //   data, and compared directly against the ranked approach.
-  // ],
+  abstract: [
+    Boston's Building Emissions Reduction and Disclosure Ordinance (BERDO)
+    requires large buildings to cut their emissions on a fixed schedule, down
+    to net zero by 2050. Owners have more candidate retrofit projects than
+    capital, and the usual way to choose between them is to rank projects by
+    cost per ton avoided. That ignores both interactions between projects and
+    the timing of each investment. We propose a decision-support tool that
+    picks the portfolio and the schedule together with a multi-period
+    mixed-integer program. It is built on real BERDO disclosures for about
+    5,600 Boston buildings, plus public upgrade, price, and grid emissions
+    data, and compared directly against the ranked approach.
+  ],
   index-terms: (
     "Decarbonization",
     "BERDO",
-    "Mixed-integer programming",
     "Capital budgeting",
     "Building energy",
   ),
-  bibliography: bibliography("refs.yml"),
+  // Placed manually at the end of the body so the appendix can follow it.
+  bibliography: none,
 )
 
 #set document(author: (
@@ -50,7 +54,7 @@
 
 // ---- 3: goal / outcome ----------------------------------------------------
 
-= Summary
+= Introduction
 
 Under Boston's Building Emissions Reduction and Disclosure Ordinance (BERDO), residential buildings with 15 or more units and nonresidential
 buildings of 20,000 sq ft or more in Boston have to report their energy use
@@ -71,7 +75,7 @@ its own first compliance year and the limits keep tightening after that.
 
 Our goal is to develop a decision-support tool that helps university and college building owners in Boston determine which decarbonization projects to implement and when (@fig:pipeline). MACC will serve as our baseline. Rather than simply ranking projects individually, the tool will produce a multi-year investment roadmap that considers limited annual capital, financial returns, emissions reduction, and building-specific BERDO emissions requirements.
 
-= Proposed Plan
+= Methods
 
 == Data
 
@@ -148,83 +152,38 @@ optimization as a capital-planning tool; if the simpler ranking performs
 similarly, that is also a useful result for practitioners deciding whether the
 additional modeling effort is justified.
 
-= Preliminary Results
+= Results
 
 Preliminary exploration of the 2026 BERDO dataset supports the feasibility of our proposal. The dataset contains 5,592 building records representing 58 distinct building types, along with detailed information on property size, ownership, BERDO compliance timing, and emissions by energy source. Ownership information is available for nearly all buildings, with only 18 records lacking an owner and 3,178 individual property owners represented. BERDO also identifies 37 building portfolios, with reported total gross floor areas ranging from approximately 80,000 to 17.6 million square feet, excluding the Boston Housing Authority portfolio at approximately 146 million square feet. "College / University" types (field `Largest Property Type`) have seven distinct universities.
 
 Initial exploration also identified data-quality issues that will inform preprocessing and portfolio selection. Some source-specific emissions fields are missing even when they may be applicable, and repeated ownership information is not always populated consistently. The BERDO portfolio groupings themselves will also require validation before use, as preliminary inspection revealed some unexpected differences in reported portfolio size. We will evaluate missingness and verify the portfolio definitions before selecting buildings or portfolios with sufficiently complete and consistent data. If needed, we will contact the City of Boston BERDO team to clarify how portfolio groupings are to confirm whether the published groupings are appropriate for our analysis.
 
-= Project Milestones
 
-// Add dated milestones and measurable deliverables here once the course
-// schedule and preliminary BERDO analysis are finalized.
-Our plan is to complete the project over ~7 weeks. Once agreed on the input format, we are going to run data preparation, optimization, and baseline development in parallel. We will first test the data preparation and both planning methods on a few buildings before applying them to a larger sample.
+// ---- 9: discussion --------------------------------------------------------
 
-#[
-  #set par(justify: false)
+= Discussion
 
-  #table(
-    columns: (auto, 1fr),
-    inset: 5pt,
-    stroke: 0.5pt,
-    align: left + top,
+#todo[What did we learn from the results? How can a building owner apply
+  them, and what decisions do they support? Were the project goals met? What
+  would we do differently, or do next to improve the outcome?]
 
-    table.header([*Timeline*], [*Milestone and deliverable*]),
+// ---- 10: statement of contributions ---------------------------------------
 
-    [10/07 - 10/11],
-    [*Explore data and define scope*: check BERDO and ComStock coverage, select initial buildings and upgrades, agree on shared columns.],
+#heading(numbering: none)[Statement of Contributions]
 
-    [10/12 - 10/18],
-    [*Build a small working example*: match a few buildings and prepare initial upgrade estimates; connect this sample to early versions of the optimizer and MACC baseline.],
+- *Konstantinos Theodoropoulos:* #todo[contributions]
+- *Zachary Wegrzyniak:* #todo[contributions]
+- *Kateryna Lysytsyna:* #todo[contributions]
 
-    [10/19 - 11/01],
-    [*Complete inputs and models*: expand the sample, add cost, price, and emission inputs; run the optimization model and MACC ranking using the same data and yearly budgets to compare which upgrades each selects and when.],
+// ---- 11: references -------------------------------------------------------
 
-    [11/02 - 11/08],
-    [*Evaluate results*: compare financial value, emissions, and spending; check how the results change if upgrades cost more, energy prices change, or energy savings are lower than expected.],
+#bibliography("refs.yml")
 
-    [11/09 - 11/15],
-    [*Prepare drafts*: complete the main figures, document methods and limitations; draft the report and final presentation.],
+// ---- 12: appendix ---------------------------------------------------------
 
-    [11/16 - 11/22],
-    [*Finalize and submit*: resolve remaining issues, check reproducibility, finalize the report and final presentation.],
-  )
-]
+#heading(numbering: none)[Appendix]
 
+Source code is available at
+#link("https://github.com/wegry/DS5500")[github.com/wegry/DS5500].
 
-// ---- 5: risks / challenges ------------------------------------------------
-
-= Risks and Challenges
-
-== Self-Reported Data
-BERDO numbers are reported by building owners. Some buildings are missing
-years, some report whole campuses together, and some values will just be
-wrong. We'll need to screen for outliers and decide how to handle campuses
-before any building goes into the model.
-
-== Matching Buildings to Upgrades
-ComStock's buildings are representative, not real. A Boston office building
-from 1920 on district steam may not look much like any ComStock office, so
-the savings we attach to it could be off. Validating that match, against
-buildings whose reported energy use changed after a known retrofit, is where
-the consulting data would help most.
-
-== Uncertainty in the Future
-Energy prices, realized savings, and the grid mix in 2035 are all forecasts. A
-deterministic optimizer will happily overfit to whichever one it's handed. We
-plan to solve across the AEO and Cambium scenarios and report which decisions
-hold up in all of them, rather than the best plan for one future.
-Scenario-based stochastic programming is the likely formulation, but it grows
-fast with the number of scenarios.
-
-== Projects Interact
-Savings aren't additive, and modeling every combination of projects blows up
-the problem size. ComStock's packages cover some combinations. The rest need
-an approximation, and that approximation is the most likely place for the
-model to be quietly wrong.
-
-== Which Emission Factor
-BERDO scores electricity with its own emission factors, which aren't the same
-as the hourly ISO New England reported intensity, or the marginal plant
-that actually ramps up to serve new load from a heat pump. A plan can be compliant on paper and still do less for the actual grid.
-We'll report both instead of picking whichever one flatters the result.
+#todo[supplementary figures, tables, and technical details.]
