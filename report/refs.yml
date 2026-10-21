@@ -1,0 +1,45 @@
+berdo:
+  type: web
+  author: City of Boston
+  title: Building Emissions Reduction and Disclosure Ordinance (BERDO)
+  url: https://data.boston.gov/dataset/building-emissions-reduction-and-disclosure-ordinance
+
+comstock:
+  type: web
+  author: National Laboratory of the Rockies
+  title: ComStock
+  url: https://comstock.nlr.gov
+
+atb:
+  type: web
+  author: National Laboratory of the Rockies
+  title: Annual Technology Baseline
+  url: https://atb.nlr.gov
+
+aeo:
+  type: web
+  author: U.S. Energy Information Administration
+  title: Annual Energy Outlook
+  url: https://www.eia.gov/outlooks/aeo/
+
+cambium:
+  type: web
+  author: National Laboratory of the Rockies
+  title: Cambium
+  url: https://scenarioviewer.nlr.gov
+
+egrid:
+  type: web
+  author: U.S. Environmental Protection Agency
+  title: Emissions & Generation Resource Integrated Database (eGRID)
+  url: https://www.epa.gov/egrid
+
+pyomo:
+  type: web
+  title: Pyomo
+  url: https://www.pyomo.org
+
+highs:
+  type: web
+  title: "HiGHS: High Performance Software for Linear Optimization"
+  url: https://highs.dev
