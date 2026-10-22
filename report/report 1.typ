@@ -267,11 +267,24 @@ The analysis has several limitations. ComStock represents simulated rather than 
 
 The resulting recommendations will therefore be interpreted as preliminary investment estimates for the 2030--2034 period rather than verified retrofit plans.
 
-= Results
 
-Preliminary exploration of the 2026 BERDO dataset supports the feasibility of our proposal. The dataset contains 5,592 building records representing 58 distinct building types, along with detailed information on property size, ownership, BERDO compliance timing, and emissions by energy source. Ownership information is available for nearly all buildings, with only 18 records lacking an owner and 3,178 individual property owners represented. BERDO also identifies 37 building portfolios, with reported total gross floor areas ranging from approximately 80,000 to 17.6 million square feet, excluding the Boston Housing Authority portfolio at approximately 146 million square feet. "College / University" types (field `Largest Property Type`) have seven distinct universities.
+= Preliminary Results
 
-Initial exploration also identified data-quality issues that will inform preprocessing and portfolio selection. Some source-specific emissions fields are missing even when they may be applicable, and repeated ownership information is not always populated consistently. The BERDO portfolio groupings themselves will also require validation before use, as preliminary inspection revealed some unexpected differences in reported portfolio size. We will evaluate missingness and verify the portfolio definitions before selecting buildings or portfolios with sufficiently complete and consistent data. If needed, we will contact the City of Boston BERDO team to clarify how portfolio groupings are to confirm whether the published groupings are appropriate for our analysis.
+== Data Exploration and Feasibility
+
+Preliminary exploration focused on assessing the availability and suitability of the BERDO, ComStock, and BTB datasets for the proposed analysis.
+
+The BERDO disclosure provides building-level information on property type, gross floor area, energy consumption, and greenhouse gas emissions @berdo. These variables support the identification of Boston office buildings and the construction of building-level emissions baselines.
+
+ComStock provides baseline simulations and retrofit scenarios with information on building characteristics, fuel consumption, and upgrade applicability @comstock. These variables support the proposed building-matching procedure and estimation of retrofit performance.
+
+Exploration of the BTB commercial dataset identified installation cost information for technologies corresponding to components of the candidate ComStock retrofit packages @btb. However, the completeness of package-level cost estimates remains under investigation.
+
+== Current Limitations
+
+Although the data integration and emissions projection models have been developed, their building-level outputs have not yet been fully evaluated. Matching quality, emissions reductions under the four selected packages, and the resulting 2030 compliance outcomes remain to be assessed.
+
+Installation cost integration and the final cost optimization are also incomplete. Consequently, no optimal retrofit recommendations are reported at this stage.
 
 
 // ---- 9: discussion --------------------------------------------------------
