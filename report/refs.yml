@@ -49,3 +49,15 @@ berdo-standards:
   author: City of Boston
   title: Building Emissions Reduction and Disclosure Ordinance
   url: https://www.boston.gov/departments/environment/berdo
+
+btb:
+  type: web
+  author:
+    - "Moore, Nathan"
+    - "Wilson, Eric"
+    - "Butrico, Mark"
+    - "Langevin, Jared"
+    - "Ciraulo, Rebecca"
+  title: 2024 Buildings Technology Baseline
+  date: 2024-09-30
+  url: https://data.openei.org/submissions/8342
