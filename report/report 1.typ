@@ -24,7 +24,7 @@
       ],
     ),
   ),
-    abstract: [Boston's Building Emissions Reduction and Disclosure Ordinance (BERDO) requires large buildings to meet increasingly strict greenhouse gas emissions limits, with a major compliance milestone in 2030. This project focuses on Boston office buildings and aims to identify the most cost-effective retrofit decisions for the 2030 compliance period. We combine BERDO building disclosures, NREL ComStock energy and emissions estimates, and Building Technologies Benchmark (BTB) installation cost data to evaluate candidate retrofit packages. For each building, we estimate emissions reductions and associated installation costs, then compare the available retrofit options against the financial consequences of noncompliance. Our optimization framework selects one of five outcomes: four potential retrofit packages or no upgrade when accepting Alternative Compliance Payments (ACP). The resulting framework supports building-level investment decisions by balancing emissions reduction requirements against financial costs.
+  abstract: [Boston's Building Emissions Reduction and Disclosure Ordinance (BERDO) requires large buildings to meet increasingly strict greenhouse gas emissions limits, with a major compliance milestone in 2030. This project focuses on Boston office buildings and aims to identify the most cost-effective retrofit decisions for the 2030 compliance period. We combine BERDO building disclosures, NLR ComStock energy and emissions estimates, and Building Technologies Benchmark (BTB) installation cost data to evaluate candidate retrofit packages. For each building, we estimate emissions reductions and associated installation costs, then compare the available retrofit options against the financial consequences of noncompliance. Our optimization framework selects one of five outcomes: four potential retrofit packages or no upgrade when accepting Alternative Compliance Payments (ACP). The resulting framework supports building-level investment decisions by balancing emissions reduction requirements against financial costs.
   ],
   index-terms: (
     "Building decarbonization",
@@ -69,7 +69,7 @@ Our goal is to develop a decision-support tool that helps university and college
 
 == Data
 
-This project uses three publicly available data sources: Boston's Building Emissions Reduction and Disclosure Ordinance (BERDO) disclosures, NREL ComStock, and the 2024 Buildings Technology Baseline (BTB).
+This project uses three publicly available data sources: Boston's Building Emissions Reduction and Disclosure Ordinance (BERDO) disclosures, NLR ComStock, and the 2024 Buildings Technology Baseline (BTB).
 
 *BERDO* provides building-level information, including property type, gross floor area, energy consumption by fuel, and greenhouse gas emissions @berdo. The analysis focuses on Boston office buildings. Records are prepared using dbt models that standardize property types, convert electricity consumption from kWh to kBtu, aggregate related fuel categories, and identify missing or inconsistent values. BERDO provides the observed building characteristics and baseline emissions for the analysis.
 
