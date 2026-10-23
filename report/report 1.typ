@@ -153,8 +153,7 @@ The integration workflow is summarized in @fig:pipeline.
     grid(
       columns: (2fr, 1fr),
       gutter: 8pt,
-      sci_arrow,
-      sci_arrow,
+      sci_arrow, sci_arrow,
     ),
 
     grid(
@@ -182,8 +181,7 @@ The integration workflow is summarized in @fig:pipeline.
     grid(
       columns: (2fr, 1fr),
       gutter: 8pt,
-      sci_arrow,
-      sci_arrow,
+      sci_arrow, sci_arrow,
     ),
 
     // Intermediate outputs
