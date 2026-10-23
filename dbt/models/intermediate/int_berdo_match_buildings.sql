@@ -3,8 +3,8 @@
 with buildings as (
     select
         *,
-        electricity_kbtu + natural_gas_kbtu + district_heating_kbtu
-            + district_cooling_kbtu + oil_propane_kbtu as fuel_total_kbtu
+        electricity_kwh + natural_gas_kwh + district_heating_kwh
+            + district_cooling_kwh + oil_propane_kwh as fuel_total_kwh
     from {{ ref('stg_berdo__buildings') }}
     where property_type in (
         {%- for t in var("match_property_types") %}'{{ t }}'{{ ", " if not loop.last }}{% endfor -%}
@@ -17,11 +17,11 @@ with buildings as (
 select
     *,
     -- the disclosed Site EUI column is ~19x below energy / GFA, so derive it
-    fuel_total_kbtu / gfa_sqft as eui_kbtu_sqft,
+    fuel_total_kwh / gfa_sqft as eui_kwh_sqft,
     ghg_kgco2e / gfa_sqft as ghg_intensity_kgco2e_sqft,
-    electricity_kbtu / fuel_total_kbtu as electricity_share,
-    natural_gas_kbtu / fuel_total_kbtu as natural_gas_share,
-    (district_heating_kbtu + district_cooling_kbtu) / fuel_total_kbtu as district_share,
-    oil_propane_kbtu / fuel_total_kbtu as oil_propane_share
+    electricity_kwh / fuel_total_kwh as electricity_share,
+    natural_gas_kwh / fuel_total_kwh as natural_gas_share,
+    (district_heating_kwh + district_cooling_kwh) / fuel_total_kwh as district_share,
+    oil_propane_kwh / fuel_total_kwh as oil_propane_share
 from buildings
-where fuel_total_kbtu > 0
+where fuel_total_kwh > 0

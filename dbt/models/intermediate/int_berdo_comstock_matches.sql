@@ -4,8 +4,8 @@
 with models as (
     select
         *,
-        electricity_kbtu + natural_gas_kbtu + district_heating_kbtu
-            + district_cooling_kbtu + oil_propane_kbtu as fuel_total_kbtu
+        electricity_kwh + natural_gas_kwh + district_heating_kwh
+            + district_cooling_kwh + oil_propane_kwh as fuel_total_kwh
     from {{ ref('int_comstock_models') }}
     where upgrade_id = 0
 ),
@@ -16,13 +16,13 @@ candidates as (
         m.comstock_id,
         m.comstock_type,
         abs(ln(b.gfa_sqft / m.gfa_sqft)) as size_gap,
-        abs(ln(b.eui_kbtu_sqft / m.eui_kbtu_sqft)) as eui_gap,
+        abs(ln(b.eui_kwh_sqft / m.eui_kwh_sqft)) as eui_gap,
         0.5 * (
-            abs(b.electricity_share - m.electricity_kbtu / m.fuel_total_kbtu)
-            + abs(b.natural_gas_share - m.natural_gas_kbtu / m.fuel_total_kbtu)
+            abs(b.electricity_share - m.electricity_kwh / m.fuel_total_kwh)
+            + abs(b.natural_gas_share - m.natural_gas_kwh / m.fuel_total_kwh)
             + abs(b.district_share
-                - (m.district_heating_kbtu + m.district_cooling_kbtu) / m.fuel_total_kbtu)
-            + abs(b.oil_propane_share - m.oil_propane_kbtu / m.fuel_total_kbtu)
+                - (m.district_heating_kwh + m.district_cooling_kwh) / m.fuel_total_kwh)
+            + abs(b.oil_propane_share - m.oil_propane_kwh / m.fuel_total_kwh)
         ) as fuel_share_gap
     from {{ ref('int_berdo_match_buildings') }} as b
     inner join {{ ref('berdo_comstock_type_crosswalk') }} as cw

@@ -10,12 +10,12 @@ select
     any_value(year_built) as year_built,
     any_value(heating_fuel) as heating_fuel,
     sum(weight) as weight,
-    avg(eui_kbtu_sqft) as eui_kbtu_sqft,
-    avg(electricity_kbtu) as electricity_kbtu,
-    avg(natural_gas_kbtu) as natural_gas_kbtu,
-    avg(oil_propane_kbtu) as oil_propane_kbtu,
-    avg(district_heating_kbtu) as district_heating_kbtu,
-    avg(district_cooling_kbtu) as district_cooling_kbtu,
+    avg(eui_kwh_sqft) as eui_kwh_sqft,
+    avg(electricity_kwh) as electricity_kwh,
+    avg(natural_gas_kwh) as natural_gas_kwh,
+    avg(oil_propane_kwh) as oil_propane_kwh,
+    avg(district_heating_kwh) as district_heating_kwh,
+    avg(district_cooling_kwh) as district_cooling_kwh,
     avg(ghg_kgco2e) as ghg_kgco2e
 from {{ ref('stg_comstock__upgrades') }}
 group by comstock_id, upgrade_id

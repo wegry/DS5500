@@ -15,9 +15,9 @@ with ratios as (
         count(*) as matched_models,
         avg(u.applicability::int) as applicable_share,
         {% for f in fuels -%}
-        coalesce(sum(u.{{ f }}_kbtu) / nullif(sum(b.{{ f }}_kbtu), 0), 1) as {{ f }}_ratio,
+        coalesce(sum(u.{{ f }}_kwh) / nullif(sum(b.{{ f }}_kwh), 0), 1) as {{ f }}_ratio,
         {% endfor -%}
-        avg(u.eui_kbtu_sqft / b.eui_kbtu_sqft) as comstock_eui_ratio
+        avg(u.eui_kwh_sqft / b.eui_kwh_sqft) as comstock_eui_ratio
     from {{ ref('int_berdo_comstock_matches') }} as m
     inner join {{ ref('int_comstock_models') }} as b
         on m.comstock_id = b.comstock_id and b.upgrade_id = 0
@@ -34,7 +34,7 @@ projected as (
         bl.property_type,
         bl.gfa_sqft,
         bl.compliance_standard_kgco2e_sqft,
-        bl.eui_kbtu_sqft as baseline_eui_kbtu_sqft,
+        bl.eui_kwh_sqft as baseline_eui_kwh_sqft,
         bl.ghg_kgco2e as baseline_ghg_kgco2e,
         bl.ghg_intensity_kgco2e_sqft as baseline_ghg_intensity_kgco2e_sqft,
         r.upgrade_id,
@@ -49,9 +49,9 @@ projected as (
         {% endfor -%}
         (
             {% for f in fuels -%}
-            bl.{{ f }}_kbtu * r.{{ f }}_ratio{{ " +" if not loop.last }}
+            bl.{{ f }}_kwh * r.{{ f }}_ratio{{ " +" if not loop.last }}
             {% endfor -%}
-        ) / bl.gfa_sqft as projected_eui_kbtu_sqft,
+        ) / bl.gfa_sqft as projected_eui_kwh_sqft,
         {% for f in fuels -%}
         bl.{{ f }}_ghg_kgco2e * r.{{ f }}_ratio{{ " +" if not loop.last }}
         {% endfor -%}

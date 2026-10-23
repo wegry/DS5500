@@ -38,12 +38,13 @@ per_building as (
         "in.sqft..ft2" as gfa_sqft,
         try_cast("in.year_built" as integer) as year_built,
         "in.heating_fuel" as heating_fuel,
-        "out.site_energy.total.energy_consumption_intensity..kwh_per_ft2" * 3.412 as eui_kbtu_sqft,
+        "out.site_energy.total.energy_consumption_intensity..kwh_per_ft2" as eui_kwh_sqft,
         -- purchased (net of onsite PV) to match BERDO's grid electricity, so PV upgrades count
-        "out.electricity.purchased.energy_consumption..kwh" * 3.412 as electricity_kbtu,
+        "out.electricity.purchased.energy_consumption..kwh" as electricity_kwh,
         {% for col, f in fuels.items() -%}
-        coalesce("calc.weighted.{{ f }}.total.energy_consumption..tbtu", 0) / weight * 1e9
-            as {{ col }}_kbtu,
+        -- TBtu -> kWh (1 kWh = 3.412 kBtu)
+        coalesce("calc.weighted.{{ f }}.total.energy_consumption..tbtu", 0) / weight * 1e9 / 3.412
+            as {{ col }}_kwh,
         {% endfor -%}
         -- eGRID 2021 subregion factors; BERDO uses Boston-specific factors, so compare loosely
         "calc.weighted.emissions.total_with_egrid..co2e_mmt" / weight * 1e9 as ghg_kgco2e
@@ -52,6 +53,6 @@ per_building as (
 
 select
     comstock_key || '-' || upgrade_id as comstock_upgrade_key,
-    * exclude (fuel_oil_kbtu, propane_kbtu),
-    fuel_oil_kbtu + propane_kbtu as oil_propane_kbtu
+    * exclude (fuel_oil_kwh, propane_kwh),
+    fuel_oil_kwh + propane_kwh as oil_propane_kwh
 from per_building

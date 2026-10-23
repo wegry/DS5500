@@ -1,5 +1,6 @@
 -- One row per building/campus row in the BERDO disclosure.
 -- all_varchar because the sparse fuel columns have no consistent type; cast explicitly.
+-- Energy is in kWh: BERDO reports electricity in kWh and every other fuel in kBtu.
 {%- set oil_propane = [
     "Fuel Oil 1", "Fuel Oil 2", "Fuel Oil 4", "Fuel Oil 5 and 6",
     "Propane", "Diesel", "Kerosene",
@@ -21,15 +22,20 @@ select
     -- the portfolio sheet writes "College / University", this sheet "College/University"
     regexp_replace("Largest Property Type", '\s*/\s*', '/') as property_type,
     try_cast("Gross Floor Area (sq ft)" as double) as gfa_sqft,
-    try_cast("Total Site Energy Usage (kBtu)" as double) as site_energy_kbtu,
-    coalesce(try_cast("Electricity Usage (kWh)" as double), 0) * 3.412 as electricity_kbtu,
-    coalesce(try_cast("Natural Gas Usage (kBtu)" as double), 0) as natural_gas_kbtu,
-    coalesce(try_cast("District Hot Water Usage (kBtu)" as double), 0)
-        + coalesce(try_cast("District Steam Usage (kBtu)" as double), 0) as district_heating_kbtu,
-    coalesce(try_cast("District Chilled Water Usage (kBtu)" as double), 0) as district_cooling_kbtu,
-    {% for f in oil_propane -%}
-    coalesce(try_cast("{{ f }} Usage (kBtu)" as double), 0){{ " +" if not loop.last else " as oil_propane_kbtu," }}
-    {% endfor -%}
+    try_cast("Total Site Energy Usage (kBtu)" as double) / 3.412 as site_energy_kwh,
+    coalesce(try_cast("Electricity Usage (kWh)" as double), 0) as electricity_kwh,
+    coalesce(try_cast("Natural Gas Usage (kBtu)" as double), 0) / 3.412 as natural_gas_kwh,
+    (
+        coalesce(try_cast("District Hot Water Usage (kBtu)" as double), 0)
+        + coalesce(try_cast("District Steam Usage (kBtu)" as double), 0)
+    ) / 3.412 as district_heating_kwh,
+    coalesce(try_cast("District Chilled Water Usage (kBtu)" as double), 0) / 3.412
+        as district_cooling_kwh,
+    (
+        {% for f in oil_propane -%}
+        coalesce(try_cast("{{ f }} Usage (kBtu)" as double), 0){{ " +" if not loop.last }}
+        {% endfor -%}
+    ) / 3.412 as oil_propane_kwh,
     try_cast("Total GHG Emissions (kgCO2e)" as double) as ghg_kgco2e,
     -- per-fuel emissions sum to the total
     coalesce(try_cast("Electricity Emissions (kgCO2e)" as double), 0) as electricity_ghg_kgco2e,

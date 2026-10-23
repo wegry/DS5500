@@ -9,7 +9,7 @@ select
     b.building_address,
     b.property_type,
     b.gfa_sqft,
-    b.eui_kbtu_sqft,
+    b.eui_kwh_sqft,
     count(*) as matched_models,
     min(m.distance) as nearest_distance,
     avg(m.distance) as mean_distance,
