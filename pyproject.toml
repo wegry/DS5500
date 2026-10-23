@@ -9,3 +9,5 @@ dependencies = [
     "marimo>=0.25.1",
     "polars>=2.0.0",
 ]
+[tool.marimo.runtime]
+pythonpath = ["src"]

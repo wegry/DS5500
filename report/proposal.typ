@@ -38,7 +38,7 @@
     "Capital budgeting",
     "Building energy",
   ),
-  bibliography: bibliography("refs.bib"),
+  bibliography: bibliography("refs.yml"),
 )
 
 #set document(author: (

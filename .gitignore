@@ -226,3 +226,8 @@ dbt/*.duckdb.wal
 dbt/.user.yml
 dbt/target/
 **/logs/
+# Local datasets
+/data/
+
+# macOS stuff
+.DS_Store
