@@ -1,0 +1,2 @@
+# Linguist treats SQL as data and leaves it out of the language bar; count the dbt models
+*.sql linguist-detectable
