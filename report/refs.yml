@@ -65,5 +65,8 @@ btb:
 berdo-acp:
   type: web
   author: City of Boston
-  title: My Building Is Above Its Emissions Limit, What Can I Do Now?
-  url: https://www.boston.gov/news/my-building-above-its-emissions-limit-what-can-i-do-now
+  title: My Building is Above its Emissions Limit, What Can I Do Now?
+  date: 2026-09-02
+  url:
+    value: https://www.boston.gov/news/my-building-above-its-emissions-limit-what-can-i-do-now
+    date: 2026-10-22
