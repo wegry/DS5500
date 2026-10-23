@@ -86,9 +86,9 @@ First, a property-type crosswalk restricts candidate ComStock models to building
 The distance function combines the absolute logarithmic differences in building size and EUI with half the sum of absolute differences in fuel shares:
 
 $
-  d(b,c) &= abs(ln(A_b / A_c)) \
-         &+ abs(ln("EUI"_b / "EUI"_c)) \
-         &+ 0.5 sum_f abs(s_(b,f) - s_(c,f))
+  d(b,c) & = abs(ln(A_b / A_c)) \
+         & + abs(ln("EUI"_b / "EUI"_c)) \
+         & + 0.5 sum_f abs(s_(b,f) - s_(c,f))
 $
 
 where $A$ denotes gross floor area, $"EUI"$ represents site energy use intensity, and $s$ represents the share of energy consumption attributed to each fuel category. The fuel categories include electricity, natural gas, district energy, and oil/propane.
