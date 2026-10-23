@@ -25,7 +25,13 @@ per_building as (
         bldg_id as comstock_id,
         "in.nhgis_tract_gisjoin" as tract_gisjoin,
         upgrade as upgrade_id,
-        "in.upgrade_name" as upgrade_name,
+        -- release 3 metadata swaps the names of upgrades 56 and 57 (the results are right:
+        -- only 56 applies the envelope measures), and so does the release's upgrades_lookup.json
+        case upgrade
+            when 56 then 'Package 3, Package 1 + Package 2'
+            when 57 then 'Package 4, Package 2 with Standard Performance HP RTU'
+            else "in.upgrade_name"
+        end as upgrade_name,
         applicability,
         weight,
         "in.comstock_building_type" as comstock_type,

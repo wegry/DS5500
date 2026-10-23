@@ -14,6 +14,15 @@ vars:
   comstock_dir: https://oedi-data-lake.s3.amazonaws.com/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2025/comstock_amy2018_release_3/metadata_and_annual_results/by_state_and_county/basic/parquet/state=MA/county=G2500250
   comstock_county_prefix: MA_G2500250
   comstock_max_upgrade: 65
+  # "full" results add the geometry and equipment sizes (out.params.*) that costing needs
+  comstock_full_dir: https://oedi-data-lake.s3.amazonaws.com/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2025/comstock_amy2018_release_3/metadata_and_annual_results/by_state_and_county/full/parquet/state=MA/county=G2500250
+  # the four retrofit packages compared for 2030 compliance (see comstock_package_components)
+  package_upgrade_ids: [54, 55, 56, 57]
+  # NLR 2024 Buildings Technology Baseline, commercial flat file (OEDI submission 8342)
+  btb_csv: https://data.openei.org/files/8342/btb2024_commercial_dataset%20(4).csv
+  # BTB cost projection year and scenario; costs are in 2023 dollars either way
+  btb_year: 2030
+  btb_scenario: Reference
   # BERDO property types to match to ComStock models (via the crosswalk seed)
   match_property_types: ["Office", "Financial Office"]
   # nearest ComStock models per BERDO building
@@ -21,6 +30,8 @@ vars:
   # BERDO Alternative Compliance Payment, $ per metric ton CO2e over the limit
   # (City of Boston, "Complying with BERDO's Emissions Standard", Feb 2024)
   acp_usd_per_tco2e: 234
+  # first year of the 5-year standards period the retrofit decision is made for
+  decision_period_start: 2030
 
 models:
   ds5500:

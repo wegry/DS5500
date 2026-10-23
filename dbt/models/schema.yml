@@ -15,6 +15,23 @@ seeds:
     columns:
       - name: property_type
         data_tests: [unique, not_null]
+  - name: comstock_package_components
+    description: >
+      The four ComStock retrofit packages compared for 2030 compliance, broken into the
+      measures they apply (named by ComStock's applicability.* columns) and the 2024 BTB
+      technology costed for each. ComStock does not name equipment, so the BTB choices are
+      proxies: a double-pane aluminum-frame window for AEDG windows, the cold-climate RTU
+      heat pump for the variable-speed HP RTU, the hydronic heat pump (priced per ton of
+      cooling, sized from heating capacity) for HP boilers, and an LED troffer/panel for
+      LED lighting.
+    columns:
+      - name: btb_measure_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('int_btb_unit_costs')
+                field: btb_measure_id
 
 models:
   - name: stg_berdo__portfolios
@@ -27,6 +44,32 @@ models:
         data_tests: [unique, not_null]
       - name: weight
         data_tests: [not_null]
+  - name: stg_comstock__package_measures
+    columns:
+      - name: comstock_measure_key
+        data_tests: [unique, not_null]
+  - name: stg_btb__technologies
+    columns:
+      - name: btb_measure_id
+        data_tests: [unique, not_null]
+  - name: int_btb_unit_costs
+    columns:
+      - name: btb_measure_id
+        data_tests: [unique, not_null]
+      - name: cost_unit
+        data_tests: [not_null]
+      - name: unit_cost_mid_usd
+        data_tests: [not_null]
+  - name: int_comstock_package_costs
+    columns:
+      - name: comstock_component_key
+        data_tests: [unique, not_null]
+      - name: installed_cost_mid_usd
+        data_tests: [not_null]
+  - name: int_berdo_package_costs
+    columns:
+      - name: berdo_component_key
+        data_tests: [unique, not_null]
   - name: stg_comstock__baseline
     columns:
       - name: comstock_key
@@ -69,3 +112,21 @@ models:
         data_tests: [unique, not_null]
       - name: standard_kgco2e_sqft
         data_tests: [not_null]
+  - name: berdo_match_quality
+    columns:
+      - name: berdo_id
+        data_tests: [unique, not_null]
+  - name: berdo_decision_options
+    columns:
+      - name: option_key
+        data_tests: [unique, not_null]
+      - name: total_cost_mid_usd
+        data_tests: [not_null]
+  - name: berdo_decisions
+    columns:
+      - name: berdo_id
+        data_tests: [unique, not_null]
+  - name: berdo_data_quality
+    columns:
+      - name: berdo_id
+        data_tests: [unique, not_null]

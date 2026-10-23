@@ -1,0 +1,16 @@
+upgrade_id,package_name,component,measure,btb_measure_id
+54,"Package 1, Wall + Roof Insulation + New Windows",Wall insulation,exterior_wall_insulation,92
+54,"Package 1, Wall + Roof Insulation + New Windows",Roof insulation,roof_insulation_aedg,93
+54,"Package 1, Wall + Roof Insulation + New Windows",New windows,env_new_aedg_windows,54
+55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",LED lighting,light_led,12
+55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",Variable speed HP RTU,add_heat_pump_rtu,2
+55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",HP boiler,replace_boiler_by_heatpump,3
+56,"Package 3, Package 1 + Package 2",Wall insulation,exterior_wall_insulation,92
+56,"Package 3, Package 1 + Package 2",Roof insulation,roof_insulation_aedg,93
+56,"Package 3, Package 1 + Package 2",New windows,env_new_aedg_windows,54
+56,"Package 3, Package 1 + Package 2",LED lighting,light_led,12
+56,"Package 3, Package 1 + Package 2",Variable speed HP RTU,add_heat_pump_rtu,2
+56,"Package 3, Package 1 + Package 2",HP boiler,replace_boiler_by_heatpump,3
+57,"Package 4, Package 2 with Standard Performance HP RTU",LED lighting,light_led,12
+57,"Package 4, Package 2 with Standard Performance HP RTU",Standard performance HP RTU,add_heat_pump_rtu,1
+57,"Package 4, Package 2 with Standard Performance HP RTU",HP boiler,replace_boiler_by_heatpump,3
