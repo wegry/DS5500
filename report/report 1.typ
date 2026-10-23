@@ -69,11 +69,11 @@ Our goal is to develop a decision-support tool that helps university and college
 
 == Data
 
-This project uses three publicly available data sources: Boston's Building Emissions Reduction and Disclosure Ordinance (BERDO) disclosures, NLR ComStock, and the 2024 Buildings Technology Baseline (BTB).
+This project uses three publicly available data sources: Boston's Building Emissions Reduction and Disclosure Ordinance (BERDO) disclosures, National Lab of the Rockies (NLR) ComStock, and the NLR 2024 Buildings Technology Baseline (BTB).
 
-*BERDO* provides building-level information, including property type, gross floor area, energy consumption by fuel, and greenhouse gas emissions @berdo. The analysis focuses on Boston office buildings. Records are prepared using dbt models that standardize property types, convert electricity consumption from kWh to kBtu, aggregate related fuel categories, and identify missing or inconsistent values. BERDO provides the observed building characteristics and baseline emissions for the analysis.
+*BERDO* provides building-level information, including property type, gross floor area, energy consumption by fuel, and greenhouse gas emissions @berdo. The analysis focuses on Boston office buildings. Records are prepared using dbt models that standardize property types for storage in duckdb, convert electricity consumption from kWh to kBtu (#todo([We may want to stay in kWh in hindsight...]), aggregate related fuel categories, and identify missing or inconsistent values. BERDO provides the observed building characteristics and baseline emissions for the analysis.
 
-*ComStock* provides simulated commercial building characteristics, baseline energy consumption, and estimates of the impacts of energy-efficiency upgrades @comstock. The integration pipeline uses Suffolk County ComStock simulations, including baseline and upgrade scenarios. Energy measurements are standardized, and weighted energy consumption values are converted to per-building quantities using ComStock simulation weights.
+*ComStock* provides simulated commercial building characteristics, baseline energy consumption, and estimates of the impacts of energy-efficiency upgrades @comstock. Our data flow uses Suffolk County ComStock simulations, including baseline and upgrade scenarios. Energy measurements are standardized, and weighted energy consumption values are converted to per-building quantities using ComStock simulation weights.
 
 *BTB* provides technology-level performance and installation cost estimates for building efficiency measures @btb. Its commercial dataset contains cost parameters for technologies such as lighting, building envelope improvements, and HVAC equipment. We use these data to estimate the installation costs of components included in four currently selected retrofit packages.
 
@@ -237,20 +237,21 @@ The integration workflow is summarized in @fig:pipeline.
     Data integration and optimization framework
     for Boston office buildings. BERDO observations are linked to ComStock simulations through property-type-constrained nearest-neighbor matching. Estimated retrofit performance and
     BTB installation costs support the selection of cost-effective 2030 compliance options.
+    #todo[Is there a way to get arrows for Installation cost estimation being merged to match BERDO and Comstock being merged above?]
   ],
 ) <fig:pipeline>
 
 
-*2030 compliance assessment.* BERDO establishes an office building emissions standard of 3.2 kg CO2e per square foot per year for the 2030-2034 compliance period @berdo-standards. For each building and retrofit scenario, estimated emissions are divided by gross floor area and compared with the applicable standard.
+*2030 compliance assessment.* #todo[Do we want to lead with this section?] BERDO establishes an office building emissions standard of 3.2 kg CO2e per square foot per year for the 2030-2034 compliance period @berdo-standards. For each building and retrofit scenario, estimated emissions are divided by gross floor area and compared with the applicable standard.
 
-The existing dbt compliance model calculates projected emissions intensity, whether the building meets the standard, and the amount of emissions exceeding the limit. It also includes an no-upgrade scenario representing no retrofit.
+The existing data flow's compliance model calculates projected emissions intensity, whether the building meets the standard, and the amount of emissions exceeding the limit. It also includes an no-upgrade scenario representing no retrofit.
 
 For emissions exceeding the limit, BERDO permits Alternative Compliance Payments (ACPs). The current payment rate is \$234 per metric ton of CO2e above the emissions limit @berdo-acp. Annual ACP obligations are estimated from the remaining excess emissions after each retrofit scenario.
 
 
 *Cost optimization.* The proposed framework identifies the most cost-effective retrofit decision for meeting Boston office buildings' 2030 BERDO obligations. Four candidate retrofit packages are compared with a no-retrofit alternative using a five-year financial evaluation period (2030--2034).
 
-For each alternative, total modeled cost consists of the estimated installation cost and cumulative Alternative Compliance Payments (ACPs) associated with any remaining excess emissions. The baseline analysis assumes constant annual emissions and ACP rates throughout the evaluation period. The model selects the alternative with the lowest total estimated cost for each building.
+For each alternative, total modeled cost consists of the estimated installation cost and cumulative Alternative Compliance Payments (ACPs) associated with any remaining excess emissions. The baseline analysis assumes constant annual emissions and ACP rates throughout the evaluation period. The model ranks the alternatives with the most impactful realistic upgrade for each building.
 
 
 == Evaluation
