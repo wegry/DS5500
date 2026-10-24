@@ -4,7 +4,7 @@ DS5500 Data Science Capstone, Northeastern University
 
 **Authors:** Konstantinos Theodoropoulos, Zachary Wegrzyniak, Kateryna Lysytsyna
 
-**Sponsor / stakeholders:** TODO
+**Sponsor / stakeholders:** Konstantinos Theodoropoulos
 
 ## Summary
 
