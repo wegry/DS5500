@@ -14,3 +14,8 @@ upgrade_id,package_name,component,measure,btb_measure_id
 57,"Package 4, Package 2 with Standard Performance HP RTU",LED lighting,light_led,12
 57,"Package 4, Package 2 with Standard Performance HP RTU",Standard performance HP RTU,add_heat_pump_rtu,1
 57,"Package 4, Package 2 with Standard Performance HP RTU",HP boiler,replace_boiler_by_heatpump,3
+43,"Individual LED Lighting",LED lighting,light_led,12
+48,"Individual Wall Insulation",Wall insulation,exterior_wall_insulation,92
+49,"Individual Roof Insulation",Roof insulation,roof_insulation_aedg,93
+52,"Individual New Windows",New windows,env_new_aedg_windows,54
+
