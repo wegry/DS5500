@@ -247,7 +247,7 @@ The integration workflow is summarized in @fig:pipeline.
 ) <fig:pipeline>
 
 
-*2030 compliance assessment.* #todo[Do we want to lead with this section?] BERDO establishes an office building emissions standard of 3.2 kg CO2e per square foot per year for the 2030-2034 compliance period @berdo-standards. For each building and retrofit scenario, estimated emissions are divided by gross floor area and compared with the applicable standard.
+*2030 compliance assessment.* BERDO establishes an office building emissions standard of 3.2 kg $"CO"_2"e"$ per square foot per year for the 2030-2034 compliance period @berdo-standards. For each building and retrofit scenario, estimated emissions are divided by gross floor area and compared with the applicable standard.
 
 The existing data flow's compliance model calculates projected emissions intensity, whether the building meets the standard, and the amount of emissions exceeding the limit. It also includes an no-upgrade scenario representing no retrofit.
 
@@ -278,7 +278,11 @@ The resulting recommendations will therefore be interpreted as preliminary inves
 
 Preliminary exploration focused on assessing the availability and suitability of the BERDO, ComStock, and BTB datasets for the proposed analysis.
 
-The BERDO disclosure provides building-level information on property type, gross floor area, energy consumption, and greenhouse gas emissions @berdo. These variables support the identification of Boston office buildings and the construction of building-level emissions baselines.
+The BERDO disclosure provides building-level information on property type, gross floor area, energy consumption, greenhouse gas emissions, and more @berdo. The dataset published for 2026 contains 5,591 building records, a substantial amount for analysis. However, because BERDO relies on self-reported building information, missing and inconsistent values limit the number of usable records. An examination of data completeness across building categories revealed considerable variation, with office buildings exhibiting higher completeness than other building types (@fig:berdo-heatmap).
+
+Of the 5,591 records, 410 were identified as having office space as their primary or sole use. This subset provided a relatively large population of records with complete entries to support the BERDO-ComStock matching step.
+
+To measure the potential need for decarbonization investments, reported greenhouse gas (GHG) emissions intensities were compared against the 2030-2034 BERDO standard for offices of 3.2 kg of $"CO"_2"e"$ per square foot per year @berdo-standards. 290 of the 410 office buildings reported GHG intensity values, of which 96 or 33.1% exceeded the 2030 standard (@fig:berdo-GHGvsStandard). This number suggests that a substantial portion of offices might face compliance challenges, highlighting the need for the evaluation of retrofit upgrades and their cost.
 
 ComStock provides baseline simulations and retrofit scenarios with information on building characteristics, fuel consumption, and upgrade applicability @comstock. These variables support the proposed building-matching procedure and estimation of retrofit performance.
 
@@ -322,11 +326,23 @@ Installation cost integration and the final cost optimization are also incomplet
 Source code is available at
 #link("https://github.com/wegry/DS5500")[github.com/wegry/DS5500].
 
+#show figure.caption: set align(center)
+
 #figure(
   image("figures/berdo-emissions-standards.png", width: 65%),
   caption: [BERDO emissions standards (kgCO#sub[2]e/ft#super[2]/year) by
     building use for each five-year compliance period, reaching zero in 2050
     @berdo-standards.],
 ) <fig:berdo-limits>
+
+#figure(
+  image("figures/berdo-completeness.png", width: 75%),
+  caption: [Data completeness heatmap by building category],
+) <fig:berdo-heatmap>
+
+#figure(
+  image("figures/berdo-intensity-vs-benchmark.png", width: 75%),
+  caption: [Reported office-building GHG intensities vs. the 2030 BERDO standard],
+) <fig:berdo-GHGvsStandard>
 
 #todo[supplementary figures, tables, and technical details.]
