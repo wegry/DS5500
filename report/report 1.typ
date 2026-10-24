@@ -47,12 +47,14 @@
 
 = Introduction
 
-Under Boston's Building Emissions Reduction and Disclosure Ordinance (BERDO), residential buildings with 15 or more units and nonresidential
+How can municipalities work to decarbonize? Part of Boston's approach is to give a financial reason for building owners to cut emissions. Under Boston's Building Emissions Reduction and Disclosure Ordinance (BERDO), residential buildings with 15 or more units and nonresidential
 buildings of 20,000 sq ft or more have to report their energy use
 every year and meet emissions limits that step down over time, reaching net
 zero by 2050 (@fig:berdo-limits) @berdo. The owner of one of these buildings, say an office, has a list of candidate
 projects: heat pumps, envelope upgrades, LED retrofits, rooftop solar,
-switching off fuel oil, etc. If a retrofit is not economical, the owner can instead pay a non-compliance fee. Either way, the owner does not have the capital to do all of the updates at once,
+switching off fuel oil, etc. If a retrofit is not economical, the owner can instead make an _Alternative Compliance Payment_ (ACP). Are ACPs a strong enough incentive to drive decarbonization?
+
+Owners might lack the capital to do all of the updates at once,
 so somebody has to pick an order. The standard tool for that is a marginal
 abatement cost curve (MACC), which ranks projects by dollars per ton of
 CO#sub[2] avoided and funds them from the cheapest on down.
@@ -63,7 +65,7 @@ than the two estimates added together. And under BERDO, _when_ a building gets
 under its limit matters as much as _whether_ it does, since each building has
 its own first compliance year and the limits keep tightening after that.
 
-Our goal is to develop a decision-support tool that helps university and college building owners in Boston determine which decarbonization projects to implement and when (@fig:pipeline). MACC will serve as our baseline. Rather than simply ranking projects individually, the tool will produce a multi-year investment roadmap that considers limited annual capital, financial returns, emissions reduction, and building-specific BERDO emissions requirements.
+Our goal is to develop a decision-support tool that helps building owners in Boston determine which decarbonization projects to implement and when (@fig:pipeline). MACC will serve as our baseline. Rather than simply ranking projects individually, the tool will produce a multi-year investment roadmap that considers limited annual capital, financial returns, emissions reduction, and building-specific BERDO emissions requirements.
 
 = Methods
 
@@ -71,7 +73,10 @@ Our goal is to develop a decision-support tool that helps university and college
 
 This project uses three publicly available data sources: Boston's Building Emissions Reduction and Disclosure Ordinance (BERDO) disclosures, National Lab of the Rockies (NLR) ComStock, and the NLR 2024 Buildings Technology Baseline (BTB).
 
-*BERDO* provides building-level information, including property type, gross floor area, energy consumption by fuel, and greenhouse gas emissions @berdo. The analysis focuses on Boston office buildings. Records are prepared using dbt models that standardize property types for storage in duckdb, convert the fuels BERDO reports in kBtu (natural gas, district energy, and oil/propane) to kWh to match electricity, aggregate related fuel categories, and identify missing or inconsistent values. BERDO provides the observed building characteristics and baseline emissions for the analysis.
+*BERDO* provides building-level information, including property type, gross floor area, energy consumption by fuel, and greenhouse gas emissions @berdo. The analysis focuses on Boston office buildings because these buildings have a relatively high emissions reporting rate. Records are prepared using dbt models that standardize property types for storage in duckdb, convert the fuels BERDO reports in kBtu (natural gas, district energy, and oil/propane) to kWh to match electricity, aggregate related fuel categories, and identify missing or inconsistent values. BERDO provides:
+- the observed building characteristics
+- baseline emissions for the analysis
+- a way to derive ACPs and identify noncompliant buildings
 
 *ComStock* provides simulated commercial building characteristics, baseline energy consumption, and estimates of the impacts of energy-efficiency upgrades @comstock. Our data flow uses Suffolk County ComStock simulations, including baseline and upgrade scenarios. Energy measurements are standardized, and weighted energy consumption values are converted to per-building quantities using ComStock simulation weights.
 
@@ -246,7 +251,7 @@ The integration workflow is summarized in @fig:pipeline.
 
 The existing data flow's compliance model calculates projected emissions intensity, whether the building meets the standard, and the amount of emissions exceeding the limit. It also includes an no-upgrade scenario representing no retrofit.
 
-For emissions exceeding the limit, BERDO permits Alternative Compliance Payments (ACPs). The current payment rate is \$234 per metric ton of CO2e above the emissions limit @berdo-acp. Annual ACP obligations are estimated from the remaining excess emissions after each retrofit scenario.
+For emissions exceeding the limit, BERDO permits ACPs. The current payment rate is \$234 per metric ton of CO2e above the emissions limit @berdo-acp. Annual ACP obligations are estimated from the remaining excess emissions after each retrofit scenario.
 
 
 *Cost optimization.* The proposed framework identifies the most cost-effective retrofit decision for meeting Boston office buildings' 2030 BERDO obligations. Four candidate retrofit packages are compared with a no-retrofit alternative using a five-year financial evaluation period (2030--2034).
