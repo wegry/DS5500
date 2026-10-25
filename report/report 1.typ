@@ -388,8 +388,10 @@ Claude Opus 5.5 and ChatGPT 6.1 were used for:
 
 // ---- 12: appendix ---------------------------------------------------------
 
-#set page(columns: 1)
 #show figure.caption: set align(center)
+// Appendix graphics float across both columns so they stay legible; body text
+// and tables remain two-column.
+#show figure.where(kind: image): set figure(placement: auto, scope: "parent")
 
 = Appendix
 
@@ -405,15 +407,16 @@ The initial analysis evaluated the completeness and composition of BERDO disclos
 #figure(
   image(
     "figures/berdo-emissions-standards.png",
-    width: 75%),
+  ),
   caption: [
     BERDO emissions-intensity standards by building use
     and five-year compliance period, expressed in
     kg CO#sub[2]e/ft#super[2]/year @berdo-standards.
   ],
+  placement: auto,
 ) <fig:berdo-limits>
 
-BERDO establishes progressively stricter emissions limits by property category and compliance period. Office buildings are subject to a standard of 3.2 kg CO#sub[2]e/ft#super[2]/year during 2030--2034. This threshold serves as the compliance criterion throughout the integrated retrofit analysis. Projected post-retrofit emissions are normalized by each building's reported floor area and compared with the applicable standard. 
+BERDO establishes progressively stricter emissions limits by property category and compliance period. Office buildings are subject to a standard of 3.2 kg CO#sub[2]e/ft#super[2]/year during 2030--2034. This threshold serves as the compliance criterion throughout the integrated retrofit analysis. Projected post-retrofit emissions are normalized by each building's reported floor area and compared with the applicable standard.
 The figure represents regulatory requirements rather
 than observed building performance.
 
@@ -422,7 +425,8 @@ than observed building performance.
 #figure(
   image(
     "figures/berdo-completeness.png",
-    width: 82%),
+    width: 82%,
+  ),
   caption: [
     Completeness of selected BERDO attributes across building-use categories. Each cell represents the percentage of records with nonmissing observations for the corresponding
     variable.
@@ -432,7 +436,7 @@ than observed building performance.
 For each building category and variable, completeness was calculated as:
 
 $
-"Completeness" = N_"nonmissing" / N_"total" times 100
+  "Completeness" = N_"nonmissing" / N_"total" times 100
 $
 
 The evaluation considered building floor area, reported greenhouse gas emissions, emissions intensity, applicable compliance standards, site energy consumption, and energy-use intensity. Office buildings showed relatively high completeness of floor-area and energy-consumption variables, making them suitable candidates for integration with ComStock However, missing emissions observations reduce the number of records available for compliance assessment. Missingness may also introduce selection bias if buildings with incomplete reporting differ systematically from those retained in the analysis.
@@ -442,7 +446,8 @@ The evaluation considered building floor area, reported greenhouse gas emissions
 #figure(
   image(
     "figures/berdo-property-types.png",
-    width: 80%),
+    width: 80%,
+  ),
   caption: [
     Composition of office-related BERDO properties according to the reported proportion of non-office, non-parking floor area.
   ],
@@ -456,7 +461,8 @@ composition. The analysis distinguished buildings containing only office and par
 #figure(
   image(
     "figures/berdo-intensity-vs-benchmark.png",
-    width: 80%),
+    width: 80%,
+  ),
   caption: [
     Distribution of reported office-building greenhouse gas emissions intensity compared with the 2030 BERDO office standard.
   ],
@@ -465,7 +471,7 @@ composition. The analysis distinguished buildings containing only office and par
 Reported emissions intensity was calculated as total annual greenhouse gas emissions divided by gross floor area:
 
 $
-I_b = G_b / A_b
+  I_b = G_b / A_b
 $
 
 where $G_b$ is a building's annual emissions in kg CO#sub[2]e and $A_b$ is its gross floor area in square feet.
@@ -480,9 +486,7 @@ These populations are therefore reported separately rather than treated as inter
 Because BERDO describes actual properties while ComStock contains simulated commercial buildings, direct matching by building identifier is not possible. Candidate ComStock simulations were restricted using compatible building types and ranked according to similarity in floor area, energy-use intensity, and fuel-consumption shares.
 
 The matching distance is defined as:
-$
-  d(b,c) &= abs(ln(A_b / A_c)) + abs(ln("EUI"_b / "EUI"_c)) + 0.5 sum_f abs(s_(b,f) - s_(c,f))
-$ where $b$ identifies a BERDO building, $c$ identifies a ComStock simulation, $A$ denotes floor area, $"EUI"$ denotes energy-use intensity, and $s_f$ represents the proportion of energy consumption attributed to fuel $f$.
+$ d(b,c) & = abs(ln(A_b / A_c)) + abs(ln("EUI"_b / "EUI"_c)) + 0.5 sum_f abs(s_(b,f) - s_(c,f)) $ where $b$ identifies a BERDO building, $c$ identifies a ComStock simulation, $A$ denotes floor area, $"EUI"$ denotes energy-use intensity, and $s_f$ represents the proportion of energy consumption attributed to fuel $f$.
 
 The closest $k$ simulations are selected for each
 BERDO building.
@@ -492,7 +496,8 @@ BERDO building.
 #figure(
   image(
     "figures/matching_quality.svg",
-    width: 82%),
+    width: 82%,
+  ),
   caption: [
     Median and 90th-percentile matching distance across BERDO buildings as a function of the number of nearest ComStock neighbors.
   ],
@@ -513,7 +518,7 @@ Retrofit effects were transferred from matched ComStock simulations to BERDO bui
 For building $b$, package $p$, fuel $f$, and matched simulation set $N_b(k)$:
 
 $
-r_(b,p,f)(k) = (sum_(c in N_b(k)) U_(c,p,f)) / (sum_(c in N_b(k)) B_(c,f))
+  r_(b,p,f)(k) = (sum_(c in N_b(k)) U_(c,p,f)) / (sum_(c in N_b(k)) B_(c,f))
 $
 where $U$ is the upgraded fuel consumption and $B$ is the corresponding baseline fuel consumption.
 
@@ -522,7 +527,7 @@ The pooled ratio is calculated separately for each fuel category. This method we
 The projected annual emissions are:
 
 $
-G_(b,p,k) = sum_f G_(b,f) r_(b,p,f)(k)
+  G_(b,p,k) = sum_f G_(b,f) r_(b,p,f)(k)
 $
 where $G_(b,f)$ represents the corresponding reported BERDO baseline emissions.
 
@@ -534,7 +539,8 @@ that fuel's emissions unchanged.
 #figure(
   image(
     "figures/emissions_sensitivity.svg",
-    width: 82%),
+    width: 82%,
+  ),
   caption: [
     Mean and median absolute differences in predicted retrofit emissions reductions across nearest-neighbor configurations, relative to k=10. Differences are measured in percentage points.
   ],
@@ -543,7 +549,7 @@ that fuel's emissions unchanged.
 To evaluate sensitivity to the matching parameter, emissions predictions were recalculated for different values of $k$. The configuration with $k = 10$ was used as the reference. For each building and retrofit scenario, the absolute difference in predicted emissions reduction was calculated as:
 
 $
-D_(b,p,k) = 100 abs(R_(b,p,k) - R_(b,p,10))
+  D_(b,p,k) = 100 abs(R_(b,p,k) - R_(b,p,10))
 $
 where $R$ denotes the fractional reduction relative to baseline emissions.
 
@@ -554,7 +560,8 @@ The mean and median absolute differences summarize the sensitivity of modeled re
 #figure(
   image(
     "figures/compliance_sensitivity.svg",
-    width: 82%),
+    width: 82%,
+  ),
   caption: [
     Changes in predicted BERDO 2030 compliance classifications relative to k=10, showing both building-upgrade scenarios and distinct affected buildings.
   ],
@@ -563,13 +570,13 @@ The mean and median absolute differences summarize the sensitivity of modeled re
 For each building and retrofit scenario, the projected emissions intensity is:
 
 $
-I_(b,p,k) = G_(b,p,k) / A_b
+  I_(b,p,k) = G_(b,p,k) / A_b
 $
 
 A scenario is predicted to satisfy the 2030 standard when:
 
 $
-I_(b,p,k) <= 3.2
+  I_(b,p,k) <= 3.2
 $
 
 Compliance sensitivity was evaluated by comparing the resulting binary classifications across nearest-neighbor configurations. Two quantities were examined: the number
@@ -587,7 +594,8 @@ using the 2030--2034 compliance standard. For each building, applicable retrofit
 #figure(
   image(
     "figures/01_compliance_availability.svg",
-    width: 82%),
+    width: 82%,
+  ),
   caption: [
     Availability of at least one predicted compliant retrofit among the evaluated measures and packages for buildings whose baseline emissions exceed the 2030 standard.
   ],
@@ -607,7 +615,8 @@ The lowest-cost compliant retrofit was identified for each building and matching
 The following table is populated directly from the generated sensitivity analysis.
 
 #let financial-rows = csv(
-  "data/financial_k_summary.csv").slice(1)
+  "data/financial_k_summary.csv",
+).slice(1)
 
 #figure(
   table(
@@ -615,19 +624,17 @@ The following table is populated directly from the generated sensitivity analysi
     align: center,
     inset: 6pt,
 
-    table.header(
-      [*$k$*],
-      [*Changed recommendations / eligible buildings*],
-      [*Reference choice loses compliance*],
-    ),
+    table.header([*$k$*], [*Changed recommendations / eligible buildings*], [*Reference choice loses compliance*]),
 
-    ..financial-rows.map(
-      row => (
-        text(row.at(0)),
-        text(row.at(4) + " / " + row.at(2)),
-        text(row.at(6)),
+    ..financial-rows
+      .map(
+        row => (
+          text(row.at(0)),
+          text(row.at(4) + " / " + row.at(2)),
+          text(row.at(6)),
+        ),
       )
-    ).flatten()
+      .flatten(),
   ),
 
   caption: [
@@ -638,7 +645,8 @@ The following table is populated directly from the generated sensitivity analysi
 #figure(
   image(
     "figures/02_recommendation_sensitivity.svg",
-    width: 82%),
+    width: 82%,
+  ),
   caption: [
     Number and proportion of buildings whose lowest-cost compliant retrofit differs from the reference k=10 recommendation.
   ],
@@ -660,7 +668,7 @@ $
 $
 
 $
-  C_(b,p,k) &= C_"installation"(b,p) + 5 times 0.234 times X_(b,p,k)
+  C_(b,p,k) & = C_"installation"(b,p) + 5 times 0.234 times X_(b,p,k)
 $
 
 Here, $X_(b,p,k)$ represents annual emissions exceeding the 2030 building-specific allowance in kg CO#sub[2]e. The five-year cost combines the one-time installation expense with annual Alternative Compliance Payments at USD 0.234 per excess kilogram. The factor 0.234 represents the modeled ACP rate in USD per excess kilogram of CO#sub[2]e per year. Installation is treated as a one-time expense. Annual emissions and the payment rate are assumed constant
@@ -671,7 +679,8 @@ throughout the five-year period. Energy operating savings, maintenance, discount
 #figure(
   image(
     "figures/03_median_extra_cost.svg",
-    width: 82%),
+    width: 82%,
+  ),
   caption: [
     Median additional five-year modeled cost of retaining the k=10 retrofit recommendation when a less expensive compliant option is available under an alternative k.
   ],
@@ -681,7 +690,7 @@ For each matching configuration, the analysis identified buildings whose lowest-
 remained compliant under the alternative configuration, the additional modeled cost of retaining it was calculated as:
 
 $
-Delta C_(b,k) = C_(b,p_(10),k) - C_(b,p_k,k)
+  Delta C_(b,k) = C_(b,p_(10),k) - C_(b,p_k,k)
 $
 where $p_(10)$ denotes the reference recommendation and $p_k$ denotes the least-cost compliant retrofit under the alternative configuration.
 
@@ -692,7 +701,8 @@ The median of these additional costs summarizes financial sensitivity among elig
 #figure(
   image(
     "figures/04_maximum_extra_cost.svg",
-    width: 82%),
+    width: 82%,
+  ),
   caption: [
     Maximum additional five-year modeled cost across buildings with changed recommendations for which the k=10 choice remains compliant.
   ],
@@ -708,7 +718,7 @@ Installation costs were estimated by mapping ComStock retrofit components to cor
 At the package level:
 
 $
-C_"installation"(b,p) = sum_(m in p) C_(b,p,m)
+  C_"installation"(b,p) = sum_(m in p) C_(b,p,m)
 $
 
 Component costs are aggregated to produce low-, mid-, and high-range package installation estimates. The financial sensitivity analysis uses the mid-range cost estimate. Validation addresses several separate aspects of cost estimation: the availability of BTB mappings consistency of physical units, applicability of components to matched ComStock simulations, and reconciliation of component totals with package-level costs. The arithmetic reconciliation checks whether the sum of component estimates matches the corresponding modeled
@@ -735,7 +745,8 @@ For building 105302, wall insulation becomes a compliant candidate when the esti
 #figure(
   image(
     "figures/05_case_study_compliance_premiums.svg",
-    width: 100%),
+    width: 100%,
+  ),
   placement: top,
   scope: "parent",
   caption: [
