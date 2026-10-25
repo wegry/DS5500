@@ -102,6 +102,10 @@ models:
         data_tests: [unique, not_null]
       - name: projected_ghg_kgco2e
         data_tests: [not_null]
+  - name: int_berdo_building_property_types
+    columns:
+      - name: building_property_type_key
+        data_tests: [unique, not_null]
   - name: int_berdo_building_standards
     columns:
       - name: building_period_key
