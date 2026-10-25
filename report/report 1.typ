@@ -317,7 +317,7 @@ In the integrated analysis, all 297 office buildings were matched to ComStock si
 
 Compared with k=10, the cheapest compliant retrofit changed for 23 of 68 commonly eligible buildings at k=1 and 4 of 74 at k=9. Installation costs and retrofit applicability were held fixed across k, while predicted emissions and ACPs were recalculated.
 
-Two buildings illustrate this sensitivity. For building 104777, Package 4 was the cheapest compliant retrofit for k=1-9, but Package 2 became preferable at k=10 after Package 4 slightly exceeded the emissions limit. For building 105302, wall insulation first became compliant at k=4 and remained the cheapest compliant option through k=10.
+Two buildings illustrate this sensitivity. For building 104777 (160-170 State Street, Boston), Package 4 was the cheapest compliant retrofit for k=1-9, but Package 2 became preferable at k=10 after Package 4 slightly exceeded the emissions limit. For building 105302 (2-16 Tremont Street, Bosoton), wall insulation first became compliant at k=4 and remained the cheapest compliant option through k=10.
 
 These findings demonstrate sensitivity of investment recommendations to neighbor selection, particularly near compliance thresholds.
 
