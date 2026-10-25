@@ -486,7 +486,7 @@ These populations are therefore reported separately rather than treated as inter
 Because BERDO describes actual properties while ComStock contains simulated commercial buildings, direct matching by building identifier is not possible. Candidate ComStock simulations were restricted using compatible building types and ranked according to similarity in floor area, energy-use intensity, and fuel-consumption shares.
 
 The matching distance is defined as:
-$ d(b,c) & = abs(ln(A_b / A_c)) + abs(ln("EUI"_b / "EUI"_c)) + 0.5 sum_f abs(s_(b,f) - s_(c,f)) $ where $b$ identifies a BERDO building, $c$ identifies a ComStock simulation, $A$ denotes floor area, $"EUI"$ denotes energy-use intensity, and $s_f$ represents the proportion of energy consumption attributed to fuel $f$.
+$ d(b,c) & = abs(ln(A_b / A_c)) + abs(ln("EUI"_b / "EUI"_c)) \ &quad + 0.5 sum_f abs(s_(b,f) - s_(c,f)) $ where $b$ identifies a BERDO building, $c$ identifies a ComStock simulation, $A$ denotes floor area, $"EUI"$ denotes energy-use intensity, and $s_f$ represents the proportion of energy consumption attributed to fuel $f$.
 
 The closest $k$ simulations are selected for each
 BERDO building.
@@ -619,6 +619,8 @@ The following table is populated directly from the generated sensitivity analysi
 ).slice(1)
 
 #figure(
+  placement: none,
+  align(center,
   table(
     columns: (auto, 1fr, 1fr),
     align: center,
@@ -635,6 +637,7 @@ The following table is populated directly from the generated sensitivity analysi
         ),
       )
       .flatten(),
+    ),
   ),
 
   caption: [
