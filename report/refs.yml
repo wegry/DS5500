@@ -1,14 +1,20 @@
 berdo:
-  type: web
+  type: repository
   author: City of Boston
   title: Building Emissions Reduction and Disclosure Ordinance (BERDO)
-  url: https://data.boston.gov/dataset/building-emissions-reduction-and-disclosure-ordinance
+  date: 2026-09-30
+  url:
+    value: https://data.boston.gov/dataset/building-emissions-reduction-and-disclosure-ordinance
+    date: 2026-10-09
 
 comstock:
-  type: web
+  type: repository
   author: National Laboratory of the Rockies
-  title: ComStock
-  url: https://comstock.nlr.gov
+  title: ComStock 2025 Release 3
+  date: 2025-11
+  url:
+    value: https://oedi-data-lake.s3.amazonaws.com/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2025/comstock_amy2018_release_3/
+    date: 2026-10-17
 
 atb:
   type: web
@@ -51,7 +57,7 @@ berdo-standards:
   url: https://www.boston.gov/departments/environment/berdo
 
 btb:
-  type: web
+  type: repository
   author:
     - "Moore, Nathan"
     - "Wilson, Eric"
@@ -60,10 +66,12 @@ btb:
     - "Ciraulo, Rebecca"
   title: 2024 Buildings Technology Baseline
   date: 2024-09-30
-  url: https://data.openei.org/submissions/8342
+  url:
+    value: https://data.openei.org/submissions/8342
+    date: 2026-10-18
 
 berdo-acp:
-  type: web
+  type: article
   author: City of Boston
   title: My Building is Above its Emissions Limit, What Can I Do Now?
   date: 2026-09-02

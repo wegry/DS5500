@@ -81,7 +81,7 @@ This project uses three publicly available data sources: Boston's Building Emiss
 - baseline emissions for the analysis
 - a way to derive ACPs and identify noncompliant buildings
 
-*ComStock* provides simulated commercial building characteristics, baseline energy consumption, and estimates of the impacts of energy-efficiency upgrades @comstock. Our data flow uses Suffolk County ComStock simulations, including baseline and upgrade scenarios. Energy measurements are standardized, and weighted energy consumption values are converted to per-building quantities using ComStock simulation weights.
+*ComStock* provides simulated commercial building characteristics, baseline energy consumption, and estimates of the impacts of energy-efficiency upgrades @comstock. Our data flow uses the Suffolk County basic annual results and full metadata tables, covering the baseline and the upgrades in @tab:upgrades. Energy measurements are standardized, and weighted energy consumption values are converted to per-building quantities using ComStock simulation weights.
 
 *BTB* provides technology-level performance and installation cost estimates for building efficiency measures @btb. Its commercial dataset contains cost parameters for technologies such as lighting, building envelope improvements, and HVAC equipment. We use these data to estimate the installation costs of components included in four currently selected retrofit packages.
 
