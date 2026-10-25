@@ -135,7 +135,7 @@ The fuel-specific ratios are applied to the corresponding BERDO building's obser
 
 If the matched simulations have no baseline consumption for a particular fuel, its ratio is set to one, leaving that fuel unchanged. Upgrade applicability is also summarized across the matched simulations. Because BERDO does not contain a complete inventory of installed equipment, the estimated impacts represent modeled retrofit opportunities rather than verified building-specific improvements.
 
-*Installation cost estimation.* Each of the four selected ComStock retrofit packages will be mapped to its corresponding technologies in BTB @btb. Installation costs will be calculated using the corresponding technology-level cost parameters and relevant building characteristics, such as gross floor area or equipment capacity. Units will be standardized before cost estimation, and missing cost values will be documented and addressed using explicit assumptions or sensitivity ranges where supported.
+*Installation cost estimation.* Each of the selected ComStock retrofit updates/packages will be mapped to its corresponding technologies in BTB @btb. Installation costs will be calculated using the corresponding technology-level cost parameters and relevant building characteristics, such as gross floor area or equipment capacity. Units will be standardized before cost estimation, and missing cost values will be documented and addressed using explicit assumptions or sensitivity ranges where supported.
 
 The integration workflow is summarized in @fig:pipeline.
 
@@ -275,14 +275,14 @@ The existing data flow's compliance model calculates projected emissions intensi
 For emissions exceeding the limit, BERDO permits ACPs. The current payment rate is \$234 per metric ton of CO#sub[2]e above the emissions limit @berdo-acp. Annual ACP obligations are estimated from the remaining excess emissions after each retrofit scenario.
 
 
-*Cost optimization.* The proposed framework identifies the most cost-effective retrofit decision for meeting Boston office buildings' 2030 BERDO obligations. Four candidate retrofit packages are compared with a no-retrofit alternative using a five-year financial evaluation period (2030--2034).
+*Cost optimization.* The proposed framework identifies the most cost-effective retrofit decision for meeting Boston office buildings' 2030 BERDO obligations. Candidate retrofit updates/packages are compared with a no-retrofit alternative using a five-year financial evaluation period (2030--2034).
 
 For each alternative, total modeled cost consists of the estimated installation cost and cumulative Alternative Compliance Payments (ACPs) associated with any remaining excess emissions. The baseline analysis assumes constant annual emissions and ACP rates throughout the evaluation period. The model ranks the alternatives with the most impactful realistic upgrade for each building.
 
 
 == Evaluation
 
-The proposed methodology will be evaluated by comparing installation costs, projected greenhouse gas emissions reductions, and BERDO compliance outcomes across the four retrofit packages. The no-retrofit alternative will serve as the financial baseline, allowing us to estimate whether implementing an upgrade reduces total modeled costs relative to relying on ACPs.
+The proposed methodology will be evaluated by comparing installation costs, projected greenhouse gas emissions reductions, and BERDO compliance outcomes across the retrofit updates/packages. The no-retrofit alternative will serve as the financial baseline, allowing us to estimate whether implementing an upgrade reduces total modeled costs relative to relying on ACPs.
 
 We will examine the distribution of recommended decisions across Boston office buildings, including the proportion of buildings for which each retrofit package is preferred and those for which ACPs are more economical.
 
@@ -315,7 +315,7 @@ The preliminary BERDO analysis revealed some data quality limitations. Of the 41
 
 Additionally, the selected buildings set contains both single-use office buildings and mixed-use buildings where offices account for the largest part. For mixed-use spaces, reported energy consumption and emissions data may reflect the use of spaces other than offices, which introduces some uncertainty in matching these buildings to ComStock simulations. Verifying the distribution of energy consumption on each building would require property-level information, potentially from individual building owners or management companies, which is beyond the scope of this project.
 
-Although the data integration and emissions projection models have been developed, their building-level outputs have not yet been fully evaluated. Matching quality, emissions reductions under the four selected packages, and the resulting 2030 compliance outcomes remain to be assessed.
+Although the data integration and emissions projection models have been developed, their building-level outputs have not yet been fully evaluated. Matching quality, emissions reductions under the selected updates/packages, and the resulting 2030 compliance outcomes remain to be assessed.
 
 Installation cost integration and the final cost optimization are also incomplete. Consequently, no optimal retrofit recommendations are reported at this stage.
 
