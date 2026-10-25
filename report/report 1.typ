@@ -76,7 +76,7 @@ Our goal is to develop a decision-support tool that helps building owners in Bos
 
 This project uses three publicly available data sources: Boston's Building Emissions Reduction and Disclosure Ordinance (BERDO) disclosures, National Lab of the Rockies (NLR) ComStock, and the NLR 2024 Buildings Technology Baseline (BTB).
 
-*BERDO* provides building-level information, including property type, gross floor area, energy consumption by fuel, and greenhouse gas emissions @berdo. The analysis focuses on Boston office buildings because these buildings have a relatively high emissions reporting rate. Records are prepared using dbt models that standardize property types for storage in duckdb, convert the fuels BERDO reports in kBtu (natural gas, district energy, and oil/propane) to kWh to match electricity, aggregate related fuel categories, and identify missing or inconsistent values. BERDO provides:
+*BERDO* provides building-level information, including property type, gross floor area, energy consumption by fuel, and greenhouse gas emissions @berdo. The analysis focuses on Boston office buildings because these buildings have a relatively high emissions reporting rate. Records are prepared using dbt to standardize property types for storage in DuckDB, convert the fuels BERDO reports in kBtu (natural gas, district energy, and oil/propane) to kWh to match electricity, aggregate related fuel categories, and identify missing or inconsistent values. BERDO provides:
 - the observed building characteristics
 - baseline emissions for the analysis
 - a way to derive ACPs and identify noncompliant buildings
@@ -328,21 +328,46 @@ Preliminary exploration of the BERDO dataset highlighted the importance of data 
 
 One potential direction involves evaluating the BERDO-ComStock matching procedure. The current approach identifies representative synthetic buildings using a custom distance function, but the quality of the matches should be carefully assessed. Refining the procedure by examining differences in building characteristics or adjusting the number of nearest neighbors could help determine whether other configurations reveal more representative matches.
 
-A second direction involves examining methods of addressing the missing information of the BERDO dataset. Further analysis could reveal if missing measurements, such as GHG intensity, can be calculated from related data. Where calculation are not possible, the option of using statistical imputation or predictive modeling could be explored. However, the suitability of these methods would rely on the availability of reliable predictors and the potential uncertainty of estimated data.
+A second direction involves examining methods of addressing the missing information of the BERDO dataset. Further analysis could reveal if missing measurements, such as GHG intensity, can be calculated from related data. Where calculations are not possible, the option of using statistical imputation or predictive modeling could be explored. However, the suitability of these methods would rely on the availability of reliable predictors and the potential uncertainty of estimated data.
 
-All things considered, both directions aim to improve the reliability of the resulting decarbonization recommendations. Sensitivity analysis could help determine how differences in matching parameters and assumptions about missing data affect the resulting suggestions. These potential paths will be evaluated as the project progresses, alongside the completion of dataset integration, matching, and optimization.
+All things considered, both directions aim to improve the reliability of the resulting decarbonization recommendations. Sensitivity analysis could help determine how differences in matching parameters and assumptions about missing data affect the resulting suggestions.
 
-#todo[What did we learn from the results? How can a building owner apply
-  them, and what decisions do they support? Were the project goals met? What
-  would we do differently, or do next to improve the outcome?]
+Our current approach does not take operating costs into consideration, only installation costs. Without operating costs in the mix, electrification is currently penalized by the initial up front cost of new equipment. Including operating costs would presumably include a time frame we would be evaluating such as 5, 10, 15, or 20 years. We may have to pull in something like _Annual Energy Outlook_ from the EIA @aeo for modeling natural gas and electricity costs in different scenarios.
+
+Our second missing piece is MACC for a baseline comparison. Our evaluation uses individual upgrades and packages of upgrades, but without operating costs, once again it is not an apples-to-apples comparison. These potential paths will be evaluated as the project progresses, alongside the completion of dataset integration, matching, and optimization.
 
 // ---- 10: statement of contributions ---------------------------------------
 
 = Statement of Contributions
 
-- *Konstantinos Theodoropoulos:* #todo[contributions]
-- *Zachary Wegrzyniak:* #todo[contributions]
-- *Kateryna Lysytsyna:* #todo[contributions]
+- *Konstantinos Theodoropoulos:*
+
+  - Reaching out to potential sponsors
+  - BERDO exploration and validation
+  - Attending office hours with Dr. Bemis
+
+- *Zachary Wegrzyniak:*
+
+  - data pipeline in dbt and DuckDB
+    - ComStock and BERDO join
+    - Mixed-use evaluation
+  - editing
+  - repo setup
+
+- *Kateryna Lysytsyna:*
+  - ComStock and BERDO join validation
+  - Joining BTB with ComStock (and selecting upgrades/packages to compare)
+  - Visualizations
+
+
+= AI Use Disclosure
+
+Claude Opus 5.5 and ChatGPT 6.1 were used for:
+- data retrieval
+- portions of the data pipeline
+- typesetting
+- visualizations
+- editing
 
 // ---- 11: references -------------------------------------------------------
 
