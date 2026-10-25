@@ -8,6 +8,7 @@ dependencies = [
     "fastexcel>=0.21.0",
     "marimo>=0.25.1",
     "matplotlib>=3.11.2",
+    "numpy>=2.5.4",
     "polars>=2.0.0",
 ]
 [tool.marimo.runtime]

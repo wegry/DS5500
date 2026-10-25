@@ -177,6 +177,7 @@ dependencies = [
     { name = "fastexcel" },
     { name = "marimo" },
     { name = "matplotlib" },
+    { name = "numpy" },
     { name = "polars" },
 ]
 
@@ -187,6 +188,7 @@ requires-dist = [
     { name = "fastexcel", specifier = ">=0.21.0" },
     { name = "marimo", specifier = ">=0.25.1" },
     { name = "matplotlib", specifier = ">=3.11.2" },
+    { name = "numpy", specifier = ">=2.5.4" },
     { name = "polars", specifier = ">=2.0.0" },
 ]
 
