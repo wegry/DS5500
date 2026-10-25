@@ -290,6 +290,10 @@ Exploration of the BTB commercial dataset identified installation cost informati
 
 == Current Limitations
 
+The preliminary BERDO analysis revealed some data quality limitations. Of the 410 buildings containing office space, 120 (29.3%) lack reported GHG emissions intensity data, limiting the coverage of the 2030 compliance assessment.
+
+Additionally, the selected buildings set contains both single-use office buildings and mixed-use buildings where offices account for the largest part. For mixed-use spaces, reported energy consumption and emissions data may reflect the use of spaces other than offices, which introduces some uncertainty in matching these buildings to ComStock simulations. Verifying the distribution of energy consumption on each building would require property-level information, potentially from individual building owners or management companies, which is beyond the scope of this project.
+
 Although the data integration and emissions projection models have been developed, their building-level outputs have not yet been fully evaluated. Matching quality, emissions reductions under the four selected packages, and the resulting 2030 compliance outcomes remain to be assessed.
 
 Installation cost integration and the final cost optimization are also incomplete. Consequently, no optimal retrofit recommendations are reported at this stage.
@@ -298,6 +302,14 @@ Installation cost integration and the final cost optimization are also incomplet
 // ---- 9: discussion --------------------------------------------------------
 
 = Discussion
+
+Preliminary exploration of the BERDO dataset highlighted the importance of data completeness in providing reliable building decarbonization recommendations. Although office buildings exhibited relatively high data completeness, records with missing data and the presence of mixed-use properties can introduce potential uncertainty to the analysis. These findings suggest that further investigation of data quality and matching reliability can improve the results.
+
+One potential direction involves evaluating the BERDO-ComStock matching procedure. The current approach identifies representative synthetic buildings using a custom distance function, but the quality of the matches should be carefully assessed. Refining the procedure by examining differences in building characteristics or adjusting the number of nearest neighbors could help determine whether other configurations reveal more representative matches.
+
+A second direction involves examining methods of addressing the missing information of the BERDO dataset. Further analysis could reveal if missing measurements, such as GHG intensity, can be calculated from related data. Where calculation are not possible, the option of using statistical imputation or predictive modeling could be explored. However, the suitability of these methods would rely on the availability of reliable predictors and the potential uncertainty of estimated data.
+
+All things considered, both directions aim to improve the reliability of the resulting decarbonization recommendations. Sensitivity analysis could help determine how differences in matching parameters and assumptions about missing data affect the resulting suggestions. These potential paths will be evaluated as the project progresses, alongside the completion of dataset integration, matching, and optimization.
 
 #todo[What did we learn from the results? How can a building owner apply
   them, and what decisions do they support? Were the project goals met? What
