@@ -272,7 +272,7 @@ The integration workflow is summarized in @fig:pipeline.
 
 The existing data flow's compliance model calculates projected emissions intensity, whether the building meets the standard, and the amount of emissions exceeding the limit. It also includes an no-upgrade scenario representing no retrofit.
 
-For emissions exceeding the limit, BERDO permits ACPs. The current payment rate is \$234 per metric ton of CO2e above the emissions limit @berdo-acp. Annual ACP obligations are estimated from the remaining excess emissions after each retrofit scenario.
+For emissions exceeding the limit, BERDO permits ACPs. The current payment rate is \$234 per metric ton of CO#sub[2]e above the emissions limit @berdo-acp. Annual ACP obligations are estimated from the remaining excess emissions after each retrofit scenario.
 
 
 *Cost optimization.* The proposed framework identifies the most cost-effective retrofit decision for meeting Boston office buildings' 2030 BERDO obligations. Four candidate retrofit packages are compared with a no-retrofit alternative using a five-year financial evaluation period (2030--2034).
