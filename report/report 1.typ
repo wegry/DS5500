@@ -4,6 +4,7 @@
 // Build: typst compile proposal.typ
 
 #import "@preview/charged-ieee:0.1.4": ieee
+#import "@preview/fletcher:0.5.8" as fletcher: diagram, edge, node
 
 // Red placeholder so unfinished rubric sections stand out in the PDF.
 #let todo(body) = text(fill: red)[*TODO:* #body]
@@ -113,126 +114,119 @@ The integration workflow is summarized in @fig:pipeline.
 
 // Methodology figure
 
-#let sci_box(heading, detail) = rect(
-  width: 100%,
-  radius: 0pt,
-  stroke: 0.6pt + black,
-  fill: white,
-  inset: (x: 7pt, y: 6pt),
-  align(center, [
-    #text(size: 8pt, weight: "bold")[#heading]
-    #linebreak()
+#let flow_node(pos, heading, detail, name) = node(
+  pos,
+  align(center)[
+    // The IEEE template justifies and hyphenates body text; keep boxes ragged.
+    #set par(justify: false)
+    #set text(hyphenate: false)
+    #text(size: 7.5pt, weight: "bold")[#heading] \
     #text(size: 7pt)[#detail]
-  ]),
+  ],
+  name: name,
+  width: 1.32in,
+  inset: 4pt,
+  stroke: 0.6pt + black,
+  corner-radius: 0pt,
 )
 
-#let sci_arrow = align(center, text(size: 10pt)[↓])
-
 #figure(
-  stack(
-    dir: ttb,
-    spacing: 4pt,
+  diagram(
+    spacing: (10pt, 6pt),
+    edge-stroke: 0.6pt,
+    mark-scale: 70%,
 
     // Input datasets
-    grid(
-      columns: (1fr, 1fr, 1fr),
-      gutter: 8pt,
-
-      sci_box(
-        "BERDO",
-        [Observed office buildings: area, EUI, fuel use, GHG],
-      ),
-
-      sci_box(
-        "ComStock",
-        [Synthetic baselines and upgrade simulations],
-      ),
-
-      sci_box(
-        "BTB",
-        [Technology-level installation cost parameters],
-      ),
+    flow_node(
+      (0, 0),
+      "BERDO",
+      [Observed office buildings: area, EUI, fuel use, GHG],
+      <berdo>,
+    ),
+    flow_node(
+      (0, 1),
+      "ComStock",
+      [Synthetic baselines and upgrade simulations],
+      <comstock>,
+    ),
+    flow_node(
+      (0, 2),
+      "NLR BTB",
+      [Technology-level installation cost parameters],
+      <btb>,
     ),
 
     // Data processing
-    grid(
-      columns: (2fr, 1fr),
-      gutter: 8pt,
-      sci_arrow, sci_arrow,
+    flow_node(
+      (1, 0.5),
+      [BERDO--ComStock matching],
+      [
+        Property-type crosswalk;
+        rank by custom distance $d(b,c)$;
+        retain $k$ nearest simulations
+      ],
+      <match>,
     ),
-
-    grid(
-      columns: (2fr, 1fr),
-      gutter: 8pt,
-
-      sci_box(
-        "BERDO--ComStock matching",
-        [
-          Property-type crosswalk;
-          rank by custom distance $d(b,c)$;
-          retain $k$ nearest simulations
-        ],
-      ),
-
-      sci_box(
-        "Technology cost mapping",
-        [
-          Map package components
-          to BTB cost functions
-        ],
-      ),
-    ),
-
-    grid(
-      columns: (2fr, 1fr),
-      gutter: 8pt,
-      sci_arrow, sci_arrow,
+    flow_node(
+      (1, 2),
+      "Technology cost mapping",
+      [
+        Map package components
+        to BTB cost functions
+      ],
+      <map>,
     ),
 
     // Intermediate outputs
-    grid(
-      columns: (2fr, 1fr),
-      gutter: 8pt,
-
-      sci_box(
-        "Retrofit emissions estimation",
-        [
-          Pooled fuel-specific upgrade ratios;
-          projected emissions for each
-          BERDO building and package
-        ],
-      ),
-
-      sci_box(
-        "Installation cost estimation",
-        [
-          Estimated capital cost
-          per building and package
-        ],
-      ),
+    flow_node(
+      (2, 0.5),
+      "Retrofit emissions estimation",
+      [
+        Pooled fuel-specific upgrade ratios;
+        projected emissions for each
+        BERDO building and package
+      ],
+      <emis>,
+    ),
+    flow_node(
+      (2, 2),
+      "Installation cost estimation",
+      [
+        Estimated capital cost
+        per building and package
+      ],
+      <cost>,
     ),
 
-    sci_arrow,
-
     // Optimization
-    sci_box(
+    flow_node(
+      (3, 1.25),
       "BERDO 2030 cost comparison",
       [
         Four retrofit packages and no-retrofit
         alternative; installation costs plus
         residual Alternative Compliance Payments
       ],
+      <cmp>,
     ),
-
-    sci_arrow,
-
-    sci_box(
+    flow_node(
+      (4, 1.25),
       "Optimal building-level decision",
       [
         Minimum-cost option:
         retrofit package 1--4 or ACP-only
       ],
+      <dec>,
     ),
+
+    edge(<berdo>, <match>, "-|>"),
+    edge(<comstock>, <match>, "-|>"),
+    edge(<btb>, <map>, "-|>"),
+    edge(<match>, <emis>, "-|>"),
+    edge(<map>, <cost>, "-|>"),
+    edge(<emis>, <cmp>, "-|>"),
+    edge(<cost>, <cmp>, "-|>"),
+    edge(<cmp>, <dec>, "-|>"),
   ),
 
   placement: top,
@@ -242,7 +236,6 @@ The integration workflow is summarized in @fig:pipeline.
     Data integration and optimization framework
     for Boston office buildings. BERDO observations are linked to ComStock simulations through property-type-constrained nearest-neighbor matching. Estimated retrofit performance and
     BTB installation costs support the selection of cost-effective 2030 compliance options.
-    #todo[Is there a way to get arrows for Installation cost estimation being merged to match BERDO and Comstock being merged above?]
   ],
 ) <fig:pipeline>
 
