@@ -16,7 +16,7 @@ from statistics import median
 
 import duckdb
 
-K_VALUES = (1, 3, 5, 10)
+K_VALUES = tuple(range(1, 11))
 K_REFERENCE = 10
 TIE_USD = 1.00
 
