@@ -11,7 +11,7 @@
 // ---- 1 & 2: name and title ------------------------------------------------
 
 #show: ieee.with(
-  title: [Optimizing Corporate Decarbonization Investments: Which Projects to Fund, and in What Year],
+  title: [Optimizing Decarbonization Investment Decisions for Boston Office Buildings],
   // One combined entry keeps the author block to two short lines instead of
   // a full column per author. PDF metadata is set separately below.
   authors: (
@@ -24,7 +24,7 @@
       ],
     ),
   ),
-  abstract: [Boston's Building Emissions Reduction and Disclosure Ordinance (BERDO) requires large buildings to meet increasingly strict greenhouse gas emissions limits, with a major compliance milestone in 2030. This project focuses on Boston office buildings and aims to identify the most cost-effective retrofit decisions for the 2030 compliance period. We combine BERDO building disclosures, NLR ComStock energy and emissions estimates, and Building Technologies Benchmark (BTB) installation cost data to evaluate candidate retrofit packages. For each building, we estimate emissions reductions and associated installation costs, then compare the available retrofit options against the financial consequences of noncompliance. Our optimization framework selects one of five outcomes: four potential retrofit packages or no upgrade when accepting Alternative Compliance Payments (ACP). The resulting framework supports building-level investment decisions by balancing emissions reduction requirements against financial costs.
+  abstract: [Boston's Building Emissions Reduction and Disclosure Ordinance (BERDO) requires large buildings to meet increasingly strict greenhouse gas emissions limits, with a major compliance milestone in 2030. This project aims to identify cost-effective decarbonization options for Boston office buildings by considering BERDO disclosures, ComStock building simulations, and Buildings Technology Baseline (BTB) installation cost data. Preliminary exploration revealed 290 buildings containing office space with reported emissions intensity, of which 96 currently exceed the 2030 emissions standard. A data intergration pipeline was developed to match BERDO buildings with representative ComStock simulations and estimate potential retrofit emissions reductions. Ongoing work focuses on integrating installation costs and optimizing the selection of one of four retrofit packages or Alternative Compliance Payments (ACP) over the 2030-2034 period. The resulting framework aims to support investment decisions for office buildings by balancing emissions reductions, compliance requirements, and budget constraints.
   ],
   index-terms: (
     "Building decarbonization",
@@ -247,7 +247,7 @@ The integration workflow is summarized in @fig:pipeline.
 ) <fig:pipeline>
 
 
-*2030 compliance assessment.* #todo[Do we want to lead with this section?] BERDO establishes an office building emissions standard of 3.2 kg CO2e per square foot per year for the 2030-2034 compliance period @berdo-standards. For each building and retrofit scenario, estimated emissions are divided by gross floor area and compared with the applicable standard.
+*2030 compliance assessment.* BERDO establishes an office building emissions standard of 3.2 kg $"CO"_2"e"$ per square foot per year for the 2030-2034 compliance period @berdo-standards. For each building and retrofit scenario, estimated emissions are divided by gross floor area and compared with the applicable standard.
 
 The existing data flow's compliance model calculates projected emissions intensity, whether the building meets the standard, and the amount of emissions exceeding the limit. It also includes an no-upgrade scenario representing no retrofit.
 
@@ -278,13 +278,21 @@ The resulting recommendations will therefore be interpreted as preliminary inves
 
 Preliminary exploration focused on assessing the availability and suitability of the BERDO, ComStock, and BTB datasets for the proposed analysis.
 
-The BERDO disclosure provides building-level information on property type, gross floor area, energy consumption, and greenhouse gas emissions @berdo. These variables support the identification of Boston office buildings and the construction of building-level emissions baselines.
+The BERDO disclosure provides building-level information on property type, gross floor area, energy consumption, greenhouse gas emissions, and more @berdo. The dataset published for 2026 contains 5,591 building records, a substantial amount for analysis. However, because BERDO relies on self-reported building information, missing and inconsistent values limit the number of usable records. An examination of data completeness across building categories revealed considerable variation, with office buildings exhibiting higher completeness than other building types (@fig:berdo-heatmap).
+
+Of the 5,591 records, 410 were identified as having office space as their primary or sole use. This subset provided a relatively large population of records to support the BERDO-ComStock matching step.
+
+To measure the potential need for decarbonization investments, reported greenhouse gas (GHG) emissions intensities were compared against the 2030-2034 BERDO standard for offices of 3.2 kg of $"CO"_2"e"$ per square foot per year @berdo-standards. 290 of the 410 office buildings reported GHG intensity values, of which 96 or 33.1% exceeded the 2030 standard (@fig:berdo-GHGvsStandard). This number suggests that a substantial portion of offices might face compliance challenges, highlighting the need for the evaluation of retrofit upgrades and their cost.
 
 ComStock provides baseline simulations and retrofit scenarios with information on building characteristics, fuel consumption, and upgrade applicability @comstock. These variables support the proposed building-matching procedure and estimation of retrofit performance.
 
 Exploration of the BTB commercial dataset identified installation cost information for technologies corresponding to components of the candidate ComStock retrofit packages @btb. However, the completeness of package-level cost estimates remains under investigation.
 
 == Current Limitations
+
+The preliminary BERDO analysis revealed some data quality limitations. Of the 410 buildings containing office space, 120 (29.3%) lack reported GHG emissions intensity data, limiting the coverage of the 2030 compliance assessment.
+
+Additionally, the selected buildings set contains both single-use office buildings and mixed-use buildings where offices account for the largest part. For mixed-use spaces, reported energy consumption and emissions data may reflect the use of spaces other than offices, which introduces some uncertainty in matching these buildings to ComStock simulations. Verifying the distribution of energy consumption on each building would require property-level information, potentially from individual building owners or management companies, which is beyond the scope of this project.
 
 Although the data integration and emissions projection models have been developed, their building-level outputs have not yet been fully evaluated. Matching quality, emissions reductions under the four selected packages, and the resulting 2030 compliance outcomes remain to be assessed.
 
@@ -294,6 +302,14 @@ Installation cost integration and the final cost optimization are also incomplet
 // ---- 9: discussion --------------------------------------------------------
 
 = Discussion
+
+Preliminary exploration of the BERDO dataset highlighted the importance of data completeness in providing reliable building decarbonization recommendations. Although office buildings exhibited relatively high data completeness, records with missing data and the presence of mixed-use properties can introduce potential uncertainty to the analysis. These findings suggest that further investigation of data quality and matching reliability can improve the results.
+
+One potential direction involves evaluating the BERDO-ComStock matching procedure. The current approach identifies representative synthetic buildings using a custom distance function, but the quality of the matches should be carefully assessed. Refining the procedure by examining differences in building characteristics or adjusting the number of nearest neighbors could help determine whether other configurations reveal more representative matches.
+
+A second direction involves examining methods of addressing the missing information of the BERDO dataset. Further analysis could reveal if missing measurements, such as GHG intensity, can be calculated from related data. Where calculation are not possible, the option of using statistical imputation or predictive modeling could be explored. However, the suitability of these methods would rely on the availability of reliable predictors and the potential uncertainty of estimated data.
+
+All things considered, both directions aim to improve the reliability of the resulting decarbonization recommendations. Sensitivity analysis could help determine how differences in matching parameters and assumptions about missing data affect the resulting suggestions. These potential paths will be evaluated as the project progresses, alongside the completion of dataset integration, matching, and optimization.
 
 #todo[What did we learn from the results? How can a building owner apply
   them, and what decisions do they support? Were the project goals met? What
@@ -322,11 +338,23 @@ Installation cost integration and the final cost optimization are also incomplet
 Source code is available at
 #link("https://github.com/wegry/DS5500")[github.com/wegry/DS5500].
 
+#show figure.caption: set align(center)
+
 #figure(
   image("figures/berdo-emissions-standards.png", width: 65%),
   caption: [BERDO emissions standards (kgCO#sub[2]e/ft#super[2]/year) by
     building use for each five-year compliance period, reaching zero in 2050
     @berdo-standards.],
 ) <fig:berdo-limits>
+
+#figure(
+  image("figures/berdo-completeness.png", width: 75%),
+  caption: [Data completeness heatmap by building category],
+) <fig:berdo-heatmap>
+
+#figure(
+  image("figures/berdo-intensity-vs-benchmark.png", width: 75%),
+  caption: [Reported office-building GHG intensities vs. the 2030 BERDO standard],
+) <fig:berdo-GHGvsStandard>
 
 #todo[supplementary figures, tables, and technical details.]
