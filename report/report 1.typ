@@ -421,4 +421,3 @@ Source code is available at
   caption: [Reported office-building GHG intensities vs. the 2030 BERDO standard],
 ) <fig:berdo-GHGvsStandard>
 
-#todo[supplementary figures, tables, and technical details.]
