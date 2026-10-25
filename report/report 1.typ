@@ -44,6 +44,8 @@
   "Kateryna Lysytsyna",
 ))
 
+#set page(numbering: "1")
+
 // ---- 3: goal / outcome ----------------------------------------------------
 
 = Introduction
