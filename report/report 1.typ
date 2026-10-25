@@ -26,7 +26,7 @@
       ],
     ),
   ),
-  abstract: [Boston's Building Emissions Reduction and Disclosure Ordinance (BERDO) requires large buildings to meet increasingly strict greenhouse gas emissions limits, with a major compliance milestone in 2030. This project aims to identify cost-effective decarbonization options for Boston office buildings by considering BERDO disclosures, ComStock building simulations, and Buildings Technology Baseline (BTB) installation cost data. Preliminary exploration revealed 290 buildings containing office space with reported emissions intensity, of which 96 currently exceed the 2030 emissions standard. A data intergration pipeline was developed to match BERDO buildings with representative ComStock simulations and estimate potential retrofit emissions reductions. Ongoing work focuses on integrating installation costs and optimizing the selection of one of four retrofit packages or Alternative Compliance Payments (ACP) over the 2030-2034 period. The resulting framework aims to support investment decisions for office buildings by balancing emissions reductions, compliance requirements, and budget constraints.
+  abstract: [Boston's Building Emissions Reduction and Disclosure Ordinance (BERDO) requires large buildings to meet increasingly strict greenhouse gas emissions limits, with a major compliance milestone in 2030. This project aims to identify cost-effective decarbonization options for Boston office buildings by considering BERDO disclosures, ComStock building simulations, and Buildings Technology Baseline (BTB) installation cost data. The integrated analysis includes 297 matched office buildings, 99 of which exceed 2030 emmissions standard. A data intergration pipeline was developed to match BERDO buildings with representative ComStock simulations and estimate potential retrofit emissions reductions. Ongoing work focuses on integrating installation costs and optimizing the selection of one of four retrofit packages or Alternative Compliance Payments (ACP) over the 2030-2034 period. The resulting framework aims to support investment decisions for office buildings by balancing emissions reductions, compliance requirements, and budget constraints.
   ],
   index-terms: (
     "Building decarbonization",
@@ -68,7 +68,7 @@ than the two estimates added together. And under BERDO, _when_ a building gets
 under its limit matters as much as _whether_ it does, since each building has
 its own first compliance year and the limits keep tightening after that.
 
-Our goal is to develop a decision-support tool that helps building owners in Boston determine which decarbonization projects to implement and when (@fig:pipeline). MACC will serve as our baseline. Rather than simply ranking projects individually, the tool will produce a multi-year investment roadmap that considers limited annual capital, financial returns, emissions reduction, and building-specific BERDO emissions requirements.
+Our goal is to develop a decision-support tool that helps building owners in Boston determine which decarbonization projects to implement and when (@fig:pipeline). MACC will serve as our baseline. Rather than simply ranking projects individually, the current implementation compares building-level retrofit decisions for 2030-2034. A budget-constrained, multi-year investment roadmap remains a proposed extension.
 
 = Methods
 
@@ -135,7 +135,7 @@ The fuel-specific ratios are applied to the corresponding BERDO building's obser
 
 If the matched simulations have no baseline consumption for a particular fuel, its ratio is set to one, leaving that fuel unchanged. Upgrade applicability is also summarized across the matched simulations. Because BERDO does not contain a complete inventory of installed equipment, the estimated impacts represent modeled retrofit opportunities rather than verified building-specific improvements.
 
-*Installation cost estimation.* Each of the selected ComStock retrofit updates/packages will be mapped to its corresponding technologies in BTB @btb. Installation costs will be calculated using the corresponding technology-level cost parameters and relevant building characteristics, such as gross floor area or equipment capacity. Units will be standardized before cost estimation, and missing cost values will be documented and addressed using explicit assumptions or sensitivity ranges where supported.
+*Installation cost estimation.* Selected ComStock upgrades and packages are mapped to corresponding BTB technologies @btb. Installation costs are estimated from applicable component quantities and BTB unit prices, with building-level scaling where appropriate. Low, mid, and high cost estimates are retained. Basic completeness and unit-consistency checks passed, while component sizing and technology-price assumptions require further validation.
 
 The integration workflow is summarized in @fig:pipeline.
 
@@ -277,16 +277,17 @@ For emissions exceeding the limit, BERDO permits ACPs. The current payment rate 
 
 *Cost optimization.* The proposed framework identifies the most cost-effective retrofit decision for meeting Boston office buildings' 2030 BERDO obligations. Candidate retrofit updates/packages are compared with a no-retrofit alternative using a five-year financial evaluation period (2030--2034).
 
-For each alternative, total modeled cost consists of the estimated installation cost and cumulative Alternative Compliance Payments (ACPs) associated with any remaining excess emissions. The baseline analysis assumes constant annual emissions and ACP rates throughout the evaluation period. The model ranks the alternatives with the most impactful realistic upgrade for each building.
+For each alternative, total modeled cost consists of the estimated installation cost and cumulative Alternative Compliance Payments (ACPs) associated with any remaining excess emissions. The baseline analysis assumes constant annual emissions and ACP rates throughout the evaluation period. The model identifies the lowest five-year-cost alternative for each building. The cheapest retrofit predicted to meet the 2030 emissions standard is also evaluated separately.
+
 
 
 == Evaluation
 
-The proposed methodology will be evaluated by comparing installation costs, projected greenhouse gas emissions reductions, and BERDO compliance outcomes across the retrofit updates/packages. The no-retrofit alternative will serve as the financial baseline, allowing us to estimate whether implementing an upgrade reduces total modeled costs relative to relying on ACPs.
+We evaluated installation costs, projected greenhouse gas emissions reductions, and 2030 BERDO compliance outcomes across the tested upgrades and packages. The no-retrofit alternative served as the financial baseline for comparing modeled installation and ACP costs.
 
-We will examine the distribution of recommended decisions across Boston office buildings, including the proportion of buildings for which each retrofit package is preferred and those for which ACPs are more economical.
+We examined the lowest-cost overall decision and the lowest-cost compliant retrofit separately, distinguishing financial preference for ACPs from predicted emissions compliance.
 
-The quality of BERDO--ComStock matching will be evaluated using matching distances and differences in building characteristics. Possible sensitivity analysis will assess how the number of nearest neighbors, estimated retrofit performance, installation costs, and incomplete upgrade applicability information affect the recommendations.
+BERDO--ComStock matching quality was evaluated using matching distances and differences in building characteristics. Sensitivity analysis varied k from 1 to 10 and compared projected emissions, compliance classifications, and cheapest compliant retrofits against k=10. Installation costs and retrofit applicability were held fixed across k.
 
 The analysis has several limitations. ComStock represents simulated rather than observed building systems, while BERDO does not provide a complete inventory of existing equipment. Additionally, the current emissions projections hold reported fuel-specific emissions factors constant, without explicitly modeling future changes in electricity emissions intensity. Installation costs are estimated from technology-level benchmarks rather than building-specific engineering assessments.
 
@@ -307,7 +308,19 @@ To measure the potential need for decarbonization investments, reported greenhou
 
 ComStock provides baseline simulations and retrofit scenarios with information on building characteristics, fuel consumption, and upgrade applicability @comstock. These variables support the proposed building-matching procedure and estimation of retrofit performance.
 
-Exploration of the BTB commercial dataset identified installation cost information for technologies corresponding to components of the candidate ComStock retrofit packages @btb. However, the completeness of package-level cost estimates remains under investigation.
+Exploration of the BTB commercial dataset identified installation cost information for technologies corresponding to components of the candidate ComStock retrofit packages @btb. Basic package-cost completeness and unit-consistency checks passed. Physical quantities and technology-price assumptions still require validation.
+
+
+== Integration and Financial Sensitivity
+
+In the integrated analysis, all 297 office buildings were matched to ComStock simulations, with 99 of them exceededing the modeled 2030 emissions standard. At k=10, 75 of those buildings had at least one predicted compliant retrofit among eight tested options.
+
+Compared with k=10, the cheapest compliant retrofit changed for 23 of 68 commonly eligible buildings at k=1 and 4 of 74 at k=9. Installation costs and retrofit applicability were held fixed across k, while predicted emissions and ACPs were recalculated.
+
+Two buildings illustrate this sensitivity. For building 104777 (160-170 State Street, Boston), Package 4 was the cheapest compliant retrofit for k=1-9, but Package 2 became preferable at k=10 after Package 4 slightly exceeded the emissions limit. For building 105302 (2-16 Tremont Street, Bosoton), wall insulation first became compliant at k=4 and remained the cheapest compliant option through k=10.
+
+These findings demonstrate sensitivity of investment recommendations to neighbor selection, particularly near compliance thresholds.
+
 
 == Current Limitations
 
@@ -315,10 +328,7 @@ The preliminary BERDO analysis revealed some data quality limitations. Of the 41
 
 Additionally, the selected buildings set contains both single-use office buildings and mixed-use buildings where offices account for the largest part. For mixed-use spaces, reported energy consumption and emissions data may reflect the use of spaces other than offices, which introduces some uncertainty in matching these buildings to ComStock simulations. Verifying the distribution of energy consumption on each building would require property-level information, potentially from individual building owners or management companies, which is beyond the scope of this project.
 
-Although the data integration and emissions projection models have been developed, their building-level outputs have not yet been fully evaluated. Matching quality, emissions reductions under the selected updates/packages, and the resulting 2030 compliance outcomes remain to be assessed.
-
-Installation cost integration and the final cost optimization are also incomplete. Consequently, no optimal retrofit recommendations are reported at this stage.
-
+The integration and matching sensitivity models have been evaluated for internal consistency and robustness to k. However, observed post-retrofit outcomes are unavailable, so predictive accuracy remains unverified. Installation costs and building-level five-year cost comparisons have been calculated, but cost assumptions require further validation, and multi-year optimization currently remains outside the implemented scope.
 
 // ---- 9: discussion --------------------------------------------------------
 
@@ -326,7 +336,7 @@ Installation cost integration and the final cost optimization are also incomplet
 
 Preliminary exploration of the BERDO dataset highlighted the importance of data completeness in providing reliable building decarbonization recommendations. Although office buildings exhibited relatively high data completeness, records with missing data and the presence of mixed-use properties can introduce potential uncertainty to the analysis. These findings suggest that further investigation of data quality and matching reliability can improve the results.
 
-One potential direction involves evaluating the BERDO-ComStock matching procedure. The current approach identifies representative synthetic buildings using a custom distance function, but the quality of the matches should be carefully assessed. Refining the procedure by examining differences in building characteristics or adjusting the number of nearest neighbors could help determine whether other configurations reveal more representative matches.
+We evaluated BERDO--ComStock matching using building-characteristic differences and sensitivity to the number of nearest neighbors. Retrofit recommendations changed for some buildings when k varied, particularly where predicted emissions were close to the compliance threshold. Comparing alternative neighbor aggregation methods remains a possible extension.
 
 A second direction involves examining methods of addressing the missing information of the BERDO dataset. Further analysis could reveal if missing measurements, such as GHG intensity, can be calculated from related data. Where calculations are not possible, the option of using statistical imputation or predictive modeling could be explored. However, the suitability of these methods would rely on the availability of reliable predictors and the potential uncertainty of estimated data.
 
@@ -355,9 +365,12 @@ Our second missing piece is MACC for a baseline comparison. Our evaluation uses 
   - repo setup
 
 - *Kateryna Lysytsyna:*
-  - ComStock and BERDO join validation
-  - Joining BTB with ComStock (and selecting upgrades/packages to compare)
+  - ComStock exploration and retrofit selection
+  - BTB-ComStock cost integration and validation
+  - BERDO-ComStock join evaluation
+  - Emissions, compliance, and financial sensitivity analysis
   - Visualizations
+
 
 
 = AI Use Disclosure
