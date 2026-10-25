@@ -21,6 +21,8 @@ select
     "Building Address" as building_address,
     -- the portfolio sheet writes "College / University", this sheet "College/University"
     regexp_replace("Largest Property Type", '\s*/\s*', '/') as property_type,
+    -- "Office (108140.0),Retail Store (26288.0)"; parsed in int_berdo_building_property_types
+    "All Property Types and GFAs (sq ft)" as all_property_types,
     try_cast("Gross Floor Area (sq ft)" as double) as gfa_sqft,
     try_cast("Total Site Energy Usage (kBtu)" as double) / 3.412 as site_energy_kwh,
     coalesce(try_cast("Electricity Usage (kWh)" as double), 0) as electricity_kwh,
