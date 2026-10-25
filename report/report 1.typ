@@ -8,6 +8,7 @@
 
 // Red placeholder so unfinished rubric sections stand out in the PDF.
 #let todo(body) = text(fill: red)[*TODO:* #body]
+#set page(numbering: "1")
 
 // ---- 1 & 2: name and title ------------------------------------------------
 
@@ -44,7 +45,6 @@
   "Kateryna Lysytsyna",
 ))
 
-#set page(numbering: "1")
 
 // ---- 3: goal / outcome ----------------------------------------------------
 
