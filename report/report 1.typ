@@ -11,7 +11,7 @@
 // ---- 1 & 2: name and title ------------------------------------------------
 
 #show: ieee.with(
-  title: [Optimizing Corporate Decarbonization Investments: Which Projects to Fund, and in What Year],
+  title: [Optimizing Decarbonization Investment Decisions for Boston Office Buildings],
   // One combined entry keeps the author block to two short lines instead of
   // a full column per author. PDF metadata is set separately below.
   authors: (
@@ -24,7 +24,7 @@
       ],
     ),
   ),
-  abstract: [Boston's Building Emissions Reduction and Disclosure Ordinance (BERDO) requires large buildings to meet increasingly strict greenhouse gas emissions limits, with a major compliance milestone in 2030. This project focuses on Boston office buildings and aims to identify the most cost-effective retrofit decisions for the 2030 compliance period. We combine BERDO building disclosures, NLR ComStock energy and emissions estimates, and Building Technologies Benchmark (BTB) installation cost data to evaluate candidate retrofit packages. For each building, we estimate emissions reductions and associated installation costs, then compare the available retrofit options against the financial consequences of noncompliance. Our optimization framework selects one of five outcomes: four potential retrofit packages or no upgrade when accepting Alternative Compliance Payments (ACP). The resulting framework supports building-level investment decisions by balancing emissions reduction requirements against financial costs.
+  abstract: [Boston's Building Emissions Reduction and Disclosure Ordinance (BERDO) requires large buildings to meet increasingly strict greenhouse gas emissions limits, with a major compliance milestone in 2030. This project aims to identify cost-effective decarbonization options for Boston office buildings by considering BERDO disclosures, ComStock building simulations, and Buildings Technology Baseline (BTB) installation cost data. Preliminary exploration revealed 290 buildings containing office space with reported emissions intensity, of which 96 currently exceed the 2030 emissions standard. A data intergration pipeline was developed to match BERDO buildings with representative ComStock simulations and estimate potential retrofit emissions reductions. Ongoing work focuses on integrating installation costs and optimizing the selection of one of four retrofit packages or Alternative Compliance Payments (ACP) over the 2030-2034 period. The resulting framework aims to support investment decisions for office buildings by balancing emissions reductions, compliance requirements, and budget constraints.
   ],
   index-terms: (
     "Building decarbonization",
@@ -280,7 +280,7 @@ Preliminary exploration focused on assessing the availability and suitability of
 
 The BERDO disclosure provides building-level information on property type, gross floor area, energy consumption, greenhouse gas emissions, and more @berdo. The dataset published for 2026 contains 5,591 building records, a substantial amount for analysis. However, because BERDO relies on self-reported building information, missing and inconsistent values limit the number of usable records. An examination of data completeness across building categories revealed considerable variation, with office buildings exhibiting higher completeness than other building types (@fig:berdo-heatmap).
 
-Of the 5,591 records, 410 were identified as having office space as their primary or sole use. This subset provided a relatively large population of records with complete entries to support the BERDO-ComStock matching step.
+Of the 5,591 records, 410 were identified as having office space as their primary or sole use. This subset provided a relatively large population of records to support the BERDO-ComStock matching step.
 
 To measure the potential need for decarbonization investments, reported greenhouse gas (GHG) emissions intensities were compared against the 2030-2034 BERDO standard for offices of 3.2 kg of $"CO"_2"e"$ per square foot per year @berdo-standards. 290 of the 410 office buildings reported GHG intensity values, of which 96 or 33.1% exceeded the 2030 standard (@fig:berdo-GHGvsStandard). This number suggests that a substantial portion of offices might face compliance challenges, highlighting the need for the evaluation of retrofit upgrades and their cost.
 
