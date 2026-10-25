@@ -388,36 +388,371 @@ Claude Opus 5.5 and ChatGPT 6.1 were used for:
 
 // ---- 12: appendix ---------------------------------------------------------
 
-// Changing the page's columns starts a new page, and one column lets the
-// appendix figures sit in order without floating.
 #set page(columns: 1)
+#show figure.caption: set align(center)
 
 = Appendix
 
-Source code is available at
+This appendix provides supplementary data diagnostics, matching evaluation, sensitivity analysis, and financial validation supporting the results presented in the main report. All figures were generated from the project datasets and analysis pipeline. The source code and reproducibility scripts are available at
 #link("https://github.com/wegry/DS5500")[github.com/wegry/DS5500].
 
-#show figure.caption: set align(center)
+== BERDO Data Exploration
+
+The initial analysis evaluated the completeness and composition of BERDO disclosure records to determine their suitability for building-level decarbonization modeling. These exploratory summaries precede the additional filtering and integration used in the final BERDO-ComStock analysis.
+
+=== Emissions Standards
 
 #figure(
-  image("figures/berdo-emissions-standards.png", width: 65%),
-  caption: [BERDO emissions standards (kgCO#sub[2]e/ft#super[2]/year) by
-    building use for each five-year compliance period, reaching zero in 2050
-    @berdo-standards.],
+  image(
+    "figures/berdo-emissions-standards.png",
+    width: 75%),
+  caption: [
+    BERDO emissions-intensity standards by building use
+    and five-year compliance period, expressed in
+    kg CO#sub[2]e/ft#super[2]/year @berdo-standards.
+  ],
 ) <fig:berdo-limits>
 
+BERDO establishes progressively stricter emissions limits by property category and compliance period. Office buildings are subject to a standard of 3.2 kg CO#sub[2]e/ft#super[2]/year during 2030--2034. This threshold serves as the compliance criterion throughout the integrated retrofit analysis. Projected post-retrofit emissions are normalized by each building's reported floor area and compared with the applicable standard. 
+The figure represents regulatory requirements rather
+than observed building performance.
+
+=== Data Completeness
+
 #figure(
-  image("figures/berdo-completeness.png", width: 75%),
-  caption: [Data completeness heatmap by building category],
+  image(
+    "figures/berdo-completeness.png",
+    width: 82%),
+  caption: [
+    Completeness of selected BERDO attributes across building-use categories. Each cell represents the percentage of records with nonmissing observations for the corresponding
+    variable.
+  ],
 ) <fig:berdo-heatmap>
 
+For each building category and variable, completeness was calculated as:
+
+$
+"Completeness" = N_"nonmissing" / N_"total" times 100
+$
+
+The evaluation considered building floor area, reported greenhouse gas emissions, emissions intensity, applicable compliance standards, site energy consumption, and energy-use intensity. Office buildings showed relatively high completeness of floor-area and energy-consumption variables, making them suitable candidates for integration with ComStock However, missing emissions observations reduce the number of records available for compliance assessment. Missingness may also introduce selection bias if buildings with incomplete reporting differ systematically from those retained in the analysis.
+
+=== Office-Building Composition
+
 #figure(
-  image("figures/berdo-property-types.png", width: 75%),
-  caption: [Composition of office buildings in BERDO],
+  image(
+    "figures/berdo-property-types.png",
+    width: 80%),
+  caption: [
+    Composition of office-related BERDO properties according to the reported proportion of non-office, non-parking floor area.
+  ],
 ) <fig:berdo-types>
 
+Office-related properties were categorized according to their reported building-use
+composition. The analysis distinguished buildings containing only office and parking uses from properties with additional non-office space. Mixed-use composition is relevant here because BERDO reports energy consumption and emissions at the building level. Consequently, the measured energy profile may incorporate activities with energy requirements different from those of a typical office building. This introduces uncertainty when matching BERDO properties to representative ComStock office simulations.
+
+=== Reported Emissions Distribution
+
 #figure(
-  image("figures/berdo-intensity-vs-benchmark.png", width: 75%),
-  caption: [Reported office-building GHG intensities vs. the 2030 BERDO standard],
+  image(
+    "figures/berdo-intensity-vs-benchmark.png",
+    width: 80%),
+  caption: [
+    Distribution of reported office-building greenhouse gas emissions intensity compared with the 2030 BERDO office standard.
+  ],
 ) <fig:berdo-GHGvsStandard>
 
+Reported emissions intensity was calculated as total annual greenhouse gas emissions divided by gross floor area:
+
+$
+I_b = G_b / A_b
+$
+
+where $G_b$ is a building's annual emissions in kg CO#sub[2]e and $A_b$ is its gross floor area in square feet.
+
+The distribution was compared with the 2030 office emissions standard to identify buildings potentially requiring decarbonization measures or Alternative Compliance Payments. The histogram shows substantial variation in reported emissions intensity across offices. The exploratory population differs from the integrated modeling population because additional
+data preparation, eligibility criteria, and matching requirements are applied downstream.
+These populations are therefore reported separately rather than treated as interchangeable.
+
+
+== BERDO--ComStock Matching Evaluation
+
+Because BERDO describes actual properties while ComStock contains simulated commercial buildings, direct matching by building identifier is not possible. Candidate ComStock simulations were restricted using compatible building types and ranked according to similarity in floor area, energy-use intensity, and fuel-consumption shares.
+
+The matching distance is defined as:
+$
+  d(b,c) &= abs(ln(A_b / A_c)) + abs(ln("EUI"_b / "EUI"_c)) + 0.5 sum_f abs(s_(b,f) - s_(c,f))
+$ where $b$ identifies a BERDO building, $c$ identifies a ComStock simulation, $A$ denotes floor area, $"EUI"$ denotes energy-use intensity, and $s_f$ represents the proportion of energy consumption attributed to fuel $f$.
+
+The closest $k$ simulations are selected for each
+BERDO building.
+
+=== Matching Quality
+
+#figure(
+  image(
+    "figures/matching_quality.svg",
+    width: 82%),
+  caption: [
+    Median and 90th-percentile matching distance across BERDO buildings as a function of the number of nearest ComStock neighbors.
+  ],
+) <fig:matching-quality>
+
+For each BERDO building, the average distance to its first $k$ matched ComStock simulations
+was calculated. The distribution of these building-level average distances was then summarized using the median and 90th percentile. The median describes typical matching similarity, while the 90th percentile characterizes buildings with comparatively less similar matches.
+
+As additional neighbors are included, the average matching distance may increase because more distant simulations enter the selected set. This illustrates the trade-off between matching similarity and the number of simulations used to estimate retrofit performance.
+
+Matching distance is a measure of similarity in selected observed characteristics. It does
+not establish that the matched models have identical equipment or reproduce actual building retrofit outcomes.
+
+=== Retrofit Emissions Estimation
+
+Retrofit effects were transferred from matched ComStock simulations to BERDO buildings through fuel-specific upgrade-to-baseline energy ratios.
+
+For building $b$, package $p$, fuel $f$, and matched simulation set $N_b(k)$:
+
+$
+r_(b,p,f)(k) = (sum_(c in N_b(k)) U_(c,p,f)) / (sum_(c in N_b(k)) B_(c,f))
+$
+where $U$ is the upgraded fuel consumption and $B$ is the corresponding baseline fuel consumption.
+
+The pooled ratio is calculated separately for each fuel category. This method weights individual retrofit ratios according to their baseline fuel consumption.
+
+The projected annual emissions are:
+
+$
+G_(b,p,k) = sum_f G_(b,f) r_(b,p,f)(k)
+$
+where $G_(b,f)$ represents the corresponding reported BERDO baseline emissions.
+
+If the matched simulations have no baseline consumption for a fuel, the model leaves
+that fuel's emissions unchanged.
+
+=== Emissions Sensitivity
+
+#figure(
+  image(
+    "figures/emissions_sensitivity.svg",
+    width: 82%),
+  caption: [
+    Mean and median absolute differences in predicted retrofit emissions reductions across nearest-neighbor configurations, relative to k=10. Differences are measured in percentage points.
+  ],
+) <fig:emissions-sensitivity>
+
+To evaluate sensitivity to the matching parameter, emissions predictions were recalculated for different values of $k$. The configuration with $k = 10$ was used as the reference. For each building and retrofit scenario, the absolute difference in predicted emissions reduction was calculated as:
+
+$
+D_(b,p,k) = 100 abs(R_(b,p,k) - R_(b,p,10))
+$
+where $R$ denotes the fractional reduction relative to baseline emissions.
+
+The mean and median absolute differences summarize the sensitivity of modeled retrofit effects to neighbor selection. A difference measured in percentage points should not be interpreted as a relative percentage difference. The analysis examines the stability of model-generated predictions under alternative neighbor configurations. It does not measure prediction accuracy, because observed post-retrofit outcomes are not available for comparison.
+
+=== Compliance Classification Sensitivity
+
+#figure(
+  image(
+    "figures/compliance_sensitivity.svg",
+    width: 82%),
+  caption: [
+    Changes in predicted BERDO 2030 compliance classifications relative to k=10, showing both building-upgrade scenarios and distinct affected buildings.
+  ],
+) <fig:compliance-sensitivity>
+
+For each building and retrofit scenario, the projected emissions intensity is:
+
+$
+I_(b,p,k) = G_(b,p,k) / A_b
+$
+
+A scenario is predicted to satisfy the 2030 standard when:
+
+$
+I_(b,p,k) <= 3.2
+$
+
+Compliance sensitivity was evaluated by comparing the resulting binary classifications across nearest-neighbor configurations. Two quantities were examined: the number
+of building-upgrade scenarios with changed classifications and the number of distinct
+BERDO buildings affected by those changes. These quantities differ because a single building may have several retrofit options whose classifications change. A relatively small change in projected emissions can cause a discrete change in compliance classification when the prediction lies close to the regulatory limit. Therefore, stable average emissions predictions do not necessarily imply stable compliance decisions.
+
+
+== Compliance Availability and Financial Decisions
+
+The integrated analysis evaluates individualretrofit measures and combined retrofit packages
+using the 2030--2034 compliance standard. For each building, applicable retrofit options are evaluated according to their projected emissions and modeled financial cost. The financial analysis distinguishes the least-cost retrofit from the least-cost retrofit predicted to meet the emissions standard.
+
+=== Availability of Compliant Retrofits
+
+#figure(
+  image(
+    "figures/01_compliance_availability.svg",
+    width: 82%),
+  caption: [
+    Availability of at least one predicted compliant retrofit among the evaluated measures and packages for buildings whose baseline emissions exceed the 2030 standard.
+  ],
+) <fig:compliance-availability>
+
+For each office exceeding the baseline emissions threshold, compliance availability
+was determined by examining all evaluated applicable retrofit options. A building was classified as having an available compliant retrofit if at least one candidate was predicted to reduce its emissions intensity to or below the 2030 standard.
+
+The figure distinguishes buildings with at least one compliant modeled option from those for which none of the tested options achieved compliance.
+
+Failure to identify a compliant option does not establish that compliance is technically impossible. It indicates only that the evaluated retrofit set was insufficient under the model assumptions.
+
+=== Retrofit Recommendation Sensitivity
+
+The lowest-cost compliant retrofit was identified for each building and matching configuration. The recommendation was determined by minimizing the modeled five-year cost among applicable options predicted to satisfy the emissions standard. Recommendations for k=1 through k=9 were compared with those obtained at k=10.
+
+The following table is populated directly from the generated sensitivity analysis.
+
+#let financial-rows = csv(
+  "data/financial_k_summary.csv").slice(1)
+
+#figure(
+  table(
+    columns: (auto, 1fr, 1fr),
+    align: center,
+    inset: 6pt,
+
+    table.header(
+      [*$k$*],
+      [*Changed recommendations / eligible buildings*],
+      [*Reference choice loses compliance*],
+    ),
+
+    ..financial-rows.map(
+      row => (
+        text(row.at(0)),
+        text(row.at(4) + " / " + row.at(2)),
+        text(row.at(6)),
+      )
+    ).flatten()
+  ),
+
+  caption: [
+    Sensitivity of lowest-cost compliant retrofit recommendations relative to k=10 Denominators include buildings with compliant candidates under both compared configurations.
+  ],
+) <tab:appendix-financial-sensitivity>
+
+#figure(
+  image(
+    "figures/02_recommendation_sensitivity.svg",
+    width: 82%),
+  caption: [
+    Number and proportion of buildings whose lowest-cost compliant retrofit differs from the reference k=10 recommendation.
+  ],
+) <fig:recommendation-sensitivity>
+
+Recommendation changes were measured only for buildings with an available compliant option under both compared matching configurations. The number of buildings contributing to each comparison can therefore differ across values of $k$. A change in the recommended retrofit indicates sensitivity to neighbor selection but does not necessarily imply a substantial difference in cost. Furthermore, two matching configurations can produce the same recommendation even when their underlying emissions estimates differ. For this reason, recommendation stability was evaluated separately from emissions and compliance sensitivity.
+
+
+== Financial Sensitivity Analysis
+
+=== Five-Year Cost Calculation
+
+The financial model evaluates each retrofit option over the 2030--2034 compliance period. Total modeled cost consists of theone-time installation cost and cumulative Alternative Compliance Payments associated with remaining excess emissions.
+
+For building $b$, retrofit $p$, and matching configuration $k$:
+
+$
+  X_(b,p,k) = max(0, G_(b,p,k) - 3.2 A_b)
+$
+
+$
+  C_(b,p,k) &= C_"installation"(b,p) + 5 times 0.234 times X_(b,p,k)
+$
+
+Here, $X_(b,p,k)$ represents annual emissions exceeding the 2030 building-specific allowance in kg CO#sub[2]e. The five-year cost combines the one-time installation expense with annual Alternative Compliance Payments at USD 0.234 per excess kilogram. The factor 0.234 represents the modeled ACP rate in USD per excess kilogram of CO#sub[2]e per year. Installation is treated as a one-time expense. Annual emissions and the payment rate are assumed constant
+throughout the five-year period. Energy operating savings, maintenance, discounting, and future changes in emissions factors are excluded.
+
+=== Median Financial Sensitivity
+
+#figure(
+  image(
+    "figures/03_median_extra_cost.svg",
+    width: 82%),
+  caption: [
+    Median additional five-year modeled cost of retaining the k=10 retrofit recommendation when a less expensive compliant option is available under an alternative k.
+  ],
+) <fig:median-extra-cost>
+
+For each matching configuration, the analysis identified buildings whose lowest-cost compliant retrofit differed from the k=10 recommendation. When the original recommendation
+remained compliant under the alternative configuration, the additional modeled cost of retaining it was calculated as:
+
+$
+Delta C_(b,k) = C_(b,p_(10),k) - C_(b,p_k,k)
+$
+where $p_(10)$ denotes the reference recommendation and $p_k$ denotes the least-cost compliant retrofit under the alternative configuration.
+
+The median of these additional costs summarizes financial sensitivity among eligible changed decisions. Buildings for which the reference recommendation becomes noncompliant are excluded from this calculation. As a result, the median represents a conditional subset rather than the entire office-building population.
+
+=== Maximum Financial Sensitivity
+
+#figure(
+  image(
+    "figures/04_maximum_extra_cost.svg",
+    width: 82%),
+  caption: [
+    Maximum additional five-year modeled cost across buildings with changed recommendations for which the k=10 choice remains compliant.
+  ],
+) <fig:maximum-extra-cost>
+
+The maximum additional cost was calculated using the same eligibility criteria as the median analysis. Whereas the median summarizes typical additional cost within the selected subset, the maximum identifies the largest observed financial difference under each matching configuration. This provides information about potentially consequential individual decisions that may not be apparent from aggregate statistics. The reported maxima are descriptive model outputs, not confidence bounds or estimates of future realized losses.
+
+
+== BTB Installation Cost Validation
+
+Installation costs were estimated by mapping ComStock retrofit components to corresponding technologies in the Buildings Technology Baseline dataset. For component $m$, cost estimation depends on the applicable quantity and the corresponding BTB unit-cost function or rate.
+
+At the package level:
+
+$
+C_"installation"(b,p) = sum_(m in p) C_(b,p,m)
+$
+
+Component costs are aggregated to produce low-, mid-, and high-range package installation estimates. The financial sensitivity analysis uses the mid-range cost estimate. Validation addresses several separate aspects of cost estimation: the availability of BTB mappings consistency of physical units, applicability of components to matched ComStock simulations, and reconciliation of component totals with package-level costs. The arithmetic reconciliation checks whether the sum of component estimates matches the corresponding modeled
+package total. However, passing this check does not independently establish that component quantities accurately represent equipment installed in the actual BERDO building. Similarly, BTB benchmark costs are not equivalent to contractor quotes or building-specific engineering cost assessments.
+
+
+== Building-Level Case Studies
+
+Two BERDO office buildings were examined to illustrate how neighbor selection affects predicted compliance and lowest-cost retrofit recommendations.
+
+=== Building 104777: State Street
+
+For building 104777, the sensitivity analysis identifies a change in the preferred compliant
+retrofit near the BERDO emissions-intensity threshold. Across neighboring configurations,
+Package 4 and Package 2 exhibit different projected compliance outcomes while their estimated
+installation costs remain fixed. The example illustrates how a relatively small difference in predicted emissions can change which retrofit is considered the lowest-cost compliant option.
+
+=== Building 105302: Tremont Street
+
+For building 105302, wall insulation becomes a compliant candidate when the estimated post-retrofit emissions intensity falls below the 2030 standard. The change in compliance status affects the set of eligible investment decisions and can change the minimum-cost compliant recommendation. This example demonstrates that financial decision sensitivity can arise from threshold crossings even when modeled installation costs are unchanged.
+
+=== Compliance Cost Premiums
+
+#figure(
+  image(
+    "figures/05_case_study_compliance_premiums.svg",
+    width: 100%),
+  placement: top,
+  scope: "parent",
+  caption: [
+    Lowest-cost retrofit, lowest-cost compliant retrofit, and additional five-year compliance cost across nearest-neighbor configurations for buildings 104777 and 105302.
+  ],
+) <fig:case-study-costs>
+
+For each case-study building and matching configuration, the compliance premium was calculated as the difference between the modeled cost of the least-cost compliant retrofit and the modeled cost of the least-cost retrofit regardless of compliance. This differs from the additional cost shown in the median and maximum financial sensitivity figures.
+
+The case studies demonstrate that the sensitivity of an investment decision depends not only on changes in predicted emissions, but also on the proximity of those predictions to the regulatory threshold and the relative costs of available retrofit alternatives. These examples evaluate model behavior under alternative matching configurations rather than actual post-retrofit performance.
+
+
+== Reproducibility and Limitations
+
+The data integration and evaluation pipeline was implemented using dbt, DuckDB, SQL, and Python. Matching diagnostics and emissions sensitivity figures are generated by the project's matching-evaluation script. Financial sensitivity outputs are generated from the analytical
+database and exported as CSV and SVG files. All nearest-neighbor comparisons use the same evaluated retrofit options and hold installation costs and applicability fixed while varying the number of matched ComStock simulations. The sensitivity experiments assess the stability of projected emissions, compliance classifications, and investment decisions under alternative model configurations.
+
+Several limitations remain. First, ComStock contains synthetic building simulations rather than observed retrofit outcomes for individual BERDO properties. Second, BERDO disclosure records do not provide complete information about installed building systems, which limits direct validation of retrofit applicability and equipment-specific cost estimates. Third, installation costs are estimated from BTB benchmarks rather than building-specific construction quotes. Finally, the five-year financial comparison excludes energy operating savings, maintenance costs, discounting, and future changes in emissions factors.
+
+Consequently, the results support comparative decision analysis under explicitly stated assumptions, but do not establish guaranteed retrofit performance, future regulatory compliance, or actual construction costs.
