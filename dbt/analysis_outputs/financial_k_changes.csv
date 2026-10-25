@@ -1,0 +1,31 @@
+k,berdo_id,k10_upgrade_id,k10_upgrade_name,k_upgrade_id,k_upgrade_name,k10_choice_still_compliant,extra_cost_to_keep_k10_choice_usd,effectively_tied_under_1_usd
+1,100297,43,LED Lighting,49,Roof Insulation,True,7679.99,False
+1,101505,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,0.0,True
+1,102952,48,Wall Insulation,49,Roof Insulation,True,6620.84,False
+1,103033,49,Roof Insulation,43,LED Lighting,True,1882.26,False
+1,103036,49,Roof Insulation,48,Wall Insulation,False,,False
+1,103336,48,Wall Insulation,49,Roof Insulation,True,11908.67,False
+1,103386,49,Roof Insulation,48,Wall Insulation,True,5060.8,False
+1,104156,49,Roof Insulation,43,LED Lighting,True,2792.15,False
+1,104376,49,Roof Insulation,48,Wall Insulation,True,83.07,False
+1,104781,48,Wall Insulation,49,Roof Insulation,True,29380.55,False
+1,106092,49,Roof Insulation,48,Wall Insulation,True,10878.33,False
+1,106476,49,Roof Insulation,48,Wall Insulation,True,1664.26,False
+3,100297,43,LED Lighting,49,Roof Insulation,True,2809.45,False
+3,101505,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,0.0,True
+3,102361,48,Wall Insulation,49,Roof Insulation,True,1390.13,False
+3,102952,48,Wall Insulation,49,Roof Insulation,True,5530.0,False
+3,103036,49,Roof Insulation,43,LED Lighting,False,,False
+3,103336,48,Wall Insulation,49,Roof Insulation,True,14341.46,False
+3,104156,49,Roof Insulation,43,LED Lighting,True,2425.0,False
+3,104781,48,Wall Insulation,49,Roof Insulation,True,8101.47,False
+3,105955,48,Wall Insulation,49,Roof Insulation,True,2799.76,False
+5,100297,43,LED Lighting,49,Roof Insulation,True,233.91,False
+5,101322,49,Roof Insulation,48,Wall Insulation,True,3774.7,False
+5,101505,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,0.0,True
+5,102396,48,Wall Insulation,49,Roof Insulation,True,121316.44,False
+5,102952,48,Wall Insulation,49,Roof Insulation,True,3940.67,False
+5,103033,49,Roof Insulation,43,LED Lighting,True,94.47,False
+5,103336,48,Wall Insulation,49,Roof Insulation,True,1095.21,False
+5,104156,49,Roof Insulation,43,LED Lighting,True,2053.18,False
+5,104781,48,Wall Insulation,49,Roof Insulation,True,1294.28,False
