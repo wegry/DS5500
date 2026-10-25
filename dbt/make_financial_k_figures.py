@@ -5,13 +5,7 @@ In the DS5500/dbt folder:
     python make_financial_k_figures.py
 
 Requires: python -m pip install matplotlib duckdb
-Uses read-only dbt DuckDB queries and the CSVs from financial_k_sensitivity.py.
 Figures saved to analysis_outputs/figures as SVG.
-
-For reproducing the *observed* figures shown in the ChatGPT conversation,
-run with --verified-preview. This mode uses the validated terminal numbers from
-24 Oct 2026 instead of querying DuckDB; regenerate normally from the project
-before updating the final report.
 """
 from __future__ import annotations
 
@@ -178,32 +172,6 @@ def cases_figure(outdir, case_data):
     export(fig, outdir,'05_case_study_compliance_premiums')
 
 
-def verified_preview_data():
-    # Exact values reported by the user from their Oct 24 analysis terminal output.
-    summary = {
-      1: {'different_recommendations':12,'compliant_buildings_compared':64,
-          'median_extra_cost_usd_excluding_noncompliant':5060.80,
-          'max_extra_cost_usd_excluding_noncompliant':29380.55},
-      3: {'different_recommendations':9,'compliant_buildings_compared':64,
-          'median_extra_cost_usd_excluding_noncompliant':2804.60,
-          'max_extra_cost_usd_excluding_noncompliant':14341.46},
-      5: {'different_recommendations':9,'compliant_buildings_compared':64,
-          'median_extra_cost_usd_excluding_noncompliant':1294.28,
-          'max_extra_cost_usd_excluding_noncompliant':121316.44},
-    }
-    examples = [
-      (101505,1,'Wall Insulation','Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers',427009.13),
-      (101505,3,'Wall Insulation','Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers',416589.56),
-      (101505,5,'Wall Insulation','Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers',429553.97),
-      (101505,10,'Wall Insulation','Package 4, Package 2 with Standard Performance HP RTU',412782.65),
-      (103036,1,'Roof Insulation','Wall Insulation',33623.48),
-      (103036,3,'Roof Insulation','LED Lighting',19988.97),
-      (103036,5,'Roof Insulation','Roof Insulation',0),
-      (103036,10,'Roof Insulation','Roof Insulation',0),
-    ]
-    return 99,64,summary,[dict(berdo_id=b,k=k,cheapest=ch,compliant=co,premium=p) for b,k,ch,co,p in examples]
-
-
 def from_project(db_folder):
     import duckdb
     # Existing reproducible financial analysis writes summary/choice CSVs.
@@ -261,16 +229,11 @@ def from_project(db_folder):
 
 def main():
     p = argparse.ArgumentParser()
-    p.add_argument('--verified-preview',action='store_true',help='Use confirmed Oct 24 terminal results')
     p.add_argument('--output-dir',type=Path,default=None)
     args = p.parse_args()
     here = Path(__file__).resolve().parent
-    if args.verified_preview:
-        above,available,summary,cases = verified_preview_data()
-        outdir = args.output_dir or (here / 'financial_visuals_preview')
-    else:
-        above,available,summary,cases = from_project(here)
-        outdir = args.output_dir or (here / 'analysis_outputs' / 'figures')
+    above, available, summary, cases = from_project(here)
+    outdir = args.output_dir or (here / 'analysis_outputs' / 'figures')
     outdir.mkdir(parents=True,exist_ok=True)
     use_font()
     compliance_figure(outdir,above,available)
