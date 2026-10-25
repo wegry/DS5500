@@ -301,7 +301,7 @@ Preliminary exploration focused on assessing the availability and suitability of
 
 The BERDO disclosure provides building-level information on property type, gross floor area, energy consumption, greenhouse gas emissions, and more @berdo. The dataset published for 2026 contains 5,591 building records, a substantial amount for analysis. However, because BERDO relies on self-reported building information, missing and inconsistent values limit the number of usable records. An examination of data completeness across building categories revealed considerable variation, with office buildings exhibiting higher completeness than other building types (@fig:berdo-heatmap).
 
-Of the 5,591 records, 410 were identified as having office space as their primary or sole use. This subset provided a relatively large population of records to support the BERDO-ComStock matching step.
+Of the 5,591 records, 431 buildings with a BERDO ID were identified as having office space as their primary or sole use. Of these, 186 (43.2%) also contained non-office, non-parking uses, highlighting the frequency of mixed-use properties (@fig:berdo-types). This subset provides a substantial population for the proposed BERDO–ComStock matching procedure, although differences in building composition may introduce additional uncertainty.
 
 To measure the potential need for decarbonization investments, reported greenhouse gas (GHG) emissions intensities were compared against the 2030-2034 BERDO standard for offices of 3.2 kg of $"CO"_2"e"$ per square foot per year @berdo-standards. 290 of the 410 office buildings reported GHG intensity values, of which 96 or 33.1% exceeded the 2030 standard (@fig:berdo-GHGvsStandard). This number suggests that a substantial portion of offices might face compliance challenges, highlighting the need for the evaluation of retrofit upgrades and their cost.
 
@@ -372,6 +372,11 @@ Source code is available at
   image("figures/berdo-completeness.png", width: 75%),
   caption: [Data completeness heatmap by building category],
 ) <fig:berdo-heatmap>
+
+#figure(
+  image("figures/berdo-property-types.png", width: 75%),
+  caption: [Composition of office buildings in BERDO],
+) <fig:berdo-types>
 
 #figure(
   image("figures/berdo-intensity-vs-benchmark.png", width: 75%),
