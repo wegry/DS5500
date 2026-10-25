@@ -101,7 +101,33 @@ where $A$ denotes gross floor area, $"EUI"$ represents site energy use intensity
 
 For each BERDO building, eligible ComStock simulations are ranked by increasing distance. The closest $k$ simulations are retained, where $k$ is a configurable matching parameter. These models provide representative building characteristics and retrofit performance estimates.
 
-*Retrofit performance estimation.* ComStock baseline and upgrade scenarios are linked using their synthetic building identifiers. For each BERDO building and upgrade, the ratio of total upgraded to baseline energy consumption is calculated separately for electricity, natural gas, oil/propane, district heating, and district cooling across the matched simulations.
+*Retrofit performance estimation.* ComStock baseline and upgrade scenarios are linked using their synthetic building identifiers. For each BERDO building and upgrade, the ratio of total upgraded to baseline energy consumption is calculated separately for electricity, natural gas, oil/propane, district heating, and district cooling across the matched simulations. The four individual measures and four packages considered are listed in @tab:upgrades.
+
+#figure(
+  table(
+    columns: (auto, auto, 1fr),
+    align: (right, left, left),
+    stroke: none,
+    inset: (x: 4pt, y: 3pt),
+    table.hline(),
+    table.header([*ID*], [*Upgrade*], [*Measures*]),
+    table.hline(stroke: 0.5pt),
+    table.cell(colspan: 3, emph[Individual measures]),
+    [43], [LED lighting], [LED lighting],
+    [48], [Wall insulation], [Exterior wall insulation],
+    [49], [Roof insulation], [Roof insulation],
+    [52], [New windows], [High-performance windows],
+    table.hline(stroke: 0.5pt),
+    table.cell(colspan: 3, emph[Packages]),
+    [54], [Package 1], [Wall and roof insulation; new windows],
+    [55], [Package 2], [LED lighting; variable-speed heat pump RTU or heat pump boiler],
+    [56], [Package 3], [Packages 1 and 2 combined],
+    [57], [Package 4], [Package 2 with a standard-performance heat pump RTU],
+    table.hline(),
+  ),
+  caption: [ComStock upgrades considered. IDs are ComStock 2025 upgrade numbers. RTU here stands for roof top unit.],
+  placement: auto,
+) <tab:upgrades>
 
 The fuel-specific ratios are applied to the corresponding BERDO building's observed energy consumption and greenhouse gas emissions. This approach preserves the building's reported emissions baseline and fuel-specific emissions factors while transferring the modeled effects of ComStock upgrades.
 
