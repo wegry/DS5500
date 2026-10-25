@@ -12,7 +12,7 @@
     "district_cooling"
 ] %}
 with k_values as (
-    select unnest([1, 3, 5, 10]) as k
+    select unnest(range(1, 11)) as k
 ),
 ratios as (
     select
@@ -50,7 +50,8 @@ projected as (
 
         bl.ghg_kgco2e as baseline_ghg_kgco2e,
         bl.gfa_sqft,
-        bl.compliance_standard_kgco2e_sqft,
+        -- the decision period's standard, not the disclosed 2025-2029 one
+        st.standard_kgco2e_sqft as compliance_standard_kgco2e_sqft,
         (
             {% for f in fuels %}
             bl.{{ f }}_ghg_kgco2e
@@ -61,6 +62,9 @@ projected as (
     from {{ ref('int_berdo_match_buildings') }} bl
     inner join ratios r
         on bl.berdo_id = r.berdo_id
+    inner join {{ ref('int_berdo_building_standards') }} st
+        on bl.berdo_id = st.berdo_id
+        and st.period_start = {{ var("decision_period_start") }}
 )
 select
     berdo_id,

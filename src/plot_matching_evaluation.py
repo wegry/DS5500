@@ -23,7 +23,7 @@ con = duckdb.connect(str(DB_PATH), read_only=True)
 
 matching_sql = """
 WITH neighbor_counts AS (
-    SELECT unnest([1, 3, 5, 10]) AS k
+    SELECT unnest(range(1, 11)) AS k
 ),
 building_distances AS (
     SELECT
@@ -66,7 +66,7 @@ ax.grid(alpha=0.25)
 ax.legend()
 
 fig.tight_layout()
-fig.savefig(OUTPUT / "matching_quality.png", dpi=300)
+fig.savefig(OUTPUT / "matching_quality.svg")
 plt.close(fig)
 
 
@@ -108,7 +108,7 @@ ax.grid(alpha=0.25)
 ax.legend()
 
 fig.tight_layout()
-fig.savefig(OUTPUT / "emissions_sensitivity.png", dpi=300)
+fig.savefig(OUTPUT / "emissions_sensitivity.svg")
 plt.close(fig)
 
 
@@ -149,7 +149,7 @@ ax.set_ylim(0, max(changes + buildings) + 1)
 ax.legend()
 
 fig.tight_layout()
-fig.savefig(OUTPUT / "compliance_sensitivity.png", dpi=300)
+fig.savefig(OUTPUT / "compliance_sensitivity.svg")
 plt.close(fig)
 
 con.close()

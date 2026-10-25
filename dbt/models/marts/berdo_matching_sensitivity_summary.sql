@@ -1,7 +1,7 @@
 
 -- Evaluate how the number of ComStock neighbors
 -- affects predicted emissions and BERDO compliance.
--- Compare k = 1, 3, 5 against the existing k = 10 model.
+-- Compare k = 1-9 against the existing k = 10 model.
 
 with comparisons as (
     select
@@ -24,7 +24,7 @@ with comparisons as (
         and s.upgrade_id = b.upgrade_id
         and b.k = 10
 
-    where s.k in (1, 3, 5)
+    where s.k < 10
 )
 
 select
