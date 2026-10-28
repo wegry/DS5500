@@ -5,7 +5,8 @@ Place this file in DS5500/dbt/ next to the project's .duckdb file, then run:
 
 Read-only DuckDB queries; writes three small CSVs to dbt/analysis_outputs/.
 Assumptions: fixed installed cost and applicability across k, 2030–2034 ACP,
-no operating energy savings. Compliant retrofits only (no ACP-only option).
+2030–2034 energy bills at mid prices (recalculated for each k). Compliant
+retrofits only (no ACP-only option).
 """
 
 from __future__ import annotations
@@ -69,7 +70,9 @@ def main() -> None:
                    GREATEST(
                        0,
                        s.projected_ghg_kgco2e - o.standard_kgco2e_sqft * d.gfa_sqft
-                   ) * ? * o.period_years AS period_acp_usd
+                   ) * ? * o.period_years AS period_acp_usd,
+                   s.projected_energy_cost_usd_per_year * o.period_years
+                       AS period_energy_cost_usd
             FROM berdo_matching_k_sensitivity AS s
             JOIN berdo_decision_options AS o
               ON s.berdo_id = o.berdo_id AND s.upgrade_id = o.upgrade_id
@@ -86,7 +89,7 @@ def main() -> None:
     # All eligible options, including those that do not achieve compliance.
     all_options: dict[tuple[int, int], list[dict]] = {}
     compliant: dict[tuple[int, int], list[dict]] = {}
-    for k, building, upgrade, name, meets, installed, acp in data:
+    for k, building, upgrade, name, meets, installed, acp, energy in data:
         item = {
             "k": int(k),
             "berdo_id": int(building),
@@ -95,7 +98,8 @@ def main() -> None:
             "meets_standard": bool(meets),
             "installed_cost_mid_usd": float(installed),
             "period_acp_usd": float(acp),
-            "total_cost_mid_usd": float(installed + acp),
+            "period_energy_cost_usd": float(energy),
+            "total_cost_mid_usd": float(installed + acp + energy),
         }
         key = (int(k), int(building))
         all_options.setdefault(key, []).append(item)
@@ -182,7 +186,8 @@ def main() -> None:
     output_dir.mkdir(exist_ok=True)
     write_csv(output_dir / "financial_k_choices.csv", [
         "k", "berdo_id", "upgrade_id", "upgrade_name", "meets_standard",
-        "installed_cost_mid_usd", "period_acp_usd", "total_cost_mid_usd"
+        "installed_cost_mid_usd", "period_acp_usd", "period_energy_cost_usd",
+        "total_cost_mid_usd"
     ], choice_rows)
     write_csv(output_dir / "financial_k_changes.csv", [
         "k", "berdo_id", "k10_upgrade_id", "k10_upgrade_name",
@@ -208,7 +213,7 @@ def main() -> None:
             f"max penalty=${row['max_extra_cost_usd_excluding_noncompliant']:,.2f}"
         )
     print("\nSaved CSV files in:", output_dir)
-    print("NOTE: Installed costs/applicability fixed across k; operating savings excluded.")
+    print("NOTE: Installed costs/applicability fixed across k; energy bills at mid prices.")
 
 
 if __name__ == "__main__":

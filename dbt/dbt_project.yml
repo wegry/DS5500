@@ -32,6 +32,19 @@ vars:
   acp_usd_per_tco2e: 234
   # first year of the 5-year standards period the retrofit decision is made for
   decision_period_start: 2030
+  # berdo_global_cost: EN 15459 global cost over the EU cost-optimal calculation period for
+  # non-residential buildings (Delegated Regulation 244/2012), from decision_period_start
+  global_cost_years: 20
+  # real discount rates: a private owner's cost of capital, and a societal rate matching
+  # the 2% used for the social cost of carbon below
+  discount_rate_financial: 0.07
+  discount_rate_societal: 0.02
+  # US EPA (2023) social cost of CO2 at a 2% discount rate, 2020 dollars: $190 for 2020
+  # emissions, $210 for 2024, rising to about $230 for 2030; held flat over the horizon
+  social_cost_usd_per_tco2e: 230
+  # annual O&M as a share of installed cost, net of the equipment a measure replaces; BTB
+  # gives none and no sourced defaults were found, so 0 (set to test sensitivity)
+  om_share_per_year: 0
 
 models:
   ds5500:

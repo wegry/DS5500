@@ -1,7 +1,7 @@
 
 -- Economic evaluation of four standalone ComStock upgrades.
 -- Cohort: BERDO offices exceeding the 2030 standard.
--- Compare installed costs and 5-year avoided ACPs.
+-- Compare installed costs with 5-year avoided ACPs and energy bills.
 -- Low, mid, and high costs are evaluated separately.
 
 with baseline as (
@@ -36,6 +36,8 @@ select
         as median_install_cost_usd,
     round(median(baseline_acp_usd - period_acp_usd), 0)
         as median_avoided_acp_usd,
+    round(median(energy_savings_usd_per_year * period_years), 0)
+        as median_avoided_energy_cost_usd,
     round(median(total_cost_mid_usd - baseline_mid), 0)
         as median_extra_cost_usd,
     count(*) filter (

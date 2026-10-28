@@ -32,6 +32,23 @@ seeds:
               arguments:
                 to: ref('int_btb_unit_costs')
                 field: btb_measure_id
+  - name: fuel_prices
+    description: >
+      Flat Massachusetts energy prices per kWh delivered, for the fuels BERDO reports, with
+      a low/mid/high range. Electricity and gas are EIA commercial averages (revenue / sales,
+      so they include fixed and demand charges on average); oil is the state heating-oil
+      survey. Boston publishes no district steam or chilled water tariff, so those two are
+      proxies for the cost of making the same heat or cooling on site. basis gives each
+      source, conversion, and how the range was set.
+    columns:
+      - name: fuel
+        data_tests: [unique, not_null]
+      - name: usd_per_kwh_low
+        data_tests: [not_null]
+      - name: usd_per_kwh_mid
+        data_tests: [not_null]
+      - name: usd_per_kwh_high
+        data_tests: [not_null]
 
 models:
   - name: stg_berdo__portfolios
@@ -124,7 +141,15 @@ models:
     columns:
       - name: option_key
         data_tests: [unique, not_null]
+      - name: energy_cost_mid_usd_per_year
+        data_tests: [not_null]
       - name: total_cost_mid_usd
+        data_tests: [not_null]
+  - name: berdo_global_cost
+    columns:
+      - name: global_cost_key
+        data_tests: [unique, not_null]
+      - name: global_cost_mid_usd
         data_tests: [not_null]
   - name: berdo_decisions
     columns:
