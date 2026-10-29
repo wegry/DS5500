@@ -2,7 +2,8 @@
 -- Evaluate sensitivity of retrofit emissions projections
 -- to the number of BERDO-ComStock neighbors.
 -- Uses the same fuel-specific methodology as
--- berdo_upgrade_scenarios.
+-- berdo_upgrade_scenarios, and prices energy like
+-- berdo_decision_options (mid prices).
 
 {% set fuels = [
     "electricity",
@@ -11,7 +12,14 @@
     "district_heating",
     "district_cooling"
 ] %}
-with k_values as (
+with prices as (
+    select
+        {% for f in fuels -%}
+        max(usd_per_kwh_mid) filter (where fuel = '{{ f }}') as {{ f }}_usd_per_kwh{{ "," if not loop.last }}
+        {% endfor -%}
+    from {{ ref('fuel_prices') }}
+),
+k_values as (
     select unnest(range(1, 11)) as k
 ),
 ratios as (
@@ -58,13 +66,22 @@ projected as (
                 * r.{{ f }}_ratio
             {{ "+" if not loop.last }}
             {% endfor %}
-        ) as projected_ghg_kgco2e
+        ) as projected_ghg_kgco2e,
+        (
+            {% for f in fuels %}
+            bl.{{ f }}_kwh
+                * r.{{ f }}_ratio
+                * p.{{ f }}_usd_per_kwh
+            {{ "+" if not loop.last }}
+            {% endfor %}
+        ) as projected_energy_cost_usd_per_year
     from {{ ref('int_berdo_match_buildings') }} bl
     inner join ratios r
         on bl.berdo_id = r.berdo_id
     inner join {{ ref('int_berdo_building_standards') }} st
         on bl.berdo_id = st.berdo_id
         and st.period_start = {{ var("decision_period_start") }}
+    cross join prices p
 )
 select
     berdo_id,
@@ -73,6 +90,7 @@ select
     matched_models,
     baseline_ghg_kgco2e,
     projected_ghg_kgco2e,
+    projected_energy_cost_usd_per_year,
     1 - projected_ghg_kgco2e
         / nullif(baseline_ghg_kgco2e, 0)
         as ghg_reduction_pct,

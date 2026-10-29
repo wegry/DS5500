@@ -1,5 +1,5 @@
 -- The minimum-cost var("decision_period_start") option for each matched BERDO building
--- (a retrofit package or no retrofit + ACPs), at BTB mid costs, with the choice under low
+-- (a retrofit package or no retrofit + ACPs, with energy bills), at BTB mid costs, with the choice under low
 -- and high costs to show whether it depends on the cost estimate.
 -- Grain: one row per matched BERDO building.
 with best as (
@@ -40,6 +40,8 @@ select
     b.applicable_share,
     b.installed_cost_mid_usd,
     b.period_acp_usd,
+    b.period_energy_cost_usd,
+    b.energy_savings_usd_per_year,
     b.total_cost_mid_usd,
     n.total_cost_mid_usd as no_upgrade_total_cost_usd,
     n.total_cost_mid_usd - b.total_cost_mid_usd as savings_vs_no_upgrade_usd,

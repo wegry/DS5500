@@ -1,92 +1,241 @@
 k,berdo_id,k10_upgrade_id,k10_upgrade_name,k_upgrade_id,k_upgrade_name,k10_choice_still_compliant,extra_cost_to_keep_k10_choice_usd,effectively_tied_under_1_usd
 1,100001,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",54,"Package 1, Wall + Roof Insulation + New Windows",False,,False
-1,100064,57,"Package 4, Package 2 with Standard Performance HP RTU",52,New Windows,True,13065.79,False
+1,100005,48,Wall Insulation,49,Roof Insulation,True,40291.91,False
+1,100036,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,0.0,True
+1,100054,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,11804.29,False
+1,100064,57,"Package 4, Package 2 with Standard Performance HP RTU",52,New Windows,True,47609.12,False
+1,100297,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,0.0,True
 1,100419,48,Wall Insulation,43,LED Lighting,False,,False
 1,100609,48,Wall Insulation,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",False,,False
-1,101229,56,"Package 3, Package 1 + Package 2",57,"Package 4, Package 2 with Standard Performance HP RTU",True,662750.04,False
-1,101686,48,Wall Insulation,49,Roof Insulation,True,6029.87,False
-1,102696,48,Wall Insulation,49,Roof Insulation,True,34557.74,False
+1,101229,56,"Package 3, Package 1 + Package 2",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,607028.06,False
+1,101654,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,29182.54,False
 1,102933,49,Roof Insulation,48,Wall Insulation,False,,False
 1,102934,49,Roof Insulation,48,Wall Insulation,False,,False
-1,102952,48,Wall Insulation,57,"Package 4, Package 2 with Standard Performance HP RTU",False,,False
-1,103770,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,12232.96,False
-1,103966,57,"Package 4, Package 2 with Standard Performance HP RTU",52,New Windows,False,,False
+1,102952,43,LED Lighting,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",False,,False
+1,102965,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,0.0,True
+1,103033,48,Wall Insulation,49,Roof Insulation,True,11923.97,False
+1,103035,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,15396.19,False
+1,103336,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,16585.82,False
+1,103856,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,5683.4,False
+1,103966,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",52,New Windows,False,,False
+1,103991,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,15642.54,False
+1,103992,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,17616.52,False
+1,104012,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,19793.11,False
+1,104020,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,12442.98,False
 1,104041,43,LED Lighting,48,Wall Insulation,False,,False
-1,104156,57,"Package 4, Package 2 with Standard Performance HP RTU",56,"Package 3, Package 1 + Package 2",False,,False
+1,104112,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,36943.69,False
+1,104156,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",56,"Package 3, Package 1 + Package 2",False,,False
+1,104209,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,12105.14,False
 1,104777,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,12761.01,False
-1,104809,54,"Package 1, Wall + Roof Insulation + New Windows",52,New Windows,True,1090799.76,False
-1,104983,57,"Package 4, Package 2 with Standard Performance HP RTU",49,Roof Insulation,True,200439.17,False
-1,105031,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",56,"Package 3, Package 1 + Package 2",False,,False
+1,104809,54,"Package 1, Wall + Roof Insulation + New Windows",52,New Windows,True,399717.04,False
+1,104983,57,"Package 4, Package 2 with Standard Performance HP RTU",49,Roof Insulation,True,232793.87,False
+1,105031,57,"Package 4, Package 2 with Standard Performance HP RTU",56,"Package 3, Package 1 + Package 2",False,,False
+1,105032,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,0.0,True
 1,105132,49,Roof Insulation,48,Wall Insulation,False,,False
 1,105302,48,Wall Insulation,54,"Package 1, Wall + Roof Insulation + New Windows",False,,False
-1,106401,54,"Package 1, Wall + Roof Insulation + New Windows",52,New Windows,True,140076.11,False
+1,105612,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,14913.94,False
+1,105956,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,5218.18,False
+1,106401,54,"Package 1, Wall + Roof Insulation + New Windows",52,New Windows,True,48021.21,False
 1,107803,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",43,LED Lighting,True,2058681.24,False
-1,108082,57,"Package 4, Package 2 with Standard Performance HP RTU",48,Wall Insulation,True,201829.24,False
+1,108082,57,"Package 4, Package 2 with Standard Performance HP RTU",48,Wall Insulation,True,243427.82,False
+2,100005,48,Wall Insulation,49,Roof Insulation,True,40744.59,False
+2,100036,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,0.0,True
+2,100054,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,11804.29,False
+2,100064,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,3117.45,False
+2,100297,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,0.0,True
 2,100419,48,Wall Insulation,49,Roof Insulation,False,,False
-2,100436,57,"Package 4, Package 2 with Standard Performance HP RTU",56,"Package 3, Package 1 + Package 2",False,,False
+2,100436,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",56,"Package 3, Package 1 + Package 2",False,,False
 2,100609,48,Wall Insulation,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",False,,False
-2,101229,56,"Package 3, Package 1 + Package 2",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,644088.88,False
-2,101687,56,"Package 3, Package 1 + Package 2",57,"Package 4, Package 2 with Standard Performance HP RTU",True,392218.62,False
-2,102696,48,Wall Insulation,49,Roof Insulation,True,34557.74,False
-2,102952,48,Wall Insulation,43,LED Lighting,False,,False
-2,103386,57,"Package 4, Package 2 with Standard Performance HP RTU",48,Wall Insulation,True,478479.51,False
-2,103770,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,12232.96,False
-2,103966,57,"Package 4, Package 2 with Standard Performance HP RTU",54,"Package 1, Wall + Roof Insulation + New Windows",False,,False
-2,103991,57,"Package 4, Package 2 with Standard Performance HP RTU",56,"Package 3, Package 1 + Package 2",False,,False
+2,101229,56,"Package 3, Package 1 + Package 2",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,577260.41,False
+2,101654,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,29182.54,False
+2,101687,56,"Package 3, Package 1 + Package 2",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,352305.88,False
+2,102696,48,Wall Insulation,49,Roof Insulation,True,13516.11,False
+2,102934,49,Roof Insulation,48,Wall Insulation,True,12153.53,False
+2,103033,48,Wall Insulation,49,Roof Insulation,True,5656.76,False
+2,103035,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,15394.23,False
+2,103336,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,16585.82,False
+2,103386,57,"Package 4, Package 2 with Standard Performance HP RTU",48,Wall Insulation,True,530603.29,False
+2,103856,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,5683.4,False
+2,103966,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",54,"Package 1, Wall + Roof Insulation + New Windows",False,,False
+2,103991,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",56,"Package 3, Package 1 + Package 2",False,,False
+2,103992,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,17616.52,False
+2,104012,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,19791.44,False
+2,104020,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,12442.98,False
 2,104041,43,LED Lighting,48,Wall Insulation,False,,False
-2,104777,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,12761.01,False
-2,104983,57,"Package 4, Package 2 with Standard Performance HP RTU",49,Roof Insulation,True,200439.17,False
+2,104112,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,32350.48,False
+2,104156,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,8765.12,False
+2,104209,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,12105.14,False
+2,104983,57,"Package 4, Package 2 with Standard Performance HP RTU",49,Roof Insulation,True,232545.35,False
+2,105031,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,0.0,True
+2,105032,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,0.0,True
 2,105132,49,Roof Insulation,48,Wall Insulation,False,,False
 2,105302,48,Wall Insulation,54,"Package 1, Wall + Roof Insulation + New Windows",False,,False
-3,100005,49,Roof Insulation,48,Wall Insulation,False,,False
-3,100419,48,Wall Insulation,49,Roof Insulation,True,27713.95,False
-3,102696,48,Wall Insulation,49,Roof Insulation,True,34557.74,False
-3,102952,48,Wall Insulation,43,LED Lighting,False,,False
-3,103386,57,"Package 4, Package 2 with Standard Performance HP RTU",48,Wall Insulation,True,478479.51,False
-3,103770,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,12232.96,False
-3,103966,57,"Package 4, Package 2 with Standard Performance HP RTU",54,"Package 1, Wall + Roof Insulation + New Windows",False,,False
-3,103991,57,"Package 4, Package 2 with Standard Performance HP RTU",56,"Package 3, Package 1 + Package 2",False,,False
-3,104777,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,12761.01,False
+2,105612,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,14911.34,False
+2,105956,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,5218.18,False
+3,100036,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,0.0,True
+3,100054,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,11804.29,False
+3,100064,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,8351.29,False
+3,100297,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,0.0,True
+3,100419,48,Wall Insulation,49,Roof Insulation,True,19700.72,False
+3,100436,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,5006.88,False
+3,100668,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,2454.59,False
+3,101654,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,29182.54,False
+3,102361,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,0.0,True
+3,102934,49,Roof Insulation,48,Wall Insulation,True,5485.59,False
+3,103033,48,Wall Insulation,49,Roof Insulation,True,5620.02,False
+3,103035,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,15393.06,False
+3,103336,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,16585.82,False
+3,103386,57,"Package 4, Package 2 with Standard Performance HP RTU",48,Wall Insulation,True,544802.64,False
+3,103856,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,5683.4,False
+3,103966,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",54,"Package 1, Wall + Roof Insulation + New Windows",False,,False
+3,103991,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",56,"Package 3, Package 1 + Package 2",False,,False
+3,104012,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,19790.31,False
+3,104020,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,12442.98,False
+3,104112,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,14339.69,False
+3,104156,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,8767.34,False
+3,104209,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,12105.14,False
+3,104983,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,1765.94,False
+3,105031,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,0.0,True
+3,105032,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,0.0,True
+3,105132,49,Roof Insulation,48,Wall Insulation,True,3005.09,False
 3,105302,48,Wall Insulation,57,"Package 4, Package 2 with Standard Performance HP RTU",False,,False
-3,106015,56,"Package 3, Package 1 + Package 2",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,368434.89,False
-4,102952,48,Wall Insulation,43,LED Lighting,False,,False
-4,103386,57,"Package 4, Package 2 with Standard Performance HP RTU",48,Wall Insulation,True,478479.51,False
+3,105612,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,14910.47,False
+3,105956,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,5218.18,False
+3,106015,56,"Package 3, Package 1 + Package 2",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,342081.61,False
+4,100005,48,Wall Insulation,49,Roof Insulation,True,17692.67,False
+4,100036,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,0.0,True
+4,100054,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,11803.49,False
+4,100064,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,1968.04,False
+4,100297,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,0.0,True
+4,100436,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,5006.52,False
+4,100668,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,8801.69,False
+4,101654,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,29184.21,False
+4,102361,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,0.0,True
+4,102934,49,Roof Insulation,48,Wall Insulation,True,116.12,False
+4,103033,48,Wall Insulation,49,Roof Insulation,True,10838.4,False
+4,103034,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,2522.52,False
+4,103035,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,15392.58,False
+4,103336,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,16585.82,False
+4,103386,57,"Package 4, Package 2 with Standard Performance HP RTU",48,Wall Insulation,True,545829.62,False
 4,103770,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",56,"Package 3, Package 1 + Package 2",False,,False
-4,103966,57,"Package 4, Package 2 with Standard Performance HP RTU",54,"Package 1, Wall + Roof Insulation + New Windows",False,,False
-4,103991,57,"Package 4, Package 2 with Standard Performance HP RTU",56,"Package 3, Package 1 + Package 2",False,,False
-4,104777,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,12761.01,False
-5,100036,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",56,"Package 3, Package 1 + Package 2",False,,False
-5,101687,56,"Package 3, Package 1 + Package 2",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,382972.37,False
-5,102952,48,Wall Insulation,43,LED Lighting,False,,False
-5,103386,57,"Package 4, Package 2 with Standard Performance HP RTU",48,Wall Insulation,True,478479.51,False
+4,103856,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,5683.4,False
+4,103966,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",54,"Package 1, Wall + Roof Insulation + New Windows",False,,False
+4,103991,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",56,"Package 3, Package 1 + Package 2",False,,False
+4,104012,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,19789.83,False
+4,104020,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,12442.98,False
+4,104112,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,3705.76,False
+4,104156,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,8766.86,False
+4,104209,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,12105.14,False
+4,105031,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,0.0,True
+4,105032,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,0.0,True
+4,105132,49,Roof Insulation,48,Wall Insulation,True,167.39,False
+4,105159,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,8277.03,False
+4,105612,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,14910.13,False
+4,105956,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,5218.18,False
+4,106365,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,0.0,True
+5,100005,48,Wall Insulation,49,Roof Insulation,True,14861.66,False
+5,100036,57,"Package 4, Package 2 with Standard Performance HP RTU",56,"Package 3, Package 1 + Package 2",False,,False
+5,100054,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,11803.63,False
+5,100297,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,0.0,True
+5,100419,48,Wall Insulation,43,LED Lighting,True,77712.42,False
+5,100436,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,5006.3,False
+5,101654,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,9503.47,False
+5,101687,56,"Package 3, Package 1 + Package 2",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,349301.67,False
+5,102361,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,0.0,True
+5,103033,48,Wall Insulation,49,Roof Insulation,True,12378.06,False
+5,103034,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,6638.71,False
+5,103035,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,15392.38,False
+5,103336,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,16585.82,False
+5,103386,57,"Package 4, Package 2 with Standard Performance HP RTU",48,Wall Insulation,True,527189.82,False
 5,103770,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",56,"Package 3, Package 1 + Package 2",False,,False
-5,103966,57,"Package 4, Package 2 with Standard Performance HP RTU",54,"Package 1, Wall + Roof Insulation + New Windows",False,,False
-5,104777,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,12761.01,False
-5,106015,56,"Package 3, Package 1 + Package 2",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,368434.89,False
-6,100005,49,Roof Insulation,48,Wall Insulation,False,,False
-6,100036,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",56,"Package 3, Package 1 + Package 2",False,,False
-6,101687,56,"Package 3, Package 1 + Package 2",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,382972.37,False
-6,102952,48,Wall Insulation,49,Roof Insulation,False,,False
-6,103386,57,"Package 4, Package 2 with Standard Performance HP RTU",48,Wall Insulation,True,478479.51,False
-6,103770,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,12232.96,False
-6,104777,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,12761.01,False
-6,104983,57,"Package 4, Package 2 with Standard Performance HP RTU",49,Roof Insulation,True,200439.17,False
-6,106015,56,"Package 3, Package 1 + Package 2",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,368434.89,False
-7,100005,49,Roof Insulation,48,Wall Insulation,False,,False
-7,100036,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",56,"Package 3, Package 1 + Package 2",False,,False
+5,103856,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,5683.4,False
+5,103966,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",54,"Package 1, Wall + Roof Insulation + New Windows",False,,False
+5,103991,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,385.37,False
+5,104012,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,19789.61,False
+5,104020,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,12442.98,False
+5,104156,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,8766.46,False
+5,104209,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,12105.14,False
+5,104983,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,2210.16,False
+5,105031,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,0.0,True
+5,105132,49,Roof Insulation,48,Wall Insulation,True,4481.62,False
+5,105159,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,5257.54,False
+5,105612,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,14909.91,False
+5,105956,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,5218.18,False
+5,106015,56,"Package 3, Package 1 + Package 2",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,341757.65,False
+6,100036,57,"Package 4, Package 2 with Standard Performance HP RTU",56,"Package 3, Package 1 + Package 2",False,,False
+6,100054,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,11803.74,False
+6,100297,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,0.0,True
+6,100419,48,Wall Insulation,43,LED Lighting,True,68590.11,False
+6,100436,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,5006.15,False
+6,101654,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,1538.61,False
+6,101687,56,"Package 3, Package 1 + Package 2",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,343375.5,False
+6,102361,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,0.0,True
+6,103033,48,Wall Insulation,49,Roof Insulation,True,6853.59,False
+6,103034,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,4078.44,False
+6,103035,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,4108.57,False
+6,103336,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,16585.82,False
+6,103386,57,"Package 4, Package 2 with Standard Performance HP RTU",48,Wall Insulation,True,507135.46,False
+6,103856,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,5682.77,False
+6,103966,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,5283.17,False
+6,103991,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,2012.49,False
+6,104012,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,19789.39,False
+6,104020,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,12442.98,False
+6,104112,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,2177.34,False
+6,104156,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,8766.31,False
+6,104209,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,12106.03,False
+6,104983,57,"Package 4, Package 2 with Standard Performance HP RTU",49,Roof Insulation,True,231583.8,False
+6,105031,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,0.0,True
+6,105132,49,Roof Insulation,48,Wall Insulation,True,2874.16,False
+6,105159,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,3767.74,False
+6,105956,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,5218.18,False
+6,106009,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,0.0,True
+6,106015,56,"Package 3, Package 1 + Package 2",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,346074.1,False
+7,100036,57,"Package 4, Package 2 with Standard Performance HP RTU",56,"Package 3, Package 1 + Package 2",False,,False
+7,100054,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,11803.81,False
+7,100093,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,5.76,False
+7,100419,48,Wall Insulation,43,LED Lighting,True,31722.28,False
+7,100436,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,5005.93,False
+7,100668,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,950.84,False
 7,101321,54,"Package 1, Wall + Roof Insulation + New Windows",56,"Package 3, Package 1 + Package 2",False,,False
-7,102952,48,Wall Insulation,43,LED Lighting,False,,False
-7,103386,57,"Package 4, Package 2 with Standard Performance HP RTU",48,Wall Insulation,True,478479.51,False
-7,103770,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,12232.96,False
-7,104777,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,12761.01,False
-7,104983,57,"Package 4, Package 2 with Standard Performance HP RTU",49,Roof Insulation,True,200439.17,False
-8,100005,49,Roof Insulation,48,Wall Insulation,False,,False
-8,100036,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",56,"Package 3, Package 1 + Package 2",False,,False
+7,102361,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,0.0,True
+7,103033,48,Wall Insulation,49,Roof Insulation,True,457.19,False
+7,103034,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,5667.71,False
+7,103386,57,"Package 4, Package 2 with Standard Performance HP RTU",48,Wall Insulation,True,529406.67,False
+7,103966,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,5879.0,False
+7,103991,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,3869.69,False
+7,104012,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,8281.54,False
+7,104020,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,12442.98,False
+7,104156,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,8766.02,False
+7,104209,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,12105.95,False
+7,104983,57,"Package 4, Package 2 with Standard Performance HP RTU",49,Roof Insulation,True,233115.52,False
+7,105031,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,0.0,True
+7,105132,49,Roof Insulation,48,Wall Insulation,True,1072.4,False
+7,105159,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,2516.25,False
+7,106009,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,0.0,True
+8,100036,57,"Package 4, Package 2 with Standard Performance HP RTU",56,"Package 3, Package 1 + Package 2",False,,False
+8,100054,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,5656.96,False
+8,100419,48,Wall Insulation,43,LED Lighting,True,14096.89,False
+8,100668,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,3813.7,False
 8,101321,54,"Package 1, Wall + Roof Insulation + New Windows",56,"Package 3, Package 1 + Package 2",False,,False
-8,102952,48,Wall Insulation,43,LED Lighting,False,,False
-8,103386,57,"Package 4, Package 2 with Standard Performance HP RTU",48,Wall Insulation,True,478479.51,False
-8,104777,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,12761.01,False
+8,103034,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,5202.14,False
+8,103386,57,"Package 4, Package 2 with Standard Performance HP RTU",48,Wall Insulation,True,503188.63,False
+8,103966,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,6319.99,False
+8,103991,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,4886.14,False
+8,104012,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,2417.96,False
+8,104020,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,12442.98,False
+8,104156,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,8765.91,False
+8,104209,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,12105.9,False
+8,104777,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,996.67,False
+8,105031,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,0.0,True
+8,105159,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,1300.82,False
+9,100419,48,Wall Insulation,43,LED Lighting,True,4871.48,False
 9,101321,54,"Package 1, Wall + Roof Insulation + New Windows",56,"Package 3, Package 1 + Package 2",False,,False
-9,102952,48,Wall Insulation,43,LED Lighting,False,,False
-9,104777,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,12761.01,False
-9,106015,56,"Package 3, Package 1 + Package 2",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,368434.89,False
+9,102361,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,0.0,True
+9,103034,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,828.02,False
+9,103991,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,5714.17,False
+9,104012,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,3438.87,False
+9,104020,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,2604.11,False
+9,104209,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",57,"Package 4, Package 2 with Standard Performance HP RTU",True,2698.01,False
+9,105031,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,0.0,True
+9,105159,57,"Package 4, Package 2 with Standard Performance HP RTU",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,498.37,False
+9,106015,56,"Package 3, Package 1 + Package 2",55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",True,345149.54,False

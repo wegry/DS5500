@@ -22,7 +22,7 @@ K_VALUES = tuple(range(1, 11))
 # A stable compliance premium (104777) and one that settles as k grows (105302)
 CASE_BUILDINGS = (104777, 105302)
 VERSION = 'DS5500  |  BERDO + ComStock + BTB  |  2030–2034'
-NOTE = 'k = matched ComStock neighbors. Fixed installation costs and applicability; five-year ACP; operating savings excluded.'
+NOTE = 'k = matched ComStock neighbors. Fixed installation costs and applicability; five-year ACP and energy bills at mid prices.'
 
 
 def use_font():
@@ -250,7 +250,7 @@ def main():
         cases_figure(outdir,cases)
     print(f'Figures saved: {outdir}')
     for f in sorted(outdir.glob('*.svg')):print('  ',f.name)
-    print('Figures exclude energy operating savings.')
+    print('Figures include five-year energy bills at mid prices.')
 
 
 if __name__ == '__main__': main()

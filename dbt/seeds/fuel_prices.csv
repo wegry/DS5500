@@ -1,0 +1,6 @@
+fuel,usd_per_kwh_low,usd_per_kwh_mid,usd_per_kwh_high,basis
+electricity,0.2090,0.2310,0.2541,"EIA Electric Power Annual 2025 Table 2.10, Massachusetts commercial: 20.90 cents/kWh (2024, low), 23.10 (2025, mid); high is mid + 10%"
+natural_gas,0.0509,0.0576,0.0666,"EIA n3020ma3, Massachusetts commercial at 1,036 Btu/cf: $15.47/Mcf (2024, low), $17.50 (2025, mid), $20.22 (Jan-Jul 2026 monthly mean, high)"
+oil_propane,0.0756,0.1008,0.1260,"Mass. DOER heating oil survey at 138,500 Btu/gal: $4.09/gal 2025-26 heating season average (mid); low/high are mid -/+ 25%"
+district_heating,0.0636,0.0721,0.0833,"Proxy, no published Vicinity tariff: gas price / 0.80 boiler efficiency"
+district_cooling,0.0523,0.0578,0.0635,"Proxy, no published tariff: electricity price / 4.0 chiller COP"
