@@ -1,0 +1,90 @@
+# References for Presentation 2 (copied from report/refs.yml, plus the deck's own sources)
+
+berdo:
+  type: repository
+  author: City of Boston
+  title: Building Emissions Reduction and Disclosure Ordinance (BERDO)
+  date: 2026-09-30
+  url:
+    value: https://data.boston.gov/dataset/building-emissions-reduction-and-disclosure-ordinance
+    date: 2026-10-09
+
+
+comstock:
+  type: repository
+  author: National Laboratory of the Rockies
+  title: ComStock 2025 Release 3
+  date: 2025-11
+  url:
+    value: https://oedi-data-lake.s3.amazonaws.com/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2025/comstock_amy2018_release_3/
+    date: 2026-10-17
+
+
+cambium:
+  type: web
+  author: National Laboratory of the Rockies
+  title: Cambium
+  url: https://scenarioviewer.nlr.gov
+
+
+berdo-standards:
+  type: web
+  author: City of Boston
+  title: Building Emissions Reduction and Disclosure Ordinance
+  url: https://www.boston.gov/departments/environment/berdo
+
+
+btb:
+  type: repository
+  author:
+    - "Moore, Nathan"
+    - "Wilson, Eric"
+    - "Butrico, Mark"
+    - "Langevin, Jared"
+    - "Ciraulo, Rebecca"
+  title: 2024 Buildings Technology Baseline
+  date: 2024-09-30
+  url:
+    value: https://data.openei.org/submissions/8342
+    date: 2026-10-18
+
+
+berdo-acp:
+  type: article
+  author: City of Boston
+  title: My Building is Above its Emissions Limit, What Can I Do Now?
+  date: 2026-09-02
+  url:
+    value: https://www.boston.gov/news/my-building-above-its-emissions-limit-what-can-i-do-now
+    date: 2026-10-22
+
+en15459:
+  type: report
+  author: European Committee for Standardization
+  title: "EN 15459-1:2017, Energy performance of buildings: Economic evaluation procedure for energy systems in buildings"
+  date: 2017
+
+eu-cost-optimal:
+  type: legislation
+  author: European Commission
+  title: "Commission Delegated Regulation (EU) No 244/2012: comparative methodology framework for calculating cost-optimal levels of minimum energy performance requirements"
+  date: 2012-01-16
+
+epa-scghg:
+  type: report
+  author: U.S. Environmental Protection Agency
+  title: "Report on the Social Cost of Greenhouse Gases: Estimates Incorporating Recent Scientific Advances"
+  date: 2023-11
+  url: https://www.epa.gov/environmental-economics/scghg
+
+eia-prices:
+  type: web
+  author: U.S. Energy Information Administration
+  title: "Electric Power Annual 2025, Table 2.10, and Massachusetts natural gas prices (n3020ma3)"
+  url: https://www.eia.gov/electricity/annual/
+
+doer-oil:
+  type: web
+  author: Massachusetts Department of Energy Resources
+  title: Home heating oil price survey
+  url: https://www.mass.gov/info-details/household-heating-costs
