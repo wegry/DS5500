@@ -10,6 +10,7 @@ dependencies = [
     "matplotlib>=3.11.2",
     "numpy>=2.5.4",
     "polars>=2.0.0",
+    "touying>=0.14.4",
 ]
 [tool.marimo.runtime]
 pythonpath = ["src"]
