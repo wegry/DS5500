@@ -88,3 +88,11 @@ doer-oil:
   author: Massachusetts Department of Energy Resources
   title: Home heating oil price survey
   url: https://www.mass.gov/info-details/household-heating-costs
+
+bos-listing:
+  type: web
+  author: Boston Office Spaces
+  title: 24 Farnsworth Street
+  url:
+    value: https://www.bostonofficespaces.com/properties/24-farnsworth-street/
+    date: 2026-11-01

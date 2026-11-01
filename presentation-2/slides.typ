@@ -16,6 +16,8 @@
 
 // Optional photo for the opening slide, e.g. "img/farnsworth.jpg". Leave none to skip.
 #let hero-photo = none
+#let case-photo = "img/farnsworth.jpg"  // bostonofficespaces.com listing
+#let case-map = "img/map.png"  // make_map.py
 
 // ---- data ------------------------------------------------------------------
 
@@ -64,7 +66,7 @@
 #let green-edge = rgb("#2e7d4f")
 
 // The stops from the presentation plan; a strip at the top shows where we are.
-#let stops = ([Motivation], [ACP vs. retrofit], [Cost formula], [Matching], [Answer])
+#let stops = ([The problem], [Pay or fix], [Scoring], [Matching], [Results])
 
 #let progress(at) = {
   set text(size: 9.5pt)
@@ -143,7 +145,7 @@
       text(
         size: 20pt,
         fill: ink-2,
-      )[Choosing between retrofits and Alternative Compliance Payments for Boston offices under BERDO]
+      )[When is it cheaper for a Boston office to pay the city than to cut its emissions?]
       v(28pt)
       text(size: 16pt)[Konstantinos Theodoropoulos · Zachary Wegrzyniak · Kateryna Lysytsyna]
       linebreak()
@@ -153,10 +155,40 @@
   )
 })
 #speaker-note[
-  Last time we told you what we wanted to build. This time we've got more numbers, and the short version is in the title: if you own a Boston office building that's over its emissions limit, is it cheaper to pay the city or to fix the building? Turns out it depends a lot on how far out you look.
+  Boston now limits how much carbon big buildings can put out. If your building goes over, you can pay the city or fix the building. We wanted to know which one is cheaper for Boston's offices. Short version: it depends a lot on how far out you look.
 ]
 
-// ---- 2. motivation ---------------------------------------------------------
+// ---- 2. the building --------------------------------------------------------
+
+#s([24 Farnsworth St: built 1915, last renovated 1989], stop: 1)[
+  #grid(
+    columns: (auto, auto, 1fr),
+    column-gutter: 16pt,
+    figure(image(case-photo, height: 7.8cm), caption: [Photo: Boston Office Spaces @bos-listing.]),
+    figure(image(case-map, height: 7.8cm), caption: [Fort Point, across the channel from downtown.]),
+    {
+      set text(size: 15pt)
+      grid(
+        columns: (auto, 1fr),
+        row-gutter: 10pt,
+        column-gutter: 12pt,
+        [*Built*], [1915],
+        [*Last renovated*], [1989],
+        [*Stories*], [6],
+        [*Floor area*], [#str(calc.round(stats.case_gfa_sqft / 1000)) k ft² @berdo],
+        [*Energy*], [65% natural gas],
+        [*Emissions*], [*#stats.case_intensity* kg/ft²/yr],
+      )
+    },
+  )
+  #v(1fr)
+  #takeaway[Last renovated 37 years ago, and heated mostly with gas. *A typical Boston office with a typical problem.*]
+]
+#speaker-note[
+  Meet 24 Farnsworth Street in Fort Point, right across the channel from South Station. It was built in 1915 and last renovated in 1989. Six stories, about 79 thousand square feet. Two thirds of its energy is natural gas. So it's old, it burns gas for heat, and it hasn't been touched in 37 years. That makes it a pretty good stand-in for a lot of Boston's office stock.
+]
+
+// ---- 3. motivation ---------------------------------------------------------
 
 #let years-step(rows) = {
   // BERDO periods as a step function from 2025 to 2055
@@ -165,7 +197,9 @@
   (xs, ys + (ys.last(),))
 }
 
-#s([24 Farnsworth St is over the line, but it's redeemable], stop: 1)[
+#s([Boston caps building emissions. Farnsworth St is over.], stop: 1)[
+  #text(size: 15pt)[*BERDO*, Boston's building emissions law @berdo, gives every large building a yearly CO#sub[2] limit per square foot. The limit steps down every five years until it hits zero in 2050.]
+  #v(2pt)
   #let (xs, ys) = years-step(standards)
   #let p2 = float(case-row(55).intensity)
   #grid(
@@ -182,7 +216,7 @@
         xaxis: (ticks: (2025, 2030, 2035, 2040, 2045, 2050), subticks: none),
         yaxis: (subticks: none),
         legend: (position: bottom + left, stroke: none, fill: white.transparentize(10%)),
-        lq.plot(xs, ys, step: end, mark: none, stroke: 2pt + navy, label: [BERDO office limit]),
+        lq.plot(xs, ys, step: end, mark: none, stroke: 2pt + navy, label: [Boston's limit for offices]),
         lq.plot(
           (2025, 2052),
           (stats.case_intensity, stats.case_intensity),
@@ -198,16 +232,15 @@
           label: [With heat-pump Package 2 (2.39)],
         ),
       )),
-      caption: [Office emissions limit by BERDO period @berdo-standards vs. 24–32 Farnsworth St.],
+      caption: [BERDO limit for offices @berdo-standards vs. 24–32 Farnsworth St, Fort Point.],
     ),
     {
       set text(size: 15pt)
-      [*24–32 Farnsworth St*, Fort Point. #str(calc.round(stats.case_gfa_sqft / 1000)) k ft² of mostly office space.]
-      v(6pt)
+      v(10pt)
       list(
-        [Today *#stats.case_intensity*, limit *3.2*.],
-        [Package 2 (LED + heat pumps): *2.39*.],
-        [#thousands(case-row(55).installed_cost_mid_usd) to install, or about \$30k a year in ACP.],
+        [Puts out *#stats.case_intensity*. The 2030 limit is *3.2*.],
+        [New LED lights + heat pumps: *2.39*.],
+        [That costs #thousands(case-row(55).installed_cost_mid_usd). Or pay the city about \$30k a year.],
       )
     },
   )
@@ -215,7 +248,7 @@
   #takeaway[One upgrade gets this building compliant for a decade. *Is it worth it, or should the owner just pay?*]
 ]
 #speaker-note[
-  This is 24 Farnsworth Street in Fort Point, about 79 thousand square feet. It puts out 4.8 kilos per square foot a year, and in 2030 the limit drops to 3.2. So it's over. But it's not hopeless. The blue line is LED lighting plus heat pumps, and that puts it under the line until 2040. Install cost is about seven hundred thousand. The alternative is writing the city a check for about thirty thousand a year. That's the whole project in one building.
+  Boston's law is called BERDO. Every big building gets a carbon limit per square foot, and the dark line shows it stepping down to zero by 2050. Farnsworth Street puts out 4.8 kilos per square foot a year, and in 2030 the limit drops to 3.2. So it's over. But it's not hopeless. The blue line is LED lighting plus heat pumps, and that puts it under the line until 2040. Install cost is about seven hundred thousand. The alternative is writing the city a check for about thirty thousand a year. That's the whole project in one building.
 ]
 
 // ---- 3. the decision -------------------------------------------------------
@@ -229,7 +262,7 @@
     {
       text(size: 21pt, weight: "bold", fill: c-gray.darken(30%))[Pay]
       v(4pt)
-      [*\$#stats.acp_usd_per_t per ton* of CO#sub[2]e over the limit, every year @berdo-acp.]
+      [An *Alternative Compliance Payment (ACP)*: *\$#stats.acp_usd_per_t per ton* of CO#sub[2] over the limit, every year @berdo-acp.]
       v(6pt)
       text(fill: ink-2)[Cheap now. Grows as the limit drops every five years.]
     },
@@ -242,7 +275,7 @@
           align: (left, left),
           inset: (x: 6pt, y: 4pt),
           table.hline(stroke: 0.8pt),
-          table.header([Kind], [ComStock upgrade @comstock]),
+          table.header([], [Retrofit]),
           table.hline(stroke: 0.5pt),
           [Single], [LED · wall insulation · roof insulation · windows],
           [Pkg 1], [Envelope: walls + roof + windows],
@@ -258,38 +291,39 @@
   #takeaway[Fixing costs more up front and saves every year after. *So the answer depends on how far ahead you look.*]
 ]
 #speaker-note[
-  Scope first, since that tripped people up last time. We started out pitching universities, but campuses are labs and dorms that ComStock barely simulates. Offices have the most complete BERDO reporting. We match 297 offices, and 99 are over the 2030 limit. Those 99 have two kinds of choices. Pay 234 dollars a ton you're over, every year. Or fix the building with one of eight ComStock retrofits, from LED bulbs to the whole works. Paying is cheap now and gets worse every five years. So it's a timing question.
+  We look at Boston's offices, because they report the most complete data. That's 297 buildings, and 99 of them are over the 2030 limit. Those 99 have two kinds of choices. Pay the city 234 dollars for every ton they're over, every year. That's called an Alternative Compliance Payment, or ACP. Or fix the building with one of eight retrofits, from LED bulbs up to the whole works. Paying is cheap now and gets worse every five years. So it's a timing question.
 ]
 
 // ---- 4. formula -------------------------------------------------------------
 
-#s([We score each option by its 20-year cost], stop: 3)[
+#s([We compare options by their total cost over 20 years], stop: 3)[
   #set text(size: 15pt)
-  #align(center, block(inset: 12pt, radius: 6pt, stroke: 0.6pt + rule, text(size: 19pt)[
+  #align(center, block(inset: 8pt, radius: 6pt, stroke: 0.6pt + rule, text(size: 16pt)[
     $
-      "Cost" = underbrace(C_"equipment", "BTB prices" \ "and lifetimes")
-      + sum_(t=1)^(20) (overbrace(E_t, "energy bills" \ "(EIA prices)" #cite(<eia-prices>)) + overbrace(P_t, "ACP or" \ "carbon cost")) / (1+r)^t
+      "Cost" = underbrace(C_"equipment", "install + replace" \ "when worn out")
+      + sum_(t=1)^(20) (overbrace(E_t, "energy bills" \ "in year" t) + overbrace(P_t, "emissions cost" \ "in year" t)) / underbrace((1+r)^t, "future dollars" \ "count less")
     $
   ]))
-  #v(6pt)
+  #v(10pt)
   #figure(
     table(
       columns: (auto, 1fr, 1fr),
       align: (left, left, left),
+      inset: (x: 8pt, y: 3pt),
       table.hline(stroke: 0.8pt),
-      table.header([], [Owner], [Society]),
+      table.header([], [Owner's view], [Society's view]),
       table.hline(stroke: 0.5pt),
-      [Discount rate $r$], [7%], [2%],
-      [Emissions cost $P_t$], [ACP on tons *over the limit*], [\$230/t on *all* tons @epa-scghg],
+      [Emissions cost $P_t$], [ACP on tons *over the limit*], [\$230 per ton on *every* ton (climate damage) @epa-scghg],
+      [Discount rate $r$], [7% (future dollars worth less)], [2%],
       table.hline(stroke: 0.8pt),
     ),
-    caption: [Two ways to price the same building (EN 15459 global cost @en15459 @eu-cost-optimal). Equipment costs from BTB @btb; oil prices from Mass. DOER @doer-oil.],
+    caption: [Two points of view on the same building. Formula: EN 15459 global cost @en15459 @eu-cost-optimal. Equipment: NLR Buildings Technology Baseline @btb. Energy: Massachusetts prices @eia-prices @doer-oil.],
   )
   #v(1fr)
-  #takeaway[*Why:* EN 15459 is the EU's standard method for cost-optimal upgrades. Same pick at low, mid and high equipment costs for *#stats.robust_to_cost of #stats.matched* buildings.]
+  #takeaway[Equipment prices are benchmarks, not quotes. But *#stats.robust_to_cost of #stats.matched* buildings get the same pick at low, mid or high prices.]
 ]
 #speaker-note[
-  How do you compare a one-time install against a check every year? We use global cost from EN 15459, which is what the EU uses for cost-optimal building rules, so we didn't invent our own. Equipment comes from NLR's Buildings Technology Baseline, including replacing things that wear out. Energy bills use Massachusetts commercial prices, so heat pumps pay for pricier electricity. We run it twice. The owner pays ACPs at 7 percent. Society pays the social cost of carbon on every ton at 2 percent. BTB prices are benchmarks, not quotes, but 209 of 297 buildings get the same answer at low or high costs.
+  How do you compare a one-time install against a check every year? Add everything up over 20 years: equipment, including replacing what wears out; energy bills, so heat pumps pay for pricier electricity; and an emissions cost. Then we look at it two ways. The owner pays the ACP on tons over the limit, and cares a lot about money now. Society counts climate damage on every ton and is more patient. The formula isn't ours. It's EN 15459, the European standard for comparing building upgrades. Equipment prices are benchmarks, but for 209 of 297 buildings the answer holds at low or high prices.
 ]
 
 // ---- 5. matching ------------------------------------------------------------
@@ -306,32 +340,40 @@
   fill: fill,
 )
 
-#s([Each real building borrows results from its 10 closest simulations], stop: 4)[
+#s([Real buildings borrow retrofit results from similar simulated ones], stop: 4)[
+  #set text(size: 15pt)
+  #grid(
+    columns: (1fr, 1fr), column-gutter: 24pt,
+    [*BERDO* @berdo has real buildings, but nothing on what a retrofit would do to them.],
+    [*ComStock* @comstock, from a national lab, simulates retrofits, but only on made-up buildings.],
+  )
+  #v(6pt)
   #figure(
     diagram(
       spacing: (10pt, 10pt),
       edge-stroke: 1pt + navy,
-      mnode((0, 0), [① BERDO office @berdo], [real building], <b>, fill: green-box),
-      mnode((1, 0), [② Filter], [same building type in ComStock], <f>),
-      mnode((2, 0), [③ Rank], [by distance $d(b,c)$], <d>),
-      mnode((3, 0), [④ Keep $k = 10$], [pool their upgrade results], <k>),
-      mnode((4, 0), [⑤ Apply], [ComStock savings % to real fuel use], <r>, fill: green-box),
+      mnode((0, 0), [① Real office], [from BERDO], <b>, fill: green-box),
+      mnode((1, 0), [② Same type], [simulated offices only], <f>),
+      mnode((2, 0), [③ Most similar], [size, energy use per ft², fuel mix], <d>),
+      mnode((3, 0), [④ Keep 10], [average their savings], <k>),
+      mnode((4, 0), [⑤ Apply], [those % savings to the real building], <r>, fill: green-box),
       edge(<b>, <f>, "-|>"),
       edge(<f>, <d>, "-|>"),
       edge(<d>, <k>, "-|>"),
       edge(<k>, <r>, "-|>"),
     ),
-    caption: [Matching BERDO buildings to ComStock simulations (k-nearest neighbors). Read left to right.],
+    caption: [Matching each real building to its 10 most similar simulated buildings (k-nearest neighbors). Read left to right.],
   )
-  #v(8pt)
+  #v(4pt)
   #align(center, text(size: 17pt)[
-    $ d(b,c) = underbrace(abs(ln A_b/A_c), "size") + underbrace(abs(ln "EUI"_b/"EUI"_c), "energy intensity") + underbrace(1/2 sum_f abs(s_(b,f) - s_(c,f)), "fuel mix") $
+    $ "distance"(b,c) = underbrace(abs(ln A_b/A_c), "size") + underbrace(abs(ln "EUI"_b/"EUI"_c), "energy use per ft²") + underbrace(1/2 sum_f abs(s_(b,f) - s_(c,f)), "fuel mix") $
   ])
+  #align(center, text(size: 13pt, fill: ink-2)[$b$ = real building, $c$ = simulated one. Logs make "twice as big" count the same for a small or a huge building.])
   #v(1fr)
-  #takeaway[*Why $k = 10$:* with one match, #calc.round(float(ksens.at(0).different_recommendations) / float(ksens.at(0).compliant_buildings_compared) * 100)% of recommendations change. By $k = 9$ only #calc.round(float(ksens.at(8).different_recommendations) / float(ksens.at(8).compliant_buildings_compared) * 100)% do.]
+  #takeaway[*Why 10:* with one match, #calc.round(float(ksens.at(0).different_recommendations) / float(ksens.at(0).compliant_buildings_compared) * 100)% of recommendations change. With nine, only #calc.round(float(ksens.at(8).different_recommendations) / float(ksens.at(8).compliant_buildings_compared) * 100)% do.]
 ]
 #speaker-note[
-  ComStock knows what a heat pump does, but only for fake buildings. BERDO has real buildings and no idea what a heat pump would do for them. So we match. Filter ComStock to the same building type, rank by size, energy intensity and fuel mix, keep the ten closest, and apply their percent savings per fuel to the real building. Logs mean twice as big counts the same at 20 thousand or a million square feet. And it's k-nearest neighbors, not k-means. Why ten? With one match a third of the picks flip. By nine it's one in twenty.
+  Here's the data problem. BERDO has real buildings but no idea what a heat pump would do for them. ComStock, from a national lab, knows exactly what a heat pump does, but only for simulated buildings. So we match. For each real office, we look at simulated offices, find the ten most similar by size, energy use per square foot, and fuel mix, and borrow their percent savings. Why ten? With one match, a third of the recommendations flip. With nine, it's one in twenty.
 ]
 
 // ---- 9. answer: across the 99 ---------------------------------------------
@@ -347,7 +389,7 @@
   #let swatch(c, t) = box(baseline: 1pt, rect(width: 11pt, height: 11pt, radius: 2pt, fill: c)) + h(4pt) + t
   #align(center, text(
     size: 13pt,
-    swatch(c-gray, [Pay ACP only])
+    swatch(c-gray, [Just pay])
       + h(18pt)
       + swatch(c-orange, [Retrofit, still over the limit])
       + h(18pt)
@@ -384,13 +426,13 @@
         })
         .flatten(),
     )),
-    caption: [Cheapest option for each of the #stats.over_limit over-limit offices, at mid energy and equipment prices. Owner: 7% discount, pays ACP. Society: 2% discount, \$230/t on all emissions.],
+    caption: [Cheapest 20-year option for each of the #stats.over_limit offices over the limit, at mid prices.],
   )
   #v(1fr)
   #takeaway[Over 5 years, *#stats.over_acp_5yr of #stats.over_limit* owners should just pay. Over 20, nobody should, but only *#outcomes.at(1).retrofit_compliant* pick a fix that actually meets the limit.]
 ]
 #speaker-note[
-  Here's the answer across all 99 over-limit offices. Top bar, the five-year view: for 66 of them the cheapest move is to just pay the ACP. Middle bar, same owners looking out 20 years: nobody should only pay. Energy savings add up. But look at the orange. Most owners' cheapest retrofit is something like wall insulation, which saves money and still leaves them over the limit. Only 24 land on a fix that gets them compliant. Bottom bar, society's view, gets you to 35.
+  Here's the answer across all 99 offices that are over the limit. Top bar, the five-year view: for 66 of them the cheapest move is to just pay the ACP. Middle bar, same owners looking out 20 years: nobody should only pay. Energy savings add up. But look at the orange. Most owners' cheapest retrofit is something like wall insulation, which saves money and still leaves them over the limit. Only 24 land on a fix that gets them compliant. Bottom bar, society's view, gets you to 35.
 ]
 
 // ---- 10. answer: the case --------------------------------------------------
@@ -411,7 +453,7 @@
         width: 13cm,
         height: 6.4cm,
         ylim: (-380, 500),
-        ylabel: [Cost vs. paying ACP (\$ thousands)],
+        ylabel: [Cost vs. just paying (\$ thousands)],
         xaxis: (ticks: xs.zip(lenses.map(l => l.at(1))), subticks: none),
         yaxis: (subticks: none, exponent: 0),
         legend: (position: top + right, stroke: none),
@@ -432,7 +474,7 @@
           })
           .flatten(),
       )),
-      caption: [24–32 Farnsworth St: each option's cost minus the cost of paying ACP only. Below zero means cheaper than paying.],
+      caption: [24–32 Farnsworth St: each retrofit's cost minus the cost of just paying. Below zero means cheaper than paying.],
     ),
     {
       set text(size: 14.5pt)
@@ -452,7 +494,7 @@
 
 // ---- 11. answer: break-even ACP -------------------------------------------
 
-#s([The ACP would need to be about 2.4× higher to tip the typical building], stop: 5)[
+#s([The payment would need to be about 2.4× higher to tip the typical building], stop: 5)[
   #let edges = (0, 234, 500, 1000, 2000, 1e9)
   #let labels = ([≤ \$234 \ (today)], [\$234–500], [\$500–1k], [\$1k–2k], [> \$2k])
   #let counts = range(5).map(i => breakeven
@@ -465,10 +507,10 @@
     figure(
       chart(lq.diagram(
         width: 13cm,
-        height: 6cm,
+        height: 5.4cm,
         ylim: (0, 29),
         ylabel: [Buildings],
-        xlabel: [Break-even ACP (\$/t CO#sub[2]e)],
+        xlabel: [Break-even payment (\$ per ton)],
         xaxis: (ticks: xs.zip(labels), subticks: none),
         yaxis: (subticks: none),
         lq.bar(xs, counts, width: 0.7, stroke: 1.5pt + white, fill: counts
@@ -479,14 +521,14 @@
           weight: "bold",
         )[#counts.at(i)]))),
       )),
-      caption: [Break-even ACP for the #stats.with_compliant_option over-limit offices that have at least one compliant retrofit (20-year owner view, mid prices).],
+      caption: [Payment per ton at which a retrofit that meets the limit becomes the owner's cheapest option (#stats.with_compliant_option offices).],
     ),
     {
       set text(size: 14.5pt)
       list(
         [Median: *\$#calc.round(stats.breakeven_median)/t*.],
         [*#stats.breakeven_le_current* already tip at \$234.],
-        [#(stats.over_limit - stats.with_compliant_option) have *no* compliant option at any price.],
+        [#(stats.over_limit - stats.with_compliant_option) more have *no* retrofit that meets the limit.],
       )
     },
   )
@@ -494,7 +536,7 @@
   #takeaway[Today's ACP is set below what it takes to make compliance the cheaper choice for most offices.]
 ]
 #speaker-note[
-  So how high would the payment need to be? Each option's 20-year cost is a straight line in the ACP rate, so for every building we can solve for the rate where a compliant retrofit becomes cheapest. The blue bar is the 24 that already tip at 234. The median is about 570 dollars a ton, so roughly two and a half times today's rate. And 24 buildings have no compliant option in our eight at all. Raising the ACP on them is just a tax unless deeper retrofits are on the table.
+  So how high would the payment need to be? For every building we raise the payment until a retrofit that meets the limit becomes the cheapest option. The blue bar is the 24 that already tip at 234. The median is about 570 dollars a ton, so roughly two and a half times today's rate. And 24 buildings have no compliant option in our eight at all. Raising the ACP on them is just a tax unless deeper retrofits are on the table.
 ]
 
 // ---- 12. discussion --------------------------------------------------------
@@ -515,17 +557,17 @@
     {
       text(size: 19pt, weight: "bold", fill: c-orange.darken(15%))[What we don't trust yet]
       list(
-        [Wall insulation wins too often. Checking BTB costs.],
-        [Prices and grid held flat (Cambium @cambium next).],
-        [No MACC baseline or portfolio blending yet.],
+        [Wall insulation wins too often. Checking its cost.],
+        [Energy prices and grid held at today's levels.],
+        [Not yet compared with ranking fixes by cost per ton.],
       )
     },
   )
   #v(1fr)
-  #takeaway[*Next:* MACC baseline, Cambium grid forecasts, then a multi-year plan that picks *what* and *when* under a budget.]
+  #takeaway[*Next:* compare with cost-per-ton ranking, add a cleaner-grid forecast @cambium, then plan *what* to fix and *when* under a budget.]
 ]
 #speaker-note[
-  So what does it mean? First, when you look decides the answer. A five-year budget says pay, a twenty-year plan says retrofit. Second, cheapest isn't compliant. And the ACP is about 40 percent of what it'd need to be to change that for a typical office. What I don't trust yet: wall insulation wins way too often, so we're checking whether BTB underprices it. Prices and the grid are flat. We still owe you the MACC baseline. And BERDO lets owners blend buildings into one portfolio, which we haven't modeled. Thanks. Happy to take questions.
+  So what does it mean? First, when you look decides the answer. A five-year budget says pay, a twenty-year plan says retrofit. Second, cheapest isn't compliant. And the ACP is about 40 percent of what it'd need to be to change that for a typical office. What I don't trust yet: wall insulation wins way too often, so we're checking whether its cost data is too low. Prices and the grid are frozen at today's levels, and the grid is getting cleaner. And the usual way people pick retrofits is ranking them by cost per ton. We haven't compared against that yet. That's next. Thanks. Happy to take questions.
 ]
 
 // ---- references ------------------------------------------------------------
