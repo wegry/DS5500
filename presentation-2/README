@@ -1,0 +1,8 @@
+# Building
+
+From the repo root, run:
+
+```sh
+uv run python presentation-2/make_data.py
+uv run touying compile --root . --format pptx presentation-2/slides.typ --output team-7.pptx
+```

@@ -1,0 +1,13 @@
+{
+  "matched": 297,
+  "over_limit": 99,
+  "over_acp_5yr": 66,
+  "robust_to_cost": 209,
+  "with_compliant_option": 75,
+  "breakeven_le_current": 24,
+  "breakeven_median": 571.4,
+  "acp_usd_per_t": 234,
+  "case_address": "24-32 Farnsworth St",
+  "case_gfa_sqft": 78860,
+  "case_intensity": 4.8
+}

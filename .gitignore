@@ -231,3 +231,5 @@ dbt/target/
 
 # macOS stuff
 .DS_Store
+~$*.pptx
+*.pptx
