@@ -1,0 +1,10 @@
+upgrade_id,upgrade_name,projected_ghg,meets_standard,installation_usd,acp_5yr_usd,energy_5yr_usd,total_5yr_usd,cost_rank_mid
+0,No upgrade,4.8,False,0.0,147776.15,1243532.68,1391308.83,1
+48,Wall Insulation,4.52,False,75248.48,122057.67,1203701.34,1401007.49,2
+49,Roof Insulation,4.65,False,62614.73,133661.56,1222036.47,1418312.77,3
+43,LED Lighting,4.8,False,96364.39,147933.8,1208208.68,1452506.87,4
+55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",2.39,True,703277.58,0.0,1110282.22,1813559.8,5
+57,"Package 4, Package 2 with Standard Performance HP RTU",2.39,True,703277.58,0.0,1110282.22,1813559.8,6
+52,New Windows,4.52,False,1432165.63,121929.17,1193767.22,2747862.02,7
+54,"Package 1, Wall + Roof Insulation + New Windows",4.1,False,1570028.85,82891.78,1134780.99,2787701.62,8
+56,"Package 3, Package 1 + Package 2",2.17,True,2273306.43,0.0,1019519.53,3292825.96,9
