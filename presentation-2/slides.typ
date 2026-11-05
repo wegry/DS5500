@@ -251,6 +251,196 @@
   Boston's law is called BERDO. Every big building gets a carbon limit per square foot, and the dark line shows it stepping down to zero by 2050. Farnsworth Street puts out 4.8 kilos per square foot a year, and in 2030 the limit drops to 3.2. So it's over. But it's not hopeless. The blue line is LED lighting plus heat pumps, and that puts it under the line until 2040. Install cost is about seven hundred thousand. The alternative is writing the city a check for about thirty thousand a year. That's the whole project in one building.
 ]
 
+
+ // ---- BERDO data exploration --------------------------------------------
+
+#s([Why focus on Boston office buildings?], stop: 1)[
+  #set text(size: 15pt)
+
+  BERDO contains *5,591 building records*, but the
+  availability of emissions data varies substantially
+  across building types.
+
+  #v(12pt)
+
+  #let categories = (
+    ("Multifamily", 72.1),
+    ("Office", 70.7),
+    ("College / University", 17.1),
+    ("K–12 School", 10.6),
+  )
+
+  #figure(
+    {
+      for (name, pct) in categories {
+        grid(
+          columns: (5cm, 1fr, 1.5cm),
+          column-gutter: 12pt,
+          align: (left + horizon, left + horizon, right + horizon),
+          text(size: 15pt, weight: if name == "Office" {
+            "bold"
+          } else {
+            "regular"
+          })[#name],
+          block(
+            width: 100%,
+            height: 17pt,
+            fill: rule,
+            radius: 3pt,
+            {
+              rect(
+                width: pct * 1%,
+                height: 100%,
+                fill: if name == "Office" { c-blue } else { c-gray },
+                radius: 3pt,
+              )
+            },
+          ),
+          text(size: 15pt, weight: "bold")[#pct%],
+        )
+        v(12pt)
+      }
+    },
+    caption: [Share of BERDO records with reported GHG intensity,
+      for selected building categories.],
+  )
+
+  #v(1fr)
+  #takeaway[
+    Office buildings offer relatively high completeness
+  across key emissions and compliance fields, making
+  them suitable for our BERDO–ComStock analysis.
+  ]
+]
+
+
+#speaker-note[
+  We began by exploring Boston's BERDO dataset,
+  which contains 5,591 building records across
+  numerous property types.
+
+  Our first challenge was identifying a building
+  category with sufficiently complete information
+  to support the analysis.
+
+  We examined data completeness across several
+  important fields, including GHG intensity,
+  total greenhouse gas emissions, and applicable
+  emissions compliance standards.
+
+  Office buildings stood out because they had
+  relatively high completeness across these
+  fields, not just one individual measurement.
+
+  For example, approximately 71 percent of office
+  records contained reported GHG intensity,
+  compared with 17 percent for college and
+  university buildings and 11 percent for K–12
+  schools.
+
+  Multifamily buildings also had relatively high
+  completeness, but offices provided a substantial
+  sample of commercial buildings with the data
+  needed for our analysis.
+
+  This made offices a suitable starting point for
+  integrating BERDO observations with ComStock
+  simulations and evaluating retrofit alternatives.
+]
+
+
+ // ---- BERDO 2030 compliance analysis -------------------------------------
+
+
+#s([How many offices exceed the 2030 benchmark?], stop: 1)[
+  #set text(size: 15pt)
+
+  BERDO reports building-level GHG intensity,
+  which we compare against the 2030 office standard
+  of *3.2 kgCO2e/ft²/year*.
+
+  #v(12pt)
+
+  #grid(
+    columns: (1.55fr, 1fr),
+    gutter: 22pt,
+    align: center + horizon,
+
+    // Left: emissions distribution
+    [
+      #image(
+        "img/berdo-intensity-vs-benchmark.png",
+        width: 100%,
+        height: 7.1cm,
+        fit: "contain",
+      )
+    ],
+
+    // Right: key finding
+    [
+      #align(center)[
+        #text(
+          size: 40pt,
+          weight: "bold",
+          fill: c-blue,
+        )[33.1%]
+
+        #v(1pt)
+
+        #text(size: 17pt, weight: "bold")[
+          Exceed the 2030 benchmark
+        ]
+
+        #v(1pt)
+
+        #text(size: 14pt)[
+          96 of 290 offices with reported
+          GHG intensity
+        ]
+      ]
+    ],
+  )
+
+  #v(1fr)
+
+  #takeaway[
+    Approximately one-third of reporting office
+    buildings exceed the 2030 emissions benchmark,
+    motivating the evaluation of cost-effective
+    retrofit alternatives.
+  ]
+]
+
+#speaker-note[
+  After selecting offices as our focus,
+  we examined their reported greenhouse gas
+  emissions intensities.
+
+  The histogram shows the distribution of
+  reported GHG intensity among office buildings.
+
+  The dashed red line represents the 2030
+  BERDO office benchmark of 3.2 kilograms
+  of CO2 equivalent per square foot per year.
+
+  Of the 410 office records in our initial
+  exploratory subset, 290 reported GHG
+  intensity values.
+
+  Among these 290 buildings, 96, or 33.1
+  percent, exceeded the 2030 benchmark.
+
+  These findings are based on observed
+  BERDO disclosures rather than modeled
+  retrofit outcomes.
+
+  This motivates the next part of our work:
+  estimating which retrofits could reduce
+  emissions sufficiently and whether those
+  investments are financially preferable
+  to Alternative Compliance Payments.
+]
+
 // ---- 3. the decision -------------------------------------------------------
 
 #s([#stats.over_limit of #stats.matched Boston offices must pay or fix by 2030], stop: 2)[
