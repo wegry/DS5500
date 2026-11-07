@@ -1,5 +1,5 @@
 -- The var("decision_period_start") retrofit decision for each matched BERDO building: the
--- four packages in comstock_package_components plus no retrofit (upgrade 0), each costed
+-- upgrades in comstock_package_components plus no retrofit (upgrade 0), each costed
 -- over the 5-year standards period as installed cost + Alternative Compliance Payments on
 -- the emissions still over the limit + energy bills. Emissions, energy use, prices and the
 -- ACP rate are held constant across the period, installation is a one-time cost at its
@@ -69,13 +69,14 @@ options as (
           co.upgrade_id = 0
           or co.upgrade_id in (select upgrade_id from {{ ref('comstock_package_components') }})
       )
+      -- the expanded upgrades are offered only where some matched model applies them
       and (
-        co.upgrade_id not in (12, 29, 46, 58, 65)
-        or (
-            coalesce(sc.applicable_share, 0) > 0
-            and coalesce(p.installed_cost_mid_usd, 0) > 0
-        )
-    )
+          co.upgrade_id not in ({{ var("expanded_upgrade_ids") | join(", ") }})
+          or (
+              coalesce(sc.applicable_share, 0) > 0
+              and coalesce(p.installed_cost_mid_usd, 0) > 0
+          )
+      )
 ),
 
 energy as (

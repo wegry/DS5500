@@ -17,13 +17,14 @@ seeds:
         data_tests: [unique, not_null]
   - name: comstock_package_components
     description: >
-      The four ComStock retrofit packages compared for 2030 compliance, broken into the
+      The ComStock retrofit upgrades compared for 2030 compliance, broken into the
       measures they apply (named by ComStock's applicability.* columns) and the 2024 BTB
       technology costed for each. ComStock does not name equipment, so the BTB choices are
       proxies: a double-pane aluminum-frame window for AEDG windows, the cold-climate RTU
       heat pump for the variable-speed HP RTU, the hydronic heat pump (priced per ton of
       cooling, sized from heating capacity) for HP boilers, and an LED troffer/panel for
-      LED lighting.
+      LED lighting. Negative btb_measure_ids are costs imputed from outside BTB (see
+      imputed_component_costs and the *_COST_SOURCES.md notes).
     columns:
       - name: btb_measure_id
         data_tests:
