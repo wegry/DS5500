@@ -19,3 +19,5 @@ upgrade_id,package_name,component,measure,btb_measure_id
 49,"Individual Roof Insulation",Roof insulation,roof_insulation_aedg,93
 52,"Individual New Windows",New windows,env_new_aedg_windows,54
 12,"Individual VRF with DOAS",VRF with DOAS,hvac_vrf_hr_doas,9
+29,"Individual Packaged Geothermal Heat Pump",Heat pump,add_packaged_gshp,10
+29,"Individual Packaged Geothermal Heat Pump",Imputed ground loop,gshp_ground_loop,-29

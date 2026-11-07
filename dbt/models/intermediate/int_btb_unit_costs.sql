@@ -13,6 +13,7 @@ with technologies as (
             when metric_1_unit = 'Lumens' and metric_2_unit = 'lm/W' then 'W'
         end as cost_unit,
         case
+            when btb_measure_id = 10 then metric_1_typical
             when typical_unit_abbreviation in ('ft2', 'ton') then typical_unit_multiplier
             when metric_1_unit = 'Tons' then metric_1_typical
             when metric_1_unit = 'Lumens' and metric_2_unit = 'lm/W'
@@ -32,3 +33,10 @@ select
     {% endfor -%}
     lifetime_years
 from technologies
+
+union all
+select
+    btb_measure_id, display_name, cost_unit, typical_quantity,
+    unit_cost_low_usd, unit_cost_mid_usd, unit_cost_high_usd,
+    lifetime_years
+from {{ ref('imputed_component_costs') }}
