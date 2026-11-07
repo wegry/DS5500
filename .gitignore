@@ -226,10 +226,22 @@ dbt/*.duckdb.wal
 dbt/.user.yml
 dbt/target/
 **/logs/
-# Local datasets
-/data/
+# Local datasets. Only the downloaded scenario sources in data/raw are tracked
+# (see data/raw/SOURCES.md); everything else in data/ stays local.
+/data/*
+!/data/raw/
+/data/raw/*
+!/data/raw/SOURCES.md
+!/data/raw/cambium/
+!/data/raw/eia_aeo2026/
+!/data/raw/berdo_policies/
+!/data/raw/ma_rps/
 
 # macOS stuff
 .DS_Store
 ~$*.pptx
 *.pptx
+
+# Source PDFs for the energy scenarios (see data/raw/SOURCES.md)
+!/data/raw/berdo_policies/*.pdf
+!/data/raw/eia_aeo2026/*.pdf

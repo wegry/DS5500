@@ -105,21 +105,36 @@ write_csv(
     """,
 )
 
-# 20-year outcomes under each energy scenario (dbt/seeds/energy_scenarios.csv, in seed order):
-# what the 99 over-limit offices' cheapest option is, and Farnsworth's pick.
+# 20-year outcomes under each energy scenario (dbt/seeds/energy_scenarios.csv, in seed order)
+# for the 99 offices over the 2030 limit at today's emissions factors: those already under it
+# in 2030 with no retrofit once BERDO's factor falls, and for the rest, whether the cheapest
+# option is paying, a retrofit still over the limit, or a compliant one. Plus Farnsworth's pick.
 scen_order = [r["scenario"] for r in rows(f"select scenario from read_csv('{ROOT / 'dbt' / 'seeds' / 'energy_scenarios.csv'}')")]
 order_case = " ".join(f"when '{sc}' then {i}" for i, sc in enumerate(scen_order))
 write_csv(
     "scenarios.csv",
     f"""
+    with g as (
+        select * from berdo_global_cost
+        where energy_price = 'mid' and {OVER}
+    ), already as (
+        -- under the 2030 limit with no retrofit, as BERDO counts emissions in this scenario
+        select scenario, berdo_id from g
+        where upgrade_id = 0 and perspective = 'financial' and meets_standard_at_start
+    )
     select g.scenario, any_value(s.label) as label, case g.scenario {order_case} end as ord,
         g.perspective,
-        count(*) filter (where g.upgrade_id = 0) as acp_only,
-        count(*) filter (where g.upgrade_id <> 0 and not g.meets_standard_at_start) as retrofit_over,
-        count(*) filter (where g.upgrade_id <> 0 and g.meets_standard_at_start) as retrofit_compliant,
+        count(*) filter (where a.berdo_id is not null) as under_limit_anyway,
+        count(*) filter (where a.berdo_id is null and g.upgrade_id = 0) as acp_only,
+        count(*) filter (where a.berdo_id is null and g.upgrade_id <> 0 and not g.meets_standard_at_start)
+            as retrofit_over,
+        count(*) filter (where a.berdo_id is null and g.upgrade_id <> 0 and g.meets_standard_at_start)
+            as retrofit_compliant,
         any_value(g.upgrade_name) filter (where g.berdo_id = {CASE_ID}) as case_pick
-    from berdo_global_cost g join energy_scenarios s using (scenario)
-    where g.cost_rank_mid = 1 and g.energy_price = 'mid' and {OVER.replace("berdo_id", "g.berdo_id", 1)}
+    from g
+    join energy_scenarios s using (scenario)
+    left join already a on a.scenario = g.scenario and a.berdo_id = g.berdo_id
+    where g.cost_rank_mid = 1
     group by g.scenario, g.perspective
     order by ord, g.perspective
     """,

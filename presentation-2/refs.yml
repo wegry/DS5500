@@ -21,10 +21,46 @@ comstock:
 
 
 cambium:
-  type: web
-  author: National Laboratory of the Rockies
-  title: Cambium
-  url: https://scenarioviewer.nlr.gov
+  type: repository
+  author:
+    - "Gagnon, Pieter"
+    - "Sanchez Perez, Pedro Andres"
+    - "Florez, Julian"
+    - "Morris, James"
+    - "Llerena Velasquez, Marck"
+    - "Eisenman, Jordan"
+  title: "Cambium 2024 Data: annual, all scenarios, GEA regions (ISO-NE average emission rate)"
+  publisher: National Laboratory of the Rockies
+  date: 2025
+  url:
+    value: https://scenarioviewer.nlr.gov/
+    date: 2026-11-07
+
+aeo2026:
+  type: repository
+  author: U.S. Energy Information Administration
+  title: "Annual Energy Outlook 2026, Table 3.1: Energy Prices by Sector and Source, New England (all cases)"
+  date: 2026-04-08
+  url:
+    value: https://www.eia.gov/outlooks/aeo/data/browser/#/?id=3-AEO2026&region=1-1
+    date: 2026-11-07
+
+berdo-grid:
+  type: report
+  author: City of Boston
+  title: "BERDO Policies & Procedures, Version 4 (adopted by the BERDO Review Board), Appendix B: Projected Grid Emissions Factors"
+  date: 2026-04-13
+  url:
+    value: https://www.boston.gov/sites/default/files/file/2026/04/2026%20Draft%20Policies%20and%20Procedures%20Final.pdf
+    date: 2026-11-07
+
+ma-rps:
+  type: legislation
+  author: Massachusetts Department of Energy Resources
+  title: "225 CMR 14.07: Renewable Energy Portfolio Standard, Class I Minimum Standard"
+  url:
+    value: https://www.law.cornell.edu/regulations/massachusetts/225-CMR-14-07
+    date: 2026-11-07
 
 
 berdo-standards:

@@ -1,7 +1,8 @@
-scenario,label,electricity_ef_decline,electricity_price_growth,fuel_price_growth,basis
-frozen,Today's levels,0,0,0,"The original model: emissions factors and real prices held at today's level for all 20 years"
-grid_3,Grid 3%/yr cleaner,0.03,0,0,"Illustrative, not from Cambium: BERDO's electricity factor falls 3% a year from 2030 (-44% by 2049)"
-grid_6,Grid 6%/yr cleaner,0.06,0,0,"Illustrative, not from Cambium: BERDO's electricity factor falls 6% a year from 2030 (-69% by 2049)"
-elec_up,Electricity +1.5%/yr,0,0.015,0,"Illustrative: electricity (and district cooling) prices rise 1.5% a year above inflation from 2030"
-fuel_up,Gas & oil +1.5%/yr,0,0,0.015,"Illustrative: natural gas, oil and district steam prices rise 1.5% a year above inflation from 2030"
-grid_3_elec_up,Grid 3% + electricity 1.5%,0.03,0.015,0,"Illustrative: the cleaner grid comes with rising electricity prices"
+scenario,label,aeo_case,cambium_scenario,berdo_grid_schedule,basis
+frozen,Today's levels,,,false,"The original model: BERDO emissions factors, grid emissions and real energy prices held at today's (2025) level for all 20 years"
+projected,AEO baseline prices,cb2026,MidCase,true,"BERDO's projected grid factor and RPS Class I schedule for compliance; Cambium 2024 Mid-case ISO-NE average emission rate for society; AEO2026 Counterfactual Baseline New England commercial prices"
+lowogs,High prices (low oil & gas supply),lowogs,MidCase,true,"As projected, with AEO2026 Low Oil and Gas Supply prices (50% less recoverable US oil and gas): gas +59% and electricity +24% by 2049"
+highogs,Low prices (high oil & gas supply),highogs,MidCase,true,"As projected, with AEO2026 High Oil and Gas Supply prices (50% more recoverable US oil and gas)"
+higheldmd,Data-center demand (high electricity demand),higheldmd,MidCase,true,"As projected, with AEO2026 High Electricity Demand prices (exponential AI server growth)"
+berdo_only,BERDO grid schedule only,,MidCase,true,"Decomposition: BERDO's projected grid factor and RPS schedule (and Cambium for society), energy prices held at 2025"
+prices_only,AEO prices only,cb2026,,false,"Decomposition: AEO2026 Counterfactual Baseline prices, BERDO factor and grid held at 2025"

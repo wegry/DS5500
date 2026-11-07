@@ -10,20 +10,29 @@
 -- one is credited its straight-line remaining value at the horizon. Running costs fall at
 -- the end of each year. The equipment the no-retrofit option keeps is never replaced, which
 -- favors that option.
--- Energy scenarios (energy_scenarios seed): each year t, the electricity share of a
--- building's emissions falls by electricity_ef_decline a year (a cleaner grid, applied to
--- BERDO's electricity factor), and electricity and other fuel prices grow by their real
--- growth rates, all compounding from the decision year (t = 1 is today's level). Energy use
--- itself is held at the BERDO year's level. Scenario 'frozen' holds everything at today's
--- level and reproduces the original model; the others are illustrative sensitivities, not
--- Cambium or AEO projections.
+-- Energy scenarios (energy_scenarios seed) move three things year by year, each as an index
+-- relative to 2025, the BERDO data year; energy use itself stays at the BERDO year's level:
+--   * Compliance (owner): the electricity part of a building's BERDO emissions follows the
+--     City's projected grid factor x (1 - RPS Class I share) (berdo_projected_grid_factors,
+--     BERDO Policies & Procedures Appendix B and 225 CMR 14.07). The index assumes a
+--     building's BCCE/REC share stays the same fraction.
+--   * Climate damage (society): the electricity part follows NLR Cambium 2024's ISO-NE
+--     average emission rate for end-use load (cambium24_isone_aer, 5-year points
+--     interpolated linearly), since the real grid, not BERDO's accounting, does the damage.
+--   * Energy bills: electricity and district cooling follow AEO2026 New England commercial
+--     electricity; gas and district steam follow commercial natural gas; oil follows
+--     distillate (aeo2026_ne_commercial_prices). The low/mid/high price cases set the 2025
+--     level; the AEO case sets the path from there.
+-- Scenario 'frozen' holds all three at 2025 and reproduces the original model. Whether an
+-- option meets the standard at the start is checked in 2030 under each scenario.
 -- Grain: BERDO building x option x perspective x energy price case x energy scenario.
 {%- set costs = ["low", "mid", "high"] %}
 {%- set n = var("global_cost_years") %}
 {%- set start = var("decision_period_start") %}
 {%- set fuels = ["electricity", "natural_gas", "oil_propane", "district_heating", "district_cooling"] %}
-{#- fuels whose price follows electricity_price_growth; the rest follow fuel_price_growth #}
-{%- set electric = ["electricity", "district_cooling"] %}
+{#- which AEO2026 price series each fuel follows #}
+{%- set price_series = {"electricity": "electricity", "district_cooling": "electricity",
+    "natural_gas": "natural_gas", "district_heating": "natural_gas", "oil_propane": "distillate"} %}
 with perspectives as (
     select * from (values
         ('financial', {{ var("discount_rate_financial") }}),
@@ -36,7 +45,7 @@ price_cases as (
 ),
 
 scenarios as (
-    select scenario, electricity_ef_decline, electricity_price_growth, fuel_price_growth
+    select scenario, aeo_case, cambium_scenario, berdo_grid_schedule
     from {{ ref('energy_scenarios') }}
 ),
 
@@ -63,6 +72,57 @@ years as (
 
 options as (
     select * from {{ ref('berdo_decision_options') }}
+),
+
+-- BERDO's effective electricity factor: projected grid factor net of the RPS Class I share
+berdo_factor as (
+    select year, grid_factor_kg_per_mwh * (1 - rps_class_i_pct / 100) as kg_per_mwh
+    from {{ ref('berdo_projected_grid_factors') }}
+),
+
+-- Cambium's 5-year points, interpolated to every year of the horizon
+cambium as (
+    select
+        c0.cambium_scenario,
+        y.year,
+        c0.aer_load_co2e_kg_per_mwh
+            + (c1.aer_load_co2e_kg_per_mwh - c0.aer_load_co2e_kg_per_mwh)
+            * (y.year - c0.year) / (c1.year - c0.year) as kg_per_mwh
+    from years as y
+    inner join {{ ref('cambium24_isone_aer') }} as c0 on c0.year = y.year - y.year % 5
+    inner join {{ ref('cambium24_isone_aer') }} as c1
+        on c1.cambium_scenario = c0.cambium_scenario and c1.year = c0.year + 5
+),
+
+aeo as (
+    select aeo_case, fuel, year, usd2025_per_mmbtu from {{ ref('aeo2026_ne_commercial_prices') }}
+),
+
+-- each scenario's indices for each year, relative to 2025 (1 everywhere for 'frozen')
+scenario_years as (
+    select
+        s.scenario,
+        y.t,
+        y.year,
+        case when s.berdo_grid_schedule then bf.kg_per_mwh / bf0.kg_per_mwh else 1 end
+            as berdo_electricity_index,
+        coalesce(cy.kg_per_mwh / c0.aer_load_co2e_kg_per_mwh, 1) as grid_electricity_index,
+        {% for series in ["electricity", "natural_gas", "distillate"] -%}
+        coalesce(
+            (select a.usd2025_per_mmbtu from aeo as a
+             where a.aeo_case = s.aeo_case and a.fuel = '{{ series }}' and a.year = y.year)
+            / (select a.usd2025_per_mmbtu from aeo as a
+               where a.aeo_case = s.aeo_case and a.fuel = '{{ series }}' and a.year = 2025),
+            1
+        ) as {{ series }}_price_index{{ "," if not loop.last }}
+        {% endfor -%}
+    from scenarios as s
+    cross join years as y
+    inner join berdo_factor as bf on bf.year = y.year
+    inner join berdo_factor as bf0 on bf0.year = 2025
+    left join cambium as cy on cy.cambium_scenario = s.cambium_scenario and cy.year = y.year
+    left join {{ ref('cambium24_isone_aer') }} as c0
+        on c0.cambium_scenario = s.cambium_scenario and c0.year = 2025
 ),
 
 -- present value of $1 of installed cost: installs at 0, L, 2L, ... inside the horizon,
@@ -128,16 +188,16 @@ limits as (
 yearly as (
     select
         fu.*,
-        s.scenario,
-        s.electricity_price_growth,
-        s.fuel_price_growth,
-        l.t,
+        sy.*,
         l.limit_kgco2e,
-        fu.electric_ghg_kgco2e * power(1 - s.electricity_ef_decline, l.t - 1)
-            + fu.other_ghg_kgco2e as ghg_kgco2e
+        -- emissions as BERDO counts them (compliance) and as the grid emits them (society)
+        fu.electric_ghg_kgco2e * sy.berdo_electricity_index + fu.other_ghg_kgco2e
+            as berdo_ghg_kgco2e,
+        fu.electric_ghg_kgco2e * sy.grid_electricity_index + fu.other_ghg_kgco2e
+            as grid_ghg_kgco2e
     from fuel_use as fu
-    cross join scenarios as s
     inner join limits as l using (berdo_id)
+    inner join scenario_years as sy on sy.t = l.t
 ),
 
 emissions as (
@@ -148,13 +208,16 @@ emissions as (
         p.perspective,
         sum(
             case p.perspective
-                when 'financial' then greatest(y.ghg_kgco2e - y.limit_kgco2e, 0) / 1000
+                when 'financial' then greatest(y.berdo_ghg_kgco2e - y.limit_kgco2e, 0) / 1000
                     * {{ var("acp_usd_per_tco2e") }}
-                else y.ghg_kgco2e / 1000 * {{ var("social_cost_usd_per_tco2e") }}
+                else y.grid_ghg_kgco2e / 1000 * {{ var("social_cost_usd_per_tco2e") }}
             end
             * power(1 + p.discount_rate, -y.t)
         ) as emissions_cost_pv_usd,
-        count(*) filter (where y.ghg_kgco2e > y.limit_kgco2e) as years_over_limit
+        count(*) filter (where y.berdo_ghg_kgco2e > y.limit_kgco2e) as years_over_limit,
+        -- under the standard in the first year (2030), as BERDO counts it
+        bool_and(y.berdo_ghg_kgco2e <= y.limit_kgco2e) filter (where y.t = 1)
+            as meets_standard_at_start
     from yearly as y
     cross join perspectives as p
     group by y.berdo_id, y.upgrade_id, y.scenario, p.perspective
@@ -169,16 +232,9 @@ energy as (
         pr.energy_price,
         sum(
             (
-                (
-                    {% for f in electric -%}
-                    y.{{ f }}_kwh * pr.{{ f }}_usd_per_kwh{{ " +" if not loop.last }}
-                    {% endfor -%}
-                ) * power(1 + y.electricity_price_growth, y.t - 1)
-                + (
-                    {% for f in fuels if f not in electric -%}
-                    y.{{ f }}_kwh * pr.{{ f }}_usd_per_kwh{{ " +" if not loop.last }}
-                    {% endfor -%}
-                ) * power(1 + y.fuel_price_growth, y.t - 1)
+                {% for f in fuels -%}
+                y.{{ f }}_kwh * pr.{{ f }}_usd_per_kwh * y.{{ price_series[f] }}_price_index{{ " +" if not loop.last }}
+                {% endfor -%}
             )
             * power(1 + p.discount_rate, -y.t)
         ) as energy_pv_usd
@@ -197,7 +253,7 @@ present_values as (
         p.perspective,
         p.discount_rate,
         pr.energy_price,
-        o.meets_standard as meets_standard_at_start,
+        e.meets_standard_at_start,
         e.years_over_limit,
         -- present value of $1 a year for n years
         (1 - power(1 + p.discount_rate, -{{ n }})) / p.discount_rate as annuity_factor,

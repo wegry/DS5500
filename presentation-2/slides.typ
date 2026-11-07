@@ -689,66 +689,89 @@
 
 // ---- 11b. energy scenarios --------------------------------------------------
 
-#s([A cleaner grid or pricier energy barely moves the 20-year answer], stop: 4)[
-  #let rows-for(p) = scen.filter(r => r.perspective == p).sorted(key: r => int(r.ord))
-  #let own = rows-for("financial")
-  #let soc = rows-for("societal")
+#s([Price forecasts barely matter. Boston's own grid factor does.], stop: 4)[
+  // owner's view, one bar per scenario; the two decomposition scenarios go in the bullets
+  #let shown = ("frozen", "projected", "lowogs", "highogs", "higheldmd")
+  #let row(sc, p) = scen.find(r => r.scenario == sc and r.perspective == p)
+  #let own = shown.map(sc => row(sc, "financial"))
   #let n = own.len()
   #let ys = range(n).rev()  // first scenario on top
-  #let comp(rs) = rs.map(r => int(r.retrofit_compliant))
-  #let lo(rs) = calc.min(..comp(rs))
-  #let hi(rs) = calc.max(..comp(rs))
-  #let base(rs) = int(rs.at(0).retrofit_compliant)
-  #let swatch(c, t) = box(baseline: 1pt, circle(radius: 5pt, fill: c, stroke: none)) + h(4pt) + t
+  #let asc(arr) = arr.rev()
+  #let col(rs, k) = rs.map(r => float(r.at(k)))
+  #let u = col(own, "under_limit_anyway")
+  #let a = col(own, "acp_only")
+  #let o = col(own, "retrofit_over")
+  #let g = col(own, "retrofit_compliant")
+  #let cum(..parts) = range(n).map(i => parts.pos().map(p => p.at(i)).sum())
+  #let ua = cum(u, a)
+  #let uao = cum(u, a, o)
+  #let uaog = cum(u, a, o, g)
+  #let soc(sc) = int(row(sc, "societal").retrofit_compliant)
+  #let comp = col(own, "retrofit_compliant").slice(1).map(int)
+  #let swatch(c, t) = box(baseline: 1pt, rect(width: 11pt, height: 11pt, radius: 2pt, fill: c)) + h(4pt) + t
+  #let labels = (
+    [Today's levels],
+    [AEO baseline],
+    [High prices#super[a]],
+    [Low prices#super[b]],
+    [Data-center demand#super[c]],
+  )
+  #align(center, text(
+    size: 12.5pt,
+    swatch(c-aqua, [Under the limit anyway])
+      + h(14pt) + swatch(c-gray, [Just pay])
+      + h(14pt) + swatch(c-orange, [Retrofit, still over])
+      + h(14pt) + swatch(c-blue, [Retrofit that complies]),
+  ))
+  #v(-4pt)
   #grid(
-    columns: (1.6fr, 1fr),
-    column-gutter: 18pt,
+    columns: (1.55fr, 1fr),
+    column-gutter: 16pt,
     figure(
-      {
-        align(center, text(size: 12.5pt, swatch(navy, [Owner (7%, ACP)]) + h(18pt) + swatch(green-edge, [Society (2%, \$230/t)])))
-        v(-2pt)
-        chart(lq.diagram(
-          width: 11cm,
-          height: 4.9cm,
-          xlim: (15, 45),
-          ylim: (-0.6, n - 0.4),
-          xlabel: [Offices (of #stats.over_limit) whose cheapest option complies],
-          yaxis: (ticks: ys.zip(own.map(r => r.label)), subticks: none),
-          xaxis: (ticks: (15, 20, 25, 30, 35, 40, 45), subticks: none),
-          grid: none,
-          lq.vlines(base(own), stroke: (paint: navy.lighten(50%), thickness: 1pt, dash: "dashed")),
-          lq.vlines(base(soc), stroke: (paint: green-edge.lighten(40%), thickness: 1pt, dash: "dashed")),
-          ..range(n).map(i => lq.plot((comp(own).at(i), comp(soc).at(i)), (ys.at(i), ys.at(i)), mark: none, stroke: 1.5pt + rule)),
-          lq.plot(comp(own), ys, stroke: none, mark: "o", mark-size: 9pt, color: navy),
-          lq.plot(comp(soc), ys, stroke: none, mark: "o", mark-size: 9pt, color: green-edge),
-          ..range(n).map(i => lq.place(comp(own).at(i), ys.at(i), align: right + horizon, pad(right: 8pt, text(size: 11pt, fill: navy)[#comp(own).at(i)]))),
-          ..range(n).map(i => lq.place(comp(soc).at(i), ys.at(i), align: left + horizon, pad(left: 8pt, text(size: 11pt, fill: green-edge)[#comp(soc).at(i)]))),
-        ))
-      },
-      caption: [Grid and price paths are illustrative rates compounding from 2030, not Cambium or EIA projections. Dashed lines: today's levels. Mid equipment and energy prices.],
+      chart(lq.diagram(
+        width: 11.2cm,
+        height: 4.6cm,
+        xlim: (0, stats.over_limit),
+        ylim: (-0.6, n - 0.4),
+        xlabel: [Over-limit offices (of #stats.over_limit): owner's cheapest 20-year option],
+        yaxis: (ticks: ys.zip(labels), subticks: none),
+        xaxis: (ticks: (0, 25, 50, 75, stats.over_limit), subticks: none),
+        grid: none,
+        lq.hbar(asc(u), asc(ys), fill: c-aqua, stroke: 1.5pt + white, width: 0.62),
+        lq.hbar(asc(ua), asc(ys), base: asc(u), fill: c-gray, stroke: 1.5pt + white, width: 0.62),
+        lq.hbar(asc(uao), asc(ys), base: asc(ua), fill: c-orange, stroke: 1.5pt + white, width: 0.62),
+        lq.hbar(asc(uaog), asc(ys), base: asc(uao), fill: c-blue, stroke: 1.5pt + white, width: 0.62),
+        ..range(n)
+          .map(i => ((u.at(i), 0), (o.at(i), ua.at(i)), (g.at(i), uao.at(i)))
+            .filter(((v, b)) => v >= 3)
+            .map(((v, b)) => lq.place(b + v / 2, ys.at(i), text(size: 11.5pt, weight: "bold", fill: white)[#int(v)])))
+          .flatten(),
+      )),
+      caption: [Compliance: BERDO projected grid factor @berdo-grid × (1 − RPS Class I @ma-rps). Bills: AEO2026 New England commercial prices @aeo2026 (#super[a]low and #super[b]high oil & gas supply, #super[c]high electricity demand). Society's grid: Cambium 2024 mid-case @cambium.],
     ),
     {
-      set text(size: 14.5pt)
-      v(14pt)
+      set text(size: 14pt)
+      v(6pt)
       list(
-        [Owner: *#lo(own)–#hi(own)* comply (#base(own) today). Society: *#lo(soc)–#hi(soc)* (#base(soc)).],
-        [A cleaner grid also cuts the payment for buildings that stay over the limit.],
-        [Pricier electricity hurts heat pumps: society drops to #comp(soc).at(3).],
-        [Farnsworth's pick never changes.],
+        [*#int(u.at(1))* of #stats.over_limit fall under the 2030 limit with *no retrofit*: BERDO's electricity factor drops 15% by 2030 as the RPS share rises from 27% to 40%.],
+        [Of the rest, *#calc.min(..comp)–#calc.max(..comp)* pick a compliant fix across AEO price cases (#int(g.at(0)) today). Prices alone: #int(row("prices_only", "financial").retrofit_compliant).],
+        [Society: #soc("highogs")–#soc("lowogs") (#soc("frozen") today). Farnsworth's pick never changes.],
       )
     },
   )
   #v(1fr)
-  #takeaway[Holding prices and the grid at today's level *doesn't drive the result*: at today's ACP, most owners still pick a fix that misses the limit.]
+  #takeaway[Projected prices don't change the answer. *BERDO's own falling grid factor does*, and it shrinks the 2030 problem from #stats.over_limit offices to about #(stats.over_limit - int(u.at(1))).]
 ]
 #speaker-note[
-  [ZW] Earlier we said we hold energy prices and the grid at today's level. So we tested that. We let BERDO's electricity emissions factor fall 3 or 6 percent a year from 2030, which by 2049 is a 44 or 69 percent cleaner grid, and we let electricity or gas prices rise 1.5 percent a year above inflation. These rates are illustrative, not from NLR's Cambium or EIA's outlook. Plugging those in is our next step.
+  [ZW] We said earlier that we hold energy prices and the grid at today's level, so we replaced that with real projections. Three sources. For compliance, the City publishes its own projected grid emissions factor through 2050 in the BERDO Policies and Procedures, and electricity covered by the state's renewable portfolio standard counts as zero. That's what determines whether you owe a payment. For the climate damage in society's view, we use NLR's Cambium 2024 projections for the actual New England grid, which gets cleaner much faster. For energy bills, EIA's Annual Energy Outlook 2026, New England commercial prices, in its baseline case and three alternatives.
 
-  Each row is a scenario; the dots count how many of the 99 over-limit offices end up with a compliant retrofit as their cheapest 20-year option. Navy is the owner, green is society. The answer barely moves: 22 to 25 for the owner against 24 today, 30 to 37 for society against 35.
+  The surprise is on the left of the bars. 18 of our 99 over-the-limit offices are under the 2030 limit without doing anything, because by 2030 BERDO counts each kilowatt-hour as 15 percent cleaner: the renewable standard goes from 27 to 40 percent. Our headline 99 used today's factor; by BERDO's own schedule it's closer to 81.
 
-  Why so little? Three reasons. These changes compound from 2030, so the big differences land in the 2040s, and the owner discounts those at 7 percent. A cleaner grid lowers the payment for buildings that stay over the limit too, not just for heat pumps, so the cheap non-compliant options get cheaper as well. And for society, pricier electricity works against heat pumps, which is why that count drops to 30, while pricier gas pushes it up to 37.
+  For the rest, the owner's cheapest choice still mostly misses the limit: 22 to 27 pick a compliant retrofit depending on prices, against 24 today. If we change only prices and leave BERDO's factor alone, it's 25. So the price forecasts barely move the decision.
 
-  Farnsworth's choice is the same in every scenario: wall insulation for the owner, Package 2 for society. So the headline holds: at today's payment, the owner's cheapest move usually doesn't meet the limit.
+  If asked about price spikes: EIA's outlook draws smooth long-run paths; it doesn't model spikes. Recent high prices are in our starting point, which uses 2025 Massachusetts prices and, in the high case, 2026 gas prices. The closest thing to prices staying high is the low oil and gas supply case, where gas is 59 percent and electricity 24 percent higher by 2049. That's the "High prices" bar, and it moves the count by three.
+
+  Caveats: the City reviews its factor projections at least every five years, and the renewable standard after 2030 is plus one percent a year unless the law changes. Cambium 2024 was built before 2025's federal policy changes, so its grid may be optimistic, but it only affects society's view.
 ]
 
 // ---- 12. answer: the case --------------------------------------------------
@@ -915,7 +938,7 @@
     ..step(
       3,
       [Model time explicitly],
-      [Swap our illustrative grid and price paths for Cambium @cambium and EIA projections; let equipment costs change by year.],
+      [Apply BERDO's 2030 grid factor to the 5-year screen and headline counts; let equipment costs change by year.],
     ),
     ..step(4, [Constraints], [Plan *what* to fix and *when* under a budget.]),
   )
@@ -923,7 +946,7 @@
   #takeaway[Our first priority is *confidence in the predicted outcomes*, not more financial complexity.]
 ]
 #speaker-note[
-  [KT] Where we go next. First, validation on real buildings. The hold-out test showed matching works between simulated buildings, but not against real retrofits. Buildings that have already retrofitted will show up in later BERDO disclosures, and engineering studies give another check. Second, expand the options and fill gaps in the cost mapping. Third, replace the illustrative grid and price paths we tested with real projections: NLR's Cambium for the grid and EIA's outlook for prices, and let equipment costs change by year too. Fourth, add a budget and plan what to fix and when. But our main priority is confidence in the predicted retrofit outcomes.
+  [KT] Where we go next. First, validation on real buildings. The hold-out test showed matching works between simulated buildings, but not against real retrofits. Buildings that have already retrofitted will show up in later BERDO disclosures, and engineering studies give another check. Second, expand the options and fill gaps in the cost mapping. Third, carry BERDO's projected 2030 grid factor into the five-year screen and the headline count of offices over the limit, which today uses the 2025 factor, and let equipment costs change by year. Fourth, add a budget and plan what to fix and when. But our main priority is confidence in the predicted retrofit outcomes.
 
   To summarize: our domain problem is choosing the most cost-effective response to BERDO, and our data science problem is estimating the retrofit outcomes that decision needs. The cheapest option for an owner often isn't the one that meets the city's goals.
 ]
@@ -931,7 +954,7 @@
 // ---- references ------------------------------------------------------------
 
 #s([References])[
-  #set text(size: 10pt)
+  #set text(size: 8.5pt)
   #set par(justify: false)
   #columns(2, gutter: 20pt, bibliography("refs.yml", title: none, style: "ieee"))
 ]
