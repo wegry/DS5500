@@ -44,7 +44,7 @@ write_csv(
         count(*) filter (where upgrade_id <> 0 and not meets_standard_at_start),
         count(*) filter (where upgrade_id <> 0 and meets_standard_at_start)
     from berdo_global_cost
-    where cost_rank_mid = 1 and energy_price = 'mid' and {OVER}
+    where cost_rank_mid = 1 and energy_price = 'mid' and scenario = 'frozen' and {OVER}
     group by perspective
     order by ord
     """,
@@ -59,7 +59,7 @@ write_csv(
         where berdo_id = {CASE_ID}
     ), twenty as (
         select upgrade_id, perspective, global_cost_mid_usd as cost from berdo_global_cost
-        where berdo_id = {CASE_ID} and energy_price = 'mid'
+        where berdo_id = {CASE_ID} and energy_price = 'mid' and scenario = 'frozen'
     ), opts as (
         select upgrade_id, upgrade_name, projected_ghg_intensity_kgco2e_sqft as intensity,
             meets_standard, installed_cost_mid_usd
@@ -89,7 +89,7 @@ write_csv(
             capital_pv_mid_usd + energy_pv_usd + om_pv_mid_usd as fixed,
             emissions_cost_pv_usd / {acp} as em  -- PV per $1/t of ACP
         from berdo_global_cost
-        where perspective = 'financial' and energy_price = 'mid' and {OVER}
+        where perspective = 'financial' and energy_price = 'mid' and scenario = 'frozen' and {OVER}
     ), bounds as (
         select a.berdo_id, a.upgrade_id,
             greatest(0, coalesce(max(case when b.em > a.em then (a.fixed - b.fixed) / (b.em - a.em) end), 0)) as lo,
@@ -102,6 +102,26 @@ write_csv(
     select berdo_id, round(min(lo), 1) as breakeven_acp_usd_per_t
     from bounds where lo <= hi and tie_ok
     group by berdo_id order by 2
+    """,
+)
+
+# 20-year outcomes under each energy scenario (dbt/seeds/energy_scenarios.csv, in seed order):
+# what the 99 over-limit offices' cheapest option is, and Farnsworth's pick.
+scen_order = [r["scenario"] for r in rows(f"select scenario from read_csv('{ROOT / 'dbt' / 'seeds' / 'energy_scenarios.csv'}')")]
+order_case = " ".join(f"when '{sc}' then {i}" for i, sc in enumerate(scen_order))
+write_csv(
+    "scenarios.csv",
+    f"""
+    select g.scenario, any_value(s.label) as label, case g.scenario {order_case} end as ord,
+        g.perspective,
+        count(*) filter (where g.upgrade_id = 0) as acp_only,
+        count(*) filter (where g.upgrade_id <> 0 and not g.meets_standard_at_start) as retrofit_over,
+        count(*) filter (where g.upgrade_id <> 0 and g.meets_standard_at_start) as retrofit_compliant,
+        any_value(g.upgrade_name) filter (where g.berdo_id = {CASE_ID}) as case_pick
+    from berdo_global_cost g join energy_scenarios s using (scenario)
+    where g.cost_rank_mid = 1 and g.energy_price = 'mid' and {OVER.replace("berdo_id", "g.berdo_id", 1)}
+    group by g.scenario, g.perspective
+    order by ord, g.perspective
     """,
 )
 

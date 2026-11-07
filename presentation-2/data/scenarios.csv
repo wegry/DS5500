@@ -1,0 +1,13 @@
+scenario,label,ord,perspective,acp_only,retrofit_over,retrofit_compliant,case_pick
+frozen,Today's levels,0,financial,0,75,24,Wall Insulation
+frozen,Today's levels,0,societal,0,64,35,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers"
+grid_3,Grid 3%/yr cleaner,1,financial,0,76,23,Wall Insulation
+grid_3,Grid 3%/yr cleaner,1,societal,0,63,36,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers"
+grid_6,Grid 6%/yr cleaner,2,financial,0,76,23,Wall Insulation
+grid_6,Grid 6%/yr cleaner,2,societal,0,63,36,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers"
+elec_up,Electricity +1.5%/yr,3,financial,0,75,24,Wall Insulation
+elec_up,Electricity +1.5%/yr,3,societal,0,69,30,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers"
+fuel_up,Gas & oil +1.5%/yr,4,financial,0,74,25,Wall Insulation
+fuel_up,Gas & oil +1.5%/yr,4,societal,0,62,37,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers"
+grid_3_elec_up,Grid 3% + electricity 1.5%,5,financial,0,77,22,Wall Insulation
+grid_3_elec_up,Grid 3% + electricity 1.5%,5,societal,0,67,32,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers"

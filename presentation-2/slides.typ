@@ -23,6 +23,8 @@
 
 #let stats = json("data/stats.json")
 #let outcomes = csv("data/outcomes.csv", row-type: dictionary)
+// 20-year outcomes under the illustrative grid and price scenarios (dbt/seeds/energy_scenarios.csv)
+#let scen = csv("data/scenarios.csv", row-type: dictionary)
 #let case = csv("data/case_study.csv", row-type: dictionary)
 #let breakeven = csv("data/breakeven.csv", row-type: dictionary).map(r => float(r.breakeven_acp_usd_per_t))
 #let standards = csv("../dbt/seeds/berdo_emissions_standards.csv", row-type: dictionary).filter(r => (
@@ -614,14 +616,14 @@
     caption: [EN 15459 global cost @en15459, as in the EU cost-optimal method @eu-cost-optimal. Equipment lifetimes from BTB @btb.],
   )
   #v(1fr)
-  #takeaway[Held at today's level for all 20 years: *energy prices, grid emissions, the ACP rate and the carbon price.* Most of these favor paying.]
+  #takeaway[Baseline: *energy prices, grid emissions, the ACP rate and the carbon price* held at today's level. We vary the grid and prices after the results.]
 ]
 #speaker-note[
   [ZW] Five years undersells a retrofit that lasts twenty, so we also compute a 20-year cost. This is the European standard for comparing building upgrades, EN 15459. Equipment includes replacing anything that wears out inside 20 years, minus the value left at the end. Then every year's energy bill and emissions cost, discounted, because a dollar in 2045 is worth less than a dollar today.
 
   We look at it from two points of view. The owner pays the ACP only on tons over the limit, and that grows each time the limit steps down. The owner discounts at 7 percent. Society counts the climate damage of every ton at 230 dollars, the EPA's 2023 social cost of carbon, and leaves out the ACP because that's just money moving from the owner to the city. Society discounts at 2 percent.
 
-  What we hold fixed: energy prices, the grid's emissions factor, the ACP rate and the carbon price, all at today's level. Most of that biases toward paying. Higher energy prices or a higher ACP would make retrofits look better. The grid getting cleaner is two-sided: it lowers emissions for heat pumps, but also for buildings that do nothing.
+  In the baseline, energy prices, the grid's emissions factor, the ACP rate and the carbon price stay at today's level. Higher energy prices or a higher ACP would make retrofits look better. The grid getting cleaner is two-sided: it lowers emissions for heat pumps, but also for buildings that do nothing. We test the grid and energy prices a couple of slides from now; the ACP rate is the break-even slide.
 ]
 
 // ---- 11. answer: across the 99 ---------------------------------------------
@@ -683,6 +685,70 @@
   [KL] Now all 99 buildings above the 2030 limit. Top bar, the five-year view: for 66 of them the cheapest move is to do nothing and pay, and only 3 have a compliant retrofit as their cheapest choice. Over 20 years retrofits look better, because there's more time to earn back the up-front cost. Nobody should only pay. But from the owner's point of view, only 24 buildings have a compliant retrofit as their cheapest option. Most pick something like wall insulation that saves money and stays over the limit.
 
   From society's point of view, where every ton is charged its climate cost and the future is discounted less, that rises to 35. So two things matter: the time horizon, and whose costs you count.
+]
+
+// ---- 11b. energy scenarios --------------------------------------------------
+
+#s([A cleaner grid or pricier energy barely moves the 20-year answer], stop: 4)[
+  #let rows-for(p) = scen.filter(r => r.perspective == p).sorted(key: r => int(r.ord))
+  #let own = rows-for("financial")
+  #let soc = rows-for("societal")
+  #let n = own.len()
+  #let ys = range(n).rev()  // first scenario on top
+  #let comp(rs) = rs.map(r => int(r.retrofit_compliant))
+  #let lo(rs) = calc.min(..comp(rs))
+  #let hi(rs) = calc.max(..comp(rs))
+  #let base(rs) = int(rs.at(0).retrofit_compliant)
+  #let swatch(c, t) = box(baseline: 1pt, circle(radius: 5pt, fill: c, stroke: none)) + h(4pt) + t
+  #grid(
+    columns: (1.6fr, 1fr),
+    column-gutter: 18pt,
+    figure(
+      {
+        align(center, text(size: 12.5pt, swatch(navy, [Owner (7%, ACP)]) + h(18pt) + swatch(green-edge, [Society (2%, \$230/t)])))
+        v(-2pt)
+        chart(lq.diagram(
+          width: 11cm,
+          height: 4.9cm,
+          xlim: (15, 45),
+          ylim: (-0.6, n - 0.4),
+          xlabel: [Offices (of #stats.over_limit) whose cheapest option complies],
+          yaxis: (ticks: ys.zip(own.map(r => r.label)), subticks: none),
+          xaxis: (ticks: (15, 20, 25, 30, 35, 40, 45), subticks: none),
+          grid: none,
+          lq.vlines(base(own), stroke: (paint: navy.lighten(50%), thickness: 1pt, dash: "dashed")),
+          lq.vlines(base(soc), stroke: (paint: green-edge.lighten(40%), thickness: 1pt, dash: "dashed")),
+          ..range(n).map(i => lq.plot((comp(own).at(i), comp(soc).at(i)), (ys.at(i), ys.at(i)), mark: none, stroke: 1.5pt + rule)),
+          lq.plot(comp(own), ys, stroke: none, mark: "o", mark-size: 9pt, color: navy),
+          lq.plot(comp(soc), ys, stroke: none, mark: "o", mark-size: 9pt, color: green-edge),
+          ..range(n).map(i => lq.place(comp(own).at(i), ys.at(i), align: right + horizon, pad(right: 8pt, text(size: 11pt, fill: navy)[#comp(own).at(i)]))),
+          ..range(n).map(i => lq.place(comp(soc).at(i), ys.at(i), align: left + horizon, pad(left: 8pt, text(size: 11pt, fill: green-edge)[#comp(soc).at(i)]))),
+        ))
+      },
+      caption: [Grid and price paths are illustrative rates compounding from 2030, not Cambium or EIA projections. Dashed lines: today's levels. Mid equipment and energy prices.],
+    ),
+    {
+      set text(size: 14.5pt)
+      v(14pt)
+      list(
+        [Owner: *#lo(own)–#hi(own)* comply (#base(own) today). Society: *#lo(soc)–#hi(soc)* (#base(soc)).],
+        [A cleaner grid also cuts the payment for buildings that stay over the limit.],
+        [Pricier electricity hurts heat pumps: society drops to #comp(soc).at(3).],
+        [Farnsworth's pick never changes.],
+      )
+    },
+  )
+  #v(1fr)
+  #takeaway[Holding prices and the grid at today's level *doesn't drive the result*: at today's ACP, most owners still pick a fix that misses the limit.]
+]
+#speaker-note[
+  [ZW] Earlier we said we hold energy prices and the grid at today's level. So we tested that. We let BERDO's electricity emissions factor fall 3 or 6 percent a year from 2030, which by 2049 is a 44 or 69 percent cleaner grid, and we let electricity or gas prices rise 1.5 percent a year above inflation. These rates are illustrative, not from NLR's Cambium or EIA's outlook. Plugging those in is our next step.
+
+  Each row is a scenario; the dots count how many of the 99 over-limit offices end up with a compliant retrofit as their cheapest 20-year option. Navy is the owner, green is society. The answer barely moves: 22 to 25 for the owner against 24 today, 30 to 37 for society against 35.
+
+  Why so little? Three reasons. These changes compound from 2030, so the big differences land in the 2040s, and the owner discounts those at 7 percent. A cleaner grid lowers the payment for buildings that stay over the limit too, not just for heat pumps, so the cheap non-compliant options get cheaper as well. And for society, pricier electricity works against heat pumps, which is why that count drops to 30, while pricier gas pushes it up to 37.
+
+  Farnsworth's choice is the same in every scenario: wall insulation for the owner, Package 2 for society. So the headline holds: at today's payment, the owner's cheapest move usually doesn't meet the limit.
 ]
 
 // ---- 12. answer: the case --------------------------------------------------
@@ -752,7 +818,7 @@
 #speaker-note[
   [ZW] Farnsworth shows what this looks like for one building. Bars below zero are cheaper than just paying. Over five years, doing nothing is cheapest. Over 20 years, wall insulation becomes the owner's cheapest option, saving about 80 thousand dollars compared with paying, but it doesn't cut emissions enough to meet the limit. When we count society's costs, Package 2 wins, saving about 303 thousand dollars, and it complies. So one building gets three different recommendations depending on the horizon and the objective.
 
-  Keep in mind we hold energy prices and the grid at today's level for all 20 years. Society here uses the social cost of carbon the EPA published in 2023. The EPA's current SCGG is \$0.
+  This holds across the grid and energy-price scenarios on the previous slide. Society here uses the social cost of carbon the EPA published in 2023. The EPA's current SCGG is \$0.
 ]
 
 // ---- 13. answer: break-even ACP -------------------------------------------
@@ -849,7 +915,7 @@
     ..step(
       3,
       [Model time explicitly],
-      [Let grid emissions @cambium, fuel prices and equipment costs change by year instead of holding them at today's level.],
+      [Swap our illustrative grid and price paths for Cambium @cambium and EIA projections; let equipment costs change by year.],
     ),
     ..step(4, [Constraints], [Plan *what* to fix and *when* under a budget.]),
   )
@@ -857,7 +923,7 @@
   #takeaway[Our first priority is *confidence in the predicted outcomes*, not more financial complexity.]
 ]
 #speaker-note[
-  [KT] Where we go next. First, validation on real buildings. The hold-out test showed matching works between simulated buildings, but not against real retrofits. Buildings that have already retrofitted will show up in later BERDO disclosures, and engineering studies give another check. Second, expand the options and fill gaps in the cost mapping. Third, model time explicitly: let grid emissions, fuel prices and costs change by year. Fourth, add a budget and plan what to fix and when. But our main priority is confidence in the predicted retrofit outcomes.
+  [KT] Where we go next. First, validation on real buildings. The hold-out test showed matching works between simulated buildings, but not against real retrofits. Buildings that have already retrofitted will show up in later BERDO disclosures, and engineering studies give another check. Second, expand the options and fill gaps in the cost mapping. Third, replace the illustrative grid and price paths we tested with real projections: NLR's Cambium for the grid and EIA's outlook for prices, and let equipment costs change by year too. Fourth, add a budget and plan what to fix and when. But our main priority is confidence in the predicted retrofit outcomes.
 
   To summarize: our domain problem is choosing the most cost-effective response to BERDO, and our data science problem is estimating the retrofit outcomes that decision needs. The cheapest option for an owner often isn't the one that meets the city's goals.
 ]

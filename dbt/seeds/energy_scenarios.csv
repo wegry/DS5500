@@ -1,0 +1,7 @@
+scenario,label,electricity_ef_decline,electricity_price_growth,fuel_price_growth,basis
+frozen,Today's levels,0,0,0,"The original model: emissions factors and real prices held at today's level for all 20 years"
+grid_3,Grid 3%/yr cleaner,0.03,0,0,"Illustrative, not from Cambium: BERDO's electricity factor falls 3% a year from 2030 (-44% by 2049)"
+grid_6,Grid 6%/yr cleaner,0.06,0,0,"Illustrative, not from Cambium: BERDO's electricity factor falls 6% a year from 2030 (-69% by 2049)"
+elec_up,Electricity +1.5%/yr,0,0.015,0,"Illustrative: electricity (and district cooling) prices rise 1.5% a year above inflation from 2030"
+fuel_up,Gas & oil +1.5%/yr,0,0,0.015,"Illustrative: natural gas, oil and district steam prices rise 1.5% a year above inflation from 2030"
+grid_3_elec_up,Grid 3% + electricity 1.5%,0.03,0.015,0,"Illustrative: the cleaner grid comes with rising electricity prices"
