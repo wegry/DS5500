@@ -9,6 +9,14 @@
     "light_led": ('"in.sqft..ft2" * "out.params.interior_lighting_power_density..w_per_ft2"', "W"),
     "add_heat_pump_rtu": ('"out.params.dx_cooling_capacity_tons..tons"', "ton"),
     "replace_boiler_by_heatpump": ('"out.params.ww_hp_heating_capacity..kbtu_per_hr" / 12', "ton"),
+    "add_packaged_gshp": ('"out.params.wa_hp_cooling_capacity..w" / 3516.85284', "ton"),
+    "gshp_ground_loop": ('"out.params.wa_hp_cooling_capacity..w" / 3516.85284', "ton"),
+    "hvac_dcv": ('"in.sqft..ft2"', "sqft"),
+    "hvac_exhaust_air_energy_or_heat_recovery": ('"out.params.design_outdoor_air_flow_rate..m3_per_m2_s" * "in.sqft..ft2" * 0.09290304 * 2118.880003', "CFM"),
+    "hvaceconomizer": ('greatest(coalesce("out.params.num_air_loops_economizer", 0), 1)', "loop"),
+    "economizer_controls": ('1', "building"),
+    "upgrade_add_pvwatts": ('"out.params.pv_system_size..kW"', "kW"),
+    "hvac_vrf_hr_doas": ('"out.params.vrf_total_outdoor_unit_cooling_capacity..w" / 3516.85284', "ton"),
 } %}
 with raw as (
     select *
@@ -20,6 +28,7 @@ with raw as (
 )
 
 {% for measure, spec in measures.items() -%}
+{% set app_measure = "add_packaged_gshp" if measure == "gshp_ground_loop" else ("hvaceconomizer" if measure == "economizer_controls" else measure) -%}
 select
     bldg_id || '-' || "in.nhgis_tract_gisjoin" || '-' || upgrade || '-' || '{{ measure }}'
         as comstock_measure_key,
@@ -28,8 +37,8 @@ select
     weight,
     "in.sqft..ft2" as gfa_sqft,
     '{{ measure }}' as measure,
-    coalesce("applicability.{{ measure }}", false) as applicability,
-    case when "applicability.{{ measure }}" then coalesce({{ spec[0] }}, 0) else 0 end
+    coalesce("applicability.{{ app_measure }}", false) as applicability,
+    case when "applicability.{{ app_measure }}" then coalesce({{ spec[0] }}, 0) else 0 end
         as quantity,
     '{{ spec[1] }}' as quantity_unit
 from raw

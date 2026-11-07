@@ -69,6 +69,13 @@ options as (
           co.upgrade_id = 0
           or co.upgrade_id in (select upgrade_id from {{ ref('comstock_package_components') }})
       )
+      and (
+        co.upgrade_id not in (12, 29, 46, 58, 65)
+        or (
+            coalesce(sc.applicable_share, 0) > 0
+            and coalesce(p.installed_cost_mid_usd, 0) > 0
+        )
+    )
 ),
 
 energy as (

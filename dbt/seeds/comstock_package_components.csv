@@ -18,4 +18,15 @@ upgrade_id,package_name,component,measure,btb_measure_id
 48,"Individual Wall Insulation",Wall insulation,exterior_wall_insulation,92
 49,"Individual Roof Insulation",Roof insulation,roof_insulation_aedg,93
 52,"Individual New Windows",New windows,env_new_aedg_windows,54
-
+12,"Individual VRF with DOAS",VRF with DOAS,hvac_vrf_hr_doas,9
+29,"Individual Packaged Geothermal Heat Pump",Heat pump,add_packaged_gshp,10
+29,"Individual Packaged Geothermal Heat Pump",Imputed ground loop,gshp_ground_loop,-29
+58,"Package 5",Heat pump RTU,add_heat_pump_rtu,2
+58,"Package 5",Heat pump boiler,replace_boiler_by_heatpump,3
+58,"Package 5",Demand-controlled ventilation,hvac_dcv,7
+58,"Package 5",Energy recovery wheel,hvac_exhaust_air_energy_or_heat_recovery,5
+58,"Package 5",Economizer hardware,hvaceconomizer,-58
+58,"Package 5",Economizer controls,economizer_controls,-59
+46,"Individual Rooftop Solar PV",Solar PV,upgrade_add_pvwatts,-46
+65,"Package 12, PV + Roof Insulation",Solar PV,upgrade_add_pvwatts,-46
+65,"Package 12, PV + Roof Insulation",Roof insulation,roof_insulation_aedg,93
