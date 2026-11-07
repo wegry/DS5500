@@ -1,12 +1,12 @@
-﻿from pathlib import Path
+from pathlib import Path
 import duckdb
-import pandas as pd
+import polars as pl
 
 root = Path(__file__).resolve().parent
 con = duckdb.connect(str(root / "ds5500.duckdb"), read_only=True)
 
 # All ComStock upgrades, using office buildings only
-performance = con.execute("""
+performance = con.sql("""
     WITH baseline AS (
         SELECT comstock_id, ghg_kgco2e
         FROM int_comstock_models
@@ -32,56 +32,64 @@ performance = con.execute("""
     JOIN baseline b USING (comstock_id)
     WHERE u.upgrade_id BETWEEN 1 AND 65
     GROUP BY u.upgrade_id
-""").df()
+""").pl()
 
 # Existing cost mappings, including imputed measures
-mapping = con.execute("""
+mapping = con.sql("""
     SELECT
         upgrade_id,
         count(*) AS mapped_components,
         bool_or(btb_measure_id < 0) AS uses_imputation
     FROM comstock_package_components
     GROUP BY upgrade_id
-""").df()
+""").pl()
 
-df = performance.merge(mapping, on="upgrade_id", how="left")
-
-df["mapped_components"] = df["mapped_components"].fillna(0).astype(int)
-df["uses_imputation"] = df["uses_imputation"].fillna(False).astype(bool)
-
-df["cost_status"] = df.apply(
-    lambda r: (
-        "Mapped (includes imputation)"
-        if r.uses_imputation
-        else "Mapped (BTB)"
-        if r.mapped_components > 0
-        else "Needs cost mapping"
-    ),
-    axis=1
+df = (
+    performance.join(mapping, on="upgrade_id", how="left")
+    .with_columns(
+        pl.col("mapped_components").fill_null(0).cast(pl.Int64),
+        pl.col("uses_imputation").fill_null(False),
+    )
+    .with_columns(
+        cost_status=pl.when(pl.col("uses_imputation"))
+        .then(pl.lit("Mapped (includes imputation)"))
+        .when(pl.col("mapped_components") > 0)
+        .then(pl.lit("Mapped (BTB)"))
+        .otherwise(pl.lit("Needs cost mapping")),
+        cost_review_needed=pl.col("mapped_components") == 0,
+    )
+    .sort(
+        ["avg_reduction_pct", "upgrade_id"],
+        descending=[True, False],
+        nulls_last=True,
+    )
 )
-
-df["cost_review_needed"] = df["mapped_components"].eq(0)
-
-df = df.sort_values("avg_reduction_pct", ascending=False)
 
 out = root / "analysis_outputs" / "retrofit_coverage_audit.csv"
 out.parent.mkdir(parents=True, exist_ok=True)
-df.to_csv(out, index=False)
+df.write_csv(out)
 
-print("Upgrades audited:", len(df))
-print("\nCost mapping summary:")
-print(df.groupby("cost_status").size().to_string())
+with pl.Config(
+    tbl_rows=-1,
+    tbl_cols=-1,
+    tbl_width_chars=200,
+    fmt_str_lengths=80,
+    tbl_hide_dataframe_shape=True,
+    tbl_hide_column_data_types=True,
+):
+    print("Upgrades audited:", df.height)
+    print("\nCost mapping summary:")
+    print(df.group_by("cost_status").len().sort("cost_status"))
 
-print("\nTop 15 currently unmapped upgrades:")
-cols = [
-    "upgrade_id", "upgrade_name",
-    "applicable_pct", "avg_reduction_pct"
-]
-print(
-    df[df.cost_review_needed][cols]
-    .head(15)
-    .to_string(index=False)
-)
+    print("\nTop 15 currently unmapped upgrades:")
+    print(
+        df.filter(pl.col("cost_review_needed"))
+        .select(
+            "upgrade_id", "upgrade_name",
+            "applicable_pct", "avg_reduction_pct",
+        )
+        .head(15)
+    )
 
 print("\nSaved:", out)
 con.close()
