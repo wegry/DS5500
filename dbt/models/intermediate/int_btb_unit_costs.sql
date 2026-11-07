@@ -9,12 +9,13 @@ with technologies as (
         *,
         case
             when typical_unit_abbreviation = 'ft2' then 'sqft'
+            when typical_unit_abbreviation = 'CFM' then 'CFM'
             when typical_unit_abbreviation = 'ton' or metric_1_unit = 'Tons' then 'ton'
             when metric_1_unit = 'Lumens' and metric_2_unit = 'lm/W' then 'W'
         end as cost_unit,
         case
             when btb_measure_id = 10 then metric_1_typical
-            when typical_unit_abbreviation in ('ft2', 'ton') then typical_unit_multiplier
+            when typical_unit_abbreviation in ('ft2', 'ton', 'CFM') then typical_unit_multiplier
             when metric_1_unit = 'Tons' then metric_1_typical
             when metric_1_unit = 'Lumens' and metric_2_unit = 'lm/W'
                 then metric_1_typical / metric_2_typical

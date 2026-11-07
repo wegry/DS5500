@@ -70,7 +70,7 @@ options as (
           or co.upgrade_id in (select upgrade_id from {{ ref('comstock_package_components') }})
       )
       and (
-        co.upgrade_id not in (12, 29)
+        co.upgrade_id not in (12, 29, 58)
         or (
             coalesce(sc.applicable_share, 0) > 0
             and coalesce(p.installed_cost_mid_usd, 0) > 0

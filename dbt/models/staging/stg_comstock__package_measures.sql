@@ -11,6 +11,10 @@
     "replace_boiler_by_heatpump": ('"out.params.ww_hp_heating_capacity..kbtu_per_hr" / 12', "ton"),
     "add_packaged_gshp": ('"out.params.wa_hp_cooling_capacity..w" / 3516.85284', "ton"),
     "gshp_ground_loop": ('"out.params.wa_hp_cooling_capacity..w" / 3516.85284', "ton"),
+    "hvac_dcv": ('"in.sqft..ft2"', "sqft"),
+    "hvac_exhaust_air_energy_or_heat_recovery": ('"out.params.design_outdoor_air_flow_rate..m3_per_m2_s" * "in.sqft..ft2" * 0.09290304 * 2118.880003', "CFM"),
+    "hvaceconomizer": ('greatest(coalesce("out.params.num_air_loops_economizer", 0), 1)', "loop"),
+    "economizer_controls": ('1', "building"),
     "hvac_vrf_hr_doas": ('"out.params.vrf_total_outdoor_unit_cooling_capacity..w" / 3516.85284', "ton"),
 } %}
 with raw as (
@@ -23,7 +27,7 @@ with raw as (
 )
 
 {% for measure, spec in measures.items() -%}
-{% set app_measure = "add_packaged_gshp" if measure == "gshp_ground_loop" else measure -%}
+{% set app_measure = "add_packaged_gshp" if measure == "gshp_ground_loop" else ("hvaceconomizer" if measure == "economizer_controls" else measure) -%}
 select
     bldg_id || '-' || "in.nhgis_tract_gisjoin" || '-' || upgrade || '-' || '{{ measure }}'
         as comstock_measure_key,
