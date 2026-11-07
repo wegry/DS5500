@@ -31,6 +31,9 @@
 // k-sensitivity of the cheapest compliant pick, with 5-year energy bills (dbt/financial_k_sensitivity.py).
 // report/data/financial_k_summary.csv is an older run without energy costs; don't use it here.
 #let ksens = csv("../dbt/analysis_outputs/financial_k_summary.csv", row-type: dictionary)
+// leave-one-out validation of the matching on ComStock offices (dbt/loo_validation.py)
+#let loo = csv("../dbt/analysis_outputs/loo_k_summary.csv", row-type: dictionary)
+#let lootest = csv("../dbt/analysis_outputs/loo_tests.csv", row-type: dictionary)
 // Farnsworth's nine options over 2030-2034 (undiscounted 5-year screen)
 #let farn = csv("../dbt/analysis_outputs/farnsworth_106476_options.csv", row-type: dictionary)
 #let case-row(id) = case.find(r => r.upgrade_id == str(id))
@@ -421,51 +424,62 @@
 
 // ---- 7. sensitivity to k ----------------------------------------------------
 
-#s([Recommendations settle as k grows], stop: 2)[
-  #let ks = range(1, 10)
+#s([Ten neighbors predict hidden buildings better than no matching], stop: 2)[
+  #let num = loo.filter(r => r.k not in ("all", "type"))
+  #let ks = num.map(r => int(r.k))
+  #let mae = num.map(r => float(r.mae_pp))
+  #let kmax = ks.last()  // floor(sqrt(number of office models)), set in loo_validation.py
+  #let at(k) = float(loo.find(r => r.k == k).mae_pp)
+  #let t-all = lootest.find(r => r.comparison == "k=10 minus all")
   #let row(k) = ksens.find(r => r.k == str(k))
-  #let n(k) = float(row(k).compliant_buildings_compared)
-  #let total(k) = int(row(k).different_recommendations)
-  #let pct = ks.map(k => total(k) / n(k) * 100)
-  #let k9 = row(9)
+  #let stab9 = int(row(9).different_recommendations) / float(row(9).compliant_buildings_compared) * 100
   #grid(
-    columns: (1.5fr, 1fr),
+    columns: (1.45fr, 1fr),
     column-gutter: 20pt,
     figure(
       chart(lq.diagram(
         width: 14cm,
-        height: 5.6cm,
-        ylim: (0, 62),
+        height: 6cm,
+        xlim: (0, kmax + 1),
+        ylim: (4.9, 6.6),
         xlabel: [Neighbors kept ($k$)],
-        ylabel: [% of picks differing from $k = 10$],
-        xaxis: (ticks: ks, subticks: none),
+        ylabel: [Mean error (pct-pts of emissions cut)],
+        xaxis: (ticks: (1, 5, 10, 15, 20, kmax), subticks: none),
         yaxis: (subticks: none),
-        lq.bar(ks, pct, fill: navy, stroke: none, width: 0.7),
-        ..ks.map(k => lq.place(k, pct.at(k - 1), align: bottom, pad(bottom: 3pt, text(
-          size: 10.5pt,
-        )[#total(k)/#int(n(k))]))),
+        grid: none,
+        lq.hlines(at("all"), stroke: (paint: c-gray.darken(20%), thickness: 1.2pt, dash: "dashed")),
+        lq.hlines(at("type"), stroke: (paint: c-orange, thickness: 1.2pt, dash: "dashed")),
+        lq.place(kmax + 0.6, at("all"), align: bottom + right, pad(bottom: 2pt, text(size: 11pt, fill: ink-2)[No matching: all other offices])),
+        lq.place(kmax + 0.6, at("type"), align: bottom + right, pad(bottom: 2pt, text(size: 11pt, fill: c-orange.darken(15%))[Office size class only])),
+        lq.plot(ks, mae, stroke: 2pt + navy, mark: "o", mark-size: 4pt, color: navy),
+        lq.plot((10,), (at("10"),), stroke: none, mark: "o", mark-size: 9pt, color: c-blue),
+        lq.place(10, at("10"), align: top + center, pad(top: 9pt, text(size: 11.5pt, weight: "bold", fill: c-blue)[$k = 10$: #at("10")])),
       )),
-      caption: [Cheapest compliant retrofit at each $k$ vs. $k = 10$, five-year cost with energy bills, buildings with a compliant option at both $k$.],
+      caption: [Leave-one-out test on #loo.at(0).held_out_models simulated Boston offices: hide one, predict its emissions cut for each of the eight retrofits from its $k$ nearest others ($k$ = 1 to √#loo.at(0).held_out_models ≈ #ks.last()), compare with ComStock's result.],
     ),
     {
       set text(size: 14.5pt)
-      v(14pt)
+      v(10pt)
       list(
-        [$k = 1$: *#calc.round(pct.at(0))%* of picks differ from $k = 10$.],
-        [$k = 9$: *#calc.round(pct.at(8))%* (#total(9) of #int(n(9))).],
-        [When the pick changes at $k = 9$, keeping the $k = 10$ pick costs a median *#money(k9.median_extra_cost_usd_excluding_noncompliant)* more over five years: mostly near-ties.],
+        [$k = 10$ is off by *#at("10")* pct-pts on average, vs. *#at("all")* with no matching: #calc.abs(float(t-all.mean_diff_pp)) better (95% CI #calc.abs(float(t-all.ci95_high_pp))–#calc.abs(float(t-all.ci95_low_pp)), paired bootstrap).],
+        [One neighbor is *worse* than no matching. Error is flat from $k approx 6$ up to $sqrt(n) approx #kmax$.],
+        [Picks are stable too: #calc.round(stab9)% change between $k = 9$ and 10, mostly near-ties.],
       )
     },
   )
   #v(1fr)
-  #takeaway[Stable is not the same as right: this shows matching is a real source of uncertainty, *not which answer is correct.*]
+  #takeaway[Matching measurably helps. But this is error *between simulations*, not against real retrofits.]
 ]
 #speaker-note[
-  [ZW] How much do our recommendations depend on how many neighbors we use? We reran the matching for k from 1 to 9 and compared the cheapest compliant upgrade against the k equals 10 answer. With one neighbor, over half the picks differ. That falls to about 15 percent at k equals 9. And when the pick does change at k equals 9, the median cost of sticking with the k-10 pick is under three thousand dollars over five years, so these are near-ties.
+  [ZW] We can't check our predictions against real retrofits, because they haven't happened. But ComStock's simulated buildings do have a known answer. So we hid each of the 618 simulated Boston offices in turn, treated it like a real building, matched it to its k nearest other simulated offices with exactly the same distance we use for BERDO, and predicted its emissions cut for each of the eight retrofits. Then we compared against what ComStock actually simulated for it.
 
-  If asked why: most of the remaining changes are swaps between Package 2 and Package 4. At k equals 9 that's 8 of the 11; at k equals 1 it's 18 of 39. Those are the same retrofit, LED plus heat pumps, and differ only in the efficiency of the rooftop heat pump. Both replace boilers with the same heat-pump boiler, so for buildings whose neighbors have no rooftop units, 138 of our 297, ComStock gives them identical results. BERDO doesn't record HVAC system type, so we can't tell which one fits a real building. Leaving those swaps out, a different retrofit is picked for about 31 percent of buildings at k equals 1 and 4 percent at k equals 9.
+  The line is the average error in percentage points of emissions cut. With ten neighbors we're off by about 5.3 points. If we didn't match at all and just pooled every other office, we'd be off by about 6.1. Using only small, medium or large office gets 5.7. The improvement from matching is about 0.85 points, and a paired bootstrap over buildings puts the 95 percent interval at 0.5 to 1.2, so it's not noise. One neighbor is actually worse than not matching, and the curve is flat from about 6 up to 24, the square root of the number of buildings, which is the usual rule-of-thumb ceiling for k. So ten is a reasonable choice, not a tuned one.
 
-  To be clear, this is stability, not accuracy. It doesn't tell us which prediction is right. That needs validation, which is our first next step.
+  The hardest case is the heat-pump packages: about 10 points of error on an average cut of 18 percent. So treat individual heat-pump estimates as rough.
+
+  Picks are also stable: between k equals 9 and 10, 15 percent of recommendations change, and keeping the k-10 pick costs a median of under three thousand dollars over five years. If asked why: 8 of those 11 changes are swaps between Package 2 and Package 4, which are the same retrofit, LED plus heat pumps, and differ only in the efficiency of the rooftop heat pump. Both replace boilers with the same heat-pump boiler, so for buildings whose neighbors have no rooftop units, 138 of our 297, ComStock gives them identical results. BERDO doesn't record HVAC system type, so we can't tell which one fits a real building.
+
+  The caveat: this measures how well neighbors transfer between simulated buildings. Real buildings can differ from every simulation in ways size, energy use and fuel mix don't capture.
 ]
 
 // ---- 8. the five-year decision rule ----------------------------------------
@@ -807,8 +821,8 @@
     align: (center + horizon, left + horizon, left + horizon),
     ..step(
       1,
-      [Validate predictions],
-      [Hold out simulated buildings and predict them from their neighbors; compare with engineering or post-upgrade data where it exists.],
+      [Validate on real buildings],
+      [The hold-out test checks simulations against simulations. Next: compare with engineering studies or post-upgrade BERDO data.],
     ),
     ..step(
       2,
@@ -826,7 +840,7 @@
   #takeaway[Our first priority is *confidence in the predicted outcomes*, not more financial complexity.]
 ]
 #speaker-note[
-  [KT] Where we go next. First, validation. We've shown how sensitive the recommendations are to matching, but not whether the predictions are right. One test we can run now is to hold out simulated buildings and predict them from their neighbors, since there we know the answer. Second, expand the options and fill gaps in the cost mapping. Third, model time explicitly: let grid emissions, fuel prices and costs change by year. Fourth, add a budget and plan what to fix and when. But our main priority is confidence in the predicted retrofit outcomes.
+  [KT] Where we go next. First, validation on real buildings. The hold-out test showed matching works between simulated buildings, but not against real retrofits. Buildings that have already retrofitted will show up in later BERDO disclosures, and engineering studies give another check. Second, expand the options and fill gaps in the cost mapping. Third, model time explicitly: let grid emissions, fuel prices and costs change by year. Fourth, add a budget and plan what to fix and when. But our main priority is confidence in the predicted retrofit outcomes.
 
   To summarize: our domain problem is choosing the most cost-effective response to BERDO, and our data science problem is estimating the retrofit outcomes that decision needs. The cheapest option for an owner often isn't the one that meets the city's goals.
 ]
