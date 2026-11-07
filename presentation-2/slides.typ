@@ -758,41 +758,56 @@
 // ---- 13. answer: break-even ACP -------------------------------------------
 
 #s([Today's ACP rarely makes compliance the cheapest choice], stop: 5)[
-  #let edges = (0, 234, 500, 1000, 2000, 1e9)
-  #let labels = ([≤ \$234 \ (today)], [\$234–500], [\$500–1k], [\$1k–2k], [> \$2k])
-  #let counts = range(5).map(i => breakeven
-    .filter(v => v > edges.at(i) - (if i == 0 { 1 } else { 0 }) and v <= edges.at(i + 1))
-    .len())
-  #let xs = range(5)
+  // Empirical CDF of the break-even ACP, counted out of all over-limit offices, so the
+  // ones with no compliant retrofit show as the gap between the curve's top and the total.
+  #let xmax = 3000
+  #let be = breakeven.sorted()
+  #let n-opt = be.len()
+  #let shown = be.filter(v => v <= xmax)
+  #let above = n-opt - shown.len()
+  #let today = stats.acp_usd_per_t
+  #let at-today = be.filter(v => v <= today).len()
+  #let med = stats.breakeven_median
+  // step: end holds each count until the next break-even value
+  #let xs = (0,) + shown + (xmax,)
+  #let ys = (0,) + range(1, shown.len() + 1) + (shown.len(),)
   #grid(
-    columns: (1.35fr, 1fr),
+    columns: (1.45fr, 1fr),
     column-gutter: 20pt,
     figure(
       chart(lq.diagram(
-        width: 13cm,
-        height: 5.4cm,
-        ylim: (0, 29),
-        ylabel: [Buildings],
-        xlabel: [Break-even payment (\$ per ton)],
-        xaxis: (ticks: xs.zip(labels), subticks: none),
-        yaxis: (subticks: none),
-        lq.bar(xs, counts, width: 0.7, stroke: 1.5pt + white, fill: counts
-          .enumerate()
-          .map(((i, _)) => if i == 0 { c-blue } else { c-gray })),
-        ..xs.map(i => lq.place(i, counts.at(i), align: bottom, pad(bottom: 3pt, text(
-          size: 12pt,
-          weight: "bold",
-        )[#counts.at(i)]))),
+        width: 14cm,
+        height: 6cm,
+        xlim: (0, xmax),
+        ylim: (0, stats.over_limit + 9),
+        xlabel: [ACP rate (\$ per ton)],
+        ylabel: [Offices where complying is cheapest],
+        xaxis: (ticks: (0, 500, 1000, 1500, 2000, 2500, 3000).map(t => (t, [\$#if t >= 1000 [#(t / 1000)k] else [#t]])), subticks: none),
+        yaxis: (ticks: (0, 25, 50, 75, stats.over_limit), subticks: none),
+        grid: none,
+        // all over-limit offices, and the most the curve can reach
+        lq.hlines(stats.over_limit, stroke: 0.8pt + rule),
+        lq.hlines(n-opt, stroke: (paint: c-gray.darken(20%), thickness: 1pt, dash: "dotted")),
+        lq.place(xmax - 40, (n-opt + stats.over_limit) / 2, align: horizon + right, text(size: 11pt, fill: ink-2)[↕ #(stats.over_limit - stats.with_compliant_option) offices: no compliant retrofit at any price]),
+        lq.place(xmax - 40, stats.over_limit, align: bottom + right, pad(bottom: 2pt, text(size: 11pt, fill: ink-2)[All #stats.over_limit over the limit])),
+        lq.vlines(today, stroke: (paint: c-blue, thickness: 1.5pt, dash: "dashed")),
+        // median drawn only up to the curve, so it does not cut through the "Today" label
+        lq.plot((med, med), (0, be.filter(v => v <= med).len()), mark: none, stroke: (paint: c-orange, thickness: 1.2pt, dash: "dashed")),
+        lq.plot(xs, ys, step: end, mark: none, stroke: 2.2pt + navy),
+        lq.plot((today,), (at-today,), stroke: none, mark: "o", mark-size: 8pt, color: c-blue),
+        lq.place(today, (n-opt + stats.over_limit) / 2, align: horizon + left, pad(left: 5pt, text(size: 11.5pt, fill: c-blue, weight: "bold")[Today: \$#today → #at-today])),
+        lq.place(med, 4, align: bottom + left, pad(left: 5pt, text(size: 11.5pt, fill: c-orange.darken(15%), weight: "bold")[Median: \$#calc.round(med)])),
+        lq.place(xmax - 40, shown.len(), align: top + right, pad(top: 4pt, text(size: 11pt, fill: ink-2)[+#above more above \$3k])),
       )),
-      caption: [ACP per ton at which a compliant retrofit becomes the owner's cheapest 20-year option (#stats.with_compliant_option offices with one).],
+      caption: [Over-limit offices whose cheapest 20-year option (owner's view) is a compliant retrofit, as the ACP rises. Each step is one building's break-even rate.],
     ),
     {
       set text(size: 14.5pt)
       v(10pt)
       list(
-        [Median: *\$#calc.round(stats.breakeven_median)/t*, about #calc.round(stats.breakeven_median / stats.acp_usd_per_t, digits: 1)× today's rate.],
-        [*#stats.breakeven_le_current* already tip at \$234.],
-        [#(stats.over_limit - stats.with_compliant_option) more have *no* retrofit among our eight that meets the limit.],
+        [At today's *\$#today/t*, compliance is cheapest for *#at-today* of #stats.over_limit.],
+        [The median office with a compliant option tips at *\$#calc.round(med)/t*, about #calc.round(med / today, digits: 1)× today's rate.],
+        [#(stats.over_limit - stats.with_compliant_option) offices never tip: none of our eight retrofits meets the limit.],
       )
     },
   )
@@ -802,7 +817,9 @@
 #speaker-note[
   [KT] This raises a policy question. If it's often cheaper to stay over the limit, how high would the payment need to be before a compliant retrofit wins? For the 75 buildings where our model finds at least one compliant retrofit, we raised the payment until that happens.
 
-  The median is about 571 dollars per ton, versus 234 today. Only 24 buildings tip at or below today's rate. And the other 24 of our 99 have no compliant option among the retrofits we evaluated, so raising the payment on them is just a tax unless deeper retrofits are on the table.
+  Read the line left to right: as the payment rises, it counts how many of the 99 over-limit offices would find a compliant retrofit cheapest. At today's 234 dollars, the blue dot, that's 24. Fourteen of those already win at any price, because their compliant retrofit pays for itself in energy savings. The median office with a compliant option tips at about 571 dollars, roughly two and a half times today's rate, and the curve keeps climbing slowly after that; seven buildings need more than 3,000 dollars a ton.
+
+  The curve can never reach 99. It tops out at 75, because the other 24 have no compliant option among the retrofits we evaluated, so raising the payment on them is just a tax unless deeper retrofits are on the table.
 ]
 
 // ---- 14. next steps --------------------------------------------------------
