@@ -27,3 +27,6 @@ upgrade_id,package_name,component,measure,btb_measure_id
 58,"Package 5",Energy recovery wheel,hvac_exhaust_air_energy_or_heat_recovery,5
 58,"Package 5",Economizer hardware,hvaceconomizer,-58
 58,"Package 5",Economizer controls,economizer_controls,-59
+46,"Individual Rooftop Solar PV",Solar PV,upgrade_add_pvwatts,-46
+65,"Package 12, PV + Roof Insulation",Solar PV,upgrade_add_pvwatts,-46
+65,"Package 12, PV + Roof Insulation",Roof insulation,roof_insulation_aedg,93

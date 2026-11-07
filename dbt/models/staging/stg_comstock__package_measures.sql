@@ -15,6 +15,7 @@
     "hvac_exhaust_air_energy_or_heat_recovery": ('"out.params.design_outdoor_air_flow_rate..m3_per_m2_s" * "in.sqft..ft2" * 0.09290304 * 2118.880003', "CFM"),
     "hvaceconomizer": ('greatest(coalesce("out.params.num_air_loops_economizer", 0), 1)', "loop"),
     "economizer_controls": ('1', "building"),
+    "upgrade_add_pvwatts": ('"out.params.pv_system_size..kW"', "kW"),
     "hvac_vrf_hr_doas": ('"out.params.vrf_total_outdoor_unit_cooling_capacity..w" / 3516.85284', "ton"),
 } %}
 with raw as (

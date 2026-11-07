@@ -2,3 +2,4 @@ btb_measure_id,display_name,cost_unit,typical_quantity,unit_cost_low_usd,unit_co
 -29,Imputed geothermal ground loop,ton,1,3570,5100,6630,50
 -58,Economizer hardware proxy,loop,1,250,500,1000,15
 -59,Economizer programming and commissioning,building,1,5000,10000,15000,15
+-46,Commercial rooftop solar PV,kW,1,1485,1980,2475,25

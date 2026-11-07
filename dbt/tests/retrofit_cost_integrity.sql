@@ -14,7 +14,7 @@ select
 
 from {{ ref('int_comstock_package_costs') }}
 
-where upgrade_id in (12, 29, 43, 58, 48, 49, 52, 54, 55, 56, 57)
+where upgrade_id in (12, 29, 43, 46, 48, 49, 52, 54, 55, 56, 57, 58, 65)
   and applicability
   and (
       quantity is null
