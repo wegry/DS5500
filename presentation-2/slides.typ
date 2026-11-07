@@ -195,7 +195,7 @@
   )
 ]
 #speaker-note[
-  [KL] Before we start, a few terms we'll use a lot. BERDO is Boston's building emissions law. It limits emissions intensity, kilograms of CO2 per square foot per year. If you're over, you can pay an Alternative Compliance Payment, the ACP, or retrofit. ComStock is the national lab's simulation data we borrow retrofit effects from. Global cost is how we compare options over 20 years. And the grid emissions factor is how much CO2 each kilowatt-hour of electricity counts for, which matters a lot by the end.
+  [KL] Before we start, a few terms we'll use a lot. BERDO is Boston's emissions rule for larger buildings. It limits emissions per square foot. The ACP is a payment for emissions above that limit, and paying it is one way to meet BERDO obligations. A retrofit package combines upgrades, like insulation or heat pumps. ComStock is the national lab's simulation data we borrow retrofit effects from. Global cost means comparing costs over 20 years. And the grid emissions factor tells us how much carbon is counted for electricity use.
 ]
 
 // ---- 2. the decision in one slide ------------------------------------------
@@ -317,9 +317,7 @@
   #takeaway[Our data science target: *post-retrofit emissions for building × option*]
 ]
 #speaker-note[
-  [KL] This brings us to our data science problem. Farnsworth emits about 4.8 kilograms of CO2 per square foot, and the 2030 limit is 3.2. We want to know what happens to that 4.8 if the owner picks a particular upgrade. Our model predicts Package 2, LED lighting plus heat pumps, would bring it to 2.39, under the limit.
-
-  But notice the difference. 4.8 is measured. 2.39 is estimated; that's why it's drawn dashed. Our data science task is to produce those estimates for every building and every retrofit. Without them we can't compute the remaining compliance payments or compare upgrades at all.
+  [KL] For Farnsworth, BERDO reports about 4.8 kilograms of CO2 equivalent per square foot per year. The 2030 office limit is 3.2. Our model estimates that Package 2, with LED lighting and heat pumps, could bring it down to 2.39. The key difference is that 4.8 comes from reported building data, while 2.39 is our prediction, not an observed result. We need estimates like this for each building and retrofit option before we can compare costs and any remaining payments.
 ]
 
 // ---- 5. three datasets, no shared key ---------------------------------------
@@ -450,9 +448,7 @@
   #takeaway[We keep each building's *real* emissions and borrow only the *% change* from its simulated neighbors.]
 ]
 #speaker-note[
-  [KL] This is the main technical part of the project: k-nearest-neighbor matching. We take a real BERDO building, like Farnsworth, and compare it with simulated offices in ComStock on three things: size, energy use per square foot, and the share of energy from each fuel. Logs mean twice as big counts the same for a small or a huge building. We keep the ten closest.
-
-  Then we look at what a given upgrade does to those ten. Say it cuts their gas use by 40 percent but raises electricity because of the heat pumps. We don't copy the simulated building's final emissions. We pool the percent change for each fuel across the ten, weighted by how much of that fuel they use, and apply it to Farnsworth's actual reported emissions. So we're using simulations to estimate how a real building would respond to a retrofit it has never had.
+  [KL] Here's how we make those predictions. We match each real BERDO office to simulated ComStock offices that look similar in size, energy use per square foot, and fuel mix. We keep the ten closest. Then we look at how an upgrade changes energy use in those simulations.For example, heat pumps might reduce gas use but increase electricity use. We combine the change for each fuel across the matches, taking account of how much of that fuel they used before the upgrade. Then we apply those changes to the real building's reported emissions. So we're not copying a simulated building's final result. We're borrowing the estimated change to predict what might happen to the real building.
 ]
 
 // ---- 7. sensitivity to k ----------------------------------------------------
@@ -614,9 +610,7 @@
   #takeaway[The cheapest move is to *do nothing and pay*. The cheapest compliant one is Package 2.]
 ]
 #speaker-note[
-  [KL] Here's the model output for Farnsworth. Over five years, the cheapest option is doing nothing and paying the compliance charge: about 1.39 million dollars including energy bills. Notice energy is by far the biggest line for every option. The cheapest compliant options are Packages 2 and 4, about 1.81 million. So meeting the limit costs about 422 thousand dollars more over five years. That's the conflict: the owner minimizes cost with an option that doesn't meet the target.
-
-  If asked why Packages 2 and 4 are identical here: Farnsworth's matched buildings have boilers, not rooftop units, so only the heat-pump boiler and LED parts of either package apply. The rooftop heat pump, the only part that differs, costs zero for this building.
+  [KL] Here's Farnsworth's five-year result. The lowest-cost option is no upgrade, at about \$1.39 million, including energy bills and ACP payments. Packages 2 and 4 are tied as the cheapest retrofits that bring emissions below the standard, at about \$1.81 million. So reaching the emissions target costs roughly \$422,000 more over five years. Paying the ACP is an allowed way to meet BERDO obligations, but it doesn't bring the building's emissions below the target. That's the tradeoff we're seeing.
 ]
 
 // ---- 10. the 20-year method, owner vs society --------------------------------
@@ -713,9 +707,7 @@
   #takeaway[Over 5 years, *#stats.over_acp_5yr of #stats.over_limit* owners should just pay. Over 20, nobody should, but only *#outcomes.at(1).retrofit_compliant* pick a fix that meets the limit.]
 ]
 #speaker-note[
-  [KL] Now all 99 buildings above the 2030 limit. Top bar, the five-year view: for 66 of them the cheapest move is to do nothing and pay, and only 3 have a compliant retrofit as their cheapest choice. Over 20 years retrofits look better, because there's more time to earn back the up-front cost. Nobody should only pay. But from the owner's point of view, only 24 buildings have a compliant retrofit as their cheapest option. Most pick something like wall insulation that saves money and stays over the limit.
-
-  From society's point of view, where every ton is charged its climate cost and the future is discounted less, that rises to 35. So two things matter: the time horizon, and whose costs you count.
+  [KL] Now let's look at all 99 buildings in our baseline comparison. Over five years, no upgrade is cheapest for 66 buildings. Only three have a retrofit that meets the emissions limit as their cheapest choice. Over 20 years, some retrofit becomes cheapest for every building, but only 24 of those choices actually get below the limit. When we include society's climate costs, that number rises to 35. So the answer changes depending on how far ahead we look and whose costs we include. And remember, this comparison uses our original baseline emissions factors. Later, we'll show how the projected 2030 factor changes the count.
 ]
 
 // ---- 11b. energy scenarios --------------------------------------------------
