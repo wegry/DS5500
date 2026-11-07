@@ -9,6 +9,7 @@
     "light_led": ('"in.sqft..ft2" * "out.params.interior_lighting_power_density..w_per_ft2"', "W"),
     "add_heat_pump_rtu": ('"out.params.dx_cooling_capacity_tons..tons"', "ton"),
     "replace_boiler_by_heatpump": ('"out.params.ww_hp_heating_capacity..kbtu_per_hr" / 12', "ton"),
+    "hvac_vrf_hr_doas": ('"out.params.vrf_total_outdoor_unit_cooling_capacity..w" / 3516.85284', "ton"),
 } %}
 with raw as (
     select *
