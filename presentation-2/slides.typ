@@ -167,6 +167,37 @@
   Before we can compare upgrades, we need to know what those upgrades would do to a building's energy and emissions. So our work is to estimate those outcomes first, and then use them to compare financial decisions.
 ]
 
+// ---- 1b. glossary -----------------------------------------------------------
+
+#let term(name, body) = block(
+  width: 100%,
+  inset: (left: 10pt, y: 5pt),
+  stroke: (left: 3pt + navy.lighten(55%)),
+  {
+    text(size: 15pt, weight: "bold", fill: navy)[#name]
+    linebreak()
+    text(size: 13.5pt, fill: ink)[#body]
+  },
+)
+
+#s([Seven terms we use throughout])[
+  #grid(
+    columns: (1fr, 1fr),
+    column-gutter: 26pt,
+    row-gutter: 11pt,
+    term([BERDO], [Boston's Building Emissions Reduction and Disclosure Ordinance. Large buildings report energy yearly and must stay under emissions limits that step down to zero by 2050.]),
+    term([ComStock], [A national lab's simulations of U.S. commercial buildings, with energy use before and after each of dozens of retrofits.]),
+    term([Emissions intensity], [kg CO#sub[2]e per ft² per year: what BERDO limits. The office limit is 5.3 now and 3.2 from 2030.]),
+    term([Global cost], [Total cost over 20 years: equipment, energy bills and emissions cost, with future dollars discounted (EN 15459).]),
+    term([ACP], [Alternative Compliance Payment: \$#stats.acp_usd_per_t per ton of CO#sub[2]e over the limit, every year. The "pay" option.]),
+    term([Grid emissions factor], [kg CO#sub[2]e per kWh of electricity. BERDO's falls as the state's renewable requirement (RPS) rises.]),
+    term([Retrofit package], [An upgrade to the building: LED lighting, insulation, windows, heat pumps. A package bundles several.]),
+  )
+]
+#speaker-note[
+  [KL] Before we start, a few terms we'll use a lot. BERDO is Boston's building emissions law. It limits emissions intensity, kilograms of CO2 per square foot per year. If you're over, you can pay an Alternative Compliance Payment, the ACP, or retrofit. ComStock is the national lab's simulation data we borrow retrofit effects from. Global cost is how we compare options over 20 years. And the grid emissions factor is how much CO2 each kilowatt-hour of electricity counts for, which matters a lot by the end.
+]
+
 // ---- 2. the decision in one slide ------------------------------------------
 
 #s([#stats.over_limit of #stats.matched Boston offices must pay or fix by 2030], stop: 1)[
