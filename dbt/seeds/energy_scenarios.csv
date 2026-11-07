@@ -1,0 +1,8 @@
+scenario,label,aeo_case,cambium_scenario,berdo_grid_schedule,basis
+frozen,Today's levels,,,false,"The original model: BERDO emissions factors, grid emissions and real energy prices held at today's (2025) level for all 20 years"
+projected,AEO baseline prices,cb2026,MidCase,true,"BERDO's projected grid factor and RPS Class I schedule for compliance; Cambium 2024 Mid-case ISO-NE average emission rate for society; AEO2026 Counterfactual Baseline New England commercial prices"
+lowogs,High prices (low oil & gas supply),lowogs,MidCase,true,"As projected, with AEO2026 Low Oil and Gas Supply prices (50% less recoverable US oil and gas): gas +59% and electricity +24% by 2049"
+highogs,Low prices (high oil & gas supply),highogs,MidCase,true,"As projected, with AEO2026 High Oil and Gas Supply prices (50% more recoverable US oil and gas)"
+higheldmd,Data-center demand (high electricity demand),higheldmd,MidCase,true,"As projected, with AEO2026 High Electricity Demand prices (exponential AI server growth)"
+berdo_only,BERDO grid schedule only,,MidCase,true,"Decomposition: BERDO's projected grid factor and RPS schedule (and Cambium for society), energy prices held at 2025"
+prices_only,AEO prices only,cb2026,,false,"Decomposition: AEO2026 Counterfactual Baseline prices, BERDO factor and grid held at 2025"
