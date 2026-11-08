@@ -693,9 +693,9 @@
 #speaker-note[
   [ZW] Five years undersells a retrofit that lasts twenty, so we also compute a 20-year cost. This is the European standard for comparing building upgrades, EN 15459. Equipment includes replacing anything that wears out inside 20 years, minus the value left at the end. Then every year's energy bill and emissions cost, discounted, because a dollar in 2045 is worth less than a dollar today.
 
-  We look at it from two points of view. The owner pays the ACP only on tons over the limit, and that grows each time the limit steps down. The owner discounts at 7 percent. Society counts the climate damage of every ton at 230 dollars, the EPA's 2023 social cost of carbon, and leaves out the ACP because that's just money moving from the owner to the city. Society discounts at 2 percent.
+  The owner pays the ACP only on tons over the limit, and that grows each time the limit steps down. The owner discounts at 7 percent. Society counts the climate damage of every ton at 230 dollars, the EPA's 2023 social cost of carbon, and leaves out the ACP because that's just money moving from the owner to the city. Society discounts at 2 percent.
 
-  In the baseline, the owner's ACP follows BERDO's projected grid factor, the same one behind our 81, and society's climate damage follows NLR's Cambium projections for the New England grid. Energy prices, the ACP rate and the carbon price stay at today's level. Higher energy prices or a higher ACP would make retrofits look better. The grid getting cleaner is two-sided: it lowers emissions for heat pumps, but also for buildings that do nothing. On the next slide we show what the grid factor does and swap in energy price projections. The ACP rate is the break-even slide.
+  In the baseline, the owner's ACP follows BERDO's projected grid factor, and society's climate damage follows NLR's Cambium projections for the New England grid.
 ]
 
 // ---- 9. answer: BERDO's grid factor and energy prices -------------------------
