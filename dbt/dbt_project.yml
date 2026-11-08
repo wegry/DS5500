@@ -16,8 +16,11 @@ vars:
   comstock_max_upgrade: 65
   # "full" results add the geometry and equipment sizes (out.params.*) that costing needs
   comstock_full_dir: https://oedi-data-lake.s3.amazonaws.com/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2025/comstock_amy2018_release_3/metadata_and_annual_results/by_state_and_county/full/parquet/state=MA/county=G2500250
-  # the four retrofit packages compared for 2030 compliance (see comstock_package_components)
+  # the retrofit upgrades compared for 2030 compliance (see comstock_package_components)
   package_upgrade_ids: [12, 29, 43, 46, 48, 49, 52, 54, 55, 56, 57, 58, 65]
+  # upgrades added after the original eight (VRF, geothermal, PV, Package 5, Package 12); they
+  # are only offered to buildings where a matched model applies them at a nonzero cost
+  expanded_upgrade_ids: [12, 29, 46, 58, 65]
   # NLR 2024 Buildings Technology Baseline, commercial flat file (OEDI submission 8342)
   btb_csv: https://data.openei.org/files/8342/btb2024_commercial_dataset%20(4).csv
   # BTB cost projection year and scenario; costs are in 2023 dollars either way

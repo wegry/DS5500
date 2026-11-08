@@ -14,7 +14,7 @@ select
 
 from {{ ref('int_comstock_package_costs') }}
 
-where upgrade_id in (12, 29, 43, 46, 48, 49, 52, 54, 55, 56, 57, 58, 65)
+where upgrade_id in ({{ var("package_upgrade_ids") | join(", ") }})
   and applicability
   and (
       quantity is null

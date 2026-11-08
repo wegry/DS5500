@@ -43,9 +43,7 @@ ratios as (
         and b.upgrade_id = 0
     inner join {{ ref('int_comstock_models') }} u
         on m.comstock_id = u.comstock_id
-        and u.upgrade_id in (
-            43, 48, 49, 52, 54, 55, 56, 57
-        )
+        and u.upgrade_id in ({{ var("package_upgrade_ids") | join(", ") }})
     where m.match_rank <= k.k
     group by m.berdo_id, k.k, u.upgrade_id
 ),

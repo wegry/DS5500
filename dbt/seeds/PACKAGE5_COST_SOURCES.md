@@ -8,7 +8,8 @@ Source: https://data.openei.org/submissions/8342
 
 - ID 7: Demand-controlled ventilation, $39,810 / 16,000 sqft.
 - ID 5: Energy recovery wheel, $66,874 / 11,000 CFM.
-- IDs 2, 3, 12: Existing heat-pump and lighting mappings.
+- IDs 2, 3: Existing heat-pump RTU and heat-pump boiler mappings.
+  (Package 5 has no LED lighting, so BTB ID 12 is not used.)
 
 Airflow is estimated from ComStock's outdoor-air-flow-rate
 intensity multiplied by building floor area.
@@ -64,7 +65,8 @@ uncertain. BTB costs and external benchmarks may also have
 different price years.
 
 Reproduce using:
-python check_imputed_cost_sensitivity.py
+uv run python check_cost_sensitivity.py
 
-The script varies only imputed components while holding
-all other installation and energy costs at their mid values.
+For Package 5 the script varies the entire installation
+cost (all components, BTB and imputed) between low and
+high, holding energy costs and all other upgrades at mid.

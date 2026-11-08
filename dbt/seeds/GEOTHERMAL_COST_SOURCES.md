@@ -2,7 +2,7 @@
 
 ## ComStock upgrade 29: Packaged ground-source heat pump
 
-### 1. Heat-pump equipment ? BTB
+### 1. Heat-pump equipment — BTB
 
 Source: 2024 Buildings Technology Baseline, commercial dataset.
 https://data.openei.org/submissions/8342
@@ -17,7 +17,7 @@ Derived unit cost: $12,900/ton.
 
 BTB explicitly states: "No ground heat exchanger."
 
-### 2. Ground-loop installation ? Imputed
+### 2. Ground-loop installation — Imputed
 
 Source: U.S. Department of Energy (2025).
 Pathways to Commercial Liftoff: Geothermal Heating and Cooling.
