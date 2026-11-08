@@ -473,7 +473,7 @@
     size: 12.5pt,
     fill: ink-2,
   )[$b$ = real building, $c$ = simulated one, $N_b$ = its 10 matches. $G_(b,f)$ = reported emissions from fuel $f$; $U$, $B$ = simulated use after / before the upgrade. Logs make "twice as big" count the same at any size.])
-  #v(6pt)
+  #v(1fr)
   #takeaway[We keep each building's *real* emissions and borrow only the *% change* from its simulated neighbors.]
 ]
 #speaker-note[
@@ -583,7 +583,7 @@
       [*Cheapest compliant:* lowest $C_5$ with $hat(G)_b slash A_b <= 3.2$.],
     ),
   )
-  #v(12pt)
+  #v(1fr)
   #takeaway[Install costs are benchmarks, not quotes. But *#stats.robust_to_cost of #stats.matched* buildings get the same pick at low, mid or high BTB prices.]
 ]
 #speaker-note[
@@ -625,7 +625,7 @@
     ),
     caption: [EN 15459 global cost @en15459, as in the EU cost-optimal method @eu-cost-optimal. Equipment lifetimes from BTB @btb.],
   )
-  #v(12pt)
+  #v(1fr)
   #takeaway[Baseline: *energy prices, grid emissions, the ACP rate and the carbon price* held at today's level. We vary the grid and prices after the results.]
 ]
 #speaker-note[
