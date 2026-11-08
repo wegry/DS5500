@@ -195,8 +195,8 @@
     ),
 
     term(
-      [Emissions intensity],
-      [kg CO#sub[2]e per ft² per year: what BERDO limits. The office limit is 5.3 now and 3.2 from 2030.],
+      [Emissions intensity & EUI],
+      [kg CO#sub[2]e per ft² per year: what BERDO limits. The office limit is 5.3 now and 3.2 from 2030. Energy Use Intensity (EUI) measures energy consumption per ft² per year.],
     ),
     term(
       [Global cost],
