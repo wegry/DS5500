@@ -187,7 +187,7 @@
     row-gutter: 14pt,
     term([BERDO], [Boston's Building Emissions Reduction and Disclosure Ordinance. Large buildings report energy yearly and must stay under emissions limits that step down to zero by 2050.]),
     term([ComStock], [A national lab's simulations of U.S. commercial buildings, with energy use before and after each of dozens of retrofits.]),
-    term([Emissions intensity], [kg CO#sub[2]e per ft² per year: what BERDO limits. The office limit is 5.3 now and 3.2 from 2030.]),
+    term([Emissions intensity & EUI], [kg CO#sub[2]e per ft² per year: what BERDO limits. The office limit is 5.3 now and 3.2 from 2030. Energy Use Intensity (EUI) measures energy consumption per ft².]),
     term([Global cost], [Total cost over 20 years: equipment, energy bills and emissions cost, with future dollars discounted (EN 15459).]),
     term([ACP], [Alternative Compliance Payment: \$#stats.acp_usd_per_t per ton of CO#sub[2]e over the limit, every year. The "pay" option.]),
     term([Grid emissions factor], [kg CO#sub[2]e per kWh of electricity. BERDO's falls as the state's renewable requirement (RPS) rises.]),
@@ -485,7 +485,7 @@
   #align(center, text(
     size: 12.5pt,
     fill: ink-2,
-  )[$b$ = real building, $c$ = simulated one, $N_b$ = its 10 matches. $G_(b,f)$ = reported emissions from fuel $f$; $U$, $B$ = simulated use after / before the upgrade. Logs make "twice as big" count the same at any size.])
+  )[$b$ = real building, $c$ = simulated one, $A$ = building area, $N_b$ = its 10 matches. $G_(b,f)$ = reported emissions from fuel $f$; $U$, $B$ = simulated use after / before the upgrade. Logs make "twice as big" count the same at any size.])
   #v(1fr)
   #takeaway[We keep each building's *real* emissions and borrow only the *% change* from its simulated neighbors.]
 ]
@@ -778,7 +778,7 @@
 
   The top bar is today's factor: 99 offices over the 2030 limit. The green on the left of the others is the surprise. 18 of those 99 are under the 2030 limit without doing anything, because by 2030 BERDO counts each kilowatt-hour as 15 percent cleaner: the renewable standard goes from 27 to 40 percent. That's why our headline is 81, not 99.
 
-  For the rest, the owner's cheapest choice still mostly misses the limit: 28 to 31 pick a retrofit under the limit depending on prices, against 34 of 99 at today's levels. If we change only prices and leave BERDO's factor alone, it's 34. So the price forecasts barely move the decision.
+  For the rest, the owner's cheapest choice still mostly misses the limit: 28 to 31 pick a retrofit under the limit depending on prices, against 24 of 99 at today's levels. If we change only prices and leave BERDO's factor alone, it's 34. So the price forecasts barely move the decision.
 
   If asked about price spikes: EIA's outlook draws smooth long-run paths; it doesn't model spikes. Recent high prices are in our starting point, which uses 2025 Massachusetts prices and, in the high case, 2026 gas prices. The closest thing to prices staying high is the low oil and gas supply case, where gas is 59 percent and electricity 24 percent higher by 2049. That's the "High prices" bar, and it moves the count by three.
 
@@ -968,30 +968,17 @@
 #speaker-note[
   [KT] Looking ahead, we have four areas we'd like to improve.
 
-  First, validation. We've tested our matching approach using simulated buildings, but we want to better understand how well it represents real-world outcomes.
-
+  First, validation. We've tested our matching approach using simulated buildings, but we want to better understand how well it represents real-world applications.
   Second, we'd like to refine our cost estimates and expand our retrofit options, especially for buildings where none currently achieves compliance.
-
   Third, time-dependent assumptions. BERDO's projected grid factor reduces the number of offices above the limit from 99 to 81. But our model updates emissions every five years and holds equipment costs fixed. We'd like to model both annually.
-
   Finally, we'd like to introduce budget constraints to help determine not just which retrofits to choose, but when.
 
-  To conclude, our project addresses two connected problems.
-  The data science challenge is estimating retrofit impacts on real buildings using simulated data.
-  The domain challenge is identifying investments that balance financial costs, emissions reductions, and BERDO compliance.
-
-  Our goal is to connect the two, turning data-driven estimates into practical decarbonization decisions.
+  To conclude, our data science challenge is estimating retrofit impacts on real buildings using simulated data.
+  Our domain challenge is identifying investments that balance costs and BERDO compliance.
+  Our goal is to connect the two, turning data into practical decarbonization decisions.
 ]
 
-// ---- references ------------------------------------------------------------
-
-#s([References])[
-  #set text(size: 8.5pt)
-  #set par(justify: false)
-  #columns(2, gutter: 20pt, bibliography("refs.yml", title: none, style: "ieee"))
-]
-
-// ---- Bublik -----------------------------------------------------------------
+// ---- Bublik & Sweet P -----------------------------------------------------------------
 
 #slide({
   set align(center + horizon)
@@ -1011,63 +998,10 @@
   [Battle it out]
 ]
 
-// ---- backup slides ----------------------------------------------------------------
+// ---- references ------------------------------------------------------------
 
-// ---- Backup: the over-limit offices by time horizon --------------------------
-
-#s([The cheapest option changes with the time horizon], stop: 4)[
-  #let ys = range(outcomes.len()).rev()  // first scenario on top; lilaq sorts by y, so feed ascending
-  #let asc(arr) = arr.rev()
-  #let col(k) = outcomes.map(r => float(r.at(k)))
-  #let a = col("acp_only")
-  #let o = col("retrofit_over")
-  #let g = col("retrofit_compliant")
-  #let ao = a.zip(o).map(((x, y)) => x + y)
-  #let swatch(c, t) = box(baseline: 1pt, rect(width: 11pt, height: 11pt, radius: 2pt, fill: c)) + h(4pt) + t
-  #align(center, text(
-    size: 13pt,
-    swatch(c-gray, [Just pay])
-      + h(18pt)
-      + swatch(c-orange, [Retrofit, still over the limit])
-      + h(18pt)
-      + swatch(c-blue, [Retrofit that meets the 2030 limit]),
-  ))
-  #v(-4pt)
-  #figure(
-    chart(lq.diagram(
-      width: 20cm,
-      height: 5.2cm,
-      xlim: (0, stats.over_limit),
-      ylim: (-0.6, 2.6),
-      xlabel: [Over-limit office buildings (of #stats.over_limit)],
-      yaxis: (ticks: range(outcomes.len()).zip(outcomes.map(r => r.scenario).rev()), subticks: none),
-      xaxis: (ticks: (0, 20, 40, 60, stats.over_limit), subticks: none),
-      grid: none,
-      lq.hbar(asc(a), asc(ys), fill: c-gray, stroke: 1.5pt + white, width: 0.62),
-      // lilaq bars run from base to x, so x is the cumulative end
-      lq.hbar(asc(ao), asc(ys), base: asc(a), fill: c-orange, stroke: 1.5pt + white, width: 0.62),
-      lq.hbar(
-        asc(ao.zip(g).map(((x, y)) => x + y)),
-        asc(ys),
-        base: asc(ao),
-        fill: c-blue,
-        stroke: 1.5pt + white,
-        width: 0.62,
-      ),
-      ..range(outcomes.len())
-        .map(i => {
-          let parts = ((a.at(i), 0), (o.at(i), a.at(i)), (g.at(i), ao.at(i)))
-          parts
-            .filter(((n, b)) => n >= 3)
-            .map(((n, b)) => lq.place(b + n / 2, ys.at(i), text(size: 13pt, weight: "bold", fill: white)[#int(n)]))
-        })
-        .flatten(),
-    )),
-    caption: [Cheapest option for each of the #stats.over_limit offices over the limit, at mid equipment prices.],
-  )
-  #v(12pt)
-  #takeaway[Over 5 years, *#stats.over_acp_5yr of #stats.over_limit* owners should just pay. Over 20, nobody should, but only *#outcomes.at(1).retrofit_compliant* pick a retrofit that meets the limit.]
-]
-#speaker-note[
-  [KL] Now let's look at all 81 buildings that must pay or retrofit. Over five years, no upgrade is cheapest for 52 buildings. Only four have a retrofit that meets the emissions limit as their cheapest choice. Over 20 years, some retrofit becomes cheapest for every building, but only 28 of those choices actually get below the limit. When we include society's climate costs, that number rises to 38. So the answer changes depending on how far ahead we look and whose costs we include.
+#s([References])[
+  #set text(size: 8.5pt)
+  #set par(justify: false)
+  #columns(2, gutter: 20pt, bibliography("refs.yml", title: none, style: "ieee"))
 ]
