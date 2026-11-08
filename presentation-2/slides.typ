@@ -185,14 +185,41 @@
     columns: (1fr, 1fr),
     column-gutter: 26pt,
     row-gutter: 14pt,
-    term([BERDO], [Boston's Building Emissions Reduction and Disclosure Ordinance. Large buildings report energy yearly and must stay under emissions limits that step down to zero by 2050.]),
-    term([ComStock], [A national lab's simulations of U.S. commercial buildings, with energy use before and after each of dozens of retrofits.]),
-    term([Emissions intensity & EUI], [kg CO#sub[2]e per ft² per year: what BERDO limits. The office limit is 5.3 now and 3.2 from 2030. Energy Use Intensity (EUI) measures energy consumption per ft².]),
-    term([Global cost], [Total cost over 20 years: equipment, energy bills and emissions cost, with future dollars discounted (EN 15459).]),
-    term([ACP], [Alternative Compliance Payment: \$#stats.acp_usd_per_t per ton of CO#sub[2]e over the limit, every year. The "pay" option.]),
-    term([Grid emissions factor], [kg CO#sub[2]e per kWh of electricity. BERDO's falls as the state's renewable requirement (RPS) rises.]),
-    term([Retrofit package], [An upgrade to the building: LED lighting, insulation, windows, heat pumps. A package bundles several.]),
-    term([RPS], [Renewable Portfolio Standard: Massachusetts' required share of new renewable power. 27% now, 40% by 2030.]),
+    term(
+      [BERDO],
+      [Boston's Building Emissions Reduction and Disclosure Ordinance. Large buildings report energy yearly and must stay under emissions limits that step down to zero by 2050.],
+    ),
+    term(
+      [ComStock],
+      [A national lab's simulations of U.S. commercial buildings, with energy use before and after each of dozens of retrofits.],
+    ),
+
+    term(
+      [Emissions intensity],
+      [kg CO#sub[2]e per ft² per year: what BERDO limits. The office limit is 5.3 now and 3.2 from 2030.],
+    ),
+    term(
+      [Global cost],
+      [Total cost over 20 years: equipment, energy bills and emissions cost, with future dollars discounted (EN 15459).],
+    ),
+
+    term(
+      [ACP],
+      [Alternative Compliance Payment: \$#stats.acp_usd_per_t per ton of CO#sub[2]e over the limit, every year. The "pay" option.],
+    ),
+    term(
+      [Grid emissions factor],
+      [kg CO#sub[2]e per kWh of electricity. BERDO's falls as the state's renewable requirement (RPS) rises.],
+    ),
+
+    term(
+      [Retrofit package],
+      [An upgrade to the building: LED lighting, insulation, windows, heat pumps. A package bundles several.],
+    ),
+    term(
+      [RPS],
+      [Renewable Portfolio Standard: Massachusetts' required share of new renewable power. 27% now, 40% by 2030.],
+    ),
   )
 ]
 #speaker-note[
@@ -258,7 +285,7 @@
   So the question we're trying to answer is: which option is more cost-effective, and does the cheapest option actually reduce emissions enough to meet the standard?
 ]
 
- // ---- 3. case study: building and missing outcome -------------------------
+// ---- 3. case study: building and missing outcome -------------------------
 
 #s([24 Farnsworth St: estimating the impact of a retrofit], stop: 1)[
   #let today = float(stats.case_intensity)
@@ -520,11 +547,21 @@
         grid: none,
         lq.hlines(at("all"), stroke: (paint: c-gray.darken(20%), thickness: 1.2pt, dash: "dashed")),
         lq.hlines(at("type"), stroke: (paint: c-orange, thickness: 1.2pt, dash: "dashed")),
-        lq.place(kmax + 0.6, at("all"), align: bottom + right, pad(bottom: 2pt, text(size: 11pt, fill: ink-2)[No matching: all other offices])),
-        lq.place(kmax + 0.6, at("type"), align: bottom + right, pad(bottom: 2pt, text(size: 11pt, fill: c-orange.darken(15%))[Office size class only])),
+        lq.place(kmax + 0.6, at("all"), align: bottom + right, pad(bottom: 2pt, text(
+          size: 11pt,
+          fill: ink-2,
+        )[No matching: all other offices])),
+        lq.place(kmax + 0.6, at("type"), align: bottom + right, pad(bottom: 2pt, text(
+          size: 11pt,
+          fill: c-orange.darken(15%),
+        )[Office size class only])),
         lq.plot(ks, mae, stroke: 2pt + navy, mark: "o", mark-size: 4pt, color: navy),
         lq.plot((10,), (at("10"),), stroke: none, mark: "o", mark-size: 9pt, color: c-blue),
-        lq.place(10, at("10"), align: top + center, pad(top: 9pt, text(size: 11.5pt, weight: "bold", fill: c-blue)[$k = 10$: #at("10")])),
+        lq.place(10, at("10"), align: top + center, pad(top: 9pt, text(
+          size: 11.5pt,
+          weight: "bold",
+          fill: c-blue,
+        )[$k = 10$: #at("10")])),
       )),
       caption: [Leave-one-out test on #loo.at(0).held_out_models simulated Boston offices: hide one, predict its emissions cut for each of the eight retrofits from its $k$ nearest others ($k$ = 1 to √#loo.at(0).held_out_models ≈ #ks.last()), compare with ComStock's result.],
     ),
@@ -730,9 +767,12 @@
   #align(center, text(
     size: 12.5pt,
     swatch(c-aqua, [Under the limit anyway])
-      + h(14pt) + swatch(c-gray, [Just pay])
-      + h(14pt) + swatch(c-orange, [Retrofit, still over])
-      + h(14pt) + swatch(c-blue, [Retrofit, under the limit]),
+      + h(14pt)
+      + swatch(c-gray, [Just pay])
+      + h(14pt)
+      + swatch(c-orange, [Retrofit, still over])
+      + h(14pt)
+      + swatch(c-blue, [Retrofit, under the limit]),
   ))
   #v(-4pt)
   #grid(
@@ -774,11 +814,7 @@
   #takeaway[Projected prices don't change the answer. *BERDO's own falling grid factor does*: it's why #stats.over_limit offices, not #stats.over_limit_today, must pay or retrofit.]
 ]
 #speaker-note[
-  [ZW] This is where our 81 comes from, and how much energy price projections matter by comparison. Three sources. For the limit and the ACP, the City publishes its own projected grid emissions factor through 2050 in the BERDO Policies and Procedures, and electricity covered by the state's renewable portfolio standard counts as zero. That's what determines whether you owe a payment. For the climate damage in society's view, we use NLR's Cambium 2024 projections for the actual New England grid, which gets cleaner much faster. For energy bills, EIA's Annual Energy Outlook 2026, New England commercial prices, in its baseline case and three alternatives.
-
-  The top bar is today's factor: 99 offices over the 2030 limit. The green on the left of the others is the surprise. 18 of those 99 are under the 2030 limit without doing anything, because by 2030 BERDO counts each kilowatt-hour as 15 percent cleaner: the renewable standard goes from 27 to 40 percent. That's why our headline is 81, not 99.
-
-  For the rest, the owner's cheapest choice still mostly misses the limit: 28 to 31 pick a retrofit under the limit depending on prices, against 24 of 99 at today's levels. If we change only prices and leave BERDO's factor alone, it's 34. So the price forecasts barely move the decision.
+  [KL] This slide shows how future electricity emissions and energy prices affect our retrofit decisions. Looking at the chart on the left, the top bar represents today’s conditions, where 75 buildings choose retrofits but still exceed the emissions limit, while 24 choose compliant retrofits. In the scenarios below, 18 buildings meet the limit without any retrofit, shown in green, mainly because BERDO projects a cleaner electricity grid by 2030. The orange and blue sections show that changing energy prices affects retrofit choices only slightly, with 22–27 buildings choosing compliant upgrades. So the main takeaway is that BERDO’s declining electricity emissions factor has a much bigger impact than future energy prices.
 
   If asked about price spikes: EIA's outlook draws smooth long-run paths; it doesn't model spikes. Recent high prices are in our starting point, which uses 2025 Massachusetts prices and, in the high case, 2026 gas prices. The closest thing to prices staying high is the low oil and gas supply case, where gas is 59 percent and electricity 24 percent higher by 2049. That's the "High prices" bar, and it moves the count by three.
 
@@ -882,22 +918,46 @@
         ylim: (0, stats.over_limit + 9),
         xlabel: [ACP rate (\$ per ton)],
         ylabel: [Offices: retrofit under limit wins],
-        xaxis: (ticks: (0, 500, 1000, 1500, 2000, 2500, 3000).map(t => (t, [\$#if t >= 1000 [#(t / 1000)k] else [#t]])), subticks: none),
+        xaxis: (
+          ticks: (0, 500, 1000, 1500, 2000, 2500, 3000).map(t => (t, [\$#if t >= 1000 [#(t / 1000)k] else [#t]])),
+          subticks: none,
+        ),
         yaxis: (ticks: (0, 20, 40, 60, stats.over_limit), subticks: none),
         grid: none,
         // all over-limit offices, and the most the curve can reach
         lq.hlines(stats.over_limit, stroke: 0.8pt + rule),
         lq.hlines(n-opt, stroke: (paint: c-gray.darken(20%), thickness: 1pt, dash: "dotted")),
-        lq.place(xmax - 40, (n-opt + stats.over_limit) / 2, align: horizon + right, text(size: 11pt, fill: ink-2)[↕ #(stats.over_limit - stats.with_compliant_option) offices: no retrofit gets under the limit]),
-        lq.place(xmax - 40, stats.over_limit, align: bottom + right, pad(bottom: 2pt, text(size: 11pt, fill: ink-2)[All #stats.over_limit over the limit])),
+        lq.place(xmax - 40, (n-opt + stats.over_limit) / 2, align: horizon + right, text(
+          size: 11pt,
+          fill: ink-2,
+        )[↕ #(stats.over_limit - stats.with_compliant_option) offices: no retrofit gets under the limit]),
+        lq.place(xmax - 40, stats.over_limit, align: bottom + right, pad(bottom: 2pt, text(
+          size: 11pt,
+          fill: ink-2,
+        )[All #stats.over_limit over the limit])),
         lq.vlines(today, stroke: (paint: c-blue, thickness: 1.5pt, dash: "dashed")),
         // median drawn only up to the curve, so it does not cut through the "Today" label
-        lq.plot((med, med), (0, be.filter(v => v <= med).len()), mark: none, stroke: (paint: c-orange, thickness: 1.2pt, dash: "dashed")),
+        lq.plot((med, med), (0, be.filter(v => v <= med).len()), mark: none, stroke: (
+          paint: c-orange,
+          thickness: 1.2pt,
+          dash: "dashed",
+        )),
         lq.plot(xs, ys, step: end, mark: none, stroke: 2.2pt + navy),
         lq.plot((today,), (at-today,), stroke: none, mark: "o", mark-size: 8pt, color: c-blue),
-        lq.place(today, (n-opt + stats.over_limit) / 2, align: horizon + left, pad(left: 5pt, text(size: 11.5pt, fill: c-blue, weight: "bold")[Today: \$#today → #at-today])),
-        lq.place(med, 4, align: bottom + left, pad(left: 5pt, text(size: 11.5pt, fill: c-orange.darken(15%), weight: "bold")[Median: \$#calc.round(med)])),
-        lq.place(xmax - 40, shown.len(), align: top + right, pad(top: 4pt, text(size: 11pt, fill: ink-2)[+#above more above \$3k])),
+        lq.place(today, (n-opt + stats.over_limit) / 2, align: horizon + left, pad(left: 5pt, text(
+          size: 11.5pt,
+          fill: c-blue,
+          weight: "bold",
+        )[Today: \$#today → #at-today])),
+        lq.place(med, 4, align: bottom + left, pad(left: 5pt, text(
+          size: 11.5pt,
+          fill: c-orange.darken(15%),
+          weight: "bold",
+        )[Median: \$#calc.round(med)])),
+        lq.place(xmax - 40, shown.len(), align: top + right, pad(top: 4pt, text(
+          size: 11pt,
+          fill: ink-2,
+        )[+#above more above \$3k])),
       )),
       caption: [Over-limit offices whose cheapest 20-year option (owner's view) is a retrofit under the limit, as the ACP rises. Each step is one building's break-even rate.],
     ),
@@ -988,8 +1048,7 @@
     columns: (auto, auto),
     column-gutter: 18pt,
     row-gutter: 8pt,
-    image("img/bublik.jpg", height: 9cm),
-    image("img/sweet-p.jpg", height: 9cm),
+    image("img/bublik.jpg", height: 9cm), image("img/sweet-p.jpg", height: 9cm),
     text(size: 20pt, fill: navy)[*Mr. Bublik*, the 4th teammate],
     text(size: 20pt, fill: navy)[*Sweet P*, the newest addition],
   )
