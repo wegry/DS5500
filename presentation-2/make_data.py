@@ -101,7 +101,8 @@ write_csv(
     )
     select berdo_id, round(min(lo), 1) as breakeven_acp_usd_per_t
     from bounds where lo <= hi and tie_ok
-    group by berdo_id order by 2
+    -- berdo_id breaks ties (many offices break even at $0) so reruns write the same file
+    group by berdo_id order by 2, 1
     """,
 )
 
