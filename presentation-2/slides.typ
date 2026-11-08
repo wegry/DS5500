@@ -25,6 +25,9 @@
 #let outcomes = csv("data/outcomes.csv", row-type: dictionary)
 // 20-year outcomes under the illustrative grid and price scenarios (dbt/seeds/energy_scenarios.csv)
 #let scen = csv("data/scenarios.csv", row-type: dictionary)
+// over-limit offices that still have to pay or retrofit in 2030 once BERDO's projected grid
+// factor applies (the rest fall under the limit with no retrofit)
+#let must-act = stats.over_limit - int(float(scen.find(r => r.scenario == "projected" and r.perspective == "financial").under_limit_anyway))
 #let case = csv("data/case_study.csv", row-type: dictionary)
 #let breakeven = csv("data/breakeven.csv", row-type: dictionary).map(r => float(r.breakeven_acp_usd_per_t))
 #let standards = csv("../dbt/seeds/berdo_emissions_standards.csv", row-type: dictionary).filter(r => (
@@ -144,7 +147,7 @@
   set align(horizon)
   text(size: 13pt, fill: muted, tracking: 1pt)[DS5500 CAPSTONE · PRESENTATION 2 · TEAM 7]
   v(10pt)
-  text(size: 38pt, weight: "bold", fill: navy)[Pay Boston or fix up older buildings?]
+  text(size: 38pt, weight: "bold", fill: navy)[Pay Boston or retrofit older buildings?]
   v(18pt)
   grid(
     columns: (auto, 1fr),
@@ -200,7 +203,7 @@
 
 // ---- 2. the decision in one slide ------------------------------------------
 
-#s([#stats.over_limit of #stats.matched Boston offices must pay or comply by 2030], stop: 1)[
+#s([#stats.over_limit of #stats.matched Boston offices must pay or retrofit by 2030], stop: 1)[
   #set text(size: 15pt)
   #grid(
     columns: (1fr, auto, 1.25fr),
@@ -217,7 +220,7 @@
     },
     text(size: 24pt, fill: muted)[vs.],
     {
-      text(size: 21pt, weight: "bold", fill: c-blue)[Comply]
+      text(size: 21pt, weight: "bold", fill: c-blue)[Retrofit]
       figure(
         table(
           columns: (auto, 1fr),
@@ -237,7 +240,7 @@
     },
   )
   #v(72pt)
-  #takeaway[Complying costs more up front and saves every year after. *So the answer depends on how far ahead you look.*]
+  #takeaway[Retrofitting costs more up front and saves every year after. *So the answer depends on how far ahead you look.*]
 ]
 
 #speaker-note[
@@ -626,73 +629,101 @@
     caption: [EN 15459 global cost @en15459, as in the EU cost-optimal method @eu-cost-optimal. Equipment lifetimes from BTB @btb.],
   )
   #v(1fr)
-  #takeaway[Baseline: *energy prices, grid emissions, the ACP rate and the carbon price* held at today's level. We vary the grid and prices after the results.]
+  #takeaway[Baseline: *energy prices, grid emissions, the ACP rate and the carbon price* held at today's level. *BERDO's projected grid factor* alone cuts the offices that must pay or retrofit from #stats.over_limit to #must-act.]
 ]
 #speaker-note[
   [ZW] Five years undersells a retrofit that lasts twenty, so we also compute a 20-year cost. This is the European standard for comparing building upgrades, EN 15459. Equipment includes replacing anything that wears out inside 20 years, minus the value left at the end. Then every year's energy bill and emissions cost, discounted, because a dollar in 2045 is worth less than a dollar today.
 
   We look at it from two points of view. The owner pays the ACP only on tons over the limit, and that grows each time the limit steps down. The owner discounts at 7 percent. Society counts the climate damage of every ton at 230 dollars, the EPA's 2023 social cost of carbon, and leaves out the ACP because that's just money moving from the owner to the city. Society discounts at 2 percent.
 
-  In the baseline, energy prices, the grid's emissions factor, the ACP rate and the carbon price stay at today's level. Higher energy prices or a higher ACP would make retrofits look better. The grid getting cleaner is two-sided: it lowers emissions for heat pumps, but also for buildings that do nothing. We test the grid and energy prices a couple of slides from now; the ACP rate is the break-even slide.
+  In the baseline, energy prices, the grid's emissions factor, the ACP rate and the carbon price stay at today's level. Higher energy prices or a higher ACP would make retrofits look better. The grid getting cleaner is two-sided: it lowers emissions for heat pumps, but also for buildings that do nothing. On the next slide we swap in real projections for the grid and energy prices. BERDO's own projected grid factor alone takes 18 of the 99 under the 2030 limit, so 81 still have to pay or retrofit. The ACP rate is the break-even slide.
 ]
 
-// ---- 9. answer: across the 99 ---------------------------------------------
+// ---- 9. answer: BERDO's grid factor and energy prices -------------------------
 
-#s([The cheapest option changes with the time horizon], stop: 4)[
-  #let ys = range(outcomes.len()).rev()  // first scenario on top; lilaq sorts by y, so feed ascending
+#s([Price forecasts barely matter. Boston's own grid factor does.], stop: 4)[
+  // owner's view, one bar per scenario; the two decomposition scenarios go in the bullets
+  #let shown = ("frozen", "projected", "lowogs", "highogs", "higheldmd")
+  #let row(sc, p) = scen.find(r => r.scenario == sc and r.perspective == p)
+  #let own = shown.map(sc => row(sc, "financial"))
+  #let n = own.len()
+  #let ys = range(n).rev()  // first scenario on top
   #let asc(arr) = arr.rev()
-  #let col(k) = outcomes.map(r => float(r.at(k)))
-  #let a = col("acp_only")
-  #let o = col("retrofit_over")
-  #let g = col("retrofit_compliant")
-  #let ao = a.zip(o).map(((x, y)) => x + y)
+  #let col(rs, k) = rs.map(r => float(r.at(k)))
+  #let u = col(own, "under_limit_anyway")
+  #let a = col(own, "acp_only")
+  #let o = col(own, "retrofit_over")
+  #let g = col(own, "retrofit_compliant")
+  #let cum(..parts) = range(n).map(i => parts.pos().map(p => p.at(i)).sum())
+  #let ua = cum(u, a)
+  #let uao = cum(u, a, o)
+  #let uaog = cum(u, a, o, g)
+  #let soc(sc) = int(row(sc, "societal").retrofit_compliant)
+  #let comp = col(own, "retrofit_compliant").slice(1).map(int)
   #let swatch(c, t) = box(baseline: 1pt, rect(width: 11pt, height: 11pt, radius: 2pt, fill: c)) + h(4pt) + t
+  #let labels = (
+    [Today's levels],
+    [AEO baseline],
+    [High prices#super[a]],
+    [Low prices#super[b]],
+    [Data-center demand#super[c]],
+  )
   #align(center, text(
-    size: 13pt,
-    swatch(c-gray, [Just pay])
-      + h(18pt)
-      + swatch(c-orange, [Retrofit, still over the limit])
-      + h(18pt)
-      + swatch(c-blue, [Retrofit that meets the 2030 limit]),
+    size: 12.5pt,
+    swatch(c-aqua, [Under the limit anyway])
+      + h(14pt) + swatch(c-gray, [Just pay])
+      + h(14pt) + swatch(c-orange, [Retrofit, still over])
+      + h(14pt) + swatch(c-blue, [Retrofit that complies]),
   ))
   #v(-4pt)
-  #figure(
-    chart(lq.diagram(
-      width: 20cm,
-      height: 5.2cm,
-      xlim: (0, 99),
-      ylim: (-0.6, 2.6),
-      xlabel: [Over-limit office buildings (of #stats.over_limit)],
-      yaxis: (ticks: range(outcomes.len()).zip(outcomes.map(r => r.scenario).rev()), subticks: none),
-      xaxis: (ticks: (0, 25, 50, 75, 99), subticks: none),
-      grid: none,
-      lq.hbar(asc(a), asc(ys), fill: c-gray, stroke: 1.5pt + white, width: 0.62),
-      // lilaq bars run from base to x, so x is the cumulative end
-      lq.hbar(asc(ao), asc(ys), base: asc(a), fill: c-orange, stroke: 1.5pt + white, width: 0.62),
-      lq.hbar(
-        asc(ao.zip(g).map(((x, y)) => x + y)),
-        asc(ys),
-        base: asc(ao),
-        fill: c-blue,
-        stroke: 1.5pt + white,
-        width: 0.62,
-      ),
-      ..range(outcomes.len())
-        .map(i => {
-          let parts = ((a.at(i), 0), (o.at(i), a.at(i)), (g.at(i), ao.at(i)))
-          parts
-            .filter(((n, b)) => n >= 3)
-            .map(((n, b)) => lq.place(b + n / 2, ys.at(i), text(size: 13pt, weight: "bold", fill: white)[#int(n)]))
-        })
-        .flatten(),
-    )),
-    caption: [Cheapest option for each of the #stats.over_limit offices over the limit, at mid equipment prices.],
+  #grid(
+    columns: (1.55fr, 1fr),
+    column-gutter: 16pt,
+    figure(
+      chart(lq.diagram(
+        width: 11.2cm,
+        height: 4.6cm,
+        xlim: (0, stats.over_limit),
+        ylim: (-0.6, n - 0.4),
+        xlabel: [Over-limit offices (of #stats.over_limit): owner's cheapest 20-year option],
+        yaxis: (ticks: ys.zip(labels), subticks: none),
+        xaxis: (ticks: (0, 25, 50, 75, stats.over_limit), subticks: none),
+        grid: none,
+        lq.hbar(asc(u), asc(ys), fill: c-aqua, stroke: 1.5pt + white, width: 0.62),
+        lq.hbar(asc(ua), asc(ys), base: asc(u), fill: c-gray, stroke: 1.5pt + white, width: 0.62),
+        lq.hbar(asc(uao), asc(ys), base: asc(ua), fill: c-orange, stroke: 1.5pt + white, width: 0.62),
+        lq.hbar(asc(uaog), asc(ys), base: asc(uao), fill: c-blue, stroke: 1.5pt + white, width: 0.62),
+        ..range(n)
+          .map(i => ((u.at(i), 0), (o.at(i), ua.at(i)), (g.at(i), uao.at(i)))
+            .filter(((v, b)) => v >= 3)
+            .map(((v, b)) => lq.place(b + v / 2, ys.at(i), text(size: 11.5pt, weight: "bold", fill: white)[#int(v)])))
+          .flatten(),
+      )),
+      caption: [Compliance: BERDO projected grid factor @berdo-grid × (1 − RPS Class I @ma-rps). Bills: AEO2026 New England commercial prices @aeo2026 (#super[a]low and #super[b]high oil & gas supply, #super[c]high electricity demand). Society's grid: Cambium 2024 mid-case @cambium.],
+    ),
+    {
+      set text(size: 14pt)
+      v(6pt)
+      list(
+        [*#int(u.at(1))* of #stats.over_limit fall under the 2030 limit with *no retrofit*: BERDO's electricity factor drops 15% by 2030 as the RPS share rises from 27% to 40%.],
+        [Of the rest, *#calc.min(..comp)–#calc.max(..comp)* pick a compliant retrofit across AEO price cases (#int(g.at(0)) today). Prices alone: #int(row("prices_only", "financial").retrofit_compliant).],
+        [Society: #soc("highogs")–#soc("lowogs") (#soc("frozen") today). Farnsworth's pick never changes.],
+      )
+    },
   )
-  #v(12pt)
-  #takeaway[Over 5 years, *#stats.over_acp_5yr of #stats.over_limit* owners should just pay. Over 20, nobody should, but only *#outcomes.at(1).retrofit_compliant* pick a fix that meets the limit.]
+  #v(1fr)
+  #takeaway[Projected prices don't change the answer. *BERDO's own falling grid factor does*: it cuts the offices that must pay or retrofit from #stats.over_limit to #must-act.]
 ]
 #speaker-note[
-  [KL] Now let's look at all 99 buildings in our baseline comparison. Over five years, no upgrade is cheapest for 66 buildings. Only three have a retrofit that meets the emissions limit as their cheapest choice. Over 20 years, some retrofit becomes cheapest for every building, but only 24 of those choices actually get below the limit. When we include society's climate costs, that number rises to 35. So the answer changes depending on how far ahead we look and whose costs we include. And remember, this comparison uses our original baseline emissions factors. Later, we'll show how the projected 2030 factor changes the count.
+  [ZW] We said earlier that we hold energy prices and the grid at today's level, so we replaced that with real projections. Three sources. For compliance, the City publishes its own projected grid emissions factor through 2050 in the BERDO Policies and Procedures, and electricity covered by the state's renewable portfolio standard counts as zero. That's what determines whether you owe a payment. For the climate damage in society's view, we use NLR's Cambium 2024 projections for the actual New England grid, which gets cleaner much faster. For energy bills, EIA's Annual Energy Outlook 2026, New England commercial prices, in its baseline case and three alternatives.
+
+  The surprise is on the left of the bars. 18 of our 99 over-the-limit offices are under the 2030 limit without doing anything, because by 2030 BERDO counts each kilowatt-hour as 15 percent cleaner: the renewable standard goes from 27 to 40 percent. Our headline 99 used today's factor; by BERDO's own schedule it's closer to 81.
+
+  For the rest, the owner's cheapest choice still mostly misses the limit: 22 to 27 pick a compliant retrofit depending on prices, against 24 today. If we change only prices and leave BERDO's factor alone, it's 25. So the price forecasts barely move the decision.
+
+  If asked about price spikes: EIA's outlook draws smooth long-run paths; it doesn't model spikes. Recent high prices are in our starting point, which uses 2025 Massachusetts prices and, in the high case, 2026 gas prices. The closest thing to prices staying high is the low oil and gas supply case, where gas is 59 percent and electricity 24 percent higher by 2049. That's the "High prices" bar, and it moves the count by three.
+
+  Caveats: the City reviews its factor projections at least every five years, and the renewable standard after 2030 is plus one percent a year unless the law changes. Cambium 2024 was built before 2025's federal policy changes, so its grid may be optimistic, but it only affects society's view.
 ]
 
 // ---- 10. answer: the case --------------------------------------------------
@@ -870,7 +901,7 @@
       [Model time explicitly],
       [Apply BERDO's 2030 grid factor to the 5-year screen and headline counts; let equipment costs change by year.],
     ),
-    ..step(4, [Constraints], [Plan *what* to fix and *when* under a budget.]),
+    ..step(4, [Constraints], [Plan *what* to retrofit and *when* under a budget.]),
   )
   #v(36pt)
   #takeaway[Our first priority is *confidence in the predicted outcomes*, not more financial complexity.]
@@ -882,7 +913,7 @@
 
   Second, we want to refine our cost estimates and expand the retrofit options we consider, especially for buildings where none of our current alternatives achieves compliance.
 
-  We also want to explore how changing electricity prices and grid emissions factors affect our recommendations over time.
+  We've seen that BERDO's projected grid factor cuts the offices that must pay or retrofit from 99 to about 81. Next, we want to carry that factor into the five-year screen and our headline counts, and let equipment costs change by year.
 
   Looking further ahead, another interesting extension would be to introduce budget constraints and optimize not just which retrofits to undertake, but when to implement them.
 
@@ -966,89 +997,61 @@
   [KL] Here's Farnsworth's five-year result. The lowest-cost option is no upgrade, at about \$1.39 million, including energy bills and ACP payments. Packages 2 and 4 are tied as the cheapest retrofits that bring emissions below the standard, at about \$1.81 million. So reaching the emissions target costs roughly \$422,000 more over five years. Paying the ACP is an allowed way to meet BERDO obligations, but it doesn't bring the building's emissions below the target. That's the tradeoff we're seeing.
 ]
 
-// ---- Backup 2: Energy scenarios ------------------------------------------------
+// ---- Backup 2: across the 99, today's grid factor ----------------------------
 
-#s([Price forecasts barely matter. Boston's own grid factor does.], stop: 4)[
-  // owner's view, one bar per scenario; the two decomposition scenarios go in the bullets
-  #let shown = ("frozen", "projected", "lowogs", "highogs", "higheldmd")
-  #let row(sc, p) = scen.find(r => r.scenario == sc and r.perspective == p)
-  #let own = shown.map(sc => row(sc, "financial"))
-  #let n = own.len()
-  #let ys = range(n).rev()  // first scenario on top
+#s([The cheapest option changes with the time horizon], stop: 4)[
+  #let ys = range(outcomes.len()).rev()  // first scenario on top; lilaq sorts by y, so feed ascending
   #let asc(arr) = arr.rev()
-  #let col(rs, k) = rs.map(r => float(r.at(k)))
-  #let u = col(own, "under_limit_anyway")
-  #let a = col(own, "acp_only")
-  #let o = col(own, "retrofit_over")
-  #let g = col(own, "retrofit_compliant")
-  #let cum(..parts) = range(n).map(i => parts.pos().map(p => p.at(i)).sum())
-  #let ua = cum(u, a)
-  #let uao = cum(u, a, o)
-  #let uaog = cum(u, a, o, g)
-  #let soc(sc) = int(row(sc, "societal").retrofit_compliant)
-  #let comp = col(own, "retrofit_compliant").slice(1).map(int)
+  #let col(k) = outcomes.map(r => float(r.at(k)))
+  #let a = col("acp_only")
+  #let o = col("retrofit_over")
+  #let g = col("retrofit_compliant")
+  #let ao = a.zip(o).map(((x, y)) => x + y)
   #let swatch(c, t) = box(baseline: 1pt, rect(width: 11pt, height: 11pt, radius: 2pt, fill: c)) + h(4pt) + t
-  #let labels = (
-    [Today's levels],
-    [AEO baseline],
-    [High prices#super[a]],
-    [Low prices#super[b]],
-    [Data-center demand#super[c]],
-  )
   #align(center, text(
-    size: 12.5pt,
-    swatch(c-aqua, [Under the limit anyway])
-      + h(14pt) + swatch(c-gray, [Just pay])
-      + h(14pt) + swatch(c-orange, [Retrofit, still over])
-      + h(14pt) + swatch(c-blue, [Retrofit that complies]),
+    size: 13pt,
+    swatch(c-gray, [Just pay])
+      + h(18pt)
+      + swatch(c-orange, [Retrofit, still over the limit])
+      + h(18pt)
+      + swatch(c-blue, [Retrofit that meets the 2030 limit]),
   ))
   #v(-4pt)
-  #grid(
-    columns: (1.55fr, 1fr),
-    column-gutter: 16pt,
-    figure(
-      chart(lq.diagram(
-        width: 11.2cm,
-        height: 4.6cm,
-        xlim: (0, stats.over_limit),
-        ylim: (-0.6, n - 0.4),
-        xlabel: [Over-limit offices (of #stats.over_limit): owner's cheapest 20-year option],
-        yaxis: (ticks: ys.zip(labels), subticks: none),
-        xaxis: (ticks: (0, 25, 50, 75, stats.over_limit), subticks: none),
-        grid: none,
-        lq.hbar(asc(u), asc(ys), fill: c-aqua, stroke: 1.5pt + white, width: 0.62),
-        lq.hbar(asc(ua), asc(ys), base: asc(u), fill: c-gray, stroke: 1.5pt + white, width: 0.62),
-        lq.hbar(asc(uao), asc(ys), base: asc(ua), fill: c-orange, stroke: 1.5pt + white, width: 0.62),
-        lq.hbar(asc(uaog), asc(ys), base: asc(uao), fill: c-blue, stroke: 1.5pt + white, width: 0.62),
-        ..range(n)
-          .map(i => ((u.at(i), 0), (o.at(i), ua.at(i)), (g.at(i), uao.at(i)))
-            .filter(((v, b)) => v >= 3)
-            .map(((v, b)) => lq.place(b + v / 2, ys.at(i), text(size: 11.5pt, weight: "bold", fill: white)[#int(v)])))
-          .flatten(),
-      )),
-      caption: [Compliance: BERDO projected grid factor @berdo-grid × (1 − RPS Class I @ma-rps). Bills: AEO2026 New England commercial prices @aeo2026 (#super[a]low and #super[b]high oil & gas supply, #super[c]high electricity demand). Society's grid: Cambium 2024 mid-case @cambium.],
-    ),
-    {
-      set text(size: 14pt)
-      v(6pt)
-      list(
-        [*#int(u.at(1))* of #stats.over_limit fall under the 2030 limit with *no retrofit*: BERDO's electricity factor drops 15% by 2030 as the RPS share rises from 27% to 40%.],
-        [Of the rest, *#calc.min(..comp)–#calc.max(..comp)* pick a compliant fix across AEO price cases (#int(g.at(0)) today). Prices alone: #int(row("prices_only", "financial").retrofit_compliant).],
-        [Society: #soc("highogs")–#soc("lowogs") (#soc("frozen") today). Farnsworth's pick never changes.],
-      )
-    },
+  #figure(
+    chart(lq.diagram(
+      width: 20cm,
+      height: 5.2cm,
+      xlim: (0, 99),
+      ylim: (-0.6, 2.6),
+      xlabel: [Over-limit office buildings (of #stats.over_limit)],
+      yaxis: (ticks: range(outcomes.len()).zip(outcomes.map(r => r.scenario).rev()), subticks: none),
+      xaxis: (ticks: (0, 25, 50, 75, 99), subticks: none),
+      grid: none,
+      lq.hbar(asc(a), asc(ys), fill: c-gray, stroke: 1.5pt + white, width: 0.62),
+      // lilaq bars run from base to x, so x is the cumulative end
+      lq.hbar(asc(ao), asc(ys), base: asc(a), fill: c-orange, stroke: 1.5pt + white, width: 0.62),
+      lq.hbar(
+        asc(ao.zip(g).map(((x, y)) => x + y)),
+        asc(ys),
+        base: asc(ao),
+        fill: c-blue,
+        stroke: 1.5pt + white,
+        width: 0.62,
+      ),
+      ..range(outcomes.len())
+        .map(i => {
+          let parts = ((a.at(i), 0), (o.at(i), a.at(i)), (g.at(i), ao.at(i)))
+          parts
+            .filter(((n, b)) => n >= 3)
+            .map(((n, b)) => lq.place(b + n / 2, ys.at(i), text(size: 13pt, weight: "bold", fill: white)[#int(n)]))
+        })
+        .flatten(),
+    )),
+    caption: [Cheapest option for each of the #stats.over_limit offices over the limit, at mid equipment prices.],
   )
-  #v(1fr)
-  #takeaway[Projected prices don't change the answer. *BERDO's own falling grid factor does*, and it shrinks the 2030 problem from #stats.over_limit offices to about #(stats.over_limit - int(u.at(1))).]
+  #v(12pt)
+  #takeaway[Over 5 years, *#stats.over_acp_5yr of #stats.over_limit* owners should just pay. Over 20, nobody should, but only *#outcomes.at(1).retrofit_compliant* pick a retrofit that meets the limit.]
 ]
 #speaker-note[
-  [ZW] We said earlier that we hold energy prices and the grid at today's level, so we replaced that with real projections. Three sources. For compliance, the City publishes its own projected grid emissions factor through 2050 in the BERDO Policies and Procedures, and electricity covered by the state's renewable portfolio standard counts as zero. That's what determines whether you owe a payment. For the climate damage in society's view, we use NLR's Cambium 2024 projections for the actual New England grid, which gets cleaner much faster. For energy bills, EIA's Annual Energy Outlook 2026, New England commercial prices, in its baseline case and three alternatives.
-
-  The surprise is on the left of the bars. 18 of our 99 over-the-limit offices are under the 2030 limit without doing anything, because by 2030 BERDO counts each kilowatt-hour as 15 percent cleaner: the renewable standard goes from 27 to 40 percent. Our headline 99 used today's factor; by BERDO's own schedule it's closer to 81.
-
-  For the rest, the owner's cheapest choice still mostly misses the limit: 22 to 27 pick a compliant retrofit depending on prices, against 24 today. If we change only prices and leave BERDO's factor alone, it's 25. So the price forecasts barely move the decision.
-
-  If asked about price spikes: EIA's outlook draws smooth long-run paths; it doesn't model spikes. Recent high prices are in our starting point, which uses 2025 Massachusetts prices and, in the high case, 2026 gas prices. The closest thing to prices staying high is the low oil and gas supply case, where gas is 59 percent and electricity 24 percent higher by 2049. That's the "High prices" bar, and it moves the count by three.
-
-  Caveats: the City reviews its factor projections at least every five years, and the renewable standard after 2030 is plus one percent a year unless the law changes. Cambium 2024 was built before 2025's federal policy changes, so its grid may be optimistic, but it only affects society's view.
+  [KL] Now let's look at all 99 buildings in our baseline comparison. Over five years, no upgrade is cheapest for 66 buildings. Only three have a retrofit that meets the emissions limit as their cheapest choice. Over 20 years, some retrofit becomes cheapest for every building, but only 24 of those choices actually get below the limit. When we include society's climate costs, that number rises to 35. So the answer changes depending on how far ahead we look and whose costs we include. And remember, this comparison uses today's emissions factors. With BERDO's projected 2030 factor, 18 of these offices fall under the limit without a retrofit, leaving 81 that must pay or retrofit.
 ]
