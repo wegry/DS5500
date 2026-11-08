@@ -1,5 +1,5 @@
 from pathlib import Path
-import pandas as pd
+import polars as pl
 import matplotlib.pyplot as plt
 from matplotlib.ticker import MultipleLocator
 
@@ -8,30 +8,27 @@ DATA = ROOT / "analysis_outputs" / "macc_vs_optimizer.csv"
 OUT = ROOT / "analysis_outputs" / "figures"
 OUT.mkdir(parents=True, exist_ok=True)
 
-df = pd.read_csv(DATA)
-
 # Only buildings with different recommendations
-df = df[
-    (df["macc_upgrade"] != df["optimizer_upgrade"])
-    & (df["extra_cost_usd"] > 0.01)
-].copy()
-
-df = df.sort_values("extra_cost_usd", ascending=False)
-df["extra_cost_k"] = df["extra_cost_usd"] / 1000
-
-# Short display labels; values and results still come from CSV
+df = (
+    pl.read_csv(DATA)
+    .filter(
+        (pl.col("macc_upgrade") != pl.col("optimizer_upgrade"))
+        & (pl.col("extra_cost_usd") > 0.01)
+    )
+    .sort("extra_cost_usd", descending=True)
+    .with_columns(extra_cost_k=pl.col("extra_cost_usd") / 1000)
+)
 
 # Load upgrade names directly from the MACC analysis.
 # No hardcoded upgrade IDs or labels.
-upgrade_data = pd.read_csv(
-    ROOT / "analysis_outputs" / "macc_options.csv",
-    usecols=["upgrade_id", "upgrade_name"]
-).drop_duplicates()
-
-upgrade_names = dict(zip(
-    upgrade_data["upgrade_id"],
-    upgrade_data["upgrade_name"]
-))
+upgrade_names = dict(
+    pl.read_csv(
+        ROOT / "analysis_outputs" / "macc_options.csv",
+        columns=["upgrade_id", "upgrade_name"],
+    )
+    .unique()
+    .iter_rows()
+)
 
 def option_name(value):
     name = upgrade_names.get(
@@ -62,17 +59,17 @@ right = fig.add_axes(
     sharey=ax
 )
 
-y = list(range(len(df)))
+y = list(range(df.height))
 
 ax.barh(
     y,
-    df["extra_cost_k"],
+    df["extra_cost_k"].to_list(),
     height=0.64,
     color="#314E72"
 )
 
 ax.set_yticks(y)
-ax.set_yticklabels(df["berdo_id"].astype(str))
+ax.set_yticklabels(df["berdo_id"].cast(pl.String).to_list())
 ax.invert_yaxis()
 ax.tick_params(axis="y", length=0, pad=11)
 ax.tick_params(axis="x", colors="#526172")
@@ -101,10 +98,10 @@ right.set_xlim(0, 1)
 right.set_ylim(ax.get_ylim())
 right.axis("off")
 
-for i, row in enumerate(df.itertuples()):
+for i, row in enumerate(df.iter_rows(named=True)):
     label = (
-        f"{option_name(row.macc_upgrade)}"
-        f"  →  {option_name(row.optimizer_upgrade)}"
+        f"{option_name(row["macc_upgrade"])}"
+        f"  →  {option_name(row["optimizer_upgrade"])}"
     )
     right.text(
         0, i, label,
@@ -136,7 +133,7 @@ fig.text(
 )
 
 total = df["extra_cost_usd"].sum()
-count = len(df)
+count = df.height
 
 fig.text(
     0.11, 0.085,

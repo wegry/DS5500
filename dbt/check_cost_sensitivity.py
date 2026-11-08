@@ -1,6 +1,6 @@
-﻿from pathlib import Path
+from pathlib import Path
 import duckdb
-import pandas as pd
+import polars as pl
 
 ROOT = Path(__file__).resolve().parent
 OUT = ROOT / "analysis_outputs"
@@ -8,7 +8,7 @@ OUT.mkdir(exist_ok=True)
 
 con = duckdb.connect(str(ROOT / "ds5500.duckdb"), read_only=True)
 
-options = con.execute("""
+options = con.sql("""
     SELECT berdo_id, upgrade_id, meets_standard,
            total_cost_mid_usd AS cost,
            projected_ghg_intensity_kgco2e_sqft AS ghg
@@ -18,7 +18,7 @@ options = con.execute("""
         FROM berdo_decision_options
         WHERE upgrade_id = 0 AND NOT meets_standard
     )
-""").df()
+""").pl()
 
 # Components set to None: vary entire installation cost.
 # Otherwise: vary only the listed components.
@@ -29,24 +29,31 @@ GROUPS = {
     "Solar PV": ([46, 65], [-46]),
 }
 
-def choose(data):
-    ranked = data.sort_values(
-        ["berdo_id", "cost", "ghg", "upgrade_id"]
+
+def first_per_building(ranked):
+    """{berdo_id: upgrade_id} for the first-ranked row of each building."""
+    return dict(
+        ranked.unique("berdo_id", keep="first", maintain_order=True)
+        .select("berdo_id", "upgrade_id")
+        .iter_rows()
     )
-    overall = ranked.drop_duplicates("berdo_id").set_index(
-        "berdo_id"
-    )["upgrade_id"]
-    compliant = ranked[ranked.meets_standard].drop_duplicates(
-        "berdo_id"
-    ).set_index("berdo_id")["upgrade_id"]
+
+
+def choose(data):
+    ranked = data.sort(
+        ["berdo_id", "cost", "ghg", "upgrade_id"], nulls_last=True
+    )
+    overall = first_per_building(ranked)
+    compliant = first_per_building(ranked.filter(pl.col("meets_standard")))
     return overall, compliant
 
+
 def count_changes(old, new):
-    ids = old.index.union(new.index)
-    return int((
-        old.reindex(ids).fillna(-1)
-        != new.reindex(ids).fillna(-1)
-    ).sum())
+    return sum(
+        old.get(bid, -1) != new.get(bid, -1)
+        for bid in old.keys() | new.keys()
+    )
+
 
 baseline_overall, baseline_compliant = choose(options)
 results = []
@@ -59,7 +66,7 @@ for name, (upgrade_ids, component_ids) in GROUPS.items():
         if component_ids is not None else ""
     )
 
-    deltas = con.execute(f"""
+    deltas = con.sql(f"""
         SELECT berdo_id, upgrade_id,
             sum(installed_cost_low_usd
                 - installed_cost_mid_usd) AS low_delta,
@@ -69,33 +76,35 @@ for name, (upgrade_ids, component_ids) in GROUPS.items():
         WHERE upgrade_id IN ({ids_sql})
           {component_sql}
         GROUP BY berdo_id, upgrade_id
-    """).df()
+    """).pl()
 
-    base = options.merge(
+    base = options.join(
         deltas,
         on=["berdo_id", "upgrade_id"],
         how="left",
-        validate="many_to_one",
+        validate="m:1",
     )
 
-    mask = base.upgrade_id.isin(upgrade_ids)
+    mask = pl.col("upgrade_id").is_in(upgrade_ids)
+    selected = base.filter(mask)
 
-    assert mask.any(), f"No options found for {name}"
-    assert base.loc[
-        mask, ["low_delta", "high_delta"]
-    ].notna().all().all(), f"Missing cost deltas for {name}"
+    assert selected.height > 0, f"No options found for {name}"
+    assert (
+        selected.select("low_delta", "high_delta")
+        .null_count().sum_horizontal().item() == 0
+    ), f"Missing cost deltas for {name}"
 
     for scenario, delta in [
         ("Low", "low_delta"),
         ("Mid", None),
         ("High", "high_delta"),
     ]:
-        data = base.copy()
-
+        data = base
         if delta is not None:
-            data.loc[mask, "cost"] = (
-                data.loc[mask, "cost"]
-                + data.loc[mask, delta]
+            data = base.with_columns(
+                cost=pl.when(mask)
+                .then(pl.col("cost") + pl.col(delta))
+                .otherwise(pl.col("cost"))
             )
 
         overall, compliant = choose(data)
@@ -103,11 +112,11 @@ for name, (upgrade_ids, component_ids) in GROUPS.items():
         results.append({
             "retrofit": name,
             "scenario": scenario,
-            "cheapest_compliant": int(
-                compliant.isin(upgrade_ids).sum()
+            "cheapest_compliant": sum(
+                u in upgrade_ids for u in compliant.values()
             ),
-            "cheapest_overall": int(
-                overall.isin(upgrade_ids).sum()
+            "cheapest_overall": sum(
+                u in upgrade_ids for u in overall.values()
             ),
             "compliant_coverage": len(compliant),
             "changed_overall_vs_mid": count_changes(
@@ -118,13 +127,18 @@ for name, (upgrade_ids, component_ids) in GROUPS.items():
             ),
         })
 
-result = pd.DataFrame(results)
+result = pl.DataFrame(results)
 
 print("\nALL RETROFIT COST SENSITIVITIES")
-print(result.to_string(index=False))
+with pl.Config(
+    tbl_rows=-1,
+    tbl_cols=-1,
+    tbl_width_chars=200,
+    tbl_hide_dataframe_shape=True,
+    tbl_hide_column_data_types=True,
+):
+    print(result)
 
-result.to_csv(
-    OUT / "retrofit_cost_sensitivity.csv", index=False
-)
+result.write_csv(OUT / "retrofit_cost_sensitivity.csv")
 
 con.close()

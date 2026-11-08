@@ -1,6 +1,6 @@
-﻿from pathlib import Path
+from pathlib import Path
 import duckdb
-import pandas as pd
+import polars as pl
 
 root = Path(__file__).resolve().parent
 out = root / "analysis_outputs"
@@ -8,7 +8,14 @@ out.mkdir(exist_ok=True)
 
 con = duckdb.connect(str(root / "ds5500.duckdb"), read_only=True)
 
-df = con.execute("""
+# Buildings that miss the standard with no retrofit
+cohort_size = con.sql("""
+    SELECT count(*)
+    FROM berdo_decision_options
+    WHERE upgrade_id = 0 AND NOT meets_standard
+""").fetchall()[0][0]
+
+df = con.sql("""
 WITH baseline AS (
     SELECT
         berdo_id,
@@ -27,13 +34,13 @@ abatement AS (
         o.total_cost_mid_usd,
         o.installed_cost_mid_usd,
 
-        5.0 * (
+        o.period_years * (
             b.baseline_ghg -
             o.projected_ghg_intensity_kgco2e_sqft
         ) * bl.gfa_sqft / 1000.0 AS avoided_tons,
 
         o.installed_cost_mid_usd
-        + 5.0 * (
+        + o.period_years * (
             o.energy_cost_mid_usd_per_year -
             b.baseline_energy
         ) AS incremental_cost_usd
@@ -50,73 +57,85 @@ SELECT
     incremental_cost_usd / avoided_tons AS mac_usd_per_ton
 FROM abatement
 WHERE avoided_tons > 0.001
-""").df()
+ORDER BY berdo_id, upgrade_id
+""").pl()
 
-assert not df.empty, "No positive-abatement retrofit options found."
+assert df.height > 0, "No positive-abatement retrofit options found."
+
+
+def first_per_building(data, by):
+    return data.sort(["berdo_id", by, "upgrade_id"]).unique(
+        "berdo_id", keep="first", maintain_order=True
+    )
+
 
 # Lowest MAC for each building, regardless of compliance
-macc_best = (
-    df.sort_values(["berdo_id", "mac_usd_per_ton", "upgrade_id"])
-    .drop_duplicates("berdo_id")
-)
+macc_best = first_per_building(df, "mac_usd_per_ton")
 
 # Fairer comparison: consider only options meeting the standard
-compliant = df[df.meets_standard].copy()
+compliant = df.filter(pl.col("meets_standard"))
 
-macc_compliant = (
-    compliant.sort_values(
-        ["berdo_id", "mac_usd_per_ton", "upgrade_id"]
+macc_compliant = first_per_building(compliant, "mac_usd_per_ton")
+cost_compliant = first_per_building(compliant, "total_cost_mid_usd")
+
+comparison = (
+    macc_compliant.select(
+        "berdo_id",
+        macc_upgrade="upgrade_id",
+        macc_total_cost="total_cost_mid_usd",
     )
-    .drop_duplicates("berdo_id")
-)
-
-cost_compliant = (
-    compliant.sort_values(
-        ["berdo_id", "total_cost_mid_usd", "upgrade_id"]
+    .join(
+        cost_compliant.select(
+            "berdo_id",
+            optimizer_upgrade="upgrade_id",
+            optimizer_total_cost="total_cost_mid_usd",
+        ),
+        on="berdo_id",
     )
-    .drop_duplicates("berdo_id")
+    .sort("berdo_id")
+    .with_columns(
+        extra_cost_usd=pl.col("macc_total_cost")
+        - pl.col("optimizer_total_cost")
+    )
 )
 
-comparison = macc_compliant[
-    ["berdo_id", "upgrade_id", "total_cost_mid_usd"]
-].rename(columns={
-    "upgrade_id": "macc_upgrade",
-    "total_cost_mid_usd": "macc_total_cost"
-}).merge(
-    cost_compliant[
-        ["berdo_id", "upgrade_id", "total_cost_mid_usd"]
-    ].rename(columns={
-        "upgrade_id": "optimizer_upgrade",
-        "total_cost_mid_usd": "optimizer_total_cost"
-    }),
-    on="berdo_id"
-)
-
-comparison["extra_cost_usd"] = (
-    comparison.macc_total_cost -
-    comparison.optimizer_total_cost
-)
+same = comparison.filter(
+    pl.col("macc_upgrade") == pl.col("optimizer_upgrade")
+).height
+# Packages 2 and 4 differ only in the RTU heat pump, so in buildings
+# without RTUs they are the same retrofit at the same cost; MACC can pick
+# either on floating-point noise. Count those as agreeing on cost.
+costlier = comparison.filter(pl.col("extra_cost_usd") > 0.01).height
 
 print("\nMACC BASELINE — 5-YEAR OWNER MODEL")
-print("Buildings in cohort:", 99)
-print("Buildings with positive-abatement options:", len(macc_best))
+print("Buildings in cohort:", cohort_size)
+print("Buildings with positive-abatement options:", macc_best.height)
 print("Lowest-MAC option meets standard:",
-      int(macc_best.meets_standard.sum()))
-print("Buildings with compliant options:", len(comparison))
-print("Same compliant retrofit selected:",
-      int((comparison.macc_upgrade == comparison.optimizer_upgrade).sum()))
+      macc_best["meets_standard"].sum())
+print("Buildings with compliant options:", comparison.height)
+print("Same compliant retrofit selected:", same)
+print("Different retrofit, same cost:", comparison.height - same - costlier)
+print("Different retrofit, higher cost:", costlier)
 print("Additional modeled cost of MACC ranking: $",
-      round(comparison.extra_cost_usd.sum()))
+      round(comparison["extra_cost_usd"].sum()))
 
 print("\nMOST COMMON LOWEST-MAC RETROFITS")
-print(
-    macc_best.groupby(["upgrade_id", "upgrade_name"])
-    .size().sort_values(ascending=False).head(10)
-    .to_string()
-)
+with pl.Config(
+    tbl_rows=-1,
+    fmt_str_lengths=80,
+    tbl_width_chars=200,
+    tbl_hide_dataframe_shape=True,
+    tbl_hide_column_data_types=True,
+):
+    print(
+        macc_best.group_by("upgrade_id", "upgrade_name")
+        .len()
+        .sort(["len", "upgrade_id"], descending=[True, False])
+        .head(10)
+    )
 
-df.to_csv(out / "macc_options.csv", index=False)
-comparison.to_csv(out / "macc_vs_optimizer.csv", index=False)
+df.write_csv(out / "macc_options.csv")
+comparison.write_csv(out / "macc_vs_optimizer.csv")
 
 print("\nResults saved to:", out)
 con.close()

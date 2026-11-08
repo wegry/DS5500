@@ -1,6 +1,6 @@
 from pathlib import Path
 import duckdb
-import pandas as pd
+import polars as pl
 
 ROOT = Path(__file__).resolve().parent
 OUT = ROOT / "analysis_outputs"
@@ -8,7 +8,7 @@ OUT.mkdir(exist_ok=True)
 
 con = duckdb.connect(str(ROOT / "ds5500.duckdb"), read_only=True)
 
-options = con.execute("""
+options = con.sql("""
     SELECT berdo_id, upgrade_id, upgrade_name, meets_standard,
            total_cost_mid_usd AS cost,
            projected_ghg_intensity_kgco2e_sqft AS ghg
@@ -18,7 +18,9 @@ options = con.execute("""
         FROM berdo_decision_options
         WHERE upgrade_id = 0 AND NOT meets_standard
     )
-""").df()
+""").pl()
+
+cohort_size = options["berdo_id"].n_unique()
 
 STAGES = [
     ("Original 8", [43, 48, 49, 52, 54, 55, 56, 57]),
@@ -28,24 +30,31 @@ STAGES = [
     ("+ Solar PV", [46, 65]),
 ]
 
-def choose(data):
-    ranked = data.sort_values(
-        ["berdo_id", "cost", "ghg", "upgrade_id"]
+
+def first_per_building(ranked):
+    """{berdo_id: upgrade_id} for the first-ranked row of each building."""
+    return dict(
+        ranked.unique("berdo_id", keep="first", maintain_order=True)
+        .select("berdo_id", "upgrade_id")
+        .iter_rows()
     )
-    overall = ranked.drop_duplicates("berdo_id").set_index(
-        "berdo_id"
-    )["upgrade_id"]
-    compliant = ranked[ranked.meets_standard].drop_duplicates(
-        "berdo_id"
-    ).set_index("berdo_id")["upgrade_id"]
+
+
+def choose(data):
+    ranked = data.sort(
+        ["berdo_id", "cost", "ghg", "upgrade_id"], nulls_last=True
+    )
+    overall = first_per_building(ranked)
+    compliant = first_per_building(ranked.filter(pl.col("meets_standard")))
     return overall, compliant
 
+
 def difference(old, new):
-    ids = old.index.union(new.index)
-    return int((
-        old.reindex(ids).fillna(-1)
-        != new.reindex(ids).fillna(-1)
-    ).sum())
+    return sum(
+        old.get(bid, -1) != new.get(bid, -1)
+        for bid in old.keys() | new.keys()
+    )
+
 
 included = {0}
 previous = None
@@ -54,7 +63,7 @@ changes = []
 
 for name, added in STAGES:
     included.update(added)
-    data = options[options.upgrade_id.isin(included)]
+    data = options.filter(pl.col("upgrade_id").is_in(included))
     overall, compliant = choose(data)
 
     newly = 0
@@ -63,17 +72,15 @@ for name, added in STAGES:
 
     if previous is not None:
         old_overall, old_compliant = previous
-        newly = len(compliant.index.difference(
-            old_compliant.index
-        ))
+        newly = len(compliant.keys() - old_compliant.keys())
         changed_overall = difference(old_overall, overall)
         changed_compliant = difference(old_compliant, compliant)
 
-        for bid in overall.index:
-            old_o = int(old_overall.get(bid, -1))
-            new_o = int(overall.get(bid, -1))
-            old_c = int(old_compliant.get(bid, -1))
-            new_c = int(compliant.get(bid, -1))
+        for bid in overall:
+            old_o = old_overall.get(bid, -1)
+            new_o = overall.get(bid, -1)
+            old_c = old_compliant.get(bid, -1)
+            new_c = compliant.get(bid, -1)
 
             if old_o != new_o or old_c != new_c:
                 changes.append({
@@ -93,26 +100,38 @@ for name, added in STAGES:
         "newly_covered": newly,
         "changed_overall": changed_overall,
         "changed_compliant": changed_compliant,
-        "no_upgrade_cheapest": int((overall == 0).sum()),
+        "no_upgrade_cheapest": sum(u == 0 for u in overall.values()),
     })
 
     previous = overall, compliant
 
-result = pd.DataFrame(summary)
-print("\nRETROFIT EXPANSION")
-print(result.to_string(index=False))
+table = pl.Config(
+    tbl_rows=-1,
+    tbl_cols=-1,
+    tbl_width_chars=200,
+    tbl_hide_dataframe_shape=True,
+    tbl_hide_column_data_types=True,
+)
 
-result.to_csv(
-    OUT / "retrofit_expansion_summary.csv", index=False
-)
-pd.DataFrame(changes).to_csv(
-    OUT / "retrofit_expansion_changes.csv", index=False
-)
+result = pl.DataFrame(summary)
+print("\nRETROFIT EXPANSION")
+with table:
+    print(result)
+
+result.write_csv(OUT / "retrofit_expansion_summary.csv")
+pl.DataFrame(
+    changes,
+    schema=[
+        "stage", "berdo_id",
+        "previous_overall", "new_overall",
+        "previous_compliant", "new_compliant",
+    ],
+).write_csv(OUT / "retrofit_expansion_changes.csv")
 
 
 # Compare the original eight retrofits with all expanded options
 # using the 20-year discounted global-cost model.
-twenty_year = con.execute("""
+twenty_year = con.sql("""
 WITH cohort AS (
     SELECT berdo_id
     FROM berdo_decision_options
@@ -165,16 +184,15 @@ FROM old_best o
 JOIN new_best n USING (berdo_id, perspective)
 GROUP BY n.perspective
 ORDER BY n.perspective
-""").df()
+""").pl()
 
 print("\n20-YEAR OPTIMIZER COMPARISON")
-print(twenty_year.to_string(index=False))
+with table:
+    print(twenty_year)
 
-assert (twenty_year["buildings"] == 99).all()
+assert (twenty_year["buildings"] == cohort_size).all()
 assert (twenty_year["unexpected_cost_increases"] == 0).all()
 
-twenty_year.to_csv(
-    OUT / "retrofit_expansion_20yr.csv", index=False
-)
+twenty_year.write_csv(OUT / "retrofit_expansion_20yr.csv")
 
 con.close()
