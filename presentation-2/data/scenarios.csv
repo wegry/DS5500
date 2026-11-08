@@ -1,15 +1,15 @@
 scenario,label,ord,perspective,under_limit_anyway,acp_only,retrofit_over,retrofit_compliant,case_pick
-frozen,Today's levels,0,financial,0,0,75,24,Wall Insulation
-frozen,Today's levels,0,societal,0,0,64,35,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers"
-projected,AEO baseline prices,1,financial,18,0,58,23,Wall Insulation
-projected,AEO baseline prices,1,societal,18,0,44,37,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers"
-lowogs,High prices (low oil & gas supply),2,financial,18,0,54,27,Wall Insulation
-lowogs,High prices (low oil & gas supply),2,societal,18,0,41,40,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers"
-highogs,Low prices (high oil & gas supply),3,financial,18,0,59,22,Wall Insulation
-highogs,Low prices (high oil & gas supply),3,societal,18,0,45,36,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers"
-higheldmd,Data-center demand (high electricity demand),4,financial,18,0,59,22,Wall Insulation
-higheldmd,Data-center demand (high electricity demand),4,societal,18,0,44,37,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers"
-berdo_only,BERDO grid schedule only,5,financial,18,0,58,23,Wall Insulation
-berdo_only,BERDO grid schedule only,5,societal,18,0,44,37,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers"
-prices_only,AEO prices only,6,financial,0,0,74,25,Wall Insulation
-prices_only,AEO prices only,6,societal,0,0,63,36,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers"
+frozen,Today's levels,0,financial,0,0,65,34,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation"
+frozen,Today's levels,0,societal,0,0,53,46,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation"
+projected,AEO baseline prices,1,financial,18,0,52,29,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation"
+projected,AEO baseline prices,1,societal,18,0,42,39,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers"
+lowogs,High prices (low oil & gas supply),2,financial,18,0,50,31,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation"
+lowogs,High prices (low oil & gas supply),2,societal,18,0,39,42,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers"
+highogs,Low prices (high oil & gas supply),3,financial,18,0,53,28,Wall Insulation
+highogs,Low prices (high oil & gas supply),3,societal,18,0,42,39,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers"
+higheldmd,Data-center demand (high electricity demand),4,financial,18,0,53,28,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation"
+higheldmd,Data-center demand (high electricity demand),4,societal,18,0,42,39,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers"
+berdo_only,BERDO grid schedule only,5,financial,18,0,53,28,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation"
+berdo_only,BERDO grid schedule only,5,societal,18,0,43,38,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers"
+prices_only,AEO prices only,6,financial,0,0,65,34,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation"
+prices_only,AEO prices only,6,societal,0,0,53,46,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation"

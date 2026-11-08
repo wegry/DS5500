@@ -26,9 +26,20 @@ def write_csv(name, sql):
     con.execute(f"copy ({sql}) to '{OUT / name}' (header, delimiter ',')")
 
 
+# Offices over the 2030 limit with no retrofit, as BERDO will count emissions in 2030 (its
+# projected electricity factor; berdo_upgrade_compliance). These are the ones that must pay or
+# retrofit, and the cohort for everything below except the scenario chart.
 OVER = "berdo_id in (select berdo_id from berdo_decisions where not meets_standard_without_upgrade)"
+# The same at today's factor, for the scenario chart, which shows the factor's effect.
+OVER_TODAY = (
+    "berdo_id in (select berdo_id from berdo_global_cost where scenario = 'frozen' and upgrade_id = 0"
+    " and perspective = 'financial' and energy_price = 'mid' and not meets_standard_at_start)"
+)
+# 20-year baseline: BERDO's projected factor for the ACP, as in the 5-year screen, energy prices
+# held at today's level (dbt/seeds/energy_scenarios.csv)
+BASELINE = "berdo_only"
 
-# Outcome of the cheapest option for the 99 over-limit buildings, by horizon and payer
+# Outcome of the cheapest option for the over-limit buildings, by horizon and payer
 write_csv(
     "outcomes.csv",
     f"""
@@ -44,7 +55,7 @@ write_csv(
         count(*) filter (where upgrade_id <> 0 and not meets_standard_at_start),
         count(*) filter (where upgrade_id <> 0 and meets_standard_at_start)
     from berdo_global_cost
-    where cost_rank_mid = 1 and energy_price = 'mid' and scenario = 'frozen' and {OVER}
+    where cost_rank_mid = 1 and energy_price = 'mid' and scenario = '{BASELINE}' and {OVER}
     group by perspective
     order by ord
     """,
@@ -59,7 +70,7 @@ write_csv(
         where berdo_id = {CASE_ID}
     ), twenty as (
         select upgrade_id, perspective, global_cost_mid_usd as cost from berdo_global_cost
-        where berdo_id = {CASE_ID} and energy_price = 'mid' and scenario = 'frozen'
+        where berdo_id = {CASE_ID} and energy_price = 'mid' and scenario = '{BASELINE}'
     ), opts as (
         select upgrade_id, upgrade_name, projected_ghg_intensity_kgco2e_sqft as intensity,
             meets_standard, installed_cost_mid_usd
@@ -77,6 +88,24 @@ write_csv(
     """,
 )
 
+# Farnsworth's options over 2030-2034 (undiscounted 5-year screen), cheapest first
+write_csv(
+    "farnsworth_options.csv",
+    f"""
+    select upgrade_id, upgrade_name,
+        round(projected_ghg_intensity_kgco2e_sqft, 2) as projected_ghg,
+        meets_standard,
+        round(installed_cost_mid_usd, 2) as installation_usd,
+        round(period_acp_usd, 2) as acp_5yr_usd,
+        round(period_energy_cost_usd, 2) as energy_5yr_usd,
+        round(total_cost_mid_usd, 2) as total_5yr_usd,
+        cost_rank_mid
+    from berdo_decision_options
+    where berdo_id = {CASE_ID}
+    order by cost_rank_mid
+    """,
+)
+
 # Break-even ACP: the lowest $/tCO2e at which an option that meets the 2030 standard is the
 # owner's cheapest 20-year choice. Owner-side emissions cost scales linearly with the ACP
 # rate, so each option's cost is a line in the rate and the break-even is an LP over pairs.
@@ -89,7 +118,7 @@ write_csv(
             capital_pv_mid_usd + energy_pv_usd + om_pv_mid_usd as fixed,
             emissions_cost_pv_usd / {acp} as em  -- PV per $1/t of ACP
         from berdo_global_cost
-        where perspective = 'financial' and energy_price = 'mid' and scenario = 'frozen' and {OVER}
+        where perspective = 'financial' and energy_price = 'mid' and scenario = '{BASELINE}' and {OVER}
     ), bounds as (
         select a.berdo_id, a.upgrade_id,
             greatest(0, coalesce(max(case when b.em > a.em then (a.fixed - b.fixed) / (b.em - a.em) end), 0)) as lo,
@@ -107,7 +136,7 @@ write_csv(
 )
 
 # 20-year outcomes under each energy scenario (dbt/seeds/energy_scenarios.csv, in seed order)
-# for the 99 offices over the 2030 limit at today's emissions factors: those already under it
+# for the offices over the 2030 limit at today's emissions factors: those already under it
 # in 2030 with no retrofit once BERDO's factor falls, and for the rest, whether the cheapest
 # option is paying, a retrofit still over the limit, or a compliant one. Plus Farnsworth's pick.
 scen_order = [r["scenario"] for r in rows(f"select scenario from read_csv('{ROOT / 'dbt' / 'seeds' / 'energy_scenarios.csv'}')")]
@@ -117,7 +146,7 @@ write_csv(
     f"""
     with g as (
         select * from berdo_global_cost
-        where energy_price = 'mid' and {OVER}
+        where energy_price = 'mid' and {OVER_TODAY}
     ), already as (
         -- under the 2030 limit with no retrofit, as BERDO counts emissions in this scenario
         select scenario, berdo_id from g
@@ -147,6 +176,7 @@ d = rows(
     f"""
     select count(*) as matched,
         count(*) filter (where not meets_standard_without_upgrade) as over_limit,
+        count(*) filter (where baseline_ghg_intensity_kgco2e_sqft > standard_kgco2e_sqft) as over_limit_today,
         count(*) filter (where not meets_standard_without_upgrade and recommended_upgrade_id = 0) as over_acp_5yr,
         count(*) filter (where is_robust_to_cost) as robust_to_cost
     from berdo_decisions
