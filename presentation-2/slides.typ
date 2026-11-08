@@ -966,23 +966,21 @@
   #takeaway[Our first priority is *confidence in the predicted outcomes*, not more financial complexity.]
 ]
 #speaker-note[
-  [KT] Looking ahead to our next presentation, we have a few areas we'd like to work on.
+  [KT] Looking ahead, we have four areas we'd like to improve.
 
-  First, we want to strengthen our validation. While we've evaluated how well our matching approach works with simulated buildings, we'd like to better understand how accurately those predictions represent real-world retrofit outcomes.
+  First, validation. We've tested our matching approach using simulated buildings, but we want to better understand how well it represents real-world outcomes.
 
-  Second, we want to refine our cost estimates and expand the retrofit options we consider, especially for buildings where none of our current retrofits gets under the limit.
+  Second, we'd like to refine our cost estimates and expand our retrofit options, especially for buildings where none currently achieves compliance.
 
-  Third, time. We now count emissions with BERDO's projected grid factor, which is why 81 offices rather than 99 must pay or retrofit. But we apply it at the start of each five-year period, and equipment costs are fixed at one year. Next, we want both to change year by year.
+  Third, time-dependent assumptions. BERDO's projected grid factor reduces the number of offices above the limit from 99 to 81. But our model updates emissions every five years and holds equipment costs fixed. We'd like to model both annually.
 
-  Looking further ahead, another interesting extension would be to introduce budget constraints and optimize not just which retrofits to undertake, but when to implement them.
+  Finally, we'd like to introduce budget constraints to help determine not just which retrofits to choose, but when.
 
   To conclude, our project addresses two connected problems.
+  The data science challenge is estimating retrofit impacts on real buildings using simulated data.
+  The domain challenge is identifying investments that balance financial costs, emissions reductions, and BERDO compliance.
 
-  From a data science perspective, we're trying to estimate the impact of retrofits on real buildings by matching them with simulated building data.
-
-  From a domain perspective, we're trying to help building owners determine which investments make financial sense while achieving meaningful emissions reductions and meeting BERDO requirements.
-
-  Ultimately, the goal is to connect those two pieces, and turn data-driven estimates into practical decarbonization decisions.
+  Our goal is to connect the two, turning data-driven estimates into practical decarbonization decisions.
 ]
 
 // ---- references ------------------------------------------------------------
