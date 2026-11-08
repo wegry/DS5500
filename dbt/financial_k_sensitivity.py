@@ -59,7 +59,7 @@ def main() -> None:
                 SELECT berdo_id
                 FROM berdo_decisions
                 WHERE is_compliance_period
-                  AND baseline_ghg_intensity_kgco2e_sqft > standard_kgco2e_sqft
+                  AND NOT meets_standard_without_upgrade
             """).fetchall()
         }
 
@@ -69,7 +69,7 @@ def main() -> None:
                    o.installed_cost_mid_usd,
                    GREATEST(
                        0,
-                       s.projected_ghg_kgco2e - o.standard_kgco2e_sqft * d.gfa_sqft
+                       s.period_ghg_kgco2e - o.standard_kgco2e_sqft * d.gfa_sqft
                    ) * ? * o.period_years AS period_acp_usd,
                    s.projected_energy_cost_usd_per_year * o.period_years
                        AS period_energy_cost_usd
@@ -80,7 +80,7 @@ def main() -> None:
               ON s.berdo_id = d.berdo_id
             WHERE d.is_compliance_period
               AND o.is_compliance_period
-              AND d.baseline_ghg_intensity_kgco2e_sqft > d.standard_kgco2e_sqft
+              AND NOT d.meets_standard_without_upgrade
               AND s.upgrade_id != 0
               AND o.applicable_share > 0
               AND o.installed_cost_mid_usd IS NOT NULL

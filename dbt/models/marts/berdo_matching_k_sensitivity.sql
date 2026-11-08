@@ -65,6 +65,10 @@ projected as (
             {{ "+" if not loop.last }}
             {% endfor %}
         ) as projected_ghg_kgco2e,
+        -- the electricity part as BERDO will count it in the decision period's first year,
+        -- as in berdo_upgrade_compliance
+        bl.electricity_ghg_kgco2e * r.electricity_ratio * (1 - ix.electricity_index)
+            as berdo_factor_drop_kgco2e,
         (
             {% for f in fuels %}
             bl.{{ f }}_kwh
@@ -79,6 +83,8 @@ projected as (
     inner join {{ ref('int_berdo_building_standards') }} st
         on bl.berdo_id = st.berdo_id
         and st.period_start = {{ var("decision_period_start") }}
+    inner join {{ ref('int_berdo_electricity_index') }} ix
+        on ix.year = st.period_start
     cross join prices p
 )
 select
@@ -92,7 +98,8 @@ select
     1 - projected_ghg_kgco2e
         / nullif(baseline_ghg_kgco2e, 0)
         as ghg_reduction_pct,
-    projected_ghg_kgco2e / nullif(gfa_sqft, 0)
+    projected_ghg_kgco2e - berdo_factor_drop_kgco2e as period_ghg_kgco2e,
+    (projected_ghg_kgco2e - berdo_factor_drop_kgco2e) / nullif(gfa_sqft, 0)
         <= compliance_standard_kgco2e_sqft
         as meets_standard_after
 from projected

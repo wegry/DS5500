@@ -61,7 +61,7 @@ def export(fig, outdir, stem):
 
 def compliance_figure(outdir, above_limit, available):
     fig, ax = base('How many offices have a compliant retrofit?',
-                   f'Of {above_limit} offices above the 2030 standard, {available} have a modeled compliant option among the 8 tested.')
+                   f'Of {above_limit} offices above the 2030 standard, {available} have a modeled compliant option among the options tested.')
     unavailable = above_limit - available
     ax.barh([0], [available], height=0.50, label='Compliant retrofit available')
     ax.barh([0], [unavailable], left=[available], height=0.50, label='No compliant retrofit among tested options')
@@ -193,7 +193,7 @@ def from_project(db_folder):
         above_limit = con.execute('''
             SELECT COUNT(*) FROM berdo_decisions
             WHERE is_compliance_period
-              AND baseline_ghg_intensity_kgco2e_sqft > standard_kgco2e_sqft
+              AND NOT meets_standard_without_upgrade
         ''').fetchone()[0]
         rate = con.execute('''
             SELECT MEDIAN(acp_usd_per_year / excess_kgco2e)
@@ -203,13 +203,13 @@ def from_project(db_folder):
             SELECT s.k, s.berdo_id, s.upgrade_id, o.upgrade_name,
                    s.meets_standard_after,
                    o.installed_cost_mid_usd + GREATEST(0,
-                   s.projected_ghg_kgco2e - o.standard_kgco2e_sqft * d.gfa_sqft)
+                   s.period_ghg_kgco2e - o.standard_kgco2e_sqft * d.gfa_sqft)
                    * ? * o.period_years AS total_usd
             FROM berdo_matching_k_sensitivity s
             JOIN berdo_decision_options o USING (berdo_id, upgrade_id)
             JOIN berdo_decisions d USING (berdo_id)
             WHERE o.is_compliance_period AND d.is_compliance_period
-              AND d.baseline_ghg_intensity_kgco2e_sqft>d.standard_kgco2e_sqft
+              AND NOT d.meets_standard_without_upgrade
               AND s.upgrade_id<>0 AND o.applicable_share>0
               AND o.installed_cost_mid_usd IS NOT NULL
               AND s.berdo_id IN ({','.join(map(str, CASE_BUILDINGS))})
