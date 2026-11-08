@@ -1,0 +1,13 @@
+retrofit,scenario,cheapest_compliant,cheapest_overall,compliant_coverage,changed_overall_vs_mid,changed_compliant_vs_mid
+VRF,Low,8,0,84,0,0
+VRF,Mid,8,0,84,0,0
+VRF,High,8,0,84,0,0
+Geothermal ground loop,Low,1,0,84,0,0
+Geothermal ground loop,Mid,1,0,84,0,0
+Geothermal ground loop,High,1,0,84,0,0
+Package 5 full installation,Low,32,2,84,2,29
+Package 5 full installation,Mid,3,0,84,0,0
+Package 5 full installation,High,3,0,84,0,0
+Solar PV,Low,21,25,84,18,4
+Solar PV,Mid,17,7,84,0,0
+Solar PV,High,15,4,84,3,2

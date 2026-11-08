@@ -1,0 +1,66 @@
+upgrade_id,upgrade_name,office_models,applicable_models,applicable_pct,avg_reduction_pct,reduction_when_applicable_pct,mapped_components,uses_imputation,cost_status,cost_review_needed
+64,"Package 11, Package 10 + LED Lighting",618,492,79.6,35.3,44.3,0,false,Needs cost mapping,true
+63,"Package 10, Package 1 + Package 6",618,494,79.9,32.9,41.1,0,false,Needs cost mapping,true
+59,"Package 6, Hydronic GHP or Packaged GHP or Console GHP",618,492,79.6,27.3,34.3,0,false,Needs cost mapping,true
+56,"Package 3, Package 1 + Package 2",618,613,99.2,26.2,26.5,6,false,Mapped (BTB),false
+12,VRF with DOAS,618,356,57.6,24.5,42.5,1,false,Mapped (BTB),false
+13,VRF with 25pct Upsizing Allowance,618,356,57.6,24.5,42.5,0,false,Needs cost mapping,true
+47,Photovoltaics with 40pct Roof Coverage + Battery Storage,618,618,100.0,21.2,21.2,0,false,Needs cost mapping,true
+65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",618,618,100.0,20.3,20.3,2,true,Mapped (includes imputation),false
+29,Packaged Water-to-Air Geothermal Heat Pump,618,303,49.0,19.5,39.8,2,true,Mapped (includes imputation),false
+58,"Package 5, Variable Speed HP RTU or HP Boilers + Economizer + DCV + Energy Recovery",618,553,89.5,18.1,20.2,6,true,Mapped (includes imputation),false
+61,"Package 8, Demand Flexibility, Lighting + Thermostat Control Load Shed for Daily Bldg Peak Reduction + PV",618,582,94.2,17.9,19.0,0,false,Needs cost mapping,true
+46,Photovoltaics with 40pct Roof Coverage,618,618,100.0,17.2,17.2,1,true,Mapped (includes imputation),false
+55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",618,503,81.4,16.9,20.8,3,false,Mapped (BTB),false
+57,"Package 4, Package 2 with Standard Performance HP RTU",618,503,81.4,15.2,18.7,3,false,Mapped (BTB),false
+54,"Package 1, Wall + Roof Insulation + New Windows",618,618,100.0,13.6,13.6,3,false,Mapped (BTB),false
+53,Code_Envelop,618,618,100.0,12.7,12.7,0,false,Needs cost mapping,true
+27,Ideal Thermal Air Loads,618,618,100.0,11.6,11.6,0,false,Needs cost mapping,true
+3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",618,116,18.8,8.1,43.2,0,false,Needs cost mapping,true
+1,"Variable Speed HP RTU, Electric Backup",618,116,18.8,7.7,41.2,0,false,Needs cost mapping,true
+2,"Variable Speed HP RTU, Original Heating Fuel Backup",618,116,18.8,7.7,40.9,0,false,Needs cost mapping,true
+10,"Commercial HVAC Challenge HP RTU, Electric Backup",618,116,18.8,7.3,38.9,0,false,Needs cost mapping,true
+23,Unoccupied AHU Control,618,446,72.2,7.0,9.7,0,false,Needs cost mapping,true
+48,Wall Insulation,618,614,99.4,6.5,6.5,1,false,Mapped (BTB),false
+4,"Standard Performance HP RTU, Electric Backup",618,116,18.8,6.3,33.5,0,false,Needs cost mapping,true
+5,"Standard Performance HP RTU using Lab Data, Electric Backup",618,116,18.8,6.3,33.3,0,false,Needs cost mapping,true
+6,"Standard Performance HP RTU, Electric Backup + Roof Insulation",618,116,18.8,6.3,33.4,0,false,Needs cost mapping,true
+15,"HP Boiler, Electric Backup",618,180,29.1,6.2,21.3,0,false,Needs cost mapping,true
+16,"HP Boiler, Gas Backup",618,180,29.1,6.2,21.2,0,false,Needs cost mapping,true
+28,Hydronic Water-to-Water Geothermal Heat Pump,618,126,20.4,6.2,30.2,0,false,Needs cost mapping,true
+7,"Standard Performance HP RTU, Electric Backup + New Windows",618,116,18.8,6.1,32.7,0,false,Needs cost mapping,true
+9,"Standard Performance HP RTU, Electric Backup, 2F Unoccupied Htg Thermostat Setback",618,116,18.8,6.1,32.3,0,false,Needs cost mapping,true
+21,Energy Recovery for AHUs,618,530,85.8,5.6,6.6,0,false,Needs cost mapping,true
+8,"Standard Performance HP RTU, Electric Backup, 32F Minimum Compressor Lockout",618,116,18.8,5.5,29.4,0,false,Needs cost mapping,true
+52,New Windows,618,618,100.0,3.9,3.9,1,false,Mapped (BTB),false
+20,Demand Control Ventilation,618,494,79.9,3.8,4.7,0,false,Needs cost mapping,true
+18,Electric Resistance Boilers,618,236,38.2,3.4,8.8,0,false,Needs cost mapping,true
+14,DOAS HP Minisplits,618,40,6.5,3.3,51.6,0,false,Needs cost mapping,true
+49,Roof Insulation,618,618,100.0,3.3,3.3,1,false,Mapped (BTB),false
+11,Advanced RTU,618,144,23.3,2.9,12.5,0,false,Needs cost mapping,true
+22,Advanced RTU Controls,618,168,27.2,2.7,10.1,0,false,Needs cost mapping,true
+17,Condensing Gas Boilers,618,236,38.2,2.6,6.8,0,false,Needs cost mapping,true
+43,LED Lighting,618,398,64.4,2.6,4.1,1,false,Mapped (BTB),false
+25,Thermostat Setbacks,618,236,38.2,2.4,6.3,0,false,Needs cost mapping,true
+50,Secondary Windows,618,618,100.0,2.3,2.3,0,false,Needs cost mapping,true
+24,Fan Static Pressure Reset for Multizone VAV,618,158,25.6,2.1,8.3,0,false,Needs cost mapping,true
+44,Lighting Controls,618,618,100.0,1.8,1.8,0,false,Needs cost mapping,true
+30,Console Water-to-Air Geothermal Heat Pump,618,63,10.2,1.6,15.9,0,false,Needs cost mapping,true
+62,"Package 9, Demand Flexibility, Lighting + Thermostat Control, Load Shed for Daily Bldg Peak Reduction",618,582,94.2,1.6,1.7,0,false,Needs cost mapping,true
+40,"Demand Flexibility, Thermostat Control (GEB Gem), Load Shed for Grid Peak Reduction",618,618,100.0,1.1,1.1,0,false,Needs cost mapping,true
+31,Chiller Replacement,618,185,29.9,1.0,3.4,0,false,Needs cost mapping,true
+60,"Package 7, Demand Flexibility, Lighting + Thermostat Control, Load Shed for Grid Peak Reduction",618,582,94.2,1.0,1.1,0,false,Needs cost mapping,true
+34,"Demand Flexibility, Lighting Control, Load Shed for Daily Bldg Peak Reduction",618,618,100.0,0.9,0.9,0,false,Needs cost mapping,true
+35,"Demand Flexibility, Lighting Control, Load Shed for Daily GHG Emission Reduction",618,618,100.0,0.8,0.8,0,false,Needs cost mapping,true
+32,"Demand Flexibility, Thermostat Control, Load Shed for Daily Bldg Peak Reduction",618,582,94.2,0.7,0.7,0,false,Needs cost mapping,true
+36,"Demand Flexibility, Thermostat Control, Load Shed for Grid Peak Reduction",618,582,94.2,0.5,0.6,0,false,Needs cost mapping,true
+37,"Demand Flexibility, Lighting Control, Load Shed for Grid Peak Reduction",618,618,100.0,0.5,0.5,0,false,Needs cost mapping,true
+38,"Demand Flexibility, Plug Load Control (GEB Gem), Load Shed for Grid Peak Reduction",618,618,100.0,0.5,0.5,0,false,Needs cost mapping,true
+26,VFD Pumps,618,332,53.7,0.4,0.7,0,false,Needs cost mapping,true
+39,"Demand Flexibility, Lighting Control (GEB Gem), Load Shed for Grid Peak Reduction",618,618,100.0,0.3,0.3,0,false,Needs cost mapping,true
+19,Air Side Economizers for AHUs,618,191,30.9,0.1,0.3,0,false,Needs cost mapping,true
+45,Electric Kitchen Equipment,618,0,0.0,0.0,,0,false,Needs cost mapping,true
+33,"Demand Flexibility, Thermostat Control, Load Shift for Daily Bldg Peak Reduction",618,582,94.2,-0.1,-0.1,0,false,Needs cost mapping,true
+42,"Demand Flexibility, Precool (GEB Gem), Load Shift for Grid Peak Reduction",618,618,100.0,-1.5,-1.5,0,false,Needs cost mapping,true
+51,Window Film,618,618,100.0,-1.8,-1.8,0,false,Needs cost mapping,true
+41,"Demand Flexibility, Preheat (GEB Gem), Load Shift for Grid Peak Reduction",618,618,100.0,-2.3,-2.3,0,false,Needs cost mapping,true

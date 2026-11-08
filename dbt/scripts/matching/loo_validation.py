@@ -1,4 +1,4 @@
-"""Leave-one-out validation of the BERDO-ComStock nearest-neighbor retrofit estimate.
+﻿"""Leave-one-out validation of the BERDO-ComStock nearest-neighbor retrofit estimate.
 
 Real buildings have no observed post-retrofit outcome, but ComStock's simulated offices do.
 So each simulated office in turn plays a "real" building: hide it, find its k nearest other
@@ -14,7 +14,7 @@ Emissions use BERDO's per-fuel factors, which are constant across Boston offices
 printout), so the error is in the same units as the BERDO projections.
 
 Run from dbt/ after `dbt build` (read-only):
-    uv run python loo_validation.py
+    uv run python scripts/matching/loo_validation.py
 Writes analysis_outputs/loo_k_summary.csv, loo_by_upgrade.csv and loo_tests.csv (paired
 bootstrap of k = 10 against the baselines).
 """
@@ -35,7 +35,7 @@ FUELS = ("electricity", "natural_gas", "oil_propane", "district_heating", "distr
 
 
 def main() -> None:
-    here = Path(__file__).resolve().parent
+    here = Path(__file__).resolve().parents[2]
     out = here / "analysis_outputs"
     con = duckdb.connect(str(here / "ds5500.duckdb"), read_only=True)
 

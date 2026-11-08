@@ -1,0 +1,6 @@
+stage,options,buildings,compliant_coverage,newly_covered,changed_overall,changed_compliant,no_upgrade_cheapest
+Original 8,8,99,75,0,0,0,66
++ VRF,9,99,83,8,0,8,66
++ Geothermal,10,99,84,1,0,1,66
++ Package 5,11,99,84,0,0,3,66
++ Solar PV,13,99,84,0,7,17,66
