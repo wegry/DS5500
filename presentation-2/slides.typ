@@ -184,7 +184,7 @@
   #grid(
     columns: (1fr, 1fr),
     column-gutter: 26pt,
-    row-gutter: 11pt,
+    row-gutter: 20pt,
     term([BERDO], [Boston's Building Emissions Reduction and Disclosure Ordinance. Large buildings report energy yearly and must stay under emissions limits that step down to zero by 2050.]),
     term([ComStock], [A national lab's simulations of U.S. commercial buildings, with energy use before and after each of dozens of retrofits.]),
     term([Emissions intensity], [kg CO#sub[2]e per ft² per year: what BERDO limits. The office limit is 5.3 now and 3.2 from 2030.]),
@@ -200,7 +200,7 @@
 
 // ---- 2. the decision in one slide ------------------------------------------
 
-#s([#stats.over_limit of #stats.matched Boston offices must pay or fix by 2030], stop: 1)[
+#s([#stats.over_limit of #stats.matched Boston offices must pay or comply by 2030], stop: 1)[
   #set text(size: 15pt)
   #grid(
     columns: (1fr, auto, 1.25fr),
@@ -217,7 +217,7 @@
     },
     text(size: 24pt, fill: muted)[vs.],
     {
-      text(size: 21pt, weight: "bold", fill: c-blue)[Fix]
+      text(size: 21pt, weight: "bold", fill: c-blue)[Comply]
       figure(
         table(
           columns: (auto, 1fr),
@@ -236,91 +236,115 @@
       )
     },
   )
-  #v(1fr)
-  #takeaway[Fixing costs more up front and saves every year after. *So the answer depends on how far ahead you look.*]
+  #v(72pt)
+  #takeaway[Complying costs more up front and saves every year after. *So the answer depends on how far ahead you look.*]
 ]
+
 #speaker-note[
-  [KT] Why this matters. Boston has a regulation called BERDO, which limits how much greenhouse gas big buildings can emit. In our data we have 297 office buildings, and 99 are above the 2030 limit. Their owners have two main options.
+  [KT] Now that we've introduced BERDO, let's look at what this means for building owners. Of the 297 office buildings in our analysis, 99 currently have emissions above the 2030 limit.
 
-  They can invest in retrofits, like better insulation, LED lighting, or heat pumps. Or they can pay an Alternative Compliance Payment, currently 234 dollars per ton over the limit, every year. And the limit keeps stepping down, so the payment grows. Retrofits are expensive up front; ACPs keep coming. So our domain question is: which option costs the least, and does that option actually bring the building under the limit?
+  Their owners face a choice. They can invest in upgrades, such as better insulation, LED lighting, or heat pumps, to reduce their emissions. Or they can continue operating above the limit and make an Alternative Compliance Payment
+  of 234 for every metric ton of excess emissions each year. The important distinction is that retrofits require an upfront investment, while compliance payments are recurring and can increase as emissions limits become stricter.
+
+  So the question we're trying to answer is: which option is more cost-effective, and does the cheapest option actually reduce emissions enough to meet the standard?
 ]
 
-// ---- 3. the example building -----------------------------------------------
+ // ---- 3. case study: building and missing outcome -------------------------
 
-#s([An example: 24 Farnsworth St], stop: 1)[
+#s([24 Farnsworth St: estimating the impact of a retrofit], stop: 1)[
+  #let today = float(stats.case_intensity)
+  #let projected = float(case-row(55).intensity)
+
   #grid(
-    columns: (auto, auto, 1fr),
-    column-gutter: 16pt,
-    figure(image(case-photo, height: 7.2cm), caption: [Photo: Boston Office Spaces @bos-listing.]),
-    figure(image(case-map, height: 7.2cm), caption: [Fort Point, across the channel.]),
+    columns: (0.85fr, 1.4fr),
+    column-gutter: 22pt,
+    align: (left + top, left + top),
+
     {
-      set text(size: 15pt)
+      figure(
+        image(case-photo, width: 100%, height: 6cm, fit: "cover"),
+        caption: [24 Farnsworth St, Boston @bos-listing.],
+      )
+
+      v(4pt)
+      set text(size: 14pt)
       grid(
         columns: (auto, 1fr),
-        row-gutter: 10pt,
         column-gutter: 12pt,
+        row-gutter: 7pt,
         [*Built*], [1915],
-        [*Last renovated*], [1989],
-        [*Floor area*], [#str(calc.round(stats.case_gfa_sqft / 1000)) k ft² @berdo],
+        [*Floor area*], [#str(calc.round(stats.case_gfa_sqft / 1000))k ft²],
         [*Energy*], [65% natural gas],
-        [*Emissions*], [*#stats.case_intensity* kg CO#sub[2]e/ft²/yr],
       )
     },
+
+    {
+      text(size: 16pt, weight: "bold")[GHG intensity (kg CO#sub[2]e/ft²/yr)]
+      v(6pt)
+
+      // Horizontal bars: reported vs. estimated
+      for (name, value, color) in (
+        ("Reported today", today, navy),
+        ("Estimated: LED + heat pumps", projected, c-blue),
+      ) {
+        text(size: 13pt, weight: "bold")[#name]
+        v(2pt)
+        grid(
+          columns: (1fr, 45pt),
+          column-gutter: 10pt,
+          align: (left + horizon, right + horizon),
+          block(
+            width: 100%,
+            height: 17pt,
+            fill: rgb("#f0f0ee"),
+            rect(
+              width: 100% * value / 5.6,
+              height: 17pt,
+              fill: color,
+              stroke: none,
+            ),
+          ),
+          text(size: 16pt, weight: "bold")[#str(calc.round(value, digits: 2))],
+        )
+        v(5pt)
+      }
+
+      line(length: 100%, stroke: 1pt + rule)
+      v(4pt)
+      text(size: 14pt, fill: c-orange.darken(15%))[
+        *2030 BERDO limit: 3.2 kg CO#sub[2]e/ft²/yr*
+      ]
+      v(4pt)
+      text(size: 12pt, fill: ink-2)[
+        Reported emissions come from BERDO. Post-retrofit emissions
+        are a ComStock-based estimate, not an observed outcome.
+      ]
+    },
   )
-  #v(1fr)
-  #takeaway[We have its current energy data, *not its response to a retrofit that hasn't happened.*]
+
+  #v(8pt)
+  #takeaway[
+    We know current emissions. Our challenge is to estimate
+    *how each retrofit would change them.*
+  ]
 ]
 #speaker-note[
-  [ZW] As an example, we'll use one office building in Fort Point, 24 Farnsworth Street. It was built in 1915, last renovated in 1989, it's about 79 thousand square feet, and two thirds of its energy is natural gas. We know its reported energy use and emissions from BERDO. Now say the owner wants to install heat pumps or insulate the walls. How much would emissions drop? We don't know, because those retrofits haven't happened.
+  [ZW] Let's look at 24 Farnsworth Street, an office building in
+  Boston built in 1915. It's roughly 79,000 square feet, and
+  natural gas accounts for about 65 percent of its energy use.
+
+  Its reported emissions intensity is 4.8, above the 2030 BERDO
+  limit of 3.2. Our model estimates that LED lighting and heat
+  pumps could bring that down to about 2.39.
+
+  But there's an important distinction: 4.8 is reported data,
+  while 2.39 is an estimate. We haven't observed this retrofit
+  happening. Estimating those outcomes is the data science
+  problem we're trying to solve.
 ]
 
-// ---- 4. the missing number -------------------------------------------------
 
-#s([The missing data: what would this building emit after a retrofit?], stop: 2)[
-  #let p2 = float(case-row(55).intensity)
-  #let today = float(stats.case_intensity)
-  #figure(
-    chart(lq.diagram(
-      width: 21cm,
-      height: 4.6cm,
-      xlim: (0, 5.6),
-      ylim: (-0.6, 1.75),
-      xlabel: [kg CO#sub[2]e / ft² / yr],
-      yaxis: (
-        ticks: (
-          (0, [After Package 2 \ #text(fill: c-blue)[_estimated_]]),
-          (1, [Today \ #text(fill: navy)[_measured_]]),
-        ),
-        subticks: none,
-      ),
-      xaxis: (subticks: none),
-      grid: none,
-      lq.hbar((today,), (1,), fill: navy, width: 0.55),
-      lq.hbar(
-        (p2,),
-        (0,),
-        fill: c-blue.lighten(45%),
-        stroke: (paint: c-blue, thickness: 1.5pt, dash: "dashed"),
-        width: 0.55,
-      ),
-      lq.vlines(3.2, stroke: (paint: c-orange, thickness: 2pt, dash: "dashed")),
-      lq.place(3.2, 1.62, align: left, pad(left: 5pt, text(
-        fill: c-orange.darken(10%),
-        weight: "bold",
-      )[2030 limit: 3.2 @berdo-standards])),
-      lq.place(today, 1, align: left, pad(left: 5pt, text(weight: "bold")[4.80])),
-      lq.place(p2, 0, align: left, pad(left: 5pt, text(weight: "bold", fill: c-blue)[2.39])),
-    )),
-    caption: [24 Farnsworth St. *Today*: reported to the city under BERDO @berdo. *After Package 2* (LED + heat pumps): our ComStock-based estimate @comstock, never observed.],
-  )
-  #v(1fr)
-  #takeaway[Our data science target: *post-retrofit emissions for building × option*]
-]
-#speaker-note[
-  [KL] For Farnsworth, BERDO reports about 4.8 kilograms of CO2 equivalent per square foot per year. The 2030 office limit is 3.2. Our model estimates that Package 2, with LED lighting and heat pumps, could bring it down to 2.39. The key difference is that 4.8 comes from reported building data, while 2.39 is our prediction, not an observed result. We need estimates like this for each building and retrofit option before we can compare costs and any remaining payments.
-]
-
-// ---- 5. three datasets, no shared key ---------------------------------------
+// ---- 4. three datasets, no shared key ---------------------------------------
 
 #let dcard(accent, title, grain, has, lacks) = block(
   width: 100%,
@@ -383,16 +407,21 @@
     },
     caption: [How the three sources combine in the dbt pipeline (github.com/wegry/DS5500/tree/main/dbt).],
   )
-  #v(1fr)
+  #v(16pt)
   #takeaway[Not a database join: *retrofit effects transfer by matching, costs by component mapping.*]
 ]
 #speaker-note[
-  [KT] So how do we estimate something that hasn't happened? We use three datasets. BERDO tells us about real Boston buildings: size, energy use, emissions. ComStock, from the National Lab of the Rockies, has simulated buildings and how their energy use changes after each retrofit. And BTB, the Buildings Technology Baseline, gives installation costs for the technologies in those retrofits.
+  [KT] So, how do we estimate the impact of a retrofit that hasn't happened yet? To answer that question, we bring together three datasets, each providing a different piece of the puzzle.
 
-  The catch is that these don't describe the same things. A real BERDO building has no ID in ComStock, and BTB describes technologies, not buildings. So instead of a join, we find comparable simulated buildings, transfer their retrofit effects, and price the components. The result is one row per real building and option, with projected emissions, install cost, energy bill and remaining compliance payment.
+  First, BERDO gives us real-world information about Boston buildings, including their size, energy consumption, and reported emissions. This establishes our starting point.
+
+  Second, ComStock, developed by the National Laboratory of the Rockies, simulates how different building upgrades affect energy consumption and emissions. This allows us to estimate the impact of retrofits that haven't actually taken place.
+
+  Finally, the Building Technology Baselines, or BTB, provides cost estimates for different building technologies and upgrades.
+
+  Together, these datasets give us the information we need to estimate retrofit outcomes for real Boston buildings. The next challenge is figuring out how to match those buildings with the appropriate simulations.
 ]
-
-// ---- 6. matching ------------------------------------------------------------
+// ---- 5. matching ------------------------------------------------------------
 
 #let mnode(pos, title, detail, name, fill: white) = node(
   pos,
@@ -444,14 +473,14 @@
     size: 12.5pt,
     fill: ink-2,
   )[$b$ = real building, $c$ = simulated one, $N_b$ = its 10 matches. $G_(b,f)$ = reported emissions from fuel $f$; $U$, $B$ = simulated use after / before the upgrade. Logs make "twice as big" count the same at any size.])
-  #v(1fr)
+  #v(6pt)
   #takeaway[We keep each building's *real* emissions and borrow only the *% change* from its simulated neighbors.]
 ]
 #speaker-note[
   [KL] Here's how we make those predictions. We match each real BERDO office to simulated ComStock offices that look similar in size, energy use per square foot, and fuel mix. We keep the ten closest. Then we look at how an upgrade changes energy use in those simulations.For example, heat pumps might reduce gas use but increase electricity use. We combine the change for each fuel across the matches, taking account of how much of that fuel they used before the upgrade. Then we apply those changes to the real building's reported emissions. So we're not copying a simulated building's final result. We're borrowing the estimated change to predict what might happen to the real building.
 ]
 
-// ---- 7. sensitivity to k ----------------------------------------------------
+// ---- 6. sensitivity to k ----------------------------------------------------
 
 #s([Ten neighbors predict hidden buildings better than no matching], stop: 2)[
   #let num = loo.filter(r => r.k not in ("all", "type"))
@@ -496,7 +525,7 @@
       )
     },
   )
-  #v(1fr)
+  #v(6pt)
   #takeaway[Matching measurably helps. But this is error *between simulations*, not against real retrofits.]
 ]
 #speaker-note[
@@ -511,7 +540,7 @@
   The caveat: this measures how well neighbors transfer between simulated buildings. Real buildings can differ from every simulation in ways size, energy use and fuel mix don't capture.
 ]
 
-// ---- 8. the five-year decision rule ----------------------------------------
+// ---- 7. the five-year decision rule ----------------------------------------
 
 #s([Per building: the cheapest option, and the cheapest that complies], stop: 3)[
   #set text(size: 15pt)
@@ -554,66 +583,22 @@
       [*Cheapest compliant:* lowest $C_5$ with $hat(G)_b slash A_b <= 3.2$.],
     ),
   )
-  #v(1fr)
+  #v(12pt)
   #takeaway[Install costs are benchmarks, not quotes. But *#stats.robust_to_cost of #stats.matched* buildings get the same pick at low, mid or high BTB prices.]
 ]
 #speaker-note[
-  [KT] Now the domain problem: choosing what to do. For each building we evaluate nine options: no upgrade, four single retrofits, and four packages. For the first five-year compliance period, 2030 to 2034, we add up installation cost, five years of energy bills, and five years of compliance payments. The limit doesn't change inside that period, so this is a simple sum, no discounting.
+  [KT] Now that we can estimate the impact and cost of different retrofits, the next question is: which option should a building owner choose? For each building, we evaluate nine alternatives: doing nothing, four individual upgrades, and four retrofit packages.
 
-  We report two answers. The cheapest option overall, whether or not it meets the standard. And the cheapest option that actually gets under the limit.
+  We compare their total costs over the first five-year compliance period, from 2030 to 2034. These costs include the upfront installation expense, energy bills, and any Alternative Compliance Payments for emissions above the limit.
 
-  Equipment costs are national benchmarks, not contractor quotes, so we reran everything at BTB's low and high prices. 209 of 297 buildings get the same recommendation either way.
+  We then report two outcomes: the cheapest option overall and the cheapest option that actually brings the building into compliance.
+
+  We also test how sensitive our recommendations are to installation costs, since these are estimates rather than actual contractor quotes.
+
+  Across our 297 buildings, 209 receive the same recommendation under all three cost scenarios, suggesting that many of our results are relatively robust to uncertainty in installation costs.
 ]
 
-// ---- 9. Farnsworth, five years ----------------------------------------------
-
-#s([At Farnsworth St, complying costs #thousands(case-row(55).delta_5yr_owner) more over five years], stop: 3)[
-  #set text(size: 14pt)
-  #let shown = (0, 48, 49, 43, 55, 56)
-  #let label(id) = (
-    "0": [No upgrade (pay ACP)],
-    "48": [Wall insulation],
-    "49": [Roof insulation],
-    "43": [LED lighting],
-    "55": [Pkg 2 or 4: LED + heat pumps],
-    "56": [Pkg 3: everything],
-  ).at(str(id))
-  #let hl(id) = if id == 0 { c-orange.lighten(80%) } else if id == 55 { c-blue.lighten(80%) } else { none }
-  #figure(
-    table(
-      columns: (auto, auto, auto, auto, auto, auto, auto),
-      align: (left, right, center, right, right, right, right),
-      inset: (x: 9pt, y: 5pt),
-      fill: (_, y) => if y > 0 { hl(shown.at(y - 1, default: -1)) },
-      table.hline(stroke: 0.8pt),
-      table.header([Option], [kg/ft²], [Meets 3.2?], [Install], [ACP, 5 yr], [Energy, 5 yr], [Total, 5 yr]),
-      table.hline(stroke: 0.5pt),
-      ..shown
-        .map(id => {
-          let r = farn-row(id)
-          (
-            label(id),
-            str(calc.round(float(r.projected_ghg), digits: 2)),
-            if r.meets_standard == "True" [*Yes*] else [No],
-            thousands(r.installation_usd),
-            thousands(r.acp_5yr_usd),
-            thousands(r.energy_5yr_usd),
-            strong(thousands(r.total_5yr_usd)),
-          )
-        })
-        .flatten(),
-      table.hline(stroke: 0.8pt),
-    ),
-    caption: [Five-year costs (2030–2034) for 24–32 Farnsworth St (BERDO 106476), mid prices. New windows and Package 1 cost \$2.7–2.8M and still miss the limit.],
-  )
-  #v(1fr)
-  #takeaway[The cheapest move is to *do nothing and pay*. The cheapest compliant one is Package 2.]
-]
-#speaker-note[
-  [KL] Here's Farnsworth's five-year result. The lowest-cost option is no upgrade, at about \$1.39 million, including energy bills and ACP payments. Packages 2 and 4 are tied as the cheapest retrofits that bring emissions below the standard, at about \$1.81 million. So reaching the emissions target costs roughly \$422,000 more over five years. Paying the ACP is an allowed way to meet BERDO obligations, but it doesn't bring the building's emissions below the target. That's the tradeoff we're seeing.
-]
-
-// ---- 10. the 20-year method, owner vs society --------------------------------
+// ---- 8. the 20-year method, owner vs society --------------------------------
 
 #s([Over 20 years: the owner's view and society's view], stop: 3)[
   #set text(size: 15pt)
@@ -640,7 +625,7 @@
     ),
     caption: [EN 15459 global cost @en15459, as in the EU cost-optimal method @eu-cost-optimal. Equipment lifetimes from BTB @btb.],
   )
-  #v(1fr)
+  #v(12pt)
   #takeaway[Baseline: *energy prices, grid emissions, the ACP rate and the carbon price* held at today's level. We vary the grid and prices after the results.]
 ]
 #speaker-note[
@@ -651,7 +636,7 @@
   In the baseline, energy prices, the grid's emissions factor, the ACP rate and the carbon price stay at today's level. Higher energy prices or a higher ACP would make retrofits look better. The grid getting cleaner is two-sided: it lowers emissions for heat pumps, but also for buildings that do nothing. We test the grid and energy prices a couple of slides from now; the ACP rate is the break-even slide.
 ]
 
-// ---- 11. answer: across the 99 ---------------------------------------------
+// ---- 9. answer: across the 99 ---------------------------------------------
 
 #s([The cheapest option changes with the time horizon], stop: 4)[
   #let ys = range(outcomes.len()).rev()  // first scenario on top; lilaq sorts by y, so feed ascending
@@ -703,14 +688,285 @@
     )),
     caption: [Cheapest option for each of the #stats.over_limit offices over the limit, at mid equipment prices.],
   )
-  #v(1fr)
+  #v(12pt)
   #takeaway[Over 5 years, *#stats.over_acp_5yr of #stats.over_limit* owners should just pay. Over 20, nobody should, but only *#outcomes.at(1).retrofit_compliant* pick a fix that meets the limit.]
 ]
 #speaker-note[
   [KL] Now let's look at all 99 buildings in our baseline comparison. Over five years, no upgrade is cheapest for 66 buildings. Only three have a retrofit that meets the emissions limit as their cheapest choice. Over 20 years, some retrofit becomes cheapest for every building, but only 24 of those choices actually get below the limit. When we include society's climate costs, that number rises to 35. So the answer changes depending on how far ahead we look and whose costs we include. And remember, this comparison uses our original baseline emissions factors. Later, we'll show how the projected 2030 factor changes the count.
 ]
 
-// ---- 11b. energy scenarios --------------------------------------------------
+// ---- 10. answer: the case --------------------------------------------------
+
+#s([Back to Farnsworth: the cheapest choice need not comply], stop: 4)[
+  #let opts = ((48, [Wall insulation], c-orange), (55, [Package 2 (heat pumps)], c-blue))
+  #let lenses = (
+    ("delta_5yr_owner", [5 yr, owner]),
+    ("delta_20yr_owner", [20 yr, owner]),
+    ("delta_20yr_society", [20 yr, society]),
+  )
+  #let xs = range(lenses.len())
+  #let swatch(c, t) = box(baseline: 1pt, rect(width: 11pt, height: 11pt, radius: 2pt, fill: c)) + h(4pt) + t
+  #grid(
+    columns: (1.35fr, 1fr),
+    column-gutter: 20pt,
+    figure(
+      {
+        align(center, text(size: 12.5pt, opts.map(((_, name, color)) => swatch(color, name)).join(h(18pt))))
+        v(-2pt)
+        chart(lq.diagram(
+          width: 13cm,
+          height: 6cm,
+          xlim: (-0.6, 2.6),
+          ylim: (-380, 560),
+          ylabel: [Cost vs. just paying (\$ thousands)],
+          xaxis: (ticks: xs.zip(lenses.map(l => l.at(1))), subticks: none),
+          yaxis: (subticks: none, exponent: 0),
+          // no grid: vertical gridlines would split each pair of bars down the middle
+          grid: none,
+          ..opts
+            .enumerate()
+            .map(((j, (id, name, color))) => {
+              let vals = lenses.map(l => float(case-row(id).at(l.at(0))) / 1000)
+              (
+                lq.bar(xs, vals, offset: (j - 0.5) * 0.4, width: 0.38, fill: color, stroke: none),
+                ..xs.map(i => lq.place(
+                  i + (j - 0.5) * 0.4,
+                  vals.at(i),
+                  align: if vals.at(i) >= 0 { bottom } else { top },
+                  pad(y: 3pt, text(size: 11pt, fill: ink)[#if vals.at(i) >= 0 [+]#calc.round(vals.at(i))k]),
+                )),
+              )
+            })
+            .flatten(),
+          // zero line drawn after the bars so it reads as one continuous baseline
+          lq.hlines(0, stroke: 1.2pt + ink),
+          lq.place(0.62, 528, align: top + left, text(size: 11pt, fill: ink-2)[↑ costs more than paying]),
+          lq.place(-0.55, -348, align: bottom + left, text(size: 11pt, fill: ink-2)[↓ cheaper than paying]),
+        ))
+      },
+      caption: [24–32 Farnsworth St: each retrofit's cost minus the cost of just paying, at mid prices.],
+    ),
+    {
+      set text(size: 14.5pt)
+      v(10pt)
+      list(
+        [*5 yr, owner:* paying wins.],
+        [*20 yr, owner:* wall insulation wins, but the building stays over the limit.],
+        [*20 yr, society:* Package 2 wins and complies.],
+      )
+    },
+  )
+  #v(12pt)
+  #takeaway[*One building, three answers*, depending on the horizon and whose costs count.]
+]
+#speaker-note[
+  [ZW] Farnsworth shows what this looks like for one building. Bars below zero are cheaper than just paying. Over five years, doing nothing is cheapest. Over 20 years, wall insulation becomes the owner's cheapest option, saving about 80 thousand dollars compared with paying, but it doesn't cut emissions enough to meet the limit. When we count society's costs, Package 2 wins, saving about 303 thousand dollars, and it complies. So one building gets three different recommendations depending on the horizon and the objective.
+
+  This holds across the grid and energy-price scenarios on the previous slide. Society here uses the social cost of carbon the EPA published in 2023. The EPA's current SCGG is \$0.
+]
+
+// ---- 11. answer: break-even ACP -------------------------------------------
+
+#s([Today's ACP rarely makes compliance the cheapest choice], stop: 5)[
+  // Empirical CDF of the break-even ACP, counted out of all over-limit offices, so the
+  // ones with no compliant retrofit show as the gap between the curve's top and the total.
+  #let xmax = 3000
+  #let be = breakeven.sorted()
+  #let n-opt = be.len()
+  #let shown = be.filter(v => v <= xmax)
+  #let above = n-opt - shown.len()
+  #let today = stats.acp_usd_per_t
+  #let at-today = be.filter(v => v <= today).len()
+  #let med = stats.breakeven_median
+  // step: end holds each count until the next break-even value
+  #let xs = (0,) + shown + (xmax,)
+  #let ys = (0,) + range(1, shown.len() + 1) + (shown.len(),)
+  #grid(
+    columns: (1.45fr, 1fr),
+    column-gutter: 20pt,
+    figure(
+      chart(lq.diagram(
+        width: 14cm,
+        height: 6cm,
+        xlim: (0, xmax),
+        ylim: (0, stats.over_limit + 9),
+        xlabel: [ACP rate (\$ per ton)],
+        ylabel: [Offices where complying is cheapest],
+        xaxis: (ticks: (0, 500, 1000, 1500, 2000, 2500, 3000).map(t => (t, [\$#if t >= 1000 [#(t / 1000)k] else [#t]])), subticks: none),
+        yaxis: (ticks: (0, 25, 50, 75, stats.over_limit), subticks: none),
+        grid: none,
+        // all over-limit offices, and the most the curve can reach
+        lq.hlines(stats.over_limit, stroke: 0.8pt + rule),
+        lq.hlines(n-opt, stroke: (paint: c-gray.darken(20%), thickness: 1pt, dash: "dotted")),
+        lq.place(xmax - 40, (n-opt + stats.over_limit) / 2, align: horizon + right, text(size: 11pt, fill: ink-2)[↕ #(stats.over_limit - stats.with_compliant_option) offices: no compliant retrofit at any price]),
+        lq.place(xmax - 40, stats.over_limit, align: bottom + right, pad(bottom: 2pt, text(size: 11pt, fill: ink-2)[All #stats.over_limit over the limit])),
+        lq.vlines(today, stroke: (paint: c-blue, thickness: 1.5pt, dash: "dashed")),
+        // median drawn only up to the curve, so it does not cut through the "Today" label
+        lq.plot((med, med), (0, be.filter(v => v <= med).len()), mark: none, stroke: (paint: c-orange, thickness: 1.2pt, dash: "dashed")),
+        lq.plot(xs, ys, step: end, mark: none, stroke: 2.2pt + navy),
+        lq.plot((today,), (at-today,), stroke: none, mark: "o", mark-size: 8pt, color: c-blue),
+        lq.place(today, (n-opt + stats.over_limit) / 2, align: horizon + left, pad(left: 5pt, text(size: 11.5pt, fill: c-blue, weight: "bold")[Today: \$#today → #at-today])),
+        lq.place(med, 4, align: bottom + left, pad(left: 5pt, text(size: 11.5pt, fill: c-orange.darken(15%), weight: "bold")[Median: \$#calc.round(med)])),
+        lq.place(xmax - 40, shown.len(), align: top + right, pad(top: 4pt, text(size: 11pt, fill: ink-2)[+#above more above \$3k])),
+      )),
+      caption: [Over-limit offices whose cheapest 20-year option (owner's view) is a compliant retrofit, as the ACP rises. Each step is one building's break-even rate.],
+    ),
+    {
+      set text(size: 14.5pt)
+      v(10pt)
+      list(
+        [At today's *\$#today/t*, compliance is cheapest for *#at-today* of #stats.over_limit.],
+        [The median office with a compliant option tips at *\$#calc.round(med)/t*, about #calc.round(med / today, digits: 1)× today's rate.],
+        [#(stats.over_limit - stats.with_compliant_option) offices never tip: none of our eight retrofits meets the limit.],
+      )
+    },
+  )
+  #v(12pt)
+  #takeaway[Today's ACP is set below what it takes to make compliance the cheaper choice for most offices.]
+]
+#speaker-note[
+  [KT] Our results raise an interesting policy question: if paying the penalty is often cheaper than upgrading, how much would the payment need to increase before a compliant retrofit becomes the better financial choice?
+
+  To investigate this, we calculate the break-even payment over a 20-year horizon for buildings where our model identifies at least one retrofit that meets the emissions limit.
+
+  The graph shows how many buildings would find compliance cheapest as the payment increases.
+
+  At today's rate of 234 per ton, that's only 24 of the 99 buildings above the limit.
+
+  For buildings with a compliant option, the median break-even rate is approximately 571 per ton, about two and a half times today's rate.
+
+  But there's another important finding: 24 buildings have no compliant option among the retrofits we evaluated. For those buildings, increasing the payment alone doesn't solve the underlying emissions problem.
+
+  So the broader takeaway is that financial incentives matter, but so does having effective retrofit options available.
+
+]
+
+// ---- 12. next steps --------------------------------------------------------
+
+#s([Next steps], stop: 5)[
+  #set text(size: 16pt)
+  #let step(n, title, body) = (
+    text(size: 24pt, weight: "bold", fill: green-edge)[#n],
+    text(size: 18pt, weight: "bold", fill: navy)[#title],
+    body,
+  )
+  #grid(
+    columns: (auto, 7.5cm, 1fr),
+    column-gutter: 16pt,
+    row-gutter: 32pt,
+    align: (center + horizon, left + horizon, left + horizon),
+    ..step(
+      1,
+      [Validate on real buildings],
+      [The hold-out test checks simulations against simulations. Next: compare with engineering studies or post-upgrade BERDO data.],
+    ),
+    ..step(
+      2,
+      [Expand coverage],
+      [More upgrades; fill BTB cost gaps so the 24 offices with no compliant option get one to test.],
+    ),
+    ..step(
+      3,
+      [Model time explicitly],
+      [Apply BERDO's 2030 grid factor to the 5-year screen and headline counts; let equipment costs change by year.],
+    ),
+    ..step(4, [Constraints], [Plan *what* to fix and *when* under a budget.]),
+  )
+  #v(36pt)
+  #takeaway[Our first priority is *confidence in the predicted outcomes*, not more financial complexity.]
+]
+#speaker-note[
+  [KT] Looking ahead to our next presentation, we have a few areas we'd like to work on.
+
+  First, we want to strengthen our validation. While we've evaluated how well our matching approach works with simulated buildings, we'd like to better understand how accurately those predictions represent real-world retrofit outcomes.
+
+  Second, we want to refine our cost estimates and expand the retrofit options we consider, especially for buildings where none of our current alternatives achieves compliance.
+
+  We also want to explore how changing electricity prices and grid emissions factors affect our recommendations over time.
+
+  Looking further ahead, another interesting extension would be to introduce budget constraints and optimize not just which retrofits to undertake, but when to implement them.
+
+  To conclude, our project addresses two connected problems.
+
+  From a data science perspective, we're trying to estimate the impact of retrofits on real buildings by matching them with simulated building data.
+
+  From a domain perspective, we're trying to help building owners determine which investments make financial sense while achieving meaningful emissions reductions and meeting BERDO requirements.
+
+  Ultimately, the goal is to connect those two pieces, and turn data-driven estimates into practical decarbonization decisions.
+]
+
+// ---- references ------------------------------------------------------------
+
+#s([References])[
+  #set text(size: 8.5pt)
+  #set par(justify: false)
+  #columns(2, gutter: 20pt, bibliography("refs.yml", title: none, style: "ieee"))
+]
+
+// ---- Bublik -----------------------------------------------------------------
+
+#slide({
+  set align(center + horizon)
+  text(size: 26pt, weight: "bold", fill: navy)[Bonus slide]
+  v(3pt)
+  image("img/bublik.jpg", height: 11cm)
+  v(2pt)
+  text(size: 22pt, fill: navy)[*Mr. Bublik*, the 4th teammate]
+})
+#speaker-note[
+  [Battle it out]
+]
+
+// ---- backup slides ----------------------------------------------------------------
+
+// ---- Backup 1: Farnsworth five-year cost comparison -------------------------------
+#s([At Farnsworth St, complying costs #thousands(case-row(55).delta_5yr_owner) more over five years], stop: 3)[
+  #set text(size: 14pt)
+  #let shown = (0, 48, 49, 43, 55, 56)
+  #let label(id) = (
+    "0": [No upgrade (pay ACP)],
+    "48": [Wall insulation],
+    "49": [Roof insulation],
+    "43": [LED lighting],
+    "55": [Pkg 2 or 4: LED + heat pumps],
+    "56": [Pkg 3: everything],
+  ).at(str(id))
+  #let hl(id) = if id == 0 { c-orange.lighten(80%) } else if id == 55 { c-blue.lighten(80%) } else { none }
+  #figure(
+    table(
+      columns: (auto, auto, auto, auto, auto, auto, auto),
+      align: (left, right, center, right, right, right, right),
+      inset: (x: 9pt, y: 5pt),
+      fill: (_, y) => if y > 0 { hl(shown.at(y - 1, default: -1)) },
+      table.hline(stroke: 0.8pt),
+      table.header([Option], [kg/ft²], [Meets 3.2?], [Install], [ACP, 5 yr], [Energy, 5 yr], [Total, 5 yr]),
+      table.hline(stroke: 0.5pt),
+      ..shown
+        .map(id => {
+          let r = farn-row(id)
+          (
+            label(id),
+            str(calc.round(float(r.projected_ghg), digits: 2)),
+            if r.meets_standard == "True" [*Yes*] else [No],
+            thousands(r.installation_usd),
+            thousands(r.acp_5yr_usd),
+            thousands(r.energy_5yr_usd),
+            strong(thousands(r.total_5yr_usd)),
+          )
+        })
+        .flatten(),
+      table.hline(stroke: 0.8pt),
+    ),
+    caption: [Five-year costs (2030–2034) for 24–32 Farnsworth St (BERDO 106476), mid prices. New windows and Package 1 cost \$2.7–2.8M and still miss the limit.],
+  )
+  #v(1fr)
+  #takeaway[The cheapest move is to *do nothing and pay*. The cheapest compliant one is Package 2.]
+]
+#speaker-note[
+  [KL] Here's Farnsworth's five-year result. The lowest-cost option is no upgrade, at about \$1.39 million, including energy bills and ACP payments. Packages 2 and 4 are tied as the cheapest retrofits that bring emissions below the standard, at about \$1.81 million. So reaching the emissions target costs roughly \$422,000 more over five years. Paying the ACP is an allowed way to meet BERDO obligations, but it doesn't bring the building's emissions below the target. That's the tradeoff we're seeing.
+]
+
+// ---- Backup 2: Energy scenarios ------------------------------------------------
 
 #s([Price forecasts barely matter. Boston's own grid factor does.], stop: 4)[
   // owner's view, one bar per scenario; the two decomposition scenarios go in the bullets
@@ -795,203 +1051,4 @@
   If asked about price spikes: EIA's outlook draws smooth long-run paths; it doesn't model spikes. Recent high prices are in our starting point, which uses 2025 Massachusetts prices and, in the high case, 2026 gas prices. The closest thing to prices staying high is the low oil and gas supply case, where gas is 59 percent and electricity 24 percent higher by 2049. That's the "High prices" bar, and it moves the count by three.
 
   Caveats: the City reviews its factor projections at least every five years, and the renewable standard after 2030 is plus one percent a year unless the law changes. Cambium 2024 was built before 2025's federal policy changes, so its grid may be optimistic, but it only affects society's view.
-]
-
-// ---- 12. answer: the case --------------------------------------------------
-
-#s([Back to Farnsworth: the cheapest choice need not comply], stop: 4)[
-  #let opts = ((48, [Wall insulation], c-orange), (55, [Package 2 (heat pumps)], c-blue))
-  #let lenses = (
-    ("delta_5yr_owner", [5 yr, owner]),
-    ("delta_20yr_owner", [20 yr, owner]),
-    ("delta_20yr_society", [20 yr, society]),
-  )
-  #let xs = range(lenses.len())
-  #let swatch(c, t) = box(baseline: 1pt, rect(width: 11pt, height: 11pt, radius: 2pt, fill: c)) + h(4pt) + t
-  #grid(
-    columns: (1.35fr, 1fr),
-    column-gutter: 20pt,
-    figure(
-      {
-        align(center, text(size: 12.5pt, opts.map(((_, name, color)) => swatch(color, name)).join(h(18pt))))
-        v(-2pt)
-        chart(lq.diagram(
-          width: 13cm,
-          height: 6cm,
-          xlim: (-0.6, 2.6),
-          ylim: (-380, 560),
-          ylabel: [Cost vs. just paying (\$ thousands)],
-          xaxis: (ticks: xs.zip(lenses.map(l => l.at(1))), subticks: none),
-          yaxis: (subticks: none, exponent: 0),
-          // no grid: vertical gridlines would split each pair of bars down the middle
-          grid: none,
-          ..opts
-            .enumerate()
-            .map(((j, (id, name, color))) => {
-              let vals = lenses.map(l => float(case-row(id).at(l.at(0))) / 1000)
-              (
-                lq.bar(xs, vals, offset: (j - 0.5) * 0.4, width: 0.38, fill: color, stroke: none),
-                ..xs.map(i => lq.place(
-                  i + (j - 0.5) * 0.4,
-                  vals.at(i),
-                  align: if vals.at(i) >= 0 { bottom } else { top },
-                  pad(y: 3pt, text(size: 11pt, fill: ink)[#if vals.at(i) >= 0 [+]#calc.round(vals.at(i))k]),
-                )),
-              )
-            })
-            .flatten(),
-          // zero line drawn after the bars so it reads as one continuous baseline
-          lq.hlines(0, stroke: 1.2pt + ink),
-          lq.place(0.62, 528, align: top + left, text(size: 11pt, fill: ink-2)[↑ costs more than paying]),
-          lq.place(-0.55, -348, align: bottom + left, text(size: 11pt, fill: ink-2)[↓ cheaper than paying]),
-        ))
-      },
-      caption: [24–32 Farnsworth St: each retrofit's cost minus the cost of just paying, at mid prices.],
-    ),
-    {
-      set text(size: 14.5pt)
-      v(10pt)
-      list(
-        [*5 yr, owner:* paying wins.],
-        [*20 yr, owner:* wall insulation wins, but the building stays over the limit.],
-        [*20 yr, society:* Package 2 wins and complies.],
-      )
-    },
-  )
-  #v(1fr)
-  #takeaway[*One building, three answers*, depending on the horizon and whose costs count.]
-]
-#speaker-note[
-  [ZW] Farnsworth shows what this looks like for one building. Bars below zero are cheaper than just paying. Over five years, doing nothing is cheapest. Over 20 years, wall insulation becomes the owner's cheapest option, saving about 80 thousand dollars compared with paying, but it doesn't cut emissions enough to meet the limit. When we count society's costs, Package 2 wins, saving about 303 thousand dollars, and it complies. So one building gets three different recommendations depending on the horizon and the objective.
-
-  This holds across the grid and energy-price scenarios on the previous slide. Society here uses the social cost of carbon the EPA published in 2023. The EPA's current SCGG is \$0.
-]
-
-// ---- 13. answer: break-even ACP -------------------------------------------
-
-#s([Today's ACP rarely makes compliance the cheapest choice], stop: 5)[
-  // Empirical CDF of the break-even ACP, counted out of all over-limit offices, so the
-  // ones with no compliant retrofit show as the gap between the curve's top and the total.
-  #let xmax = 3000
-  #let be = breakeven.sorted()
-  #let n-opt = be.len()
-  #let shown = be.filter(v => v <= xmax)
-  #let above = n-opt - shown.len()
-  #let today = stats.acp_usd_per_t
-  #let at-today = be.filter(v => v <= today).len()
-  #let med = stats.breakeven_median
-  // step: end holds each count until the next break-even value
-  #let xs = (0,) + shown + (xmax,)
-  #let ys = (0,) + range(1, shown.len() + 1) + (shown.len(),)
-  #grid(
-    columns: (1.45fr, 1fr),
-    column-gutter: 20pt,
-    figure(
-      chart(lq.diagram(
-        width: 14cm,
-        height: 6cm,
-        xlim: (0, xmax),
-        ylim: (0, stats.over_limit + 9),
-        xlabel: [ACP rate (\$ per ton)],
-        ylabel: [Offices where complying is cheapest],
-        xaxis: (ticks: (0, 500, 1000, 1500, 2000, 2500, 3000).map(t => (t, [\$#if t >= 1000 [#(t / 1000)k] else [#t]])), subticks: none),
-        yaxis: (ticks: (0, 25, 50, 75, stats.over_limit), subticks: none),
-        grid: none,
-        // all over-limit offices, and the most the curve can reach
-        lq.hlines(stats.over_limit, stroke: 0.8pt + rule),
-        lq.hlines(n-opt, stroke: (paint: c-gray.darken(20%), thickness: 1pt, dash: "dotted")),
-        lq.place(xmax - 40, (n-opt + stats.over_limit) / 2, align: horizon + right, text(size: 11pt, fill: ink-2)[↕ #(stats.over_limit - stats.with_compliant_option) offices: no compliant retrofit at any price]),
-        lq.place(xmax - 40, stats.over_limit, align: bottom + right, pad(bottom: 2pt, text(size: 11pt, fill: ink-2)[All #stats.over_limit over the limit])),
-        lq.vlines(today, stroke: (paint: c-blue, thickness: 1.5pt, dash: "dashed")),
-        // median drawn only up to the curve, so it does not cut through the "Today" label
-        lq.plot((med, med), (0, be.filter(v => v <= med).len()), mark: none, stroke: (paint: c-orange, thickness: 1.2pt, dash: "dashed")),
-        lq.plot(xs, ys, step: end, mark: none, stroke: 2.2pt + navy),
-        lq.plot((today,), (at-today,), stroke: none, mark: "o", mark-size: 8pt, color: c-blue),
-        lq.place(today, (n-opt + stats.over_limit) / 2, align: horizon + left, pad(left: 5pt, text(size: 11.5pt, fill: c-blue, weight: "bold")[Today: \$#today → #at-today])),
-        lq.place(med, 4, align: bottom + left, pad(left: 5pt, text(size: 11.5pt, fill: c-orange.darken(15%), weight: "bold")[Median: \$#calc.round(med)])),
-        lq.place(xmax - 40, shown.len(), align: top + right, pad(top: 4pt, text(size: 11pt, fill: ink-2)[+#above more above \$3k])),
-      )),
-      caption: [Over-limit offices whose cheapest 20-year option (owner's view) is a compliant retrofit, as the ACP rises. Each step is one building's break-even rate.],
-    ),
-    {
-      set text(size: 14.5pt)
-      v(10pt)
-      list(
-        [At today's *\$#today/t*, compliance is cheapest for *#at-today* of #stats.over_limit.],
-        [The median office with a compliant option tips at *\$#calc.round(med)/t*, about #calc.round(med / today, digits: 1)× today's rate.],
-        [#(stats.over_limit - stats.with_compliant_option) offices never tip: none of our eight retrofits meets the limit.],
-      )
-    },
-  )
-  #v(1fr)
-  #takeaway[Today's ACP is set below what it takes to make compliance the cheaper choice for most offices.]
-]
-#speaker-note[
-  [KT] This raises a policy question. If it's often cheaper to stay over the limit, how high would the payment need to be before a compliant retrofit wins? For the 75 buildings where our model finds at least one compliant retrofit, we raised the payment until that happens.
-
-  Read the line left to right: as the payment rises, it counts how many of the 99 over-limit offices would find a compliant retrofit cheapest. At today's 234 dollars, the blue dot, that's 24. Fourteen of those already win at any price, because their compliant retrofit pays for itself in energy savings. The median office with a compliant option tips at about 571 dollars, roughly two and a half times today's rate, and the curve keeps climbing slowly after that; seven buildings need more than 3,000 dollars a ton.
-
-  The curve can never reach 99. It tops out at 75, because the other 24 have no compliant option among the retrofits we evaluated, so raising the payment on them is just a tax unless deeper retrofits are on the table.
-]
-
-// ---- 14. next steps --------------------------------------------------------
-
-#s([Next steps], stop: 5)[
-  #set text(size: 16pt)
-  #let step(n, title, body) = (
-    text(size: 24pt, weight: "bold", fill: green-edge)[#n],
-    text(size: 18pt, weight: "bold", fill: navy)[#title],
-    body,
-  )
-  #grid(
-    columns: (auto, 6.5cm, 1fr),
-    column-gutter: 16pt,
-    row-gutter: 20pt,
-    align: (center + horizon, left + horizon, left + horizon),
-    ..step(
-      1,
-      [Validate on real buildings],
-      [The hold-out test checks simulations against simulations. Next: compare with engineering studies or post-upgrade BERDO data.],
-    ),
-    ..step(
-      2,
-      [Expand coverage],
-      [More upgrades; fill BTB cost gaps so the 24 offices with no compliant option get one to test.],
-    ),
-    ..step(
-      3,
-      [Model time explicitly],
-      [Apply BERDO's 2030 grid factor to the 5-year screen and headline counts; let equipment costs change by year.],
-    ),
-    ..step(4, [Constraints], [Plan *what* to fix and *when* under a budget.]),
-  )
-  #v(1fr)
-  #takeaway[Our first priority is *confidence in the predicted outcomes*, not more financial complexity.]
-]
-#speaker-note[
-  [KT] Where we go next. First, validation on real buildings. The hold-out test showed matching works between simulated buildings, but not against real retrofits. Buildings that have already retrofitted will show up in later BERDO disclosures, and engineering studies give another check. Second, expand the options and fill gaps in the cost mapping. Third, carry BERDO's projected 2030 grid factor into the five-year screen and the headline count of offices over the limit, which today uses the 2025 factor, and let equipment costs change by year. Fourth, add a budget and plan what to fix and when. But our main priority is confidence in the predicted retrofit outcomes.
-
-  To summarize: our domain problem is choosing the most cost-effective response to BERDO, and our data science problem is estimating the retrofit outcomes that decision needs. The cheapest option for an owner often isn't the one that meets the city's goals.
-]
-
-// ---- references ------------------------------------------------------------
-
-#s([References])[
-  #set text(size: 8.5pt)
-  #set par(justify: false)
-  #columns(2, gutter: 20pt, bibliography("refs.yml", title: none, style: "ieee"))
-]
-
-// ---- bonus -----------------------------------------------------------------
-
-#slide({
-  set align(center + horizon)
-  text(size: 26pt, weight: "bold", fill: navy)[Bonus slide]
-  v(6pt)
-  image("img/bublik.jpg", height: 11cm)
-  v(4pt)
-  text(size: 22pt, fill: green-edge)[*Mr. Bublik*, the 4th teammate]
-})
-#speaker-note[
-  [Battle it out]
 ]
