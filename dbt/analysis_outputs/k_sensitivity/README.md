@@ -8,8 +8,8 @@ Unlike the earlier sensitivity analysis, this experiment rebuilds the matching, 
 
 From the dbt directory:
 
-1. python check_full_k_sensitivity.py
-2. python summarize_full_k_sensitivity.py
+1. uv run python check_full_k_sensitivity.py
+2. uv run python summarize_full_k_sensitivity.py
 
 Run using the project's Python environment.
 
@@ -18,6 +18,5 @@ Run using the project's Python environment.
 - full_k_report.txt: summary of findings
 - data/: six reproducible CSVs
 - figures/: recommendation changes and optimizer outcomes
-- logs/: local dbt build logs, not committed
 
 K=10 is the reference, not ground truth. This measures model sensitivity, not predictive accuracy.
