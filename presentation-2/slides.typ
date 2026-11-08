@@ -611,6 +611,55 @@
   Across our 297 buildings, 207 receive the same recommendation under all three cost scenarios, suggesting that many of our results are relatively robust to uncertainty in installation costs.
 ]
 
+// ---- 7b. Farnsworth, five years ---------------------------------------------
+#s([Farnsworth: meeting the limit costs #thousands(case-row(55).delta_5yr_owner) more over five years], stop: 3)[
+  #set text(size: 14pt)
+  #let shown = (0, 48, 49, 43, 46, 65, 55, 56)
+  #let label(id) = (
+    "0": [No upgrade (pay ACP)],
+    "48": [Wall insulation],
+    "49": [Roof insulation],
+    "43": [LED lighting],
+    "46": [Rooftop PV],
+    "65": [Pkg 12: PV + roof],
+    "55": [Pkg 2 or 4: LED + heat pumps],
+    "56": [Pkg 3: everything],
+  ).at(str(id))
+  #let hl(id) = if id == 0 { c-orange.lighten(80%) } else if id == 55 { c-blue.lighten(80%) } else { none }
+  #figure(
+    table(
+      columns: (auto, auto, auto, auto, auto, auto, auto),
+      align: (left, right, center, right, right, right, right),
+      inset: (x: 9pt, y: 5pt),
+      fill: (_, y) => if y > 0 { hl(shown.at(y - 1, default: -1)) },
+      table.hline(stroke: 0.8pt),
+      table.header([Option], [kg/ft²], [Meets 3.2?], [Install], [ACP, 5 yr], [Energy, 5 yr], [Total, 5 yr]),
+      table.hline(stroke: 0.5pt),
+      ..shown
+        .map(id => {
+          let r = farn-row(id)
+          (
+            label(id),
+            str(calc.round(float(r.projected_ghg), digits: 2)),
+            if r.meets_standard == "true" [*Yes*] else [No],
+            thousands(r.installation_usd),
+            thousands(r.acp_5yr_usd),
+            thousands(r.energy_5yr_usd),
+            strong(thousands(r.total_5yr_usd)),
+          )
+        })
+        .flatten(),
+      table.hline(stroke: 0.8pt),
+    ),
+    caption: [Five-year costs (2030–2034) for 24–32 Farnsworth St (BERDO 106476), mid prices. New windows and Package 1 cost \$2.7–2.8M and still miss the limit.],
+  )
+  #v(1fr)
+  #takeaway[The cheapest move is to *do nothing and pay*. The cheapest retrofit under the limit is Package 2.]
+]
+#speaker-note[
+  [KL] Here's Farnsworth's five-year result. The lowest-cost option is no upgrade, at about \$1.37 million, including energy bills and ACP payments. Packages 2 and 4 are tied as the cheapest retrofits that bring emissions below the standard, at about \$1.81 million. So reaching the emissions target costs roughly \$445,000 more over five years. Paying the ACP is an allowed way to meet BERDO obligations, but it doesn't bring the building's emissions below the target. That's the tradeoff we're seeing.
+]
+
 // ---- 8. the 20-year method, owner vs society --------------------------------
 
 #s([Over 20 years: the owner's view and society's view], stop: 3)[
@@ -948,11 +997,17 @@
 
 #slide({
   set align(center + horizon)
-  text(size: 26pt, weight: "bold", fill: navy)[Bonus slide]
-  v(3pt)
-  image("img/bublik.jpg", height: 11cm)
-  v(2pt)
-  text(size: 22pt, fill: navy)[*Mr. Bublik*, the 4th teammate]
+  text(size: 26pt, weight: "bold", fill: navy)[Team support]
+  v(6pt)
+  grid(
+    columns: (auto, auto),
+    column-gutter: 18pt,
+    row-gutter: 8pt,
+    image("img/bublik.jpg", height: 9cm),
+    image("img/sweet-p.jpg", height: 9cm),
+    text(size: 20pt, fill: navy)[*Mr. Bublik*, the 4th teammate],
+    text(size: 20pt, fill: navy)[*Sweet P*, the newest addition],
+  )
 })
 #speaker-note[
   [Battle it out]
@@ -960,56 +1015,7 @@
 
 // ---- backup slides ----------------------------------------------------------------
 
-// ---- Backup 1: Farnsworth five-year cost comparison -------------------------------
-#s([Farnsworth: meeting the limit costs #thousands(case-row(55).delta_5yr_owner) more over five years], stop: 3)[
-  #set text(size: 14pt)
-  #let shown = (0, 48, 49, 43, 46, 65, 55, 56)
-  #let label(id) = (
-    "0": [No upgrade (pay ACP)],
-    "48": [Wall insulation],
-    "49": [Roof insulation],
-    "43": [LED lighting],
-    "46": [Rooftop PV],
-    "65": [Pkg 12: PV + roof],
-    "55": [Pkg 2 or 4: LED + heat pumps],
-    "56": [Pkg 3: everything],
-  ).at(str(id))
-  #let hl(id) = if id == 0 { c-orange.lighten(80%) } else if id == 55 { c-blue.lighten(80%) } else { none }
-  #figure(
-    table(
-      columns: (auto, auto, auto, auto, auto, auto, auto),
-      align: (left, right, center, right, right, right, right),
-      inset: (x: 9pt, y: 5pt),
-      fill: (_, y) => if y > 0 { hl(shown.at(y - 1, default: -1)) },
-      table.hline(stroke: 0.8pt),
-      table.header([Option], [kg/ft²], [Meets 3.2?], [Install], [ACP, 5 yr], [Energy, 5 yr], [Total, 5 yr]),
-      table.hline(stroke: 0.5pt),
-      ..shown
-        .map(id => {
-          let r = farn-row(id)
-          (
-            label(id),
-            str(calc.round(float(r.projected_ghg), digits: 2)),
-            if r.meets_standard == "true" [*Yes*] else [No],
-            thousands(r.installation_usd),
-            thousands(r.acp_5yr_usd),
-            thousands(r.energy_5yr_usd),
-            strong(thousands(r.total_5yr_usd)),
-          )
-        })
-        .flatten(),
-      table.hline(stroke: 0.8pt),
-    ),
-    caption: [Five-year costs (2030–2034) for 24–32 Farnsworth St (BERDO 106476), mid prices. New windows and Package 1 cost \$2.7–2.8M and still miss the limit.],
-  )
-  #v(1fr)
-  #takeaway[The cheapest move is to *do nothing and pay*. The cheapest retrofit under the limit is Package 2.]
-]
-#speaker-note[
-  [KL] Here's Farnsworth's five-year result. The lowest-cost option is no upgrade, at about \$1.37 million, including energy bills and ACP payments. Packages 2 and 4 are tied as the cheapest retrofits that bring emissions below the standard, at about \$1.81 million. So reaching the emissions target costs roughly \$445,000 more over five years. Paying the ACP is an allowed way to meet BERDO obligations, but it doesn't bring the building's emissions below the target. That's the tradeoff we're seeing.
-]
-
-// ---- Backup 2: the over-limit offices by time horizon --------------------------
+// ---- Backup: the over-limit offices by time horizon --------------------------
 
 #s([The cheapest option changes with the time horizon], stop: 4)[
   #let ys = range(outcomes.len()).rev()  // first scenario on top; lilaq sorts by y, so feed ascending
