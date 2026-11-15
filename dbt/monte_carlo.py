@@ -48,7 +48,8 @@ def load_inputs(con):
         SELECT o.berdo_id, o.upgrade_id, o.upgrade_name, o.period_start,
                o.period_end, o.period_years, o.standard_kgco2e_sqft,
                o.projected_ghg_intensity_kgco2e_sqft, o.acp_usd_per_year,
-               o.excess_kgco2e, o.energy_cost_mid_usd_per_year,
+               o.excess_kgco2e, o.energy_cost_low_usd_per_year,
+               o.energy_cost_mid_usd_per_year, o.energy_cost_high_usd_per_year,
                o.installed_cost_mid_usd, o.total_cost_mid_usd, o.cost_rank_mid,
                b.gfa_sqft
         FROM berdo_decision_options o
@@ -116,11 +117,20 @@ def load_inputs(con):
         FROM int_berdo_comstock_matches m
         JOIN int_comstock_models cm ON m.comstock_id = cm.comstock_id
                                    AND cm.upgrade_id = ?
-        GROUP BY m.berdo_id, cm.comstock_type
-    """, [no_upgrade]):
+        GROUP BY m.berdo_id, cm.comstock_type""", [no_upgrade]):
         matched_types[row['berdo_id']].append((row['comstock_type'], row['n']))
     if set(buildings) != set(matched_types):
         raise ValueError("Matched ComStock types missing for some buildings.")
+        # Keep buildings exceeding the 2030 standard without upgrading.
+    all_buildings = len(buildings)
+    at_risk = {bid for bid, opts in buildings.items() if any(o['upgrade_id'] == no_upgrade 
+               and o['projected_ghg_intensity_kgco2e_sqft'] > o['standard_kgco2e_sqft'] for o in opts)}
+    if not at_risk:
+        raise ValueError("No buildings exceed the standard.")
+    buildings = {bid: opts for bid, opts in buildings.items() if bid in at_risk}
+    matched_types = {bid: types for bid, types in matched_types.items() if bid in at_risk}
+    components = {key: value for key, value in components.items() if key[0] in at_risk}
+    print(f"At-risk buildings: {len(buildings)} of {all_buildings}")
     return buildings, components, matched_types, no_upgrade, upgrades, start, end, rate
 
 
@@ -160,11 +170,13 @@ def write_csv(path, rows):
 
 
 def simulate(buildings, components, matched_types, baseline_id, errors, error_columns,
-             type_rows, rate, draws, seed, zero=False):
+             type_rows, rate, draws, seed, zero=False, sample_energy_prices=False):
     rng = np.random.default_rng(seed)
     # Costs sharing a BTB technology receive the same triangular quantile in each draw.
     technologies = {c['btb_measure_id'] for group in components.values() for c in group}
     shared_cost_draws = {tech: rng.random(draws) for tech in sorted(technologies)}
+    price_rng = np.random.default_rng(np.random.SeedSequence([seed, 1]))
+    shared_price_draws = (price_rng.random(draws) if sample_energy_prices else None)
     options_out, buildings_out = [], []
     x = np.arange(draws)
     for bid, opts in sorted(buildings.items()):
@@ -203,7 +215,15 @@ def simulate(buildings, components, matched_types, baseline_id, errors, error_co
                 intensity = np.maximum(0, intensity + baseline_intensity
                                        * err[:, error_columns[up]] / 100)
             annual_acp = np.maximum(0, intensity - standard) * area * rate
-            costs.append(installed + years * (annual_acp + float(o['energy_cost_mid_usd_per_year'])))
+            annual_energy = float(o['energy_cost_mid_usd_per_year'])
+            if shared_price_draws is not None:
+                annual_energy = triangular(
+                    shared_price_draws,
+                    float(o['energy_cost_low_usd_per_year']),
+                    annual_energy,
+                    float(o['energy_cost_high_usd_per_year'])
+                )
+            costs.append(installed + years * (annual_acp + annual_energy))
             emissions.append(intensity)
             compliant.append(intensity <= standard)
         costs, emissions, compliant = map(np.stack, (costs, emissions, compliant))
@@ -266,19 +286,16 @@ def main():
         buildings, components, matched_types, baseline_id, upgrades, start, end, rate = load_inputs(con)
     residual_csv = folder / 'analysis_outputs' / 'loo_residuals.csv'
     errors, error_cols, by_type = load_errors(residual_csv, upgrades, start)
-    option_rows, building_rows, cohort_rows = simulate(
-        buildings, components, matched_types, baseline_id, errors, error_cols,
-        by_type, rate, args.draws, args.seed, args.zero_uncertainty)
-    out = folder / 'analysis_outputs' / ('monte_carlo_zero_check' if args.zero_uncertainty else 'monte_carlo')
+    inputs = (buildings, components, matched_types, baseline_id,
+              errors, error_cols, by_type, rate, args.draws, args.seed)   
+    result = simulate(*inputs, zero=args.zero_uncertainty, sample_energy_prices=not args.zero_uncertainty)
+    out = folder / 'analysis_outputs' / ('monte_carlo_at_risk_zero_check' if args.zero_uncertainty else 'monte_carlo_at_risk')
     out.mkdir(parents=True, exist_ok=True)
-    for name, rows in [('option_summary.csv', option_rows),
-                       ('building_summary.csv', building_rows),
-                       ('cohort_summary.csv', cohort_rows)]:
+    for name, rows in zip(('option_summary.csv', 'building_summary.csv', 'cohort_summary.csv'), result):
         write_csv(out / name, rows)
-    print(f"Validated baseline; {len(buildings)} buildings, {len(upgrades)} upgrades, "
-          f"{args.draws} draws, {start}–{end}.")
+    print(f"Validated baseline; {len(buildings)} buildings, "
+          f"{len(upgrades)} upgrades, {args.draws} draws, {start}–{end}.")
     print(f"Saved results: {out}")
-
 
 if __name__ == '__main__':
     main()
