@@ -1,6 +1,10 @@
 -- The var("match_k") nearest ComStock baseline models for each BERDO building, among the
 -- ComStock types its property type maps to. Distance: log size gap + log EUI gap + half
 -- the L1 gap between fuel shares (the three terms are kept for match-quality checks).
+{% set weighting = var("match_weighting", "unweighted") %}
+{% if weighting not in ["unweighted", "inverse_distance"] %}
+    {{ exceptions.raise_compiler_error("match_weighting must be 'unweighted' or 'inverse_distance'") }}
+{% endif %}
 with models as (
     select
         *,
@@ -35,6 +39,11 @@ select
     berdo_id || '-' || comstock_id as match_key,
     *,
     size_gap + eui_gap + fuel_share_gap as distance,
+    {% if weighting == "inverse_distance" %}
+    1.0 / (size_gap + eui_gap + fuel_share_gap + 0.000001) as match_weight,
+    {% else %}
+    1.0 as match_weight,
+    {% endif %}
     row_number() over (
         partition by berdo_id order by size_gap + eui_gap + fuel_share_gap, comstock_id
     ) as match_rank
