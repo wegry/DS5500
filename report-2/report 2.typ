@@ -26,14 +26,14 @@
       ],
     ),
   ),
-  abstract: [Boston's Building Emissions Reduction and Disclosure Ordinance (BERDO) requires large buildings to meet increasingly strict greenhouse gas emissions limits, with a major compliance milestone in 2030. This project aims to identify cost-effective decarbonization options for Boston office buildings by considering BERDO disclosures, ComStock building simulations, and Buildings Technology Baseline (BTB) installation cost data. The integrated analysis includes 297 matched office buildings, 99 of which exceed 2030 emmissions standard. A data intergration pipeline was developed to match BERDO buildings with representative ComStock simulations and estimate potential retrofit emissions reductions. Ongoing work focuses on integrating installation costs and optimizing the selection of one of four retrofit packages or Alternative Compliance Payments (ACP) over the 2030-2034 period. The resulting framework aims to support investment decisions for office buildings by balancing emissions reductions, compliance requirements, and budget constraints.
+  abstract: [Boston's Building Emissions Reduction and Disclosure Ordinance (BERDO) requires large buildings to meet increasingly strict greenhouse gas emissions limits, with a major compliance milestone in 2030. This project aims to identify cost-effective decarbonization options for Boston office buildings by considering BERDO disclosures, ComStock building simulations, and Buildings Technology Baseline (BTB) installation cost data. The integrated analysis includes 297 matched office buildings, 99 of which exceed 2030 emissions standard. A data integration pipeline was developed to match BERDO buildings with representative ComStock simulations and estimate potential retrofit emissions reductions. Ongoing work focuses on integrating installation costs and optimizing the selection of one of four retrofit packages or Alternative Compliance Payments (ACP) over the 2030-2034 period. The resulting framework aims to support investment decisions for office buildings by balancing emissions reductions, compliance requirements, and budget constraints.
   ],
   index-terms: (
     "Building decarbonization",
     "BERDO",
     "Retrofit optimization",
     "Office buildings",
-    "Emissions comliance",
+    "Emissions compliance",
   ),
   // Placed manually at the end of the body so the appendix can follow it.
   bibliography: none,
@@ -313,11 +313,11 @@ Exploration of the BTB commercial dataset identified installation cost informati
 
 == Integration and Financial Sensitivity
 
-In the integrated analysis, all 297 office buildings were matched to ComStock simulations, with 99 of them exceededing the modeled 2030 emissions standard. At k=10, 75 of those buildings had at least one predicted compliant retrofit among eight tested options.
+In the integrated analysis, all 297 office buildings were matched to ComStock simulations, with 99 of them exceeding the modeled 2030 emissions standard. At k=10, 75 of those buildings had at least one predicted compliant retrofit among eight tested options.
 
 Compared with k=10, the cheapest compliant retrofit changed for 23 of 68 commonly eligible buildings at k=1 and 4 of 74 at k=9. Installation costs and retrofit applicability were held fixed across k, while predicted emissions and ACPs were recalculated.
 
-Two buildings illustrate this sensitivity. For building 104777 (160-170 State Street, Boston), Package 4 was the cheapest compliant retrofit for k=1-9, but Package 2 became preferable at k=10 after Package 4 slightly exceeded the emissions limit. For building 105302 (2-16 Tremont Street, Bosoton), wall insulation first became compliant at k=4 and remained the cheapest compliant option through k=10.
+Two buildings illustrate this sensitivity. For building 104777 (160-170 State Street, Boston), Package 4 was the cheapest compliant retrofit for k=1-9, but Package 2 became preferable at k=10 after Package 4 slightly exceeded the emissions limit. For building 105302 (2-16 Tremont Street, Boston), wall insulation first became compliant at k=4 and remained the cheapest compliant option through k=10.
 
 These findings demonstrate sensitivity of investment recommendations to neighbor selection, particularly near compliance thresholds.
 
@@ -439,7 +439,7 @@ $
   "Completeness" = N_"nonmissing" / N_"total" times 100
 $
 
-The evaluation considered building floor area, reported greenhouse gas emissions, emissions intensity, applicable compliance standards, site energy consumption, and energy-use intensity. Office buildings showed relatively high completeness of floor-area and energy-consumption variables, making them suitable candidates for integration with ComStock However, missing emissions observations reduce the number of records available for compliance assessment. Missingness may also introduce selection bias if buildings with incomplete reporting differ systematically from those retained in the analysis.
+The evaluation considered building floor area, reported greenhouse gas emissions, emissions intensity, applicable compliance standards, site energy consumption, and energy-use intensity. Office buildings showed relatively high completeness of floor-area and energy-consumption variables, making them suitable candidates for integration with ComStock. However, missing emissions observations reduce the number of records available for compliance assessment. Missingness may also introduce selection bias if buildings with incomplete reporting differ systematically from those retained in the analysis.
 
 === Office-Building Composition
 
@@ -486,7 +486,8 @@ These populations are therefore reported separately rather than treated as inter
 Because BERDO describes actual properties while ComStock contains simulated commercial buildings, direct matching by building identifier is not possible. Candidate ComStock simulations were restricted using compatible building types and ranked according to similarity in floor area, energy-use intensity, and fuel-consumption shares.
 
 The matching distance is defined as:
-$ d(b,c) & = abs(ln(A_b / A_c)) + abs(ln("EUI"_b / "EUI"_c)) \ &quad + 0.5 sum_f abs(s_(b,f) - s_(c,f)) $ where $b$ identifies a BERDO building, $c$ identifies a ComStock simulation, $A$ denotes floor area, $"EUI"$ denotes energy-use intensity, and $s_f$ represents the proportion of energy consumption attributed to fuel $f$.
+$ d(b,c) & = abs(ln(A_b / A_c)) + abs(ln("EUI"_b / "EUI"_c)) \
+       & quad + 0.5 sum_f abs(s_(b,f) - s_(c,f)) $ where $b$ identifies a BERDO building, $c$ identifies a ComStock simulation, $A$ denotes floor area, $"EUI"$ denotes energy-use intensity, and $s_f$ represents the proportion of energy consumption attributed to fuel $f$.
 
 The closest $k$ simulations are selected for each
 BERDO building.
@@ -586,7 +587,7 @@ BERDO buildings affected by those changes. These quantities differ because a sin
 
 == Compliance Availability and Financial Decisions
 
-The integrated analysis evaluates individualretrofit measures and combined retrofit packages
+The integrated analysis evaluates individual retrofit measures and combined retrofit packages
 using the 2030--2034 compliance standard. For each building, applicable retrofit options are evaluated according to their projected emissions and modeled financial cost. The financial analysis distinguishes the least-cost retrofit from the least-cost retrofit predicted to meet the emissions standard.
 
 === Availability of Compliant Retrofits
@@ -620,8 +621,7 @@ The following table is populated directly from the generated sensitivity analysi
 
 #figure(
   placement: none,
-  align(center,
-  table(
+  align(center, table(
     columns: (auto, 1fr, 1fr),
     align: center,
     inset: 6pt,
@@ -637,11 +637,10 @@ The following table is populated directly from the generated sensitivity analysi
         ),
       )
       .flatten(),
-    ),
-  ),
+  )),
 
   caption: [
-    Sensitivity of lowest-cost compliant retrofit recommendations relative to k=10 Denominators include buildings with compliant candidates under both compared configurations.
+    Sensitivity of lowest-cost compliant retrofit recommendations relative to k=10. Denominators include buildings with compliant candidates under both compared configurations.
   ],
 ) <tab:appendix-financial-sensitivity>
 
@@ -662,7 +661,7 @@ Recommendation changes were measured only for buildings with an available compli
 
 === Five-Year Cost Calculation
 
-The financial model evaluates each retrofit option over the 2030--2034 compliance period. Total modeled cost consists of theone-time installation cost and cumulative Alternative Compliance Payments associated with remaining excess emissions.
+The financial model evaluates each retrofit option over the 2030--2034 compliance period. Total modeled cost consists of the one-time installation cost and cumulative Alternative Compliance Payments associated with remaining excess emissions.
 
 For building $b$, retrofit $p$, and matching configuration $k$:
 
