@@ -1,0 +1,6 @@
+metric,mean_jaccard_vs_original,buildings_with_new_neighbors,buildings_half_replaced,mean_jaccard_district_buildings,district_buildings_share_district_nbrs
+original,1.0,0,0,1.0,0.565
+standardized,0.444,295,112,0.403,0.819
+fuel x3,0.529,294,64,0.515,0.784
+district rule,0.889,98,15,0.465,1.0
+standardized + district rule,0.434,295,119,0.315,1.0

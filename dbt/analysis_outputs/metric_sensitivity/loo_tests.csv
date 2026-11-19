@@ -1,0 +1,9 @@
+metric,models,n,mean_diff_vs_original_pp,ci95_low_pp,ci95_high_pp
+standardized,all,618,-0.12,-0.29,0.05
+standardized,district,73,-0.62,-0.89,-0.39
+fuel x3,all,618,-0.12,-0.25,0.01
+fuel x3,district,73,-0.33,-0.52,-0.15
+district rule,all,618,-0.05,-0.09,-0.01
+district rule,district,73,-0.3,-0.57,-0.03
+standardized + district rule,all,618,-0.12,-0.29,0.05
+standardized + district rule,district,73,-0.64,-0.94,-0.36
