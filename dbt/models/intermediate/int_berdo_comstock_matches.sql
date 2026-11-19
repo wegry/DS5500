@@ -1,6 +1,9 @@
 -- The var("match_k") nearest ComStock baseline models for each BERDO building, among the
 -- ComStock types its property type maps to. Distance: log size gap + log EUI gap + half
 -- the L1 gap between fuel shares (the three terms are kept for match-quality checks).
+-- var("match_w_size"/"match_w_eui"/"match_w_fuel") weight the terms (1 each by default), and
+-- var("match_district_rule") restricts candidates to models whose district-energy use (any
+-- vs none) agrees with the building's; metric_sensitivity.py compares these choices.
 with models as (
     select
         *,
@@ -29,14 +32,24 @@ candidates as (
         on b.property_type = cw.berdo_type
     inner join models as m
         on cw.comstock_type = m.comstock_type
+    {%- if var("match_district_rule", false) %}
+    where (b.district_share > 0)
+        = (m.district_heating_kwh + m.district_cooling_kwh > 0)
+    {%- endif %}
+),
+
+weighted as (
+    select
+        *,
+        {{ var("match_w_size", 1) }} * size_gap
+            + {{ var("match_w_eui", 1) }} * eui_gap
+            + {{ var("match_w_fuel", 1) }} * fuel_share_gap as distance
+    from candidates
 )
 
 select
     berdo_id || '-' || comstock_id as match_key,
     *,
-    size_gap + eui_gap + fuel_share_gap as distance,
-    row_number() over (
-        partition by berdo_id order by size_gap + eui_gap + fuel_share_gap, comstock_id
-    ) as match_rank
-from candidates
+    row_number() over (partition by berdo_id order by distance, comstock_id) as match_rank
+from weighted
 qualify match_rank <= {{ var("match_k") }}

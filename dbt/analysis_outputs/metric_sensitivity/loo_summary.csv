@@ -1,0 +1,6 @@
+metric,mae_pp,p90_ae_pp,mae_pp_district_models,mae_pp_other_models,district_models,models
+original,7.23,18.59,4.29,7.62,73,618
+standardized,7.11,18.57,3.67,7.57,73,618
+fuel x3,7.1,18.76,3.97,7.52,73,618
+district rule,7.18,18.49,4.0,7.61,73,618
+standardized + district rule,7.11,18.58,3.65,7.57,73,618
