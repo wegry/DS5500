@@ -14,9 +14,13 @@ Simulates BTB component installed costs, LOO retrofit-performance errors, and
 fuel-price ranges, and evaluates existing AEO/BERDO/Cambium scenario paths.
 Discount rates can additionally be sampled if bounds are provided. Emissions
 scenarios are evaluated *separately*, not randomly assigned unsupported odds.
-LOO errors are applied as a constant additive intensity deviation across the
-horizon; fuel use is unchanged, so this is an approximation rather than a
-fully joint fuel/emissions forecast. Model-conditional, not real-world odds.
+Each LOO error is split into an electricity part and the rest (fractions of the
+building's 2025-factor emissions); every year, the electricity part scales with
+that year's factor index like the emissions it corrects: BERDO's projected
+factor for compliance, Cambium's grid for the societal cost, and 1 when
+'frozen'. Fuel use is still held at the BERDO year's level, so this remains an
+approximation rather than a fully joint fuel/emissions forecast.
+Model-conditional, not real-world odds.
 """
 
 from __future__ import annotations
@@ -30,14 +34,10 @@ from pathlib import Path
 import duckdb
 import numpy as np
 
-from monte_carlo import load_inputs, load_errors, query, triangular, write_csv
+from monte_carlo import (FUELS, load_emissions, load_errors, load_inputs, query, triangular,
+                         write_csv)
 
 
-def coalesce_float(value, default):
-    """Match SQL COALESCE on optional per-fuel retrofit ratios."""
-    return float(default if value is None else value)
-
-FUELS = ('electricity', 'natural_gas', 'oil_propane', 'district_heating', 'district_cooling')
 PRICE_SERIES = dict(electricity='electricity', natural_gas='natural_gas',
                     oil_propane='distillate', district_heating='natural_gas',
                     district_cooling='electricity')
@@ -95,25 +95,7 @@ def load_long_inputs(con, folder, buildings, components, scenarios, cambium_over
 
     # Separate baseline fuel consumption and 2025-reported emissions, then apply
     # the existing ComStock fuel ratios (1 for No upgrade).
-    base = {r['berdo_id']: r for r in query(con,
-        'SELECT * FROM int_berdo_match_buildings') if r['berdo_id'] in buildings}
-    ratio = {(r['berdo_id'], r['upgrade_id']): r for r in query(con,
-        'SELECT * FROM berdo_upgrade_scenarios')}
-    fuel = {}
-    for bid, opts in buildings.items():
-        bl = base[bid]
-        for o in opts:
-            up = o['upgrade_id']
-            sc = ratio.get((bid, up))
-            use = np.array([float(bl[f + '_kwh']) *
-                           coalesce_float(sc.get(f + '_ratio') if sc is not None else None, 1.0)
-                           for f in FUELS])
-            elec_ghg = float(bl['electricity_ghg_kgco2e']) * (
-                coalesce_float(sc.get('electricity_ratio') if sc is not None else None, 1.0))
-            original_total = coalesce_float(
-                sc.get('projected_ghg_kgco2e') if sc is not None else None,
-                bl['ghg_kgco2e'])
-            fuel[bid, up] = (use, elec_ghg, original_total - elec_ghg)
+    fuel = load_emissions(con, buildings)
 
     # Published standards for each five-year compliance period.
     baseline_upgrade = next(o['upgrade_id'] for opts in buildings.values()
@@ -205,6 +187,17 @@ def capital_factor(lifetime, horizon, rates):
         residual * np.power(1 + rates, -horizon))
 
 
+def existing_capital_factor(lifetime, remaining, horizon, rates):
+    """dbt's existing_capital_factors: existing equipment first replaced like-for-like at
+    `remaining` years, then every lifetime, less the last one's remaining value."""
+    if remaining >= horizon:
+        return np.zeros_like(rates)
+    k = np.arange(math.ceil((horizon - remaining) / lifetime))
+    residual = (remaining + (k[-1] + 1) * lifetime - horizon) / lifetime
+    return np.power(1 + rates[:, None], -(remaining + k[None, :] * lifetime)).sum(axis=1) - (
+        residual * np.power(1 + rates, -horizon))
+
+
 def rate_draws(rng, base, bounds, n, zero):
     if zero or bounds is None:
         return np.full(n, base)
@@ -252,14 +245,15 @@ def run_simulation(db, folder, args):
     annuity = {p: ds.sum(axis=1) for p, ds in df.items()}
     cap = {p: {tech: capital_factor(lifetimes[tech], years, drawn_rates[p])
                for tech in technologies} for p in drawn_rates}
+    existing_cap = {p: {} for p in drawn_rates}
     rows_opt, rows_build = [], []
 
     for bid, opts in sorted(buildings.items()):
         opts = sorted(opts, key=lambda o: o['upgrade_id'])
         option_ids = np.array([o['upgrade_id'] for o in opts])
         gfa = float(opts[0]['gfa_sqft'])
-        baseline_intensity = next(float(o['projected_ghg_intensity_kgco2e_sqft'])
-                                  for o in opts if o['upgrade_id'] == no_upgrade)
+        # reported emissions at 2025 factors, the base the LOO error fractions scale
+        baseline_ghg = sum(fuel[bid, no_upgrade][1:])
         st = np.array([standards[bid][year] for year in range(start, start + years)]) * gfa
         # One held-out ComStock model per draw, shared across all upgrade options.
         distribution = matches[bid]
@@ -282,6 +276,15 @@ def run_simulation(db, folder, args):
                 tech = c['btb_measure_id']
                 sampled = (np.full(n, float(c['mid'])) if args.zero_uncertainty else
                            triangular(cost_u[tech], float(c['low']), float(c['mid']), float(c['high'])))
+                if c.get('existing'):
+                    # like-for-like replacement of kept equipment: not installed now, so no O&M
+                    key = tech, float(c['lifetime_years']), float(c['remaining_years'])
+                    for p in rates:
+                        if key not in existing_cap[p]:
+                            existing_cap[p][key] = existing_capital_factor(
+                                key[1], key[2], years, drawn_rates[p])
+                        cap_by_p[p] += sampled * existing_cap[p][key]
+                    continue
                 inst += sampled
                 for p in rates:
                     cap_by_p[p] += sampled * cap[p][tech]
@@ -295,13 +298,15 @@ def run_simulation(db, folder, args):
             for o in opts:
                 up = o['upgrade_id']
                 use, electric_ghg, other_ghg = fuel[bid, up]
-                correction = (np.zeros(n) if up == no_upgrade else baseline_intensity * gfa * err[:, error_cols[up]] / 100)
-                berdo_ghg = np.maximum(0, electric_ghg * berdo_ix[None, :] + other_ghg + correction[:, None])
-                society_ghg = np.maximum(0, electric_ghg * grid_ix[None, :] +other_ghg + correction[:, None])
+                # LOO error parts (draws x 1); zero for no upgrade, which is the reported data
+                e = (np.zeros((n, 2)) if up == no_upgrade else err[:, error_cols[up]])
+                e_elec, e_other = baseline_ghg * e[:, 0:1], baseline_ghg * e[:, 1:2]
+                berdo_ghg = np.maximum(0, (electric_ghg + e_elec) * berdo_ix[None, :]
+                                       + other_ghg + e_other)
+                society_ghg = np.maximum(0, (electric_ghg + e_elec) * grid_ix[None, :]
+                                         + other_ghg + e_other)
                 annual_energy = (drawn_prices * use[None, :]) @ price_ix.T
                 annual_acp = np.maximum(0, berdo_ghg - st[None, :]) * acp_rate
-                # Keeping one emissions deviation across years is the stated
-                # approximation; annual standards/grid indices still change.
                 compliant.append(berdo_ghg <= st[None, :])
                 for p in rates:
                     annual_emissions_cost = (annual_acp if p == 'financial' else society_ghg * (scc / 1000))

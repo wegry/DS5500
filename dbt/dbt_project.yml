@@ -44,6 +44,18 @@ vars:
   acp_usd_per_tco2e: 234
   # first year of the 5-year standards period the retrofit decision is made for
   decision_period_start: 2030
+  # berdo_decision_options: how much of equipment that lasts ~20 years the 5-year period
+  # bears: annualized (equivalent annual cost at discount_rate_financial), straight_line
+  # (remaining value credited at the period's end), or full
+  five_year_capital: annualized
+  # options that keep the existing heating/cooling equipment (no retrofit, lighting, envelope,
+  # PV) pay for replacing it like-for-like (int_berdo_existing_hvac); options with any of
+  # hvac_replacing_measures replace it instead. The 5-year view charges it like any capital
+  # (none under five_year_capital: full); the 20-year view first replaces it after
+  # existing_hvac_remaining_years, half the 21-year BTB lifetime, as its age is unknown
+  like_for_like_hvac: true
+  existing_hvac_remaining_years: 10.5
+  hvac_replacing_measures: [add_heat_pump_rtu, replace_boiler_by_heatpump, hvac_vrf_hr_doas, add_packaged_gshp]
   # berdo_global_cost: EN 15459 global cost over the EU cost-optimal calculation period for
   # non-residential buildings (Delegated Regulation 244/2012), from decision_period_start
   global_cost_years: 20

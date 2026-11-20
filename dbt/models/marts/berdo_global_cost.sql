@@ -8,8 +8,10 @@
 -- carbon at a low rate and leaves out ACPs, which are a transfer to the city.
 -- Components are installed at the start and replaced at the end of each lifetime; the last
 -- one is credited its straight-line remaining value at the horizon. Running costs fall at
--- the end of each year. The equipment the no-retrofit option keeps is never replaced, which
--- favors that option.
+-- the end of each year. Options that keep the existing heating and cooling equipment
+-- (replaces_hvac false) replace it like-for-like (int_berdo_existing_hvac) after its
+-- remaining_years and then every lifetime, credited its remaining value at the horizon
+-- (existing_hvac_pv_*); the others replace it at the start with their own equipment.
 -- Energy scenarios (energy_scenarios seed) move three things year by year, each as an index
 -- relative to 2025, the BERDO data year; energy use itself stays at the BERDO year's level:
 --   * Compliance (owner): the electricity part of a building's BERDO emissions follows the
@@ -155,6 +157,38 @@ capital as (
     group by pc.berdo_id, pc.upgrade_id, f.perspective
 ),
 
+-- the same for existing equipment, first replaced like-for-like after remaining_years
+existing_capital_factors as (
+    select
+        e.btb_measure_id,
+        e.remaining_years,
+        p.perspective,
+        sum(power(1 + p.discount_rate, -(e.remaining_years + ks.k * e.lifetime_years)))
+            - ((e.remaining_years + (max(ks.k) + 1) * e.lifetime_years) - {{ n }})
+            / e.lifetime_years * power(1 + p.discount_rate, -{{ n }}) as capital_factor
+    from (
+        select distinct btb_measure_id, remaining_years, lifetime_years
+        from {{ ref('int_berdo_existing_hvac') }}
+    ) as e
+    cross join perspectives as p
+    inner join (select unnest(range(0, {{ n }})) as k) as ks
+        on e.remaining_years + ks.k * e.lifetime_years < {{ n }}
+    group by e.btb_measure_id, e.remaining_years, e.lifetime_years, p.perspective, p.discount_rate
+),
+
+existing_capital as (
+    select
+        e.berdo_id,
+        f.perspective,
+        {% for c in costs -%}
+        sum(e.replacement_cost_{{ c }}_usd * f.capital_factor) as existing_hvac_pv_{{ c }}_usd
+            {{- "," if not loop.last }}
+        {% endfor -%}
+    from {{ ref('int_berdo_existing_hvac') }} as e
+    inner join existing_capital_factors as f using (btb_measure_id, remaining_years)
+    group by e.berdo_id, f.perspective
+),
+
 -- each option's yearly fuel use and emissions at today's grid, split into the electricity
 -- part (which a cleaner grid shrinks) and the rest: the building's BERDO use and per-fuel
 -- emissions scaled by the upgrade's per-fuel ratios (1 for no retrofit), as in
@@ -260,6 +294,8 @@ present_values as (
         {% for c in costs -%}
         o.installed_cost_{{ c }}_usd,
         coalesce(k.capital_pv_{{ c }}_usd, 0) as capital_pv_{{ c }}_usd,
+        case when o.replaces_hvac then 0 else coalesce(x.existing_hvac_pv_{{ c }}_usd, 0) end
+            as existing_hvac_pv_{{ c }}_usd,
         {% endfor -%}
         en.energy_pv_usd,
         e.emissions_cost_pv_usd
@@ -271,6 +307,7 @@ present_values as (
         on en.berdo_id = o.berdo_id and en.upgrade_id = o.upgrade_id and en.scenario = e.scenario
         and en.perspective = p.perspective and en.energy_price = pr.energy_price
     left join capital as k using (berdo_id, upgrade_id, perspective)
+    left join existing_capital as x on x.berdo_id = o.berdo_id and x.perspective = p.perspective
 ),
 
 totals as (
@@ -279,6 +316,7 @@ totals as (
         {% for c in costs -%}
         installed_cost_{{ c }}_usd * {{ var("om_share_per_year") }} * annuity_factor as om_pv_{{ c }}_usd,
         capital_pv_{{ c }}_usd
+            + existing_hvac_pv_{{ c }}_usd
             + installed_cost_{{ c }}_usd * {{ var("om_share_per_year") }} * annuity_factor
             + energy_pv_usd
             + emissions_cost_pv_usd as global_cost_{{ c }}_usd{{ "," if not loop.last }}
