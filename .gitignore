@@ -245,3 +245,8 @@ dbt/target/
 # Source PDFs for the energy scenarios (see data/raw/SOURCES.md)
 !/data/raw/berdo_policies/*.pdf
 !/data/raw/eia_aeo2026/*.pdf
+
+# Regenerable analysis outputs: LOO residuals (loo_validation.py) and the Monte Carlo
+# --zero-uncertainty parity checks
+dbt/analysis_outputs/loo_residuals.csv
+dbt/analysis_outputs/*_zero_check/
