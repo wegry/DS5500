@@ -6,6 +6,8 @@ From the DS5500 root, after `dbt build` and `loo_validation.py`:
 
 Uses the current DuckDB options, component low/mid/high costs, and signed LOO
 errors. Keeps energy bills fixed, as in the original 5-year decision model.
+Installed costs are charged as dbt's five_year_capital method does (by default
+5 equivalent annual costs, not the whole price of ~20-year equipment).
 Emissions follow BERDO's projected electricity factor year by year, as dbt's
 period_acp_usd does: each LOO error is split into an electricity part, scaled by
 that year's factor index, and the rest. Compliance means every year is within
@@ -54,8 +56,9 @@ def load_inputs(con):
                o.projected_ghg_intensity_kgco2e_sqft, o.acp_usd_per_year,
                o.period_acp_usd, o.excess_kgco2e, o.energy_cost_low_usd_per_year,
                o.energy_cost_mid_usd_per_year, o.energy_cost_high_usd_per_year,
-               o.installed_cost_mid_usd, o.total_cost_mid_usd, o.cost_rank_mid,
-               b.gfa_sqft
+               o.installed_cost_mid_usd, o.capital_charged_mid_usd, o.five_year_capital,
+               o.capital_discount_rate, o.replaces_hvac, o.existing_hvac_charged_mid_usd,
+               o.total_cost_mid_usd, o.cost_rank_mid, b.gfa_sqft
         FROM berdo_decision_options o
         JOIN int_berdo_match_buildings b USING (berdo_id)
         ORDER BY o.berdo_id, o.upgrade_id
@@ -75,16 +78,52 @@ def load_inputs(con):
     if end - start + 1 != years:
         raise ValueError("Inconsistent period length.")
 
+    # How much of each component's installed cost the period bears, as dbt's
+    # berdo_decision_options.five_year_capital sets it (checked against it below).
+    methods = {(o['five_year_capital'], o['capital_discount_rate']) for o in options}
+    if len(methods) != 1:
+        raise ValueError(f"Expected one five_year_capital method, found {methods}")
+    method, r = methods.pop()
+
+    def capital_share(lifetime):
+        if method == 'annualized':
+            return min(1.0, years * r / (1 - (1 + r) ** -lifetime))
+        if method == 'straight_line':
+            return min(1.0, years / lifetime)
+        if method == 'full':
+            return 1.0
+        raise ValueError(f"Unknown five_year_capital: {method}")
+
     components = defaultdict(list)
     for c in query(con, """
-        SELECT berdo_id, upgrade_id, btb_measure_id,
-               installed_cost_low_usd AS low, installed_cost_mid_usd AS mid,
-               installed_cost_high_usd AS high
-        FROM int_berdo_package_costs
+        SELECT pc.berdo_id, pc.upgrade_id, pc.btb_measure_id,
+               pc.installed_cost_low_usd AS low, pc.installed_cost_mid_usd AS mid,
+               pc.installed_cost_high_usd AS high, u.lifetime_years
+        FROM int_berdo_package_costs pc
+        JOIN int_btb_unit_costs u USING (btb_measure_id)
     """):
         if c['btb_measure_id'] is None:
             raise ValueError("Component without a BTB measure ID.")
+        c['capital_share'] = capital_share(float(c['lifetime_years']))
         components[c['berdo_id'], c['upgrade_id']].append(c)
+
+    # Options that keep the existing heating/cooling equipment also pay for replacing it
+    # like-for-like (dbt's existing_hvac_charged_*; none under 'full'). These are extra
+    # components marked existing=True, so their cost is sampled like any other component.
+    existing = defaultdict(list)
+    for e in query(con, """
+        SELECT berdo_id, btb_measure_id, replacement_cost_low_usd AS low,
+               replacement_cost_mid_usd AS mid, replacement_cost_high_usd AS high,
+               lifetime_years, remaining_years
+        FROM int_berdo_existing_hvac ORDER BY berdo_id, btb_measure_id
+    """):
+        existing[e['berdo_id']].append(e)
+    for o in options:
+        if not o['replaces_hvac']:
+            for e in existing[o['berdo_id']]:
+                components[o['berdo_id'], o['upgrade_id']].append(dict(
+                    e, existing=True, capital_share=0.0 if method == 'full'
+                    else capital_share(float(e['lifetime_years']))))
 
     excess_rates = [o['acp_usd_per_year'] / o['excess_kgco2e'] for o in options
                     if o['excess_kgco2e'] > 0]
@@ -98,12 +137,16 @@ def load_inputs(con):
     for o in options:
         buildings[o['berdo_id']].append(o)
         key = o['berdo_id'], o['upgrade_id']
-        installed = sum(float(c['mid']) for c in components[key])
+        installed = sum(float(c['mid']) for c in components[key] if not c.get('existing'))
+        charged = sum(float(c['mid']) * c['capital_share'] for c in components[key])
         # simulate() recomputes period_acp_usd year by year and checks it with --zero-uncertainty
-        total = installed + float(o['period_acp_usd']) + years * float(
+        total = charged + float(o['period_acp_usd']) + years * float(
             o['energy_cost_mid_usd_per_year'])
         if not math.isclose(installed, float(o['installed_cost_mid_usd']), abs_tol=0.05):
             raise ValueError(f"Installed cost mismatch: {key}")
+        if not math.isclose(charged, float(o['capital_charged_mid_usd'])
+                            + float(o['existing_hvac_charged_mid_usd']), abs_tol=0.05):
+            raise ValueError(f"Capital charged mismatch ({method}): {key}")
         if not math.isclose(total, float(o['total_cost_mid_usd']), abs_tol=0.05):
             raise ValueError(f"Deterministic cost mismatch: {key}")
     for bid, opts in buildings.items():
@@ -260,9 +303,9 @@ def simulate(buildings, components, matched_types, baseline_id, errors, error_co
         costs, emissions, compliant = [], [], []
         for o in opts:
             up = o['upgrade_id']
-            installed = np.zeros(draws)
+            capital = np.zeros(draws)  # the share of installed cost the period bears
             for c in components.get((bid, up), []):
-                installed += (float(c['mid']) if zero else triangular(
+                capital += c['capital_share'] * (float(c['mid']) if zero else triangular(
                     shared_cost_draws[c['btb_measure_id']],
                     float(c['low']), float(c['mid']), float(c['high'])))
             # draws x years emissions intensity: the electricity part (and the electricity
@@ -286,7 +329,7 @@ def simulate(buildings, components, matched_types, baseline_id, errors, error_co
                     annual_energy,
                     float(o['energy_cost_high_usd_per_year'])
                 )
-            costs.append(installed + period_acp + years * annual_energy)
+            costs.append(capital + period_acp + years * annual_energy)
             emissions.append(intensity)
             compliant.append((yearly <= standard).all(axis=1))
         costs, emissions, compliant = map(np.stack, (costs, emissions, compliant))

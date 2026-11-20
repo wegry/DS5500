@@ -39,6 +39,7 @@ select
     b.meets_standard,
     b.applicable_share,
     b.installed_cost_mid_usd,
+    b.capital_charged_mid_usd,
     b.period_acp_usd,
     b.period_energy_cost_usd,
     b.energy_savings_usd_per_year,

@@ -5,7 +5,9 @@
 -- of the typical size: an RTU or ground-source heat pump of metric_1_typical tons, or an LED
 -- fixture of metric_1_typical lumens at metric_2_typical lm/W. Costs scale linearly with
 -- quantity, so multi-unit and size effects are ignored. Costs BTB does not cover (ground
--- loop, economizer, PV) are appended from the imputed_component_costs seed.
+-- loop, economizer, PV) are appended from the imputed_component_costs seed. Also costed: the
+-- like-for-like equipment of existing_hvac_like_for_like (a gas boiler is one product of
+-- metric_1_typical Btu/h).
 with technologies as (
     select
         *,
@@ -14,15 +16,17 @@ with technologies as (
             when typical_unit_abbreviation = 'CFM' then 'CFM'
             when typical_unit_abbreviation = 'ton' or metric_1_unit = 'Tons' then 'ton'
             when metric_1_unit = 'Lumens' and metric_2_unit = 'lm/W' then 'W'
+            when metric_1_unit = 'Btu/h' then 'Btu/h'
         end as cost_unit,
         case
             when typical_unit_abbreviation in ('ft2', 'ton', 'CFM') then typical_unit_multiplier
-            when metric_1_unit = 'Tons' then metric_1_typical
+            when metric_1_unit in ('Tons', 'Btu/h') then metric_1_typical
             when metric_1_unit = 'Lumens' and metric_2_unit = 'lm/W'
                 then metric_1_typical / metric_2_typical
         end as typical_quantity
     from {{ ref('stg_btb__technologies') }}
     where btb_measure_id in (select btb_measure_id from {{ ref('comstock_package_components') }})
+       or btb_measure_id in (select btb_measure_id from {{ ref('existing_hvac_like_for_like') }})
 )
 
 select

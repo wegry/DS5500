@@ -1,2 +1,2 @@
 start_year,end_year,buildings,draws,seed,mean_recommendation_stability,mean_probability_original_compliant,sum_mean_regret_usd
-2030,2034,81,5000,5500,0.7948,0.046,680895.1
+2030,2034,81,5000,5500,0.7072,0.3955,701552.09

@@ -1,0 +1,3 @@
+measure,quantity_upgrade_id,btb_measure_id,capacity_per_quantity,existing_equipment
+add_heat_pump_rtu,55,97,1,"Gas-heat rooftop unit, sized at the heat pump RTU's cooling tons"
+replace_boiler_by_heatpump,55,59,12000,"Gas boiler, sized at the heat pump boiler's tons x 12,000 Btu/h per ton"

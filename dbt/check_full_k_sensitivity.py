@@ -15,8 +15,9 @@ DECISION_COLS = [
 ]
 OPTION_COLS = [
     "berdo_id", "upgrade_id", "upgrade_name", "meets_standard",
-    "applicable_share", "installed_cost_mid_usd", "period_acp_usd",
-    "period_energy_cost_usd", "total_cost_mid_usd",
+    "applicable_share", "installed_cost_mid_usd", "capital_charged_mid_usd",
+    "existing_hvac_charged_mid_usd", "period_acp_usd", "period_energy_cost_usd",
+    "total_cost_mid_usd",
     "projected_ghg_intensity_kgco2e_sqft",
 ]
 
@@ -93,8 +94,9 @@ try:
         if len({(r["berdo_id"], r["upgrade_id"]) for r in options}) != len(options):
             raise AssertionError(f"K={k}: duplicate building-option pairs")
         for r in options:
-            values = (r["installed_cost_mid_usd"], r["period_acp_usd"], r["period_energy_cost_usd"], r["total_cost_mid_usd"])
-            if any(x is None for x in values) or abs(values[0]+values[1]+values[2]-values[3]) > .01:
+            values = (r["capital_charged_mid_usd"], r["existing_hvac_charged_mid_usd"],
+                      r["period_acp_usd"], r["period_energy_cost_usd"], r["total_cost_mid_usd"])
+            if any(x is None for x in values) or abs(sum(values[:-1]) - values[-1]) > .01:
                 raise AssertionError(f"K={k}: invalid total for {r['berdo_id']}/{r['upgrade_id']}")
         all_decisions.extend([{"k":k, **r} for r in decisions])
         all_options.extend([{"k":k, **r} for r in options])

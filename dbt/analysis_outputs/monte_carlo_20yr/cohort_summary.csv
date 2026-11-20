@@ -1,5 +1,5 @@
 scenario,perspective,start_year,seed,end_year,draws,buildings,assumed_rate_low,assumed_rate_high,mean_recommendation_stability,total_expected_regret_usd
-projected,societal,2030,5500,2049,5000,81,0.01,0.03,0.8398,1937983.34
-projected,financial,2030,5500,2049,5000,81,0.05,0.09,0.6982,1882045.23
-frozen,societal,2030,5500,2049,5000,81,0.01,0.03,0.8421,3222581.9
-frozen,financial,2030,5500,2049,5000,81,0.05,0.09,0.6681,3073190.25
+projected,societal,2030,5500,2049,5000,81,0.01,0.03,0.824,2105326.63
+projected,financial,2030,5500,2049,5000,81,0.05,0.09,0.6812,1992960.0
+frozen,societal,2030,5500,2049,5000,81,0.01,0.03,0.8196,3341354.8
+frozen,financial,2030,5500,2049,5000,81,0.05,0.09,0.6515,3015998.21

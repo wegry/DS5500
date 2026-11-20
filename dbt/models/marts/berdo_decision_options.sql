@@ -5,13 +5,38 @@
 -- are held constant across the period; the electricity part of the emissions follows
 -- BERDO's projected factor year by year (berdo_upgrade_compliance.period_acp_usd), while
 -- meets_standard and the intensity are the period's first year, its highest-factor year.
--- Installation is a one-time cost at the period's start, and nothing is discounted. Totals vary the installed cost (low/mid/high) at mid
--- energy prices; energy_cost_{low,high}_usd_per_year give the price range.
+-- Running costs are not discounted. Equipment outlives the period (BTB lifetimes, median
+-- ~21 years), so var("five_year_capital") sets how much of each component's installed cost
+-- the period bears (capital_charged_*): 'annualized' charges period_years equivalent annual
+-- costs at var("discount_rate_financial") (installed x r / (1 - (1 + r)^-lifetime) a year);
+-- 'straight_line' charges period_years / lifetime of it, i.e. credits straight-line
+-- remaining value at the period's end as berdo_global_cost does at its horizon; 'full'
+-- charges all of it. Each is capped at the installed cost. Options that keep the existing
+-- heating and cooling equipment (replaces_hvac false) are charged its like-for-like
+-- replacement (int_berdo_existing_hvac) the same way (existing_hvac_charged_*), since it
+-- wears out too; heat pump, VRF and geothermal options replace it instead, so in effect they
+-- pay only their extra cost over like-for-like. With 'full' there is no such charge: when
+-- the existing equipment fails in the period is unknown. Totals vary the installed costs
+-- (low/mid/high) at mid energy prices; energy_cost_{low,high}_usd_per_year give the price
+-- range.
 -- Energy bills price the building's BERDO fuel use, scaled by the upgrade's per-fuel ratios
 -- (1 for no retrofit), at the fuel_prices seed's flat $/kWh, so they leave out demand
 -- charges and tariff structure. Grain: BERDO building x option.
 {%- set costs = ["low", "mid", "high"] %}
 {%- set fuels = ["electricity", "natural_gas", "oil_propane", "district_heating", "district_cooling"] %}
+{%- set capital = var("five_year_capital", "annualized") %}
+{%- set years = "(st.period_end - st.period_start + 1)" %}
+{%- if capital == "annualized" %}
+{%- set r = var("discount_rate_financial") %}
+{%- set capital_share = "least(1, " ~ years ~ " * " ~ r ~ " / (1 - power(1 + " ~ r ~ ", -u.lifetime_years)))" %}
+{%- elif capital == "straight_line" %}
+{%- set capital_share = "least(1, " ~ years ~ " / u.lifetime_years)" %}
+{%- elif capital == "full" %}
+{%- set capital_share = "1" %}
+{%- else %}
+{{ exceptions.raise_compiler_error("five_year_capital must be annualized, straight_line or full") }}
+{%- endif %}
+{%- set existing_share = "0" if capital == "full" else capital_share %}
 with prices as (
     select
         {% for c in costs -%}
@@ -25,13 +50,41 @@ with prices as (
 
 packages as (
     select
-        berdo_id,
-        upgrade_id,
+        pc.berdo_id,
+        pc.upgrade_id,
         {% for c in costs -%}
-        sum(installed_cost_{{ c }}_usd) as installed_cost_{{ c }}_usd{{ "," if not loop.last }}
+        sum(pc.installed_cost_{{ c }}_usd) as installed_cost_{{ c }}_usd,
         {% endfor -%}
-    from {{ ref('int_berdo_package_costs') }}
-    group by berdo_id, upgrade_id
+        {% for c in costs -%}
+        sum(pc.installed_cost_{{ c }}_usd * {{ capital_share }}) as capital_charged_{{ c }}_usd
+            {{- "," if not loop.last }}
+        {% endfor -%}
+    from {{ ref('int_berdo_package_costs') }} as pc
+    inner join {{ ref('int_btb_unit_costs') }} as u using (btb_measure_id)
+    inner join {{ ref('int_berdo_building_standards') }} as st
+        on st.berdo_id = pc.berdo_id and st.period_start = {{ var("decision_period_start") }}
+    group by pc.berdo_id, pc.upgrade_id
+),
+
+-- the share of the existing equipment's like-for-like replacement the period bears
+existing as (
+    select
+        e.berdo_id,
+        {% for c in costs -%}
+        sum(e.replacement_cost_{{ c }}_usd * {{ existing_share }}) as existing_hvac_charged_{{ c }}_usd
+            {{- "," if not loop.last }}
+        {% endfor -%}
+    from {{ ref('int_berdo_existing_hvac') }} as e
+    inner join {{ ref('int_btb_unit_costs') }} as u using (btb_measure_id)
+    inner join {{ ref('int_berdo_building_standards') }} as st
+        on st.berdo_id = e.berdo_id and st.period_start = {{ var("decision_period_start") }}
+    group by e.berdo_id
+),
+
+hvac_upgrades as (
+    select distinct upgrade_id
+    from {{ ref('comstock_package_components') }}
+    where measure in ('{{ var("hvac_replacing_measures") | join("', '") }}')
 ),
 
 options as (
@@ -50,10 +103,19 @@ options as (
         co.acp_usd_per_year,
         sc.applicable_share,
         sc.ghg_reduction_pct,
+        co.upgrade_id in (select upgrade_id from hvac_upgrades) as replaces_hvac,
         {% for c in costs -%}
         coalesce(p.installed_cost_{{ c }}_usd, 0) as installed_cost_{{ c }}_usd,
+        coalesce(p.capital_charged_{{ c }}_usd, 0) as capital_charged_{{ c }}_usd,
+        case when co.upgrade_id in (select upgrade_id from hvac_upgrades) then 0
+            else coalesce(ex.existing_hvac_charged_{{ c }}_usd, 0)
+        end as existing_hvac_charged_{{ c }}_usd,
         {% endfor -%}
         co.period_acp_usd,
+        -- the capital method, so Python checks (monte_carlo.py) can mirror this build
+        '{{ capital }}' as five_year_capital,
+        {{ var("discount_rate_financial") if capital == "annualized" else "null" }}::double
+            as capital_discount_rate,
         {% for c in costs -%}
         (
             {% for f in fuels -%}
@@ -65,6 +127,7 @@ options as (
     inner join {{ ref('int_berdo_match_buildings') }} as bl using (berdo_id)
     left join {{ ref('berdo_upgrade_scenarios') }} as sc using (berdo_id, upgrade_id)
     left join packages as p using (berdo_id, upgrade_id)
+    left join existing as ex using (berdo_id)
     cross join prices as pr
     where co.period_start = {{ var("decision_period_start") }}
       and (
@@ -92,7 +155,8 @@ totals as (
     select
         *,
         {% for c in costs -%}
-        installed_cost_{{ c }}_usd + period_acp_usd + period_energy_cost_usd
+        capital_charged_{{ c }}_usd + existing_hvac_charged_{{ c }}_usd + period_acp_usd
+            + period_energy_cost_usd
             as total_cost_{{ c }}_usd{{ "," if not loop.last }}
         {% endfor -%}
     from energy

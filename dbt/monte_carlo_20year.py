@@ -187,6 +187,17 @@ def capital_factor(lifetime, horizon, rates):
         residual * np.power(1 + rates, -horizon))
 
 
+def existing_capital_factor(lifetime, remaining, horizon, rates):
+    """dbt's existing_capital_factors: existing equipment first replaced like-for-like at
+    `remaining` years, then every lifetime, less the last one's remaining value."""
+    if remaining >= horizon:
+        return np.zeros_like(rates)
+    k = np.arange(math.ceil((horizon - remaining) / lifetime))
+    residual = (remaining + (k[-1] + 1) * lifetime - horizon) / lifetime
+    return np.power(1 + rates[:, None], -(remaining + k[None, :] * lifetime)).sum(axis=1) - (
+        residual * np.power(1 + rates, -horizon))
+
+
 def rate_draws(rng, base, bounds, n, zero):
     if zero or bounds is None:
         return np.full(n, base)
@@ -234,6 +245,7 @@ def run_simulation(db, folder, args):
     annuity = {p: ds.sum(axis=1) for p, ds in df.items()}
     cap = {p: {tech: capital_factor(lifetimes[tech], years, drawn_rates[p])
                for tech in technologies} for p in drawn_rates}
+    existing_cap = {p: {} for p in drawn_rates}
     rows_opt, rows_build = [], []
 
     for bid, opts in sorted(buildings.items()):
@@ -264,6 +276,15 @@ def run_simulation(db, folder, args):
                 tech = c['btb_measure_id']
                 sampled = (np.full(n, float(c['mid'])) if args.zero_uncertainty else
                            triangular(cost_u[tech], float(c['low']), float(c['mid']), float(c['high'])))
+                if c.get('existing'):
+                    # like-for-like replacement of kept equipment: not installed now, so no O&M
+                    key = tech, float(c['lifetime_years']), float(c['remaining_years'])
+                    for p in rates:
+                        if key not in existing_cap[p]:
+                            existing_cap[p][key] = existing_capital_factor(
+                                key[1], key[2], years, drawn_rates[p])
+                        cap_by_p[p] += sampled * existing_cap[p][key]
+                    continue
                 inst += sampled
                 for p in rates:
                     cap_by_p[p] += sampled * cap[p][tech]
