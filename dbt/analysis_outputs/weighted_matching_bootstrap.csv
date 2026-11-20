@@ -1,0 +1,4 @@
+k,held_out_models,paired_predictions,weighted_minus_unweighted_mae_pp,ci95_low_pp,ci95_high_pp
+10,618,8034,-0.0762,-0.1894,0.0329
+15,618,8034,-0.0868,-0.1975,0.0276
+20,618,8034,-0.1228,-0.2364,-0.013

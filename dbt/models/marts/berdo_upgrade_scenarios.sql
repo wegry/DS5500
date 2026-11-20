@@ -13,11 +13,11 @@ with ratios as (
         u.upgrade_id,
         any_value(u.upgrade_name) as upgrade_name,
         count(*) as matched_models,
-        avg(u.applicability::int) as applicable_share,
+        sum(m.match_weight * u.applicability::int) / nullif(sum(m.match_weight), 0) as applicable_share,
         {% for f in fuels -%}
-        coalesce(sum(u.{{ f }}_kwh) / nullif(sum(b.{{ f }}_kwh), 0), 1) as {{ f }}_ratio,
+        coalesce(sum(m.match_weight * u.{{ f }}_kwh) / nullif(sum(m.match_weight * b.{{ f }}_kwh), 0), 1) as {{ f }}_ratio,
         {% endfor -%}
-        avg(u.eui_kwh_sqft / b.eui_kwh_sqft) as comstock_eui_ratio
+        sum(m.match_weight * (u.eui_kwh_sqft / nullif(b.eui_kwh_sqft, 0))) / nullif(sum(m.match_weight), 0) as comstock_eui_ratio
     from {{ ref('int_berdo_comstock_matches') }} as m
     inner join {{ ref('int_comstock_models') }} as b
         on m.comstock_id = b.comstock_id and b.upgrade_id = 0

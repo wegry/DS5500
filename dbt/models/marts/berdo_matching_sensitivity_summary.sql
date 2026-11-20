@@ -1,7 +1,7 @@
 
 -- Evaluate how the number of ComStock neighbors
 -- affects predicted emissions and BERDO compliance.
--- Compare k = 1-9 against the existing k = 10 model.
+-- Compare each smaller k against the configured var("match_k") model.
 
 with comparisons as (
     select
@@ -22,9 +22,9 @@ with comparisons as (
     inner join {{ ref('berdo_matching_k_sensitivity') }} b
         on s.berdo_id = b.berdo_id
         and s.upgrade_id = b.upgrade_id
-        and b.k = 10
+        and b.k = {{ var("match_k") }}
 
-    where s.k < 10
+    where s.k < {{ var("match_k") }}
 )
 
 select
