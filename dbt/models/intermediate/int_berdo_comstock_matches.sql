@@ -61,6 +61,9 @@ select
     {%- else -%}
     1.0 as match_weight,
     {%- endif %}
+    -- the matching settings, so Python checks (loo_validation.py) can mirror this build
+    '{{ weighting }}' as match_weighting,
+    {{ var("match_district_rule", false) }} as match_district_rule,
     row_number() over (partition by berdo_id order by distance, comstock_id) as match_rank
 from weighted
 qualify match_rank <= {{ var("match_k") }}

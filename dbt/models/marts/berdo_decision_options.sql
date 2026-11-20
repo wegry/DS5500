@@ -1,9 +1,11 @@
 -- The var("decision_period_start") retrofit decision for each matched BERDO building: the
 -- upgrades in comstock_package_components plus no retrofit (upgrade 0), each costed
 -- over the 5-year standards period as installed cost + Alternative Compliance Payments on
--- the emissions still over the limit + energy bills. Emissions, energy use, prices and the
--- ACP rate are held constant across the period, installation is a one-time cost at its
--- start, and nothing is discounted. Totals vary the installed cost (low/mid/high) at mid
+-- the emissions still over the limit + energy bills. Energy use, prices and the ACP rate
+-- are held constant across the period; the electricity part of the emissions follows
+-- BERDO's projected factor year by year (berdo_upgrade_compliance.period_acp_usd), while
+-- meets_standard and the intensity are the period's first year, its highest-factor year.
+-- Installation is a one-time cost at the period's start, and nothing is discounted. Totals vary the installed cost (low/mid/high) at mid
 -- energy prices; energy_cost_{low,high}_usd_per_year give the price range.
 -- Energy bills price the building's BERDO fuel use, scaled by the upgrade's per-fuel ratios
 -- (1 for no retrofit), at the fuel_prices seed's flat $/kWh, so they leave out demand
@@ -51,7 +53,7 @@ options as (
         {% for c in costs -%}
         coalesce(p.installed_cost_{{ c }}_usd, 0) as installed_cost_{{ c }}_usd,
         {% endfor -%}
-        co.acp_usd_per_year * (co.period_end - co.period_start + 1) as period_acp_usd,
+        co.period_acp_usd,
         {% for c in costs -%}
         (
             {% for f in fuels -%}

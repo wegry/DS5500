@@ -1,9 +1,10 @@
 -- BERDO compliance by period for each matched building under each ComStock upgrade, plus
 -- upgrade 0 (no retrofit). Grain: building x upgrade x 5-year standards period.
 -- Energy use is held at the disclosed year's level. The electricity part of the emissions
--- follows BERDO's projected electricity factor (int_berdo_electricity_index) at the start of
--- each period, as in berdo_global_cost's check in its first year; the factor keeps falling
--- inside a period, so the excess over a whole period is an upper bound.
+-- follows BERDO's projected electricity factor (int_berdo_electricity_index): compliance,
+-- intensity and acp_usd_per_year use the period's first year, as in berdo_global_cost's
+-- check in its first year, while period_acp_usd sums each year's payment at that year's
+-- factor (null for the open-ended 2050+ period).
 with scenarios as (
     select
         sc.berdo_id,
@@ -47,6 +48,23 @@ periods as (
     from scenarios as sc
     inner join {{ ref('int_berdo_building_standards') }} as st using (berdo_id)
     inner join {{ ref('int_berdo_electricity_index') }} as ix on ix.year = st.period_start
+),
+
+-- each year of the period at that year's electricity factor
+yearly as (
+    select
+        p.berdo_id,
+        p.upgrade_id,
+        p.period_start,
+        sum(greatest(
+            p.projected_ghg_kgco2e - p.electricity_ghg_kgco2e * (1 - iy.electricity_index)
+                - p.standard_kgco2e_sqft * p.gfa_sqft,
+            0
+        )) / 1000 * {{ var("acp_usd_per_tco2e") }} as period_acp_usd
+    from periods as p
+    inner join {{ ref('int_berdo_electricity_index') }} as iy
+        on iy.year between p.period_start and p.period_end
+    group by p.berdo_id, p.upgrade_id, p.period_start
 )
 
 select
@@ -68,5 +86,7 @@ select
     greatest(period_ghg_kgco2e - standard_kgco2e_sqft * gfa_sqft, 0) as excess_kgco2e,
     -- annual payment if the excess is covered with Alternative Compliance Payments
     greatest(period_ghg_kgco2e - standard_kgco2e_sqft * gfa_sqft, 0) / 1000
-        * {{ var("acp_usd_per_tco2e") }} as acp_usd_per_year
+        * {{ var("acp_usd_per_tco2e") }} as acp_usd_per_year,
+    y.period_acp_usd
 from periods
+left join yearly as y using (berdo_id, upgrade_id, period_start)

@@ -6,6 +6,10 @@ office models with the same distance used for BERDO matching (int_berdo_comstock
 pool their per-fuel upgrade/baseline ratios as in berdo_upgrade_scenarios, apply those to
 the held-out model's own baseline fuel use, and compare with what ComStock simulated for it.
 
+The neighbor count, pooling weights (match_weighting) and district rule (match_district_rule)
+are read from the built int_berdo_comstock_matches, so the residuals monte_carlo.py and
+monte_carlo_20year.py sample always describe the matching the optimizer used.
+
 This measures how well neighbor transfer works between simulated buildings. It is not a
 real-world accuracy: BERDO buildings can differ from every ComStock model in ways the three
 matching features don't capture.
@@ -75,6 +79,17 @@ def main() -> None:
     if ref_k is None or len(period_rows) != 1:
         raise ValueError("Missing reference k or ambiguous decision period")
     ref_k = int(ref_k)
+    # ... and the same neighbor weighting and district rule (see int_berdo_comstock_matches).
+    weighting, district_rule, n_settings, max_term_gap = con.execute("""
+        select any_value(match_weighting), any_value(match_district_rule),
+            count(distinct (match_weighting, match_district_rule)),
+            max(abs(distance - (size_gap + eui_gap + fuel_share_gap)))
+        from int_berdo_comstock_matches""").fetchone()
+    if n_settings != 1 or weighting not in ("unweighted", "inverse_distance"):
+        raise ValueError(f"Unexpected matching settings: {weighting}, {district_rule}")
+    if max_term_gap > 1e-9:
+        raise ValueError("Matches use non-default term weights (match_w_*); LOO assumes 1, 1, 1")
+    neighbor_weight = "1.0 / (distance + 0.000001)" if weighting == "inverse_distance" else "1.0"
     decision_year = int(period_rows[0][0])
     index_row = con.execute("""
         select electricity_index from int_berdo_electricity_index where year = ?
@@ -109,10 +124,12 @@ def main() -> None:
     k_max = math.isqrt(n_models)
     print(f"Office models: {n_models}; k = 1..{k_max}")
     print(f"Upgrades from optimization: {upgrades}; office types: {office_types}")
-    print(f"Reference k={ref_k}; decision year={decision_year}; index={electricity_index:.6f}")
+    print(f"Reference k={ref_k}; weighting={weighting}; district rule={district_rule}; "
+          f"decision year={decision_year}; index={electricity_index:.6f}")
     ups = ", ".join(map(str, upgrades))
     cum = ",\n".join(
-        f"sum(u.{f}_kwh) over w as cu_{f}, sum(b.{f}_kwh) over w as cb_{f}" for f in fuels
+        f"sum(r.w * u.{f}_kwh) over w as cu_{f}, sum(r.w * b.{f}_kwh) over w as cb_{f}"
+        for f in fuels
     )
     pred = " + ".join(
         f"h.{f}_kwh * {ef[f]} * coalesce(cu_{f} / nullif(cb_{f}, 0), 1)" for f in fuels
@@ -132,6 +149,8 @@ def main() -> None:
         pairs as (
             select h.comstock_id as h_id, c.comstock_id as c_id,
                 h.comstock_type = c.comstock_type as same_type,
+                (h.district_heating_kwh + h.district_cooling_kwh > 0)
+                    = (c.district_heating_kwh + c.district_cooling_kwh > 0) as district_agrees,
                 abs(ln(h.gfa_sqft / c.gfa_sqft)) + abs(ln(h.eui_kwh_sqft / c.eui_kwh_sqft))
                 + 0.5 * (
                     abs(h.electricity_kwh / h.fuel_total_kwh - c.electricity_kwh / c.fuel_total_kwh)
@@ -142,21 +161,25 @@ def main() -> None:
                 ) as distance
             from m as h join m as c on h.comstock_id <> c.comstock_id
         ),
+        -- candidates and pooling weights as the BERDO matching uses them; n_cand is how many
+        -- candidates h has, so rk = n_cand pools them all
         ranked as (
-            select *, row_number() over (partition by h_id order by distance, c_id) as rk
+            select *, {neighbor_weight} as w,
+                row_number() over (partition by h_id order by distance, c_id) as rk,
+                count(*) over (partition by h_id) as n_cand
             from pairs
+            {"where district_agrees" if district_rule else ""}
         ),
         -- running sums of neighbor use, so row rk holds the pooled ratio for k = rk
         running as (
-            select r.h_id, r.rk, u.upgrade_id, {cum}
+            select r.h_id, r.rk, r.n_cand, u.upgrade_id, {cum}
             from ranked r
             join int_comstock_models b on b.comstock_id = r.c_id and b.upgrade_id = {baseline_id}
             join int_comstock_models u on u.comstock_id = r.c_id and u.upgrade_id in ({ups})
             window w as (partition by r.h_id, u.upgrade_id order by r.rk)
-        ),
-        n as (select count(*) - 1 as n_others from m)
+        )
         select r.h_id, h.comstock_type, h.gfa_sqft,
-            case when r.rk = n.n_others then 'all' else r.rk::varchar end as k,
+            case when r.rk = r.n_cand then 'all' else r.rk::varchar end as k,
             r.upgrade_id,
             ({base}) as base_ghg, ({actual}) as actual_ghg, ({pred}) as pred_ghg,
             h.electricity_kwh * {ef["electricity"]} as base_elec_ghg,
@@ -165,10 +188,9 @@ def main() -> None:
                 * coalesce(cu_electricity / nullif(cb_electricity, 0), 1)
                 as pred_elec_ghg
         from running r
-        cross join n
         join m h on h.comstock_id = r.h_id
         join int_comstock_models hu on hu.comstock_id = r.h_id and hu.upgrade_id = r.upgrade_id
-        where r.rk <= {k_max} or r.rk = n.n_others
+        where r.rk <= {k_max} or r.rk = r.n_cand
     """)
 
     # Same-type baseline: pool every other model of the held-out model's ComStock type, i.e.
@@ -233,7 +255,8 @@ def main() -> None:
     print(open(out / "loo_k_summary.csv").read())
     print(open(out / "loo_by_upgrade.csv").read())
 
-    # Monte Carlo needs signed *2030-period-adjusted* errors (positive = optimistic model).
+    # Signed errors for the Monte Carlos (positive = optimistic model): signed_error_pp is
+    # 2030-period-adjusted; the *_frac split is at 2025 factors for year-by-year scaling.
     # Keep original LOO summary metrics above unchanged (2025-equivalent errors).
     # Apply BERDO's decision-year electricity index to both prediction and actual.
     con.execute(f"""
@@ -252,7 +275,13 @@ def main() -> None:
                 100 * ((actual_ghg - actual_elec_ghg * (1 - {electricity_index}))
                     - (pred_ghg - pred_elec_ghg * (1 - {electricity_index})))
                     / nullif(base_ghg - base_elec_ghg * (1 - {electricity_index}), 0)
-                    as signed_error_pp
+                    as signed_error_pp,
+                -- the same error split into its electricity part and the rest, as fractions
+                -- of the held-out model's baseline at 2025 (BERDO data year) factors, so the
+                -- Monte Carlos can scale the electricity part by each year's grid index
+                ((actual_elec_ghg - pred_elec_ghg) / base_ghg) as signed_error_elec_frac,
+                (((actual_ghg - actual_elec_ghg) - (pred_ghg - pred_elec_ghg)) / base_ghg)
+                    as signed_error_other_frac
             from ({errors})
             where k = '{ref_k}' and gfa_sqft > 0
             order by h_id, upgrade_id
