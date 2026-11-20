@@ -20,7 +20,7 @@ with prices as (
     from {{ ref('fuel_prices') }}
 ),
 k_values as (
-    select unnest(range(1, 11)) as k
+    select unnest(range(1, {{ var("match_k") }} + 1)) as k
 ),
 ratios as (
     select
@@ -30,8 +30,8 @@ ratios as (
         count(*) as matched_models,
         {% for f in fuels %}
         coalesce(
-            sum(u.{{ f }}_kwh)
-            / nullif(sum(b.{{ f }}_kwh), 0),
+            sum(m.match_weight * u.{{ f }}_kwh)
+            / nullif(sum(m.match_weight * b.{{ f }}_kwh), 0),
             1
         ) as {{ f }}_ratio
         {{ "," if not loop.last }}

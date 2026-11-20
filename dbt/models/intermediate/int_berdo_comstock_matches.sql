@@ -4,6 +4,12 @@
 -- var("match_w_size"/"match_w_eui"/"match_w_fuel") weight the terms (1 each by default), and
 -- var("match_district_rule") restricts candidates to models whose district-energy use (any
 -- vs none) agrees with the building's; metric_sensitivity.py compares these choices.
+-- var("match_weighting") sets how much each neighbor counts when downstream models pool
+-- them: equally (unweighted) or by 1 / (distance + 1e-6) (inverse_distance).
+{% set weighting = var("match_weighting", "unweighted") %}
+{% if weighting not in ["unweighted", "inverse_distance"] %}
+    {{ exceptions.raise_compiler_error("match_weighting must be 'unweighted' or 'inverse_distance'") }}
+{% endif %}
 with models as (
     select
         *,
@@ -50,6 +56,11 @@ weighted as (
 select
     berdo_id || '-' || comstock_id as match_key,
     *,
+    {% if weighting == "inverse_distance" -%}
+    1.0 / (distance + 0.000001) as match_weight,
+    {%- else -%}
+    1.0 as match_weight,
+    {%- endif %}
     row_number() over (partition by berdo_id order by distance, comstock_id) as match_rank
 from weighted
 qualify match_rank <= {{ var("match_k") }}
