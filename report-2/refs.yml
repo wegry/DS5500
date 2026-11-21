@@ -132,15 +132,6 @@ epa-scghg:
     value: https://www.epa.gov/system/files/documents/2023-12/epa_scghg_2023_report_final.pdf
     date: 2026-11-21
 
-en15459:
-  type: report
-  author: European Committee for Standardization
-  title: "EN 15459-1:2017 Energy Performance of Buildings — Economic Evaluation Procedure for Energy Systems in Buildings — Part 1: Calculation Procedures, Module M1-14"
-  date: 2017
-  url:
-    value: https://www.evs.ee/en/evs-en-15459-1-2017
-    date: 2026-11-21
-
 eu-cost-optimal:
   type: legislation
   author: European Commission
