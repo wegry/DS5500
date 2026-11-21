@@ -127,6 +127,16 @@ omb-a4:
     value: https://georgewbush-whitehouse.archives.gov/omb/circulars/a004/a-4.html
     date: 2026-11-21
 
+omb-m2515:
+  type: report
+  author: "Vought, Russell T."
+  title: "M-25-15: Recission and Reinstatement of Circular A-4"
+  publisher: U.S. Office of Management and Budget
+  date: 2025-02-12
+  url:
+    value: https://www.whitehouse.gov/wp-content/uploads/2025/03/M-25-15-Recission-and-Reinstatement-of-Circular-A-4.pdf
+    date: 2026-11-21
+
 epa-scghg:
   type: report
   author: U.S. Environmental Protection Agency
