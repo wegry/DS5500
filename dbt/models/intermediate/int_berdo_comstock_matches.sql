@@ -1,25 +1,17 @@
 -- The var("match_k") nearest ComStock baseline models for each BERDO building, among the
 -- ComStock types its property type maps to. Distance: log size gap + log EUI gap + half
 -- the L1 gap between fuel shares + log stories gap (the terms are kept for match-quality
--- checks). A building without a stories estimate (int_berdo_building_stories) gets a
--- stories gap of 0 for every candidate, so its ranking rests on the other three terms.
+-- checks; see macros/matching.sql, which the leave-one-out validation shares). A building
+-- without a stories estimate (int_berdo_building_stories) gets a stories gap of 0 for every
+-- candidate, so its ranking rests on the other three terms.
 -- var("match_w_size"/"match_w_eui"/"match_w_fuel"/"match_w_stories") weight the terms (1
--- each by default), and
--- var("match_district_rule") restricts candidates to models whose district-energy use (any
--- vs none) agrees with the building's; metric_sensitivity.py compares these choices.
+-- each by default), and var("match_district_rule") restricts candidates to models whose
+-- district-energy use (any vs none) agrees with the building's.
 -- var("match_weighting") sets how much each neighbor counts when downstream models pool
 -- them: equally (unweighted) or by 1 / (distance + 1e-6) (inverse_distance).
 {% set weighting = var("match_weighting", "unweighted") %}
-{% if weighting not in ["unweighted", "inverse_distance"] %}
-    {{ exceptions.raise_compiler_error("match_weighting must be 'unweighted' or 'inverse_distance'") }}
-{% endif %}
 with models as (
-    select
-        *,
-        electricity_kwh + natural_gas_kwh + district_heating_kwh
-            + district_cooling_kwh + oil_propane_kwh as fuel_total_kwh
-    from {{ ref('int_comstock_models') }}
-    where upgrade_id = 0
+    {{ comstock_match_features() }}
 ),
 
 candidates as (
@@ -27,46 +19,29 @@ candidates as (
         b.berdo_id,
         m.comstock_id,
         m.comstock_type,
-        abs(ln(b.gfa_sqft / m.gfa_sqft)) as size_gap,
-        abs(ln(b.eui_kwh_sqft / m.eui_kwh_sqft)) as eui_gap,
-        0.5 * (
-            abs(b.electricity_share - m.electricity_kwh / m.fuel_total_kwh)
-            + abs(b.natural_gas_share - m.natural_gas_kwh / m.fuel_total_kwh)
-            + abs(b.district_share
-                - (m.district_heating_kwh + m.district_cooling_kwh) / m.fuel_total_kwh)
-            + abs(b.oil_propane_share - m.oil_propane_kwh / m.fuel_total_kwh)
-        ) as fuel_share_gap,
-        coalesce(abs(ln(b.stories / m.stories)), 0) as stories_gap
+        {{ match_gaps('b', 'm') }}
     from {{ ref('int_berdo_match_buildings') }} as b
     inner join {{ ref('berdo_comstock_type_crosswalk') }} as cw
         on b.property_type = cw.berdo_type
     inner join models as m
         on cw.comstock_type = m.comstock_type
     {%- if var("match_district_rule", false) %}
-    where (b.district_share > 0)
-        = (m.district_heating_kwh + m.district_cooling_kwh > 0)
+    where (b.district_share > 0) = m.uses_district
     {%- endif %}
 ),
 
 weighted as (
     select
         *,
-        {{ var("match_w_size", 1) }} * size_gap
-            + {{ var("match_w_eui", 1) }} * eui_gap
-            + {{ var("match_w_fuel", 1) }} * fuel_share_gap
-            + {{ var("match_w_stories", 1) }} * stories_gap as distance
+        {{ match_distance() }} as distance
     from candidates
 )
 
 select
     berdo_id || '-' || comstock_id as match_key,
     *,
-    {% if weighting == "inverse_distance" -%}
-    1.0 / (distance + 0.000001) as match_weight,
-    {%- else -%}
-    1.0 as match_weight,
-    {%- endif %}
-    -- the matching settings, so Python checks (loo_validation.py) can mirror this build
+    {{ match_weight(weighting) }} as match_weight,
+    -- the matching settings, so Python checks can mirror this build
     '{{ weighting }}' as match_weighting,
     {{ var("match_district_rule", false) }} as match_district_rule,
     {{ var("match_w_stories", 1) }} as match_w_stories,

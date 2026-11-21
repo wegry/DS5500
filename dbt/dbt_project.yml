@@ -83,8 +83,19 @@ vars:
   # gives none and no sourced defaults were found, so 0 (set to test sensitivity)
   om_share_per_year: 0
 
+  # analysis models (models/analysis) write their CSVs here; paths are relative to dbt/,
+  # where dbt is run
+  analysis_outputs_dir: analysis_outputs
+  report_data_dir: ../report-2/data
+  # paired bootstrap of the leave-one-out comparisons: resamples, and the seed of the
+  # hash that picks them
+  bootstrap_draws: 4000
+  bootstrap_seed: 5500
+
 models:
   ds5500:
+    analysis:
+      +materialized: table
     staging:
       +materialized: table
     intermediate:

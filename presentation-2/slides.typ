@@ -33,7 +33,7 @@
 // k-sensitivity of the cheapest compliant pick, with 5-year energy bills (dbt/financial_k_sensitivity.py).
 // report/data/financial_k_summary.csv is an older run without energy costs; don't use it here.
 #let ksens = csv("../dbt/analysis_outputs/financial_k_summary.csv", row-type: dictionary)
-// leave-one-out validation of the matching on ComStock offices (dbt/loo_validation.py)
+// leave-one-out validation of the matching on ComStock offices (dbt models analysis_loo_*)
 #let loo = csv("../dbt/analysis_outputs/loo_k_summary.csv", row-type: dictionary)
 #let lootest = csv("../dbt/analysis_outputs/loo_tests.csv", row-type: dictionary)
 // Farnsworth's options over 2030-2034 (undiscounted 5-year screen)
@@ -526,7 +526,7 @@
   #let num = loo.filter(r => r.k not in ("all", "type"))
   #let ks = num.map(r => int(r.k))
   #let mae = num.map(r => float(r.mae_pp))
-  #let kmax = ks.last()  // floor(sqrt(number of office models)), set in loo_validation.py
+  #let kmax = ks.last()  // floor(sqrt(number of office models)), set in analysis_loo_predictions
   #let at(k) = float(loo.find(r => r.k == k).mae_pp)
   #let t-all = lootest.find(r => r.comparison == "k=10 minus all")
   #let row(k) = ksens.find(r => r.k == str(k))

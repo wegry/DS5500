@@ -289,7 +289,7 @@ For emissions exceeding the limit, BERDO permits ACPs. The current payment rate 
 
 For each alternative, total modeled cost consists of capital, energy bills, and cumulative Alternative Compliance Payments (ACPs) associated with any remaining excess emissions. Because equipment lasts a median of 21 years, the five-year view charges five years of its equivalent annual cost at a 7% discount rate rather than its full price, and the like-for-like replacement of kept equipment is charged the same way. The baseline analysis assumes constant energy use, energy prices, and ACP rates throughout the evaluation period. The model identifies the lowest five-year-cost alternative for each building. The cheapest retrofit predicted to meet the 2030 emissions standard is also evaluated separately.
 
-*Uncertainty.* A 20-year life-cycle cost discounts capital replacements, energy bills under EIA price scenarios @aeo, and ACPs or the social cost of carbon. Monte Carlo analyses of both horizons sample installation costs, energy prices, and the leave-one-out retrofit-performance errors to estimate how often each recommendation stays the cheapest and compliant.
+*Uncertainty.* A 20-year life-cycle cost discounts capital replacements, energy bills under EIA price scenarios @aeo, and ACPs or the social cost of carbon. A Monte Carlo analysis of the 20-year horizon samples installation costs, energy prices, and the leave-one-out retrofit-performance errors to estimate how often each recommendation stays the cheapest and compliant.
 
 
 
@@ -327,13 +327,13 @@ Exploration of the BTB commercial dataset identified installation cost informati
 
 In the integrated analysis, all 297 office buildings were matched to ComStock simulations. Of these, 99 exceed the 2030 emissions standard at today's electricity emissions factor and 81 at BERDO's projected 2030 factor. At k=20, 71 of those 81 buildings had at least one predicted compliant retrofit among thirteen tested options. The five-year model recommends a retrofit for all 81 and a compliant one for 36, most often rooftop PV with roof insulation (40 buildings); heat pump options are chosen for 19. Over 20 years under projected grid emissions and prices, the cheapest option meets the standard for 36 buildings from the owner's perspective and 41 from society's.
 
-In leave-one-out validation, adding stories to the distance lowered the mean absolute error at k=20 from 7.05 to 6.58 percentage points of emissions reduction, and the median from 3.80 to 3.00, though the 90th percentile rose from 18.08 to 18.83. Inverse-distance weighting with the district-energy rule remained the best configuration tested, within 0.01 points of its minimum at k=19. Compared with unweighted matching without the rule at the same k, it was 0.10 points better (95% CI 0.01--0.19), and 0.21 points better for district-energy simulations, an interval that includes zero (95% CI −0.003 to 0.40). Held-out simulations have their exact story counts, while BERDO buildings have estimates, so the stories term likely helps less in practice.
+In leave-one-out validation, adding stories to the distance lowered the mean absolute error at k=20 from 7.05 to 6.58 percentage points of emissions reduction, and the median from 3.80 to 3.00, though the 90th percentile rose from 18.08 to 18.83. Inverse-distance weighting with the district-energy rule remained the best configuration tested, within 0.01 points of its minimum at k=19. Compared with unweighted matching without the rule at the same k, it was 0.10 points better (95% CI 0.01--0.19), and 0.21 points better for district-energy simulations, a borderline difference (95% CI 0.003--0.41). Held-out simulations have their exact story counts, while BERDO buildings have estimates, so the stories term likely helps less in practice.
 
-Compared with k=20, the cheapest compliant retrofit changed for 43 of 69 commonly eligible buildings at k=1, 15 of 70 at k=10, and 7 of 71 at k=19.
+Compared with k=20, the cheapest compliant retrofit changed for 42 of 69 commonly eligible buildings at k=1, 14 of 70 at k=10, and 5 of 71 at k=19.
 
 Two buildings illustrate this sensitivity. For building 104777 (160-170 State Street, Boston), Package 2 was the cheapest compliant retrofit at most k, but Package 5 at k=1 and 4. For building 105302 (2-16 Tremont Street, Boston), roof insulation was the cheapest compliant option at k=1-2, Package 4 at k=3, and Package 2 from k=4 on.
 
-These findings demonstrate sensitivity of investment recommendations to neighbor selection, particularly near compliance thresholds. In the five-year Monte Carlo analysis (5,000 draws), the recommendation stays the cheapest option in 76.0% of draws and meets the standard in 43.0%.
+These findings demonstrate sensitivity of investment recommendations to neighbor selection, particularly near compliance thresholds.
 
 
 == Current Limitations
@@ -489,7 +489,7 @@ Each of 618 ComStock office simulations in turn plays a BERDO building: it is hi
       .map(r => (
         r.k,
         if r.method == "inverse_distance" [Inverse distance] else [Equal],
-        if r.rule == "True" [Yes] else [No],
+        if r.rule == "true" [Yes] else [No],
         two(r.mae_pp),
         two(r.mae_pp_district_models),
       ))

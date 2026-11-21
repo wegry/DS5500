@@ -1,6 +1,7 @@
 """20-year BERDO Monte Carlo using the existing DuckDB global-cost methodology.
 
-Run from the DS5500 repository root, after `dbt build` and `loo_validation.py`:
+Run from the DS5500 repository root, after `dbt build` (which writes the LOO residuals), or
+all at once with `uv run python dbt/regenerate.py`:
     uv run python dbt/monte_carlo_20year.py --zero-uncertainty
     uv run python dbt/monte_carlo_20year.py --draws 2000 --scenarios projected frozen
     uv run python dbt/monte_carlo_20year.py --draws 2000 --scenarios projected \
@@ -34,8 +35,8 @@ from pathlib import Path
 import duckdb
 import numpy as np
 
-from monte_carlo import (FUELS, load_emissions, load_errors, load_inputs, query, triangular,
-                         write_csv)
+from monte_carlo_inputs import (FUELS, load_emissions, load_errors, load_inputs, query,
+                                triangular, write_csv)
 
 
 PRICE_SERIES = dict(electricity='electricity', natural_gas='natural_gas',

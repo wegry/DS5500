@@ -195,3 +195,32 @@ models:
     columns:
       - name: berdo_id
         data_tests: [unique, not_null]
+  # analysis models (models/analysis): the leave-one-out validation and k sensitivity,
+  # which write the tracked CSVs under analysis_outputs/
+  - name: analysis_k_decisions
+    data_tests:
+      - unique:
+          arguments:
+            column_name: "k || '-' || berdo_id"
+  - name: analysis_k_decision_options
+    columns:
+      - name: option_key
+        data_tests: [unique, not_null]
+  - name: analysis_k_summary
+    columns:
+      - name: k
+        data_tests: [unique, not_null]
+  - name: analysis_loo_k_summary
+    columns:
+      - name: k
+        data_tests: [unique, not_null]
+  - name: analysis_loo_residuals
+    data_tests:
+      - unique:
+          arguments:
+            column_name: "held_out_model_id || '-' || upgrade_id"
+  - name: analysis_matching_validation
+    data_tests:
+      - unique:
+          arguments:
+            column_name: "k || '-' || method || '-' || rule"

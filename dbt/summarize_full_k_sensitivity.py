@@ -2,7 +2,7 @@
 """Summarize full K=1 to 10 BERDO optimization experiments.
 
 Run from dbt/: uv run python summarize_full_k_sensitivity.py
-Requires the CSVs produced by check_full_k_sensitivity.py.
+Requires the CSVs written by dbt build (the analysis_k_* models).
 """
 
 from __future__ import annotations
@@ -28,7 +28,7 @@ EXPECTED_K = list(range(1, 11))
 def read_csv(name: str, columns: set[str]) -> list[dict[str, str]]:
     path = OUT / name
     if not path.is_file():
-        raise SystemExit(f"Missing {path}. Run check_full_k_sensitivity.py first.")
+        raise SystemExit(f"Missing {path}. Run dbt build first.")
     with path.open(newline="", encoding="utf-8-sig") as stream:
         reader = csv.DictReader(stream)
         missing = columns - set(reader.fieldnames or ())
