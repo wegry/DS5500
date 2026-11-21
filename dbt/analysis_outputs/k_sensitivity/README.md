@@ -4,6 +4,10 @@ Evaluates the five-year BERDO optimizer for K=1 through the project's `match_k` 
 
 The analysis_k_* dbt models rerun the whole retrofit chain at every K in one build: matching, retrofit installation costs, projected emissions, energy costs, ACPs, and optimal recommendations. They share the production models' SQL (dbt/macros/retrofit_chain.sql), and a dbt test checks that K = `match_k` reproduces `berdo_decisions`.
 
+## 20-year version
+
+The analysis_k_global_* models do the same for the 20-year global cost (dbt/macros/global_cost.sql, shared with `berdo_global_cost`), for the projected energy scenario at mid energy prices. Report 2 uses these. A dbt test checks that K = `match_k` reproduces `berdo_global_cost`. `uv run dbt build` writes data/global_k_choices.csv (each office's cheapest and cheapest compliant option at each K, for the owner and society) and data/global_k_summary.csv (how many differ from K = `match_k`).
+
 ## Reproduce
 
 From the dbt directory, `uv run dbt build` writes data/full_k_decisions.csv, full_k_options.csv, full_k_summary.csv and full_k_changes.csv.
