@@ -5,7 +5,8 @@ match_district_rule: true.
 
 Same held-out models, upgrades, emission factors, distance and pooled ratios as
 weighted_matching_validation.py. The district rule restricts each held-out model's neighbors
-to models that agree with it on using any district energy. Read-only.
+to models that agree with it on using any district energy. The distance includes the
+stories term at the built match_w_stories (int_berdo_comstock_matches). Read-only.
 
 Run from dbt/ after `dbt build`: uv run python weighted_district_validation.py
 Writes analysis_outputs/weighted_district/summary.csv (MAE by k and configuration, overall and
@@ -51,6 +52,9 @@ factors = {f: con.execute(f"""select median({f}_ghg_kgco2e / {f}_kwh)
     from int_berdo_match_buildings where {f}_kwh > 0""").fetchone()[0] for f in FUELS}
 if factors['district_cooling'] is None:
     factors['district_cooling'] = factors['electricity'] / 4
+# the stories weight the BERDO matching was built with
+w_stories = float(con.execute(
+    'select any_value(match_w_stories) from int_berdo_comstock_matches').fetchone()[0])
 
 con.execute('create temp table selected_types(t varchar)')
 con.executemany('insert into selected_types values (?)', [(t,) for t in types])
@@ -76,7 +80,7 @@ con.execute(f"""
         select h.comstock_id as held_id, c.comstock_id as neighbor_id,
             h.uses_district as held_district, h.uses_district = c.uses_district as agrees,
             abs(ln(h.gfa_sqft / c.gfa_sqft)) + abs(ln(h.eui_kwh_sqft / c.eui_kwh_sqft))
-            + 0.5 * ({fuel_gap}) as distance
+            + 0.5 * ({fuel_gap}) + {w_stories} * abs(ln(h.stories / c.stories)) as distance
         from valid h join valid c on h.comstock_id <> c.comstock_id
     ), ranked as (
         select *,
