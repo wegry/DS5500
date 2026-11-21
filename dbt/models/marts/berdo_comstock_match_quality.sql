@@ -15,6 +15,8 @@ select
     ) as nearest_eui_gap,
     max(fuel_share_gap) filter (where match_rank = 1
     ) as nearest_fuel_gap,
+    max(stories_gap) filter (where match_rank = 1
+    ) as nearest_stories_gap,
 
     -- Quality across all selected matches
     avg(distance) as average_distance,

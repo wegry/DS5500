@@ -110,6 +110,29 @@ models:
     columns:
       - name: berdo_id
         data_tests: [unique, not_null]
+      - name: stories_source
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: [gfa_over_footprint, roof_height, gfa_over_footprint_unchecked]
+  - name: int_boston_parcel_buildings
+    description: >
+      Building footprint, footprint-weighted 2010 roof height and exterior perimeter per
+      Boston parcel, from the City's roof outlines spatially joined to the 2025 parcels.
+    columns:
+      - name: parcel_id
+        data_tests: [unique, not_null]
+      - name: footprint_sqft
+        data_tests: [not_null]
+  - name: int_berdo_building_stories
+    description: >
+      Estimated stories per BERDO building (GFA / footprint, checked against roof height /
+      var floor_to_floor_ft), for matching to ComStock's number of stories.
+    columns:
+      - name: berdo_id
+        data_tests: [unique, not_null]
+      - name: stories
+        data_tests: [not_null]
   - name: int_berdo_comstock_matches
     columns:
       - name: match_key
@@ -172,3 +195,32 @@ models:
     columns:
       - name: berdo_id
         data_tests: [unique, not_null]
+  # analysis models (models/analysis): the leave-one-out validation and k sensitivity,
+  # which write the tracked CSVs under analysis_outputs/
+  - name: analysis_k_decisions
+    data_tests:
+      - unique:
+          arguments:
+            column_name: "k || '-' || berdo_id"
+  - name: analysis_k_decision_options
+    columns:
+      - name: option_key
+        data_tests: [unique, not_null]
+  - name: analysis_k_summary
+    columns:
+      - name: k
+        data_tests: [unique, not_null]
+  - name: analysis_loo_k_summary
+    columns:
+      - name: k
+        data_tests: [unique, not_null]
+  - name: analysis_loo_residuals
+    data_tests:
+      - unique:
+          arguments:
+            column_name: "held_out_model_id || '-' || upgrade_id"
+  - name: analysis_matching_validation
+    data_tests:
+      - unique:
+          arguments:
+            column_name: "k || '-' || method || '-' || rule"

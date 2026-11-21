@@ -89,17 +89,20 @@ This project uses three publicly available data sources: Boston's Building Emiss
 
 *Building matching.* BERDO and ComStock cannot be joined directly by building identifier because BERDO represents real buildings, while ComStock contains synthetic building simulations. We use k-nearest-neighbor (KNN) matching with a custom distance function to identify representative ComStock models for each BERDO office building @berdo @comstock.
 
-First, a property-type crosswalk restricts candidate ComStock models to building types compatible with each BERDO property type. Then similarity is calculated using gross floor area, site energy use intensity (EUI), and fuel-consumption shares.
+First, a property-type crosswalk restricts candidate ComStock models to building types compatible with each BERDO property type. Then similarity is calculated using gross floor area, site energy use intensity (EUI), fuel-consumption shares, and number of stories.
 
-The distance function combines the absolute logarithmic differences in building size and EUI with half the sum of absolute differences in fuel shares:
+The distance function combines the absolute logarithmic differences in building size, EUI, and stories with half the sum of absolute differences in fuel shares:
 
 $
   d(b,c) & = abs(ln(A_b / A_c)) \
          & + abs(ln("EUI"_b / "EUI"_c)) \
-         & + 0.5 sum_f abs(s_(b,f) - s_(c,f))
+         & + 0.5 sum_f abs(s_(b,f) - s_(c,f)) \
+         & + abs(ln(S_b / S_c))
 $
 
-where $A$ denotes gross floor area, $"EUI"$ represents site energy use intensity, and $s$ represents the share of energy consumption attributed to each fuel category. The fuel categories include electricity, natural gas, district energy, and oil/propane.
+where $A$ denotes gross floor area, $"EUI"$ represents site energy use intensity, and $s$ represents the share of energy consumption attributed to each fuel category. The fuel categories include electricity, natural gas, district energy, and oil/propane. $S$ is the number of stories, which sets how much of a building's envelope is roof rather than wall.
+
+Neither BERDO nor the city's assessor reports stories for commercial buildings, so we estimate them from the city's building roof outlines, which carry 2010 LiDAR roof heights @boston-buildings, joined to the 2025 parcels @boston-parcels. A building's stories are its floor area divided by its parcel's footprint when that agrees within a factor of 1.6 with roof height divided by a 13 ft floor-to-floor height, and the height estimate otherwise. The two estimates agree for 218 of the 252 offices with both. Of the 297 offices, 267 receive an estimate; for the other 30 the stories term is zero for every candidate.
 
 For each BERDO building, eligible ComStock simulations are ranked by increasing distance. The closest $k$ simulations are retained, where $k$ is a configurable matching parameter. These models provide representative building characteristics and retrofit performance estimates.
 
@@ -286,7 +289,7 @@ For emissions exceeding the limit, BERDO permits ACPs. The current payment rate 
 
 For each alternative, total modeled cost consists of capital, energy bills, and cumulative Alternative Compliance Payments (ACPs) associated with any remaining excess emissions. Because equipment lasts a median of 21 years, the five-year view charges five years of its equivalent annual cost at a 7% discount rate rather than its full price, and the like-for-like replacement of kept equipment is charged the same way. The baseline analysis assumes constant energy use, energy prices, and ACP rates throughout the evaluation period. The model identifies the lowest five-year-cost alternative for each building. The cheapest retrofit predicted to meet the 2030 emissions standard is also evaluated separately.
 
-*Uncertainty.* A 20-year life-cycle cost discounts capital replacements, energy bills under EIA price scenarios @aeo, and ACPs or the social cost of carbon. Monte Carlo analyses of both horizons sample installation costs, energy prices, and the leave-one-out retrofit-performance errors to estimate how often each recommendation stays the cheapest and compliant.
+*Uncertainty.* A 20-year life-cycle cost discounts capital replacements, energy bills under EIA price scenarios @aeo, and ACPs or the social cost of carbon. A Monte Carlo analysis of the 20-year horizon samples installation costs, energy prices, and the leave-one-out retrofit-performance errors to estimate how often each recommendation stays the cheapest and compliant.
 
 
 
@@ -322,15 +325,15 @@ Exploration of the BTB commercial dataset identified installation cost informati
 
 == Integration and Financial Sensitivity
 
-In the integrated analysis, all 297 office buildings were matched to ComStock simulations. Of these, 99 exceed the 2030 emissions standard at today's electricity emissions factor and 81 at BERDO's projected 2030 factor. At k=20, 69 of those 81 buildings had at least one predicted compliant retrofit among thirteen tested options. The five-year model recommends a retrofit for all 81 and a compliant one for 33, most often rooftop PV with roof insulation (46 buildings); heat pump packages are chosen for 14. Over 20 years under projected grid emissions and prices, the cheapest option meets the standard for 32 buildings from the owner's perspective and 40 from society's.
+In the integrated analysis, all 297 office buildings were matched to ComStock simulations. Of these, 99 exceed the 2030 emissions standard at today's electricity emissions factor and 81 at BERDO's projected 2030 factor. At k=20, 71 of those 81 buildings had at least one predicted compliant retrofit among thirteen tested options. The five-year model recommends a retrofit for all 81 and a compliant one for 36, most often rooftop PV with roof insulation (40 buildings); heat pump options are chosen for 19. Over 20 years under projected grid emissions and prices, the cheapest option meets the standard for 36 buildings from the owner's perspective and 41 from society's.
 
-In leave-one-out validation, inverse-distance weighting with the district-energy rule had the lowest error of the configurations tested, a mean absolute error of 7.05 percentage points of emissions reduction at k=20 against 7.23 for the original unweighted matching at k=10. Compared with unweighted matching without the rule at the same k, it was 0.15 points better (95% CI 0.02--0.26), and 0.43 points better for district-energy simulations.
+In leave-one-out validation, adding stories to the distance lowered the mean absolute error at k=20 from 7.05 to 6.58 percentage points of emissions reduction, and the median from 3.80 to 3.00, though the 90th percentile rose from 18.08 to 18.83. Inverse-distance weighting with the district-energy rule remained the best configuration tested, within 0.01 points of its minimum at k=19. Compared with unweighted matching without the rule at the same k, it was 0.10 points better (95% CI 0.01--0.19), and 0.21 points better for district-energy simulations, a borderline difference (95% CI 0.003--0.41). Held-out simulations have their exact story counts, while BERDO buildings have estimates, so the stories term likely helps less in practice.
 
-Compared with k=20, the cheapest compliant retrofit changed for 46 of 68 commonly eligible buildings at k=1, 20 of 68 at k=10, and 4 of 68 at k=19.
+Compared with k=20, the cheapest compliant retrofit changed for 42 of 69 commonly eligible buildings at k=1, 14 of 70 at k=10, and 5 of 71 at k=19.
 
-Two buildings illustrate this sensitivity. For building 104777 (160-170 State Street, Boston), Package 5 was the cheapest compliant retrofit at most k, but Package 2 at k=13, 14, and 17. For building 105302 (2-16 Tremont Street, Boston), roof insulation was the cheapest compliant option at k=1-2, Package 4 at k=3, and Package 2 from k=4 on.
+Two buildings illustrate this sensitivity. For building 104777 (160-170 State Street, Boston), Package 2 was the cheapest compliant retrofit at most k, but Package 5 at k=1 and 4. For building 105302 (2-16 Tremont Street, Boston), roof insulation was the cheapest compliant option at k=1-2, Package 4 at k=3, and Package 2 from k=4 on.
 
-These findings demonstrate sensitivity of investment recommendations to neighbor selection, particularly near compliance thresholds. In the five-year Monte Carlo analysis (5,000 draws), the recommendation stays the cheapest option in 70.7% of draws and meets the standard in 39.6%.
+These findings demonstrate sensitivity of investment recommendations to neighbor selection, particularly near compliance thresholds.
 
 
 == Current Limitations
@@ -347,13 +350,13 @@ The integration and matching sensitivity models have been evaluated for internal
 
 Preliminary exploration of the BERDO dataset highlighted the importance of data completeness in providing reliable building decarbonization recommendations. Although office buildings exhibited relatively high data completeness, records with missing data and the presence of mixed-use properties can introduce potential uncertainty to the analysis. These findings suggest that further investigation of data quality and matching reliability can improve the results.
 
-We evaluated BERDO--ComStock matching using building-characteristic differences and sensitivity to the number of nearest neighbors. Retrofit recommendations changed for some buildings when k varied, particularly where predicted emissions were close to the compliance threshold. Comparing neighbor aggregation methods led us to weight neighbors by inverse distance and to match district-energy buildings only to district-energy simulations.
+We evaluated BERDO--ComStock matching using building-characteristic differences and sensitivity to the number of nearest neighbors. Retrofit recommendations changed for some buildings when k varied, particularly where predicted emissions were close to the compliance threshold. Comparing neighbor aggregation methods led us to weight neighbors by inverse distance and to match district-energy buildings only to district-energy simulations, and adding stories estimated from city building footprints and roof heights reduced the leave-one-out error further.
 
 A second direction involves examining methods of addressing the missing information of the BERDO dataset. Further analysis could reveal if missing measurements, such as GHG intensity, can be calculated from related data. Where calculations are not possible, the option of using statistical imputation or predictive modeling could be explored. However, the suitability of these methods would rely on the availability of reliable predictors and the potential uncertainty of estimated data.
 
 All things considered, both directions aim to improve the reliability of the resulting decarbonization recommendations. Sensitivity analysis could help determine how differences in matching parameters and assumptions about missing data affect the resulting suggestions.
 
-Our approach now includes energy bills alongside installation costs, over 5 and 20 years, with the 20-year view following the EIA's _Annual Energy Outlook_ @aeo price scenarios. Charging long-lived equipment its full price against five years of savings, and leaving kept equipment free, had penalized electrification; annualizing capital and charging like-for-like replacement raised the compliant five-year recommendations from 3 to 33 of 81. BERDO's flat ACP per ton remains the main barrier to deeper retrofits, since it gives no extra reward for meeting the standard.
+Our approach now includes energy bills alongside installation costs, over 5 and 20 years, with the 20-year view following the EIA's _Annual Energy Outlook_ @aeo price scenarios. Charging long-lived equipment its full price against five years of savings, and leaving kept equipment free, had penalized electrification; annualizing capital and charging like-for-like replacement raised the compliant five-year recommendations from 3 to 33 of 81 (36 after stories were added to the matching). BERDO's flat ACP per ton remains the main barrier to deeper retrofits, since it gives no extra reward for meeting the standard.
 
 Our second missing piece is MACC for a baseline comparison. Our evaluation uses individual upgrades and packages of upgrades. These potential paths will be evaluated as the project progresses, alongside the completion of dataset integration, matching, and optimization.
 
@@ -486,7 +489,7 @@ Each of 618 ComStock office simulations in turn plays a BERDO building: it is hi
       .map(r => (
         r.k,
         if r.method == "inverse_distance" [Inverse distance] else [Equal],
-        if r.rule == "True" [Yes] else [No],
+        if r.rule == "true" [Yes] else [No],
         two(r.mae_pp),
         two(r.mae_pp_district_models),
       ))

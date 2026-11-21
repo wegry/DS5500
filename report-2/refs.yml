@@ -78,3 +78,20 @@ berdo-acp:
   url:
     value: https://www.boston.gov/news/my-building-above-its-emissions-limit-what-can-i-do-now
     date: 2026-10-22
+
+boston-buildings:
+  type: repository
+  author: City of Boston Planning Department
+  title: Boston Buildings with Roof Breaks
+  url:
+    value: https://data.boston.gov/dataset/boston-buildings-with-roof-breaks
+    date: 2026-11-20
+
+boston-parcels:
+  type: repository
+  author: City of Boston
+  title: Parcels (2025)
+  date: 2025-09-04
+  url:
+    value: https://data.boston.gov/dataset/parcels-2025
+    date: 2026-11-20

@@ -3,7 +3,7 @@
 Run from dbt/: python -m uv run python weighted_matching_validation.py
 Outputs analysis_outputs/weighted_matching_summary.csv, weighted_matching_by_upgrade.csv,
 and weighted_matching_bootstrap.csv.
-Compare against existing loo_validation.py; this is an independent experiment.
+Compare against the analysis_loo_* dbt models; this is an independent experiment.
 """
 from pathlib import Path
 import csv

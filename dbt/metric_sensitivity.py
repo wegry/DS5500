@@ -8,7 +8,7 @@ can be built with, e.g.
     uv run dbt build --profiles-dir . --vars '{match_district_rule: true}'
 
 Two read-only checks at the configured k:
-1. Leave-one-out accuracy, as in loo_validation.py: hide each ComStock office model, predict
+1. Leave-one-out accuracy, as in the analysis_loo_* dbt models: hide each ComStock office model, predict
    its upgrade emissions from its k nearest others under the metric, compare with what
    ComStock simulated. Reported overall and for district-energy models, with a paired
    bootstrap of each metric against the original (pre-district-rule) one.
@@ -89,7 +89,7 @@ def main() -> dict:
         join (select distinct property_type from int_berdo_match_buildings) b
           on cw.berdo_type = b.property_type order by 1""").fetchall())
 
-    # BERDO's per-fuel emission factors, as in loo_validation.py
+    # BERDO's per-fuel emission factors, as in analysis_loo_predictions
     ef = {}
     for f in FUELS:
         ef[f] = one(f"""select median({f}_ghg_kgco2e / {f}_kwh)
