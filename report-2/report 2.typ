@@ -58,17 +58,13 @@ projects: heat pumps, envelope upgrades, LED retrofits, rooftop solar,
 switching off fuel oil, etc. If a retrofit is not economical, the owner can instead make an _Alternative Compliance Payment_ (ACP). Are ACPs a strong enough incentive to drive decarbonization?
 
 Owners might lack the capital to do all of the updates at once,
-so somebody has to pick an order. The standard tool for that is a marginal
-abatement cost curve (MACC), which ranks projects by dollars per ton of
-CO#sub[2] avoided and funds them from the cheapest on down.
-
-That ranking treats every project as independent and every year as the same.
-Neither is true. A heat pump in a building that was just insulated saves less
+so somebody has to pick an order. Judging each project on its own savings
+doesn't work. A heat pump in a building that was just insulated saves less
 than the two estimates added together. And under BERDO, _when_ a building gets
 under its limit matters as much as _whether_ it does, since each building has
 its own first compliance year and the limits keep tightening after that.
 
-Our goal is to develop a decision-support tool that helps building owners in Boston determine which decarbonization projects to implement and when (@fig:pipeline). MACC will serve as our baseline. Rather than simply ranking projects individually, the current implementation compares building-level retrofit decisions made at the start of the 2030 compliance period over a 20-year horizon. A budget-constrained, multi-year investment roadmap remains a proposed extension.
+Our goal is to develop a decision-support tool that helps building owners in Boston determine which decarbonization projects to implement and when (@fig:pipeline). The current implementation compares building-level retrofit decisions made at the start of the 2030 compliance period over a 20-year horizon. A budget-constrained, multi-year investment roadmap remains a proposed extension.
 
 = Methods
 
@@ -398,7 +394,7 @@ Missing data remains a problem in its own right. 120 of the 420 office records r
 
 Our approach now includes energy bills alongside installation costs over a 20-year horizon, following the EIA's _Annual Energy Outlook_ @aeo price scenarios. Charging every option for its replacements and remaining value over the same horizon, and charging options that keep existing equipment for its like-for-like replacement, avoids penalizing long-lived electrification measures. BERDO's flat ACP per ton remains the main barrier to deeper retrofits, since it gives no extra reward for meeting the standard. At today's \$234, the owner's cheapest option meets the standard for 36 of 81 buildings, against 41 when society's climate damages are counted instead. Raising the rate to \$1,000 would bring the owner's count to 53, but 18 offices would still need more, and 10 have no compliant option at any price.
 
-Where next? Our first priority is confidence in the predicted outcomes, not more financial detail. The leave-one-out test checks simulations against simulations. Checking against real retrofits would need engineering studies, or BERDO disclosures from buildings before and after an upgrade. Second, the 10 offices without a compliant option need more to test: more ComStock upgrades, priced from BTB. Third, time. The model makes one decision in 2030 and holds equipment prices fixed. Letting costs change year by year, and choosing what to retrofit and when under a budget, is the multi-year roadmap we set out to build. MACC remains the baseline we will compare it against.
+Where next? Our first priority is confidence in the predicted outcomes, not more financial detail. The leave-one-out test checks simulations against simulations. Checking against real retrofits would need engineering studies, or BERDO disclosures from buildings before and after an upgrade. Second, the 10 offices without a compliant option need more to test: more ComStock upgrades, priced from BTB. Third, time. The model makes one decision in 2030 and holds equipment prices fixed. Letting costs change year by year, and choosing what to retrofit and when under a budget, is the multi-year roadmap we set out to build.
 
 // ---- 10: statement of contributions ---------------------------------------
 
