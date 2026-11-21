@@ -342,9 +342,9 @@ Preliminary exploration focused on assessing the availability and suitability of
 
 The BERDO disclosure provides building-level information on property type, gross floor area, energy consumption, greenhouse gas emissions, and more @berdo. The dataset published for 2026 contains 5,591 building records, a substantial amount for analysis. However, because BERDO relies on self-reported building information, missing and inconsistent values limit the number of usable records. An examination of data completeness across building categories revealed considerable variation, with office buildings exhibiting higher completeness than other building types (@fig:berdo-heatmap).
 
-Of the 5,591 records, 431 buildings with a BERDO ID were identified as having office space as their primary or sole use. Of these, 186 (43.2%) also contained non-office, non-parking uses, highlighting the frequency of mixed-use properties (@fig:berdo-types). This subset provides a substantial population for the proposed BERDO–ComStock matching procedure, although differences in building composition may introduce additional uncertainty.
+Of the 5,591 records, 416 buildings with a BERDO ID have Office or Financial Office as their largest property type. Medical Office is left out because BERDO holds it to the separate Healthcare standard. Of these, 185 (44.5%) also contained non-office, non-parking uses, highlighting the frequency of mixed-use properties (@fig:berdo-types). Half of those devote at least 14% of their floor area to other uses. This subset provides a substantial population for the proposed BERDO–ComStock matching procedure, although differences in building composition may introduce additional uncertainty.
 
-To measure the potential need for decarbonization investments, reported greenhouse gas (GHG) emissions intensities were compared against the 2030-2034 BERDO standard for offices of 3.2 kg of $"CO"_2"e"$ per square foot per year @berdo-standards. 290 of the 410 office buildings reported GHG intensity values, of which 96 or 33.1% exceeded the 2030 standard (@fig:berdo-GHGvsStandard). This number suggests that a substantial portion of offices might face compliance challenges, highlighting the need for the evaluation of retrofit upgrades and their cost.
+To measure the potential need for decarbonization investments, reported greenhouse gas (GHG) emissions intensities were compared against the 2030-2034 BERDO standard for offices of 3.2 kg of $"CO"_2"e"$ per square foot per year @berdo-standards. 300 of the 420 Office and Financial Office records reported GHG intensity values, of which 102 or 34.0% exceeded the 2030 standard (@fig:berdo-GHGvsStandard). This number suggests that a substantial portion of offices might face compliance challenges, highlighting the need for the evaluation of retrofit upgrades and their cost.
 
 ComStock provides baseline simulations and retrofit scenarios with information on building characteristics, fuel consumption, and upgrade applicability @comstock. These variables support the proposed building-matching procedure and estimation of retrofit performance.
 
@@ -366,7 +366,7 @@ These findings demonstrate sensitivity of investment recommendations to neighbor
 
 == Current Limitations
 
-The preliminary BERDO analysis revealed some data quality limitations. Of the 410 buildings containing office space, 120 (29.3%) lack reported GHG emissions intensity data, limiting the coverage of the 2030 compliance assessment.
+The preliminary BERDO analysis revealed some data quality limitations. Of the 420 Office and Financial Office records, 120 (28.6%) lack reported GHG emissions intensity data, limiting the coverage of the 2030 compliance assessment.
 
 Additionally, the selected buildings set contains both single-use office buildings and mixed-use buildings where offices account for the largest part. For mixed-use spaces, reported energy consumption and emissions data may reflect the use of spaces other than offices, which introduces some uncertainty in matching these buildings to ComStock simulations. Verifying the distribution of energy consumption on each building would require property-level information, potentially from individual building owners or management companies, which is beyond the scope of this project.
 
@@ -460,31 +460,30 @@ These exploratory summaries precede the filtering and matching of the integrated
 #figure(
   image(
     "figures/berdo-completeness.png",
-    width: 82%,
+    width: 80%,
   ),
   caption: [
-    Completeness of selected BERDO attributes across building-use categories. Each cell represents the percentage of records with nonmissing observations for the corresponding
-    variable.
+    Completeness of selected BERDO attributes for the five most common building uses, with Office and Financial Office combined. Each cell is the percentage of records with a value for the corresponding variable.
   ],
 ) <fig:berdo-heatmap>
 
 #figure(
   image(
-    "figures/berdo-property-types.png",
+    "figures/berdo-mixed-use-cdf.png",
     width: 80%,
   ),
   caption: [
-    Composition of office-related BERDO properties according to the reported proportion of non-office, non-parking floor area.
+    Cumulative distribution of the mixed-use share, the share of non-parking floor area in uses other than office, across the 416 BERDO buildings whose largest property type is Office or Financial Office. The jump at 0% is the buildings with only office and parking space.
   ],
 ) <fig:berdo-types>
 
 #figure(
   image(
-    "figures/berdo-intensity-vs-benchmark.png",
+    "figures/berdo-intensity-cdf.png",
     width: 80%,
   ),
   caption: [
-    Distribution of reported office-building greenhouse gas emissions intensity compared with the 2030 BERDO office standard.
+    Cumulative distribution of reported greenhouse gas emissions intensity for the 300 Office and Financial Office records that report it, compared with the 2030 BERDO office standard.
   ],
 ) <fig:berdo-GHGvsStandard>
 

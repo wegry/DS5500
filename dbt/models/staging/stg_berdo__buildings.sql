@@ -52,6 +52,11 @@ select
     {% endfor -%}
     try_cast("Applicable Emissions Compliance Standard (kgCO2e/sq ft)" as double)
         as compliance_standard_kgco2e_sqft,
+    -- as disclosed; int_berdo_match_buildings derives its own intensities from the totals
+    -- (the disclosed Site EUI is ~19x below energy / GFA)
+    try_cast("GHG Emissions Intensity (kgCO2e/sq ft)" as double)
+        as reported_ghg_intensity_kgco2e_sqft,
+    try_cast("Site EUI (Energy Use Intensity kBtu/ft²)" as double) as reported_site_eui_kbtu_sqft,
     -- "2025", "2030", or "Exempt During Vacancy"
     try_cast("First Emissions Compliance Year" as integer) as first_compliance_year,
     "Reporting Compliance Status" as reporting_status,
