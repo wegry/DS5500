@@ -15,13 +15,17 @@ with buildings as (
 )
 
 select
-    *,
+    b.*,
     -- the disclosed Site EUI column is ~19x below energy / GFA, so derive it
-    fuel_total_kwh / gfa_sqft as eui_kwh_sqft,
-    ghg_kgco2e / gfa_sqft as ghg_intensity_kgco2e_sqft,
-    electricity_kwh / fuel_total_kwh as electricity_share,
-    natural_gas_kwh / fuel_total_kwh as natural_gas_share,
-    (district_heating_kwh + district_cooling_kwh) / fuel_total_kwh as district_share,
-    oil_propane_kwh / fuel_total_kwh as oil_propane_share
-from buildings
-where fuel_total_kwh > 0
+    b.fuel_total_kwh / b.gfa_sqft as eui_kwh_sqft,
+    b.ghg_kgco2e / b.gfa_sqft as ghg_intensity_kgco2e_sqft,
+    b.electricity_kwh / b.fuel_total_kwh as electricity_share,
+    b.natural_gas_kwh / b.fuel_total_kwh as natural_gas_share,
+    (b.district_heating_kwh + b.district_cooling_kwh) / b.fuel_total_kwh as district_share,
+    b.oil_propane_kwh / b.fuel_total_kwh as oil_propane_share,
+    -- estimated from footprints and roof heights; null where the parcel has no footprint
+    s.stories,
+    s.stories_source
+from buildings as b
+left join {{ ref('int_berdo_building_stories') }} as s using (berdo_id)
+where b.fuel_total_kwh > 0

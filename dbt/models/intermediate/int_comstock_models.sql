@@ -7,6 +7,7 @@ select
     bool_or(applicability) as applicability,
     any_value(comstock_type) as comstock_type,
     any_value(gfa_sqft) as gfa_sqft,
+    any_value(stories) as stories,
     any_value(year_built) as year_built,
     any_value(heating_fuel) as heating_fuel,
     sum(weight) as weight,

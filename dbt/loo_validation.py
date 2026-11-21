@@ -11,8 +11,10 @@ are read from the built int_berdo_comstock_matches, so the residuals monte_carlo
 monte_carlo_20year.py sample always describe the matching the optimizer used.
 
 This measures how well neighbor transfer works between simulated buildings. It is not a
-real-world accuracy: BERDO buildings can differ from every ComStock model in ways the three
-matching features don't capture.
+real-world accuracy: BERDO buildings can differ from every ComStock model in ways the
+matching features don't capture. Held-out models also have their exact story count, while
+BERDO buildings have an estimate from footprints and roof heights (or none), so the stories
+term helps less in practice than here.
 
 Emissions use BERDO's per-fuel factors, which are constant across Boston offices (see the
 printout), so the error is in the same units as the BERDO projections.
@@ -79,16 +81,21 @@ def main() -> None:
     if ref_k is None or len(period_rows) != 1:
         raise ValueError("Missing reference k or ambiguous decision period")
     ref_k = int(ref_k)
-    # ... and the same neighbor weighting and district rule (see int_berdo_comstock_matches).
-    weighting, district_rule, n_settings, max_term_gap = con.execute("""
+    # ... and the same neighbor weighting, district rule and stories weight (see
+    # int_berdo_comstock_matches).
+    weighting, district_rule, w_stories, n_settings, max_term_gap = con.execute("""
         select any_value(match_weighting), any_value(match_district_rule),
-            count(distinct (match_weighting, match_district_rule)),
-            max(abs(distance - (size_gap + eui_gap + fuel_share_gap)))
+            any_value(match_w_stories),
+            count(distinct (match_weighting, match_district_rule, match_w_stories)),
+            max(abs(distance - (size_gap + eui_gap + fuel_share_gap
+                + match_w_stories * stories_gap)))
         from int_berdo_comstock_matches""").fetchone()
     if n_settings != 1 or weighting not in ("unweighted", "inverse_distance"):
         raise ValueError(f"Unexpected matching settings: {weighting}, {district_rule}")
     if max_term_gap > 1e-9:
-        raise ValueError("Matches use non-default term weights (match_w_*); LOO assumes 1, 1, 1")
+        raise ValueError("Matches use non-default size/EUI/fuel weights (match_w_size, "
+                         "match_w_eui, match_w_fuel); LOO assumes 1, 1, 1")
+    w_stories = float(w_stories)
     neighbor_weight = "1.0 / (distance + 0.000001)" if weighting == "inverse_distance" else "1.0"
     decision_year = int(period_rows[0][0])
     index_row = con.execute("""
@@ -125,6 +132,7 @@ def main() -> None:
     print(f"Office models: {n_models}; k = 1..{k_max}")
     print(f"Upgrades from optimization: {upgrades}; office types: {office_types}")
     print(f"Reference k={ref_k}; weighting={weighting}; district rule={district_rule}; "
+          f"stories weight={w_stories}; "
           f"decision year={decision_year}; index={electricity_index:.6f}")
     ups = ", ".join(map(str, upgrades))
     cum = ",\n".join(
@@ -158,7 +166,7 @@ def main() -> None:
                     + abs((h.district_heating_kwh + h.district_cooling_kwh) / h.fuel_total_kwh
                         - (c.district_heating_kwh + c.district_cooling_kwh) / c.fuel_total_kwh)
                     + abs(h.oil_propane_kwh / h.fuel_total_kwh - c.oil_propane_kwh / c.fuel_total_kwh)
-                ) as distance
+                ) + {w_stories} * abs(ln(h.stories / c.stories)) as distance
             from m as h join m as c on h.comstock_id <> c.comstock_id
         ),
         -- candidates and pooling weights as the BERDO matching uses them; n_cand is how many

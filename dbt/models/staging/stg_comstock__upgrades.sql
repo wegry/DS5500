@@ -36,6 +36,13 @@ per_building as (
         weight,
         "in.comstock_building_type" as comstock_type,
         "in.sqft..ft2" as gfa_sqft,
+        -- binned above 14 stories; the full results' in.number_of_stories gives the stories
+        -- modeled for each bin (15_25 -> 20, over_25 -> 30)
+        case "in.number_stories"
+            when '15_25' then 20
+            when 'over_25' then 30
+            else try_cast("in.number_stories" as integer)
+        end as stories,
         try_cast("in.year_built" as integer) as year_built,
         "in.heating_fuel" as heating_fuel,
         "out.site_energy.total.energy_consumption_intensity..kwh_per_ft2" as eui_kwh_sqft,

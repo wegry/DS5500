@@ -26,6 +26,16 @@ vars:
   # BTB cost projection year and scenario; costs are in 2023 dollars either way
   btb_year: 2030
   btb_scenario: Reference
+  # City of Boston Planning Department GIS Lab, "Boston Buildings with Roof Breaks": roof
+  # outlines for every building in Boston, one polygon per roof section with its 2010 LiDAR
+  # height (data.boston.gov dataset boston-buildings-with-roof-breaks)
+  boston_buildings_url: https://data.boston.gov/dataset/08fd5249-2d75-42ef-ac23-951f3e0ec259/resource/57026638-b4e8-4dfa-8644-0e2cfe925a46/download/boston_buildings_with_roof_breaks_geojson.zip
+  # City of Boston "Parcels (2025)"; MAP_PAR_ID is the assessing PID that BERDO's Tax Parcel
+  # ID uses (data.boston.gov dataset parcels-2025)
+  boston_parcels_url: https://data.boston.gov/dataset/d0fe512c-80bd-4ed7-8582-c6ec38aedfa0/resource/905e3f0a-1b17-4105-a4dd-c6c3f04690cd/download/parcels_2025_geojson.zip
+  # floor-to-floor height used to turn roof height into stories (int_berdo_building_stories);
+  # 13 ft is the DOE medium and large office prototypes' floor-to-floor height
+  floor_to_floor_ft: 13
   # BERDO property types to match to ComStock models (via the crosswalk seed)
   match_property_types: ["Office", "Financial Office"]
   # nearest ComStock models per BERDO building
@@ -36,6 +46,9 @@ vars:
   # models without it; otherwise a building's district emissions get no upgrade ratio
   # (metric_sensitivity.py compares this and other weightings)
   match_district_rule: true
+  # weight of the stories term, |ln stories ratio|, in the match distance (the size, EUI and
+  # fuel-share terms have match_w_size/match_w_eui/match_w_fuel, 1 by default)
+  match_w_stories: 1
   # how matched models are pooled downstream: unweighted (each counts equally) or
   # inverse_distance (1 / (distance + 1e-6))
   match_weighting: inverse_distance

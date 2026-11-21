@@ -5,3 +5,6 @@ ds5500:
       type: duckdb
       path: ds5500.duckdb
       threads: 4
+      # spatial reads the City of Boston building and parcel GeoJSON (stg_boston__*)
+      extensions:
+        - spatial

@@ -1,7 +1,10 @@
 -- The var("match_k") nearest ComStock baseline models for each BERDO building, among the
 -- ComStock types its property type maps to. Distance: log size gap + log EUI gap + half
--- the L1 gap between fuel shares (the three terms are kept for match-quality checks).
--- var("match_w_size"/"match_w_eui"/"match_w_fuel") weight the terms (1 each by default), and
+-- the L1 gap between fuel shares + log stories gap (the terms are kept for match-quality
+-- checks). A building without a stories estimate (int_berdo_building_stories) gets a
+-- stories gap of 0 for every candidate, so its ranking rests on the other three terms.
+-- var("match_w_size"/"match_w_eui"/"match_w_fuel"/"match_w_stories") weight the terms (1
+-- each by default), and
 -- var("match_district_rule") restricts candidates to models whose district-energy use (any
 -- vs none) agrees with the building's; metric_sensitivity.py compares these choices.
 -- var("match_weighting") sets how much each neighbor counts when downstream models pool
@@ -32,7 +35,8 @@ candidates as (
             + abs(b.district_share
                 - (m.district_heating_kwh + m.district_cooling_kwh) / m.fuel_total_kwh)
             + abs(b.oil_propane_share - m.oil_propane_kwh / m.fuel_total_kwh)
-        ) as fuel_share_gap
+        ) as fuel_share_gap,
+        coalesce(abs(ln(b.stories / m.stories)), 0) as stories_gap
     from {{ ref('int_berdo_match_buildings') }} as b
     inner join {{ ref('berdo_comstock_type_crosswalk') }} as cw
         on b.property_type = cw.berdo_type
@@ -49,7 +53,8 @@ weighted as (
         *,
         {{ var("match_w_size", 1) }} * size_gap
             + {{ var("match_w_eui", 1) }} * eui_gap
-            + {{ var("match_w_fuel", 1) }} * fuel_share_gap as distance
+            + {{ var("match_w_fuel", 1) }} * fuel_share_gap
+            + {{ var("match_w_stories", 1) }} * stories_gap as distance
     from candidates
 )
 
@@ -64,6 +69,7 @@ select
     -- the matching settings, so Python checks (loo_validation.py) can mirror this build
     '{{ weighting }}' as match_weighting,
     {{ var("match_district_rule", false) }} as match_district_rule,
+    {{ var("match_w_stories", 1) }} as match_w_stories,
     row_number() over (partition by berdo_id order by distance, comstock_id) as match_rank
 from weighted
 qualify match_rank <= {{ var("match_k") }}
