@@ -183,12 +183,22 @@ The integration workflow is summarized in @fig:pipeline.
     ),
     flow_node(
       (0, 1),
+      "Boston buildings and parcels",
+      [
+        Roof outlines, LiDAR heights, and parcels from
+        data.boston.gov @boston-buildings @boston-parcels;
+        estimated stories
+      ],
+      <stories>,
+    ),
+    flow_node(
+      (0, 2),
       "ComStock",
       [Synthetic baselines and upgrade simulations],
       <comstock>,
     ),
     flow_node(
-      (0, 2),
+      (0, 3),
       "NLR BTB",
       [Technology-level installation cost parameters],
       <btb>,
@@ -196,17 +206,18 @@ The integration workflow is summarized in @fig:pipeline.
 
     // Data processing
     flow_node(
-      (1, 0.5),
+      (1, 1),
       [BERDO--ComStock matching],
       [
         Property-type crosswalk;
-        rank by custom distance $d(b,c)$;
+        rank by custom distance $d(b,c)$
+        over area, EUI, fuel shares, and stories;
         retain $k$ nearest simulations
       ],
       <match>,
     ),
     flow_node(
-      (1, 2),
+      (1, 3),
       "Technology cost mapping",
       [
         Map package components
@@ -217,7 +228,7 @@ The integration workflow is summarized in @fig:pipeline.
 
     // Intermediate outputs
     flow_node(
-      (2, 0.5),
+      (2, 1),
       "Retrofit emissions estimation",
       [
         Pooled fuel-specific upgrade ratios;
@@ -227,7 +238,7 @@ The integration workflow is summarized in @fig:pipeline.
       <emis>,
     ),
     flow_node(
-      (2, 2),
+      (2, 3),
       "Installation cost estimation",
       [
         Estimated capital cost
@@ -236,9 +247,23 @@ The integration workflow is summarized in @fig:pipeline.
       <cost>,
     ),
 
+    // Energy and emissions scenarios
+    flow_node(
+      (3.5, 0),
+      "EIA AEO2026",
+      [New England commercial energy price scenarios],
+      <aeo>,
+    ),
+    flow_node(
+      (2.5, 0),
+      "NLR Cambium 2024",
+      [ISO-NE grid emission rates for climate damages],
+      <cambium>,
+    ),
+
     // Optimization
     flow_node(
-      (3, 1.25),
+      (3, 2),
       "BERDO 2030 cost comparison",
       [
         Thirteen retrofit options and no-retrofit
@@ -248,7 +273,7 @@ The integration workflow is summarized in @fig:pipeline.
       <cmp>,
     ),
     flow_node(
-      (4, 1.25),
+      (4, 2),
       "Optimal building-level decision",
       [
         Minimum-cost option:
@@ -258,12 +283,15 @@ The integration workflow is summarized in @fig:pipeline.
     ),
 
     edge(<berdo>, <match>, "-|>"),
+    edge(<stories>, <match>, "-|>"),
     edge(<comstock>, <match>, "-|>"),
     edge(<btb>, <map>, "-|>"),
     edge(<match>, <emis>, "-|>"),
     edge(<map>, <cost>, "-|>"),
     edge(<emis>, <cmp>, "-|>"),
     edge(<cost>, <cmp>, "-|>"),
+    edge(<aeo>, <cmp>, "-|>"),
+    edge(<cambium>, <cmp>, "-|>"),
     edge(<cmp>, <dec>, "-|>"),
   ),
 
@@ -272,8 +300,8 @@ The integration workflow is summarized in @fig:pipeline.
 
   caption: [
     Data integration and optimization framework
-    for Boston office buildings. BERDO observations are linked to ComStock simulations through property-type-constrained nearest-neighbor matching. Estimated retrofit performance and
-    BTB installation costs support the selection of cost-effective 2030 compliance options.
+    for Boston office buildings. BERDO observations, with story counts estimated from data.boston.gov building and parcel data @boston-buildings @boston-parcels, are linked to ComStock simulations through property-type-constrained nearest-neighbor matching. Estimated retrofit performance,
+    BTB installation costs, AEO energy price scenarios @aeo, and Cambium grid emission rates @cambium support the selection of cost-effective 2030 compliance options.
   ],
 ) <fig:pipeline>
 
@@ -287,9 +315,9 @@ For emissions exceeding the limit, BERDO permits ACPs. The current payment rate 
 
 *Cost optimization.* The proposed framework identifies the most cost-effective retrofit decision for meeting Boston office buildings' 2030 BERDO obligations. Candidate retrofit updates/packages are compared with a no-retrofit alternative using a five-year financial evaluation period (2030--2034).
 
-For each alternative, total modeled cost consists of capital, energy bills, and cumulative Alternative Compliance Payments (ACPs) associated with any remaining excess emissions. Because equipment lasts a median of 21 years, the five-year view charges five years of its equivalent annual cost at a 7% discount rate rather than its full price, and the like-for-like replacement of kept equipment is charged the same way. The baseline analysis assumes constant energy use, energy prices, and ACP rates throughout the evaluation period. The model identifies the lowest five-year-cost alternative for each building. The cheapest retrofit predicted to meet the 2030 emissions standard is also evaluated separately.
+For each alternative, total modeled cost consists of capital, energy bills, and cumulative Alternative Compliance Payments (ACPs) associated with any remaining excess emissions. Because equipment lasts a median of 21 years, the five-year view charges five years of its equivalent annual cost at a 7% real discount rate, the return on private capital in OMB's regulatory guidance @omb-a4, rather than its full price, and the like-for-like replacement of kept equipment is charged the same way. The baseline analysis assumes constant energy use, energy prices, and ACP rates throughout the evaluation period. The model identifies the lowest five-year-cost alternative for each building. The cheapest retrofit predicted to meet the 2030 emissions standard is also evaluated separately.
 
-*Uncertainty.* A 20-year life-cycle cost discounts capital replacements, energy bills under EIA price scenarios @aeo, and ACPs or the social cost of carbon. A Monte Carlo analysis of the 20-year horizon samples installation costs, energy prices, and the leave-one-out retrofit-performance errors to estimate how often each recommendation stays the cheapest and compliant.
+*Uncertainty.* A 20-year life-cycle cost, following the global cost method of EN 15459-1 @en15459 and the EU cost-optimal framework @eu-cost-optimal, discounts capital replacements, energy bills under EIA price scenarios @aeo, and either ACPs or climate damages. The owner's view discounts at the same 7% and pays ACPs. Society's view discounts at 2%, the rate underlying the EPA's social cost of carbon, and prices all emissions at about \$230 per metric ton of CO#sub[2]e in 2020 dollars @epa-scghg, with electricity following NLR Cambium's projected ISO-NE grid emission rates @cambium. A Monte Carlo analysis of the 20-year horizon samples installation costs, energy prices, and the leave-one-out retrofit-performance errors to estimate how often each recommendation stays the cheapest and compliant.
 
 
 

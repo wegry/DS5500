@@ -20,41 +20,63 @@ atb:
   type: web
   author: National Laboratory of the Rockies
   title: Annual Technology Baseline
-  url: https://atb.nlr.gov
+  url:
+    value: https://atb.nlr.gov
+    date: 2026-10-06
 
 aeo:
-  type: web
+  type: report
   author: U.S. Energy Information Administration
-  title: Annual Energy Outlook
-  url: https://www.eia.gov/outlooks/aeo/
+  title: Annual Energy Outlook 2026
+  date: 2026-04
+  url:
+    value: https://www.eia.gov/outlooks/aeo/
+    date: 2026-11-07
 
 cambium:
-  type: web
-  author: National Laboratory of the Rockies
-  title: Cambium
-  url: https://scenarioviewer.nlr.gov
+  type: repository
+  author:
+    - "Gagnon, P."
+    - "Sanchez Perez, P. A."
+    - "Florez, J."
+    - "Morris, J."
+    - "Llerena Velasquez, M."
+    - "Eisenman, J."
+  title: Cambium 2024 Data
+  publisher: National Laboratory of the Rockies
+  url:
+    value: https://scenarioviewer.nlr.gov
+    date: 2026-11-07
 
 egrid:
   type: web
   author: U.S. Environmental Protection Agency
   title: Emissions & Generation Resource Integrated Database (eGRID)
-  url: https://www.epa.gov/egrid
+  url:
+    value: https://www.epa.gov/egrid
+    date: 2026-10-06
 
 pyomo:
   type: web
   title: Pyomo
-  url: https://www.pyomo.org
+  url:
+    value: https://www.pyomo.org
+    date: 2026-10-06
 
 highs:
   type: web
   title: "HiGHS: High Performance Software for Linear Optimization"
-  url: https://highs.dev
+  url:
+    value: https://highs.dev
+    date: 2026-10-06
 
 berdo-standards:
   type: web
   author: City of Boston
   title: Building Emissions Reduction and Disclosure Ordinance
-  url: https://www.boston.gov/departments/environment/berdo
+  url:
+    value: https://www.boston.gov/departments/environment/berdo
+    date: 2026-10-17
 
 btb:
   type: repository
@@ -95,3 +117,39 @@ boston-parcels:
   url:
     value: https://data.boston.gov/dataset/parcels-2025
     date: 2026-11-20
+
+omb-a4:
+  type: report
+  author: U.S. Office of Management and Budget
+  title: "Circular A-4: Regulatory Analysis"
+  date: 2003-09-17
+  url:
+    value: https://georgewbush-whitehouse.archives.gov/omb/circulars/a004/a-4.html
+    date: 2026-11-21
+
+epa-scghg:
+  type: report
+  author: U.S. Environmental Protection Agency
+  title: "Report on the Social Cost of Greenhouse Gases: Estimates Incorporating Recent Scientific Advances"
+  date: 2023-11
+  url:
+    value: https://www.epa.gov/system/files/documents/2023-12/epa_scghg_2023_report_final.pdf
+    date: 2026-11-21
+
+en15459:
+  type: report
+  author: European Committee for Standardization
+  title: "EN 15459-1:2017 Energy Performance of Buildings — Economic Evaluation Procedure for Energy Systems in Buildings — Part 1: Calculation Procedures, Module M1-14"
+  date: 2017
+  url:
+    value: https://www.evs.ee/en/evs-en-15459-1-2017
+    date: 2026-11-21
+
+eu-cost-optimal:
+  type: legislation
+  author: European Commission
+  title: "Commission Delegated Regulation (EU) No 244/2012 Supplementing Directive 2010/31/EU by Establishing a Comparative Methodology Framework for Calculating Cost-Optimal Levels of Minimum Energy Performance Requirements"
+  date: 2012-01-16
+  url:
+    value: https://eur-lex.europa.eu/eli/reg_del/2012/244/oj
+    date: 2026-11-21
