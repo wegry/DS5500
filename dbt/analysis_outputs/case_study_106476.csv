@@ -1,0 +1,29 @@
+perspective,upgrade_id,upgrade_name,meets_standard_at_start,years_over_limit,global_cost_mid_usd,savings_vs_no_upgrade_usd,cost_rank_mid
+financial,57,"Package 4, Package 2 with Standard Performance HP RTU",true,5,2932599.08,270461.41,2
+financial,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,5,2932599.08,270461.41,1
+financial,58,"Package 5, Variable Speed HP RTU or HP Boilers + Economizer + DCV + Energy Recovery",true,5,2987806.28,215254.21,3
+financial,48,Wall Insulation,false,20,3080062.47,122998.02,4
+financial,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,20,3081982.92,121077.57,5
+financial,46,Photovoltaics with 40pct Roof Coverage,false,20,3106108.26,96952.22,6
+financial,49,Roof Insulation,false,20,3178833.64,24226.84,7
+financial,0,No upgrade,false,20,3203060.49,0.0,8
+financial,43,LED Lighting,false,20,3350229.5,-147169.02,9
+financial,56,"Package 3, Package 1 + Package 2",true,5,4983227.53,-1780167.04,10
+financial,54,"Package 1, Wall + Roof Insulation + New Windows",false,20,5019196.98,-1816136.49,11
+financial,52,New Windows,false,20,5160342.9,-1957282.41,12
+financial,12,VRF with DOAS,true,5,6031876.84,-2828816.36,13
+financial,29,Packaged Water-to-Air Geothermal Heat Pump,false,20,12344668.41,-9141607.93,14
+societal,57,"Package 4, Package 2 with Standard Performance HP RTU",true,5,4513891.91,978384.4,2
+societal,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,5,4513891.91,978384.4,1
+societal,58,"Package 5, Variable Speed HP RTU or HP Boilers + Economizer + DCV + Energy Recovery",true,5,4523518.59,968757.72,3
+societal,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,20,5152559.72,339716.59,4
+societal,46,Photovoltaics with 40pct Roof Coverage,false,20,5217266.54,275009.77,5
+societal,48,Wall Insulation,false,20,5235454.9,256821.42,6
+societal,49,Roof Insulation,false,20,5427418.6,64857.71,7
+societal,0,No upgrade,false,20,5492276.31,0.0,8
+societal,43,LED Lighting,false,20,5678564.28,-186287.97,9
+societal,56,"Package 3, Package 1 + Package 2",true,5,6830413.34,-1338137.03,10
+societal,12,VRF with DOAS,true,5,7222705.14,-1730428.83,11
+societal,54,"Package 1, Wall + Roof Insulation + New Windows",false,20,7484950.68,-1992674.37,12
+societal,52,New Windows,false,20,7797469.71,-2305193.4,13
+societal,29,Packaged Water-to-Air Geothermal Heat Pump,false,20,14309179.55,-8816903.24,14

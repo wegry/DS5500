@@ -1,8 +1,9 @@
-"""Report 2's BERDO exploration figures, drawn from the dbt models in one shared style:
+"""Report 2's data figures, drawn from the dbt models in one shared style:
 
-    figures/berdo-completeness.png     Fig. 3, data completeness by building use
-    figures/berdo-mixed-use-cdf.png    Fig. 4, cumulative distribution of the mixed-use share
-    figures/berdo-intensity-cdf.png    Fig. 5, cumulative distribution of reported GHG intensity
+    figures/berdo-completeness.png     data completeness by building use
+    figures/berdo-mixed-use-cdf.png    cumulative distribution of the mixed-use share
+    figures/berdo-intensity-cdf.png    cumulative distribution of reported GHG intensity
+    figures/breakeven-acp.png          over-limit offices a compliant retrofit wins, by ACP rate
 
 Run from the repo root after `dbt build`:
     uv run python report-2/make_berdo_figures.py
@@ -246,11 +247,68 @@ def intensity(con: duckdb.DuckDBPyConnection) -> None:
     save(fig, "berdo-intensity-cdf.png")
 
 
+# ---- break-even ACP ----------------------------------------------------------------
+
+ACP_USD_PER_T = 234
+BREAKEVEN_XMAX = 2000
+
+
+def breakeven(con: duckdb.DuckDBPyConnection) -> None:
+    # the over-limit cohort, and the break-even rate of those with a compliant option
+    cohort = con.sql("""
+        select count(*) from berdo_global_cost
+        where scenario = 'projected' and energy_price = 'mid' and perspective = 'financial'
+          and upgrade_id = 0 and not meets_standard_at_start
+    """).fetchall()[0][0]
+    be = np.sort(np.array([r[0] for r in con.sql(
+        "select breakeven_acp_usd_per_t from analysis_breakeven_acp"
+    ).fetchall()]))
+    n = len(be)
+    today = int((be <= ACP_USD_PER_T).sum())
+    shown = be[be <= BREAKEVEN_XMAX]
+    above = n - len(shown)
+
+    print(f"over-limit offices: {cohort}, with a compliant option: {n}")
+    print(f"compliant cheapest at ${ACP_USD_PER_T}: {today}; above ${BREAKEVEN_XMAX:,}: {above}")
+    print(f"median break-even: ${np.median(be):,.0f}; above $1,000: {int((be > 1000).sum())}")
+
+    # starts at the offices that break even at $0 on the y-axis, as in the mixed-use figure
+    at_zero = int((shown == 0).sum())
+    xs = np.concatenate((shown[at_zero - 1:], [BREAKEVEN_XMAX])) if at_zero else \
+        np.concatenate(([0.0], shown, [BREAKEVEN_XMAX]))
+    ys = np.concatenate((np.arange(max(at_zero, 1), len(shown) + 1), [len(shown)])) if at_zero else \
+        np.concatenate(([0], np.arange(1, len(shown) + 1), [len(shown)]))
+    print(f"compliant cheapest even with no ACP: {at_zero}")
+
+    fig, ax = plt.subplots(figsize=(7.5, 3.4), dpi=220)
+    # the most the curve can reach: offices without a compliant option never tip
+    ax.axhline(n, color=INK_2, linewidth=1, linestyle=(0, (1, 2)), zorder=1)
+    ax.text(BREAKEVEN_XMAX, n + 1.2, f"{cohort - n} of {cohort} offices have no compliant retrofit",
+            ha="right", va="bottom", color=INK_2, fontsize=9.5)
+    ax.axvline(ACP_USD_PER_T, color=INK_2, linewidth=1, linestyle=(0, (4, 3)), zorder=1)
+    ax.text(ACP_USD_PER_T + 25, 2, f"Today's ACP: ${ACP_USD_PER_T}/t", color=INK_2, fontsize=9.5)
+    ax.step(xs, ys, where="post", color=SERIES, linewidth=2)
+    if at_zero:
+        point(ax, 0, at_zero, f"{at_zero} pick it\nwith no ACP", (15, at_zero + 16))
+    point(ax, ACP_USD_PER_T, today, f"{today} of {n} offices with a compliant\noption already pick it",
+          (ACP_USD_PER_T + 180, today - 14))
+    ax.text(BREAKEVEN_XMAX, len(shown) + 1.5, f"{above} more above ${BREAKEVEN_XMAX:,}",
+            ha="right", va="bottom", color=INK_2, fontsize=9.5)
+    ax.set_xlim(0, BREAKEVEN_XMAX)
+    ax.set_ylim(0, cohort + 2)
+    ax.set_yticks([0, 20, 40, 60, cohort])
+    ax.xaxis.set_major_formatter(lambda x, _: f"${x:,.0f}")
+    style_axes(ax, f"Over-limit offices where a compliant retrofit is the owner's cheapest option (of {cohort})",
+               r"ACP rate (\$ per metric ton of CO$_2$e)")
+    save(fig, "breakeven-acp.png")
+
+
 def main() -> None:
     with duckdb.connect(str(DB), read_only=True) as con:
         completeness(con)
         mixed_use(con)
         intensity(con)
+        breakeven(con)
 
 
 if __name__ == "__main__":

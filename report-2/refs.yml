@@ -56,20 +56,6 @@ egrid:
     value: https://www.epa.gov/egrid
     date: 2026-10-06
 
-pyomo:
-  type: web
-  title: Pyomo
-  url:
-    value: https://www.pyomo.org
-    date: 2026-10-06
-
-highs:
-  type: web
-  title: "HiGHS: High Performance Software for Linear Optimization"
-  url:
-    value: https://highs.dev
-    date: 2026-10-06
-
 berdo-standards:
   type: web
   author: City of Boston
@@ -196,3 +182,13 @@ doer-oil:
   url:
     value: https://www.mass.gov/info-details/household-heating-costs
     date: 2026-10-28
+
+omb-m2527:
+  type: report
+  author: "Clark, Jeffrey B."
+  title: 'M-25-27: Guidance Implementing Section 6 of Executive Order 14154, Entitled "Unleashing American Energy"'
+  publisher: U.S. Office of Management and Budget
+  date: 2025-05-05
+  url:
+    value: https://www.whitehouse.gov/wp-content/uploads/2025/02/M-25-27-Guidance-Implementing-Section-6-of-Executive-Order-14154-Entitled-Unleashing-American-Energy.pdf
+    date: 2026-11-21

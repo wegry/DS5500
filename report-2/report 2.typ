@@ -327,7 +327,7 @@ We evaluated installation costs, projected greenhouse gas emissions reductions, 
 
 We examined the lowest-cost overall decision and the lowest-cost compliant retrofit separately, distinguishing financial preference for ACPs from predicted emissions compliance.
 
-BERDO--ComStock matching quality was evaluated using matching distances and differences in building characteristics. Matching configurations (the number of neighbors $k$, inverse-distance weighting, and the district-energy rule) were compared by leave-one-out validation on 618 ComStock office simulations: each simulation's upgrade emissions were predicted from its neighbors and compared with ComStock's result. Sensitivity analysis then varied k from 1 to 20 and compared the 20-year recommendations and cheapest compliant retrofits against k=20, rebuilding costs, emissions, and ACPs for each k under projected grid emissions and mid prices.
+BERDO--ComStock matching quality was evaluated using matching distances and differences in building characteristics. Matching configurations (the number of neighbors $k$, inverse-distance weighting, and the district-energy rule) were compared by leave-one-out validation on 618 ComStock office simulations: each simulation's upgrade emissions were predicted from its neighbors and compared with ComStock's result. Two baselines without matching were tested the same way: pooling every other office simulation, and pooling only those of the same size class. Sensitivity analysis then varied k from 1 to 20 and compared the 20-year recommendations and cheapest compliant retrofits against k=20, rebuilding costs, emissions, and ACPs for each k under projected grid emissions and mid prices. For each building over the limit, we also solved for the ACP rate at which a compliant retrofit becomes the owner's cheapest option.
 
 The analysis has several limitations. ComStock represents simulated rather than observed building systems, while BERDO does not provide a complete inventory of existing equipment. Additionally, the emissions projections hold energy use and non-electric emissions factors constant, and electricity follows BERDO's projected factor rather than an observed grid. Installation costs are estimated from technology-level benchmarks rather than building-specific engineering assessments.
 
@@ -355,9 +355,21 @@ Exploration of the BTB commercial dataset identified installation cost informati
 
 In the integrated analysis, all 297 office buildings were matched to ComStock simulations. Of these, 99 exceed the 2030 emissions standard at today's electricity emissions factor and 81 at BERDO's projected 2030 factor. At k=20, 71 of those 81 buildings had at least one predicted compliant retrofit among thirteen tested options. Over 20 years under projected grid emissions and prices, a retrofit is cheaper than no retrofit for all 81 buildings from both perspectives, and the cheapest option meets the standard for 36 buildings from the owner's perspective and 41 from society's. The owner's cheapest option is most often rooftop PV with roof insulation (Package 12, 46 buildings, 13 of them compliant). Heat pump options are chosen for 18 buildings by the owner and 28 by society. The owner's choice is the same at low, mid, and high BTB installation costs for 40 of the 81 buildings, and society's for 61.
 
+Which matters more, energy prices or how BERDO counts electricity? Of the 99 offices over the limit at today's factor, 18 fall under it in 2030 without a retrofit, only because BERDO's projected factor counts each kilowatt-hour as cleaner @berdo-grid. Prices barely move the answer. With BERDO's factor held at today's level, switching from today's prices to the AEO baseline changes the owner's compliant picks from 42 to 43 of 99. Across AEO's alternative cases, from expensive gas to data-center demand, the owner's cheapest option meets the standard for 34 to 37 of the 81 offices still over the limit, against 36 in the baseline.
+
+How high would the ACP have to be? Every ton over the limit costs the owner the ACP each year, so a higher rate makes compliance cheaper by comparison. For each office over the limit, we found the rate at which a compliant retrofit becomes the owner's cheapest option (@fig:breakeven). Of the 71 offices that have one, 26 would pick it with no ACP at all, and 36 already do at \$234. Another 17 tip below \$1,000 per ton. The last 18 need more than that, five of them more than \$10,000. The other 10 offices have no compliant option among our thirteen, so no rate gets them under the limit.
+
+How stable are these picks? Across 5,000 Monte Carlo draws, the owner's recommendation stays the cheapest in 74% of draws for the average office, and society's in 80%. It holds in at least 90% of draws for 20 offices from the owner's view and 41 from society's, and in fewer than half for 12 and 10.
+
+One building makes this concrete. 24--32 Farnsworth Street (BERDO 106476) is a 78,860 sq ft office in Fort Point that gets 65% of its energy from natural gas. It reports 4.8 kg $"CO"_2"e"$ per square foot, well over the 2030 limit of 3.2. From both the owner's and society's view, its cheapest 20-year option is Package 2, LED lighting with heat pumps, which keeps it under the limit through 2044. Package 4, the same retrofit with a standard-efficiency rooftop heat pump, ties it exactly. Over 20 years, Package 2 saves the owner about \$270,000 against paying ACPs, and society about \$980,000. The owner's cheapest option that stays over the limit, wall insulation, costs about \$150,000 more.
+
+Matching is worth doing. At k=20 the leave-one-out mean absolute error is 6.58 percentage points of emissions reduction, against 8.20 when every other office simulation is pooled and 7.98 when only those of the same size class are. Matching beats pooling by 1.62 points (95% CI 1.36--1.89) and does better for 78% of the held-out simulations.
+
 In leave-one-out validation, adding stories to the distance lowered the mean absolute error at k=20 from 7.05 to 6.58 percentage points of emissions reduction, and the median from 3.80 to 3.00, though the 90th percentile rose from 18.08 to 18.83. Inverse-distance weighting with the district-energy rule remained the best configuration tested, within 0.01 points of its minimum at k=19. Compared with unweighted matching without the rule at the same k, it was 0.10 points better (95% CI 0.01--0.19), and 0.21 points better for district-energy simulations, a borderline difference (95% CI 0.003--0.41). Held-out simulations have their exact story counts, while BERDO buildings have estimates, so the stories term likely helps less in practice.
 
-Compared with k=20, the owner's cheapest compliant retrofit changed for 40 of 69 commonly eligible buildings at k=1, 18 of 70 at k=10, and 6 of 71 at k=19. For society, it changed for 31, 14, and 4.
+The error is not even across upgrades. Heat pump options are the hardest to predict: VRF and geothermal miss by about 14--15 points on average cuts of 20--26%, and Packages 2 and 5 by about 10 points on cuts of 18--20%. Single envelope, lighting, and PV measures miss by 1--3 points. Individual heat pump estimates should be read as rough.
+
+Compared with k=20, the owner's cheapest compliant retrofit changed for 40 of 69 commonly eligible buildings at k=1, 18 of 70 at k=10, and 6 of 71 at k=19. For society, it changed for 31, 14, and 4. Some of these changes matter less than they look. Three of the 18 at k=10 are swaps between Packages 2 and 4, which differ only in the efficiency of the rooftop heat pump and have identical 20-year costs for 49 of the 297 offices.
 
 Two buildings illustrate this sensitivity. For building 104777 (160-170 State Street, Boston), Package 2 was the owner's cheapest compliant retrofit at most k, but Package 5 at k=1 and 4. For building 105302 (2-16 Tremont Street, Boston), roof insulation was the cheapest compliant option at k=1-2, Package 4 at k=3, Package 2 at k=4-13, and wall insulation from k=14 on.
 
@@ -372,6 +384,8 @@ Additionally, the selected buildings set contains both single-use office buildin
 
 The integration and matching sensitivity models have been evaluated for internal consistency and robustness to k. However, observed post-retrofit outcomes are unavailable, so predictive accuracy remains unverified. Installation costs and building-level 20-year cost comparisons have been calculated, but cost assumptions require further validation: the existing equipment's type and age are inferred rather than observed, and incentives such as Mass Save rebates are not included. Multi-year optimization currently remains outside the implemented scope.
 
+The grid assumptions are policy, not physics. BERDO's Review Board reviews the projected factors at least every five years and may change them @berdo-grid, and the RPS rises 1% a year after 2030 only "unless modified by law" @ma-rps. Cambium 2024 was published before the 2025 changes to federal clean-energy tax credits, so society's grid may be cleaner than the one Boston actually gets. Society's view also rests on a number the federal government no longer uses. Since May 2025, it has not been federal policy to maintain a uniform estimate of greenhouse gas damages @omb-m2527, so the \$230 per ton is the EPA's 2023 estimate, not a current one.
+
 // ---- 9: discussion --------------------------------------------------------
 
 = Discussion
@@ -380,13 +394,11 @@ Preliminary exploration of the BERDO dataset highlighted the importance of data 
 
 We evaluated BERDO--ComStock matching using building-characteristic differences and sensitivity to the number of nearest neighbors. Retrofit recommendations changed for some buildings when k varied, particularly where predicted emissions were close to the compliance threshold. Comparing neighbor aggregation methods led us to weight neighbors by inverse distance and to match district-energy buildings only to district-energy simulations, and adding stories estimated from city building footprints and roof heights reduced the leave-one-out error further.
 
-A second direction involves examining methods of addressing the missing information of the BERDO dataset. Further analysis could reveal if missing measurements, such as GHG intensity, can be calculated from related data. Where calculations are not possible, the option of using statistical imputation or predictive modeling could be explored. However, the suitability of these methods would rely on the availability of reliable predictors and the potential uncertainty of estimated data.
+Missing data remains a problem in its own right. 120 of the 420 office records report no GHG intensity. Some of these could be filled from related fields, and imputation could cover the rest, though only as well as the predictors allow.
 
-All things considered, both directions aim to improve the reliability of the resulting decarbonization recommendations. Sensitivity analysis could help determine how differences in matching parameters and assumptions about missing data affect the resulting suggestions.
+Our approach now includes energy bills alongside installation costs over a 20-year horizon, following the EIA's _Annual Energy Outlook_ @aeo price scenarios. Charging every option for its replacements and remaining value over the same horizon, and charging options that keep existing equipment for its like-for-like replacement, avoids penalizing long-lived electrification measures. BERDO's flat ACP per ton remains the main barrier to deeper retrofits, since it gives no extra reward for meeting the standard. At today's \$234, the owner's cheapest option meets the standard for 36 of 81 buildings, against 41 when society's climate damages are counted instead. Raising the rate to \$1,000 would bring the owner's count to 53, but 18 offices would still need more, and 10 have no compliant option at any price.
 
-Our approach now includes energy bills alongside installation costs over a 20-year horizon, following the EIA's _Annual Energy Outlook_ @aeo price scenarios. Charging every option for its replacements and remaining value over the same horizon, and charging options that keep existing equipment for its like-for-like replacement, avoids penalizing long-lived electrification measures. BERDO's flat ACP per ton remains the main barrier to deeper retrofits, since it gives no extra reward for meeting the standard: the owner's cheapest option meets the standard for 36 of 81 buildings, compared with 41 when society's climate damages are counted instead.
-
-Our second missing piece is MACC for a baseline comparison. Our evaluation uses individual upgrades and packages of upgrades. These potential paths will be evaluated as the project progresses, alongside the completion of dataset integration, matching, and optimization.
+Where next? Our first priority is confidence in the predicted outcomes, not more financial detail. The leave-one-out test checks simulations against simulations. Checking against real retrofits would need engineering studies, or BERDO disclosures from buildings before and after an upgrade. Second, the 10 offices without a compliant option need more to test: more ComStock upgrades, priced from BTB. Third, time. The model makes one decision in 2030 and holds equipment prices fixed. Letting costs change year by year, and choosing what to retrofit and when under a budget, is the multi-year roadmap we set out to build. MACC remains the baseline we will compare it against.
 
 // ---- 10: statement of contributions ---------------------------------------
 
@@ -561,3 +573,17 @@ $
 $
 
 where $bb(1)_p$ is one for options that keep the existing equipment. The energy bill is $E_(b,p,t) = sum_f Q_(b,f) r_(b,p,f) c_f pi_(f,t)$, with $Q_(b,f)$ the building's reported use of fuel $f$, $c_f$ its 2025 price, and $pi_(f,t)$ the AEO price index (2025 = 1). The owner's emissions cost is the ACP, $P_(b,p,t) = 0.234 max(0, G_(b,p,t) - S_t A_b)$, where $S_t$ is the standard in force in year $t$ and $A_b$ is floor area. Society's is $P_(b,p,t) = 0.230 tilde(G)_(b,p,t)$, where $tilde(G)$ replaces BERDO's electricity factor index $e_y$ with Cambium's grid emission rate index. Both rates are in dollars per kilogram. Operation and maintenance costs are left at zero, since BTB gives none.
+
+== Break-Even ACP
+
+From the owner's view, an option's 20-year cost is linear in the ACP rate $a$: $C_(b,p)(a) = F_(b,p) + a T_(b,p)$, where $T_(b,p)$ is the present value of its tons over the limit and $F_(b,p)$ is everything else. A compliant option beats another wherever its line is lower. An office's break-even rate is the lowest $a$ at which some compliant option beats every other option, compliant or not (@fig:breakeven).
+
+#figure(
+  image(
+    "figures/breakeven-acp.png",
+    width: 80%,
+  ),
+  caption: [
+    Over-limit offices whose cheapest 20-year option, from the owner's view, meets the 2030 standard, as the ACP rate rises (projected grid emissions and prices, BTB mid costs). Each step is one office's break-even rate. Global cost is linear in the rate, so each break-even rate is found exactly.
+  ],
+) <fig:breakeven>
