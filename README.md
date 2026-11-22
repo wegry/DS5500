@@ -19,6 +19,6 @@ Future work will focus on improving data completeness, validating building-match
 ## Project Materials
 
 - Latest Presentation: [`presentation-2/slides.typ`](presentation-2/slides.typ)
-- Latest Report: [`report-2/proposal 2.typ`](report-2/report 2.typ)
+- Latest Report: [`report-2/proposal 2.typ`](report-2/report%202.typ)
 
 The original project proposal is available in [`report/proposal.typ`](report/proposal.typ).
