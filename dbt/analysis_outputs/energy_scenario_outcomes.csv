@@ -1,15 +1,15 @@
 scenario,label,perspective,offices,under_limit_anyway,no_retrofit,retrofit_over,retrofit_compliant
-berdo_only,BERDO grid schedule only,financial,99,18,0,52,29
+berdo_only,BERDO grid schedule only,financial,99,18,0,51,30
 berdo_only,BERDO grid schedule only,societal,99,18,0,39,42
-frozen,Today's levels,financial,99,0,0,62,37
-frozen,Today's levels,societal,99,0,0,48,51
+frozen,Today's levels,financial,99,0,0,60,39
+frozen,Today's levels,societal,99,0,0,49,50
 higheldmd,Data-center demand (high electricity demand),financial,99,18,0,50,31
 higheldmd,Data-center demand (high electricity demand),societal,99,18,0,39,42
 highogs,Low prices (high oil & gas supply),financial,99,18,0,50,31
-highogs,Low prices (high oil & gas supply),societal,99,18,0,37,44
-lowogs,High prices (low oil & gas supply),financial,99,18,0,48,33
-lowogs,High prices (low oil & gas supply),societal,99,18,0,35,46
-prices_only,AEO prices only,financial,99,0,0,61,38
-prices_only,AEO prices only,societal,99,0,0,49,50
+highogs,Low prices (high oil & gas supply),societal,99,18,0,36,45
+lowogs,High prices (low oil & gas supply),financial,99,18,0,45,36
+lowogs,High prices (low oil & gas supply),societal,99,18,0,34,47
+prices_only,AEO prices only,financial,99,0,0,58,41
+prices_only,AEO prices only,societal,99,0,0,48,51
 projected,AEO baseline prices,financial,99,18,0,50,31
 projected,AEO baseline prices,societal,99,18,0,37,44
