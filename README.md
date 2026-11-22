@@ -4,12 +4,21 @@ DS5500 Data Science Capstone, Northeastern University
 
 **Authors:** Konstantinos Theodoropoulos, Zachary Wegrzyniak, Kateryna Lysytsyna
 
-**Sponsor / stakeholders:** Konstantinos Theodoropoulos
+**Industry Stakeholder:** Debra Shepard, Founder & Principal Consultant, Riverstone Sustainability
 
 ## Summary
 
-Boston's Building Emissions Reduction and Disclosure Ordinance (BERDO) requires large buildings to report their energy use every year and to meet emissions limits that step down over time, reaching net zero by 2050. For each building, there are more candidate retrofit projects (heat pumps, envelope upgrades, LED lighting, rooftop solar, switching off fuel oil) than the available capital allows for. The usual approach ranks projects by cost per ton of CO2 avoided and funds them from the cheapest down. That treats projects as independent and every year as the same, and neither is true.
+Boston's Building Emissions Reduction and Disclosure Ordinance (BERDO) requires large buildings to report their energy consumption every year and comply with increasingly strict greenhouse gas emissions limits, reaching net zero by 2050. For building owners, meeting these requirements presents a financial challenge: determining which decarbonization investments can sufficiently reduce emissions while minimizing long-term costs.
 
-This project aims to identify cost-effective decarbonization options for Boston office buildings by considering BERDO disclosures, ComStock building simulations, and Buildings Technology Baseline (BTB) installation cost data. Preliminary exploration has revealed 290 buildings containing office space with reported emissions intensity, of which 96 currently exceed the 2030 emissions standard. A data integration pipeline was developed to match BERDO buildings with representative ComStock simulations and estimate potential retrofit emissions reductions. Ongoing work focuses on integrating installation costs and optimizing the selection of one of four retrofit packages or Alternative Compliance Payments (ACP) over the 2030-2034 period. The resulting framework aims to support investment decisions for office buildings by balancing emissions reductions, compliance requirements, and budget constraints.
+This project investigates cost-effective decarbonization strategies for Boston office buildings using BERDO disclosures, ComStock building energy simulations, and Buildings Technology Baseline (BTB) installation cost data. By matching real buildings with representative simulations, we estimate the emissions reductions and installation costs of thirteen retrofit options. We then compare their projected 20-year costs, accounting for energy expenses, and either BERDO's Alternative Compliance Payments (ACP) or the societal cost of greenhouse gas emissions.
 
-The full proposal source is in [`report/proposal.typ`](report/proposal.typ).
+Our integrated analysis includes 297 matched office buildings, of which 81 are projected to exceed the 2030 BERDO emissions standard under the city's projected electricity emissions factor. Among these 81 buildings, 71 have at least one modeled retrofit option capable of achieving compliance. However, the lowest-cost option achieves compliance for only 36 buildings from the owner's perspective and 41 when accounting for societal climate damages. These findings highlight the trade-offs between financial incentives and emissions reduction goals, as well as the importance of evaluating retrofit investments on a building-specific basis.
+
+Future work will focus on improving data completeness, validating building-matching accuracy and retrofit cost estimates, and refining the analysis to provide more reliable decarbonization investment recommendations.
+
+## Project Materials
+
+- Latest Presentation: [`presentation-2/slides.typ`](presentation-2/slides.typ)
+- Latest Report: [`report-2/report 2.typ`](report-2/report%202.typ)
+
+The original project proposal is available in [`report/proposal.typ`](report/proposal.typ).
