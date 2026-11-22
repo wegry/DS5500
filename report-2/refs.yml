@@ -114,6 +114,16 @@ boston-assessment:
     value: https://data.boston.gov/dataset/property-assessment
     date: 2026-11-22
 
+bea-deflator:
+  type: repository
+  author: U.S. Bureau of Economic Analysis
+  title: "Gross Domestic Product: Implicit Price Deflator (A191RD3A086NBEA)"
+  publisher: Federal Reserve Bank of St. Louis (FRED)
+  date: 2026-09-30
+  url:
+    value: https://fred.stlouisfed.org/series/A191RD3A086NBEA
+    date: 2026-11-22
+
 omb-a4:
   type: report
   author: U.S. Office of Management and Budget
