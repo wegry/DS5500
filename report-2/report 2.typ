@@ -53,7 +53,7 @@
 How can municipalities work to decarbonize? Part of Boston's approach is to give a financial reason for building owners to cut emissions. Under Boston's Building Emissions Reduction and Disclosure Ordinance (BERDO), residential buildings with 15 or more units and nonresidential
 buildings of 20,000 sq ft or more have to report their energy use
 every year and meet emissions limits that step down over time, reaching net
-zero by 2050 (@fig:berdo-limits) @berdo. The owner of one of these buildings, say an office, has a list of candidate
+zero by 2050 (Appendix, @fig:berdo-limits) @berdo. The owner of one of these buildings, say an office, has a list of candidate
 projects: heat pumps, envelope upgrades, LED retrofits, rooftop solar,
 switching off fuel oil, etc. If a retrofit is not economical, the owner can instead make an _Alternative Compliance Payment_ (ACP). Are ACPs a strong enough incentive to drive decarbonization?
 
@@ -104,7 +104,7 @@ Neither BERDO nor the city's assessor reports stories for commercial buildings, 
 
 For each BERDO building, eligible ComStock simulations are ranked by increasing distance. The closest $k$ simulations are retained, where $k$ is a configurable matching parameter. These models provide representative building characteristics and retrofit performance estimates.
 
-Two refinements were adopted after leave-one-out validation (@tab:matching-validation). Buildings that use district energy are matched only to simulations that also use it, and the others only to simulations without it; otherwise a district-heated building's district emissions receive no upgrade ratio. With $k = 20$, each simulation is weighted by its inverse distance, $w_(b c) = 1 \/ (d(b,c) + 10^(-6))$.
+Two refinements were adopted after leave-one-out validation (Appendix, @tab:matching-validation). Buildings that use district energy are matched only to simulations that also use it, and the others only to simulations without it; otherwise a district-heated building's district emissions receive no upgrade ratio. With $k = 20$, each simulation is weighted by its inverse distance, $w_(b c) = 1 \/ (d(b,c) + 10^(-6))$.
 
 *Retrofit performance estimation.* ComStock baseline and upgrade scenarios are linked using their synthetic building identifiers. For each BERDO building and upgrade, the ratio of total upgraded to baseline energy consumption, weighted by $w_(b c)$, is calculated separately for electricity, natural gas, oil/propane, district heating, and district cooling across the matched simulations. The thirteen upgrades considered are listed in @tab:upgrades.
 
@@ -177,15 +177,15 @@ The recommendations are investment estimates for a decision made in 2030, not ve
 
 == BERDO Coverage
 
-The 2026 BERDO disclosure has 5,591 building records @berdo. Owners report their own data, so completeness varies a lot by building type, and offices are among the most complete (@fig:berdo-heatmap). 416 buildings with a BERDO ID have Office or Financial Office as their largest property type. Medical Office is left out because BERDO holds it to the separate Healthcare standard. 185 of the 416 (44.5%) also have non-office, non-parking space, and half of those give at least 14% of their floor area to other uses (@fig:berdo-types).
+The 2026 BERDO disclosure has 5,591 building records @berdo. Owners report their own data, so completeness varies a lot by building type, and offices are among the most complete (Appendix, @fig:berdo-heatmap). 416 buildings with a BERDO ID have Office or Financial Office as their largest property type. Medical Office is left out because BERDO holds it to the separate Healthcare standard. 185 of the 416 (44.5%) also have non-office, non-parking space, and half of those give at least 14% of their floor area to other uses (Appendix, @fig:berdo-types).
 
-300 of the 420 Office and Financial Office records report GHG intensity, and 102 of them (34.0%) are over the 2030 office standard of 3.2 kg $"CO"_2"e"$ per square foot @berdo-standards (@fig:berdo-GHGvsStandard). A third of reporting offices is a lot of buildings with a decision to make before 2030.
+300 of the 420 Office and Financial Office records report GHG intensity, and 102 of them (34.0%) are over the 2030 office standard of 3.2 kg $"CO"_2"e"$ per square foot @berdo-standards (Appendix, @fig:berdo-GHGvsStandard). A third of reporting offices is a lot of buildings with a decision to make before 2030.
 
 == Matching Accuracy
 
 Matching is worth doing. At k=20 the leave-one-out mean absolute error is 6.58 percentage points of emissions reduction, against 8.20 when every other office simulation is pooled and 7.98 when only those of the same size class are. Matching beats pooling by 1.62 points (95% CI 1.36--1.89) and does better for 78% of the held-out simulations.
 
-Adding stories to the distance lowered the error at k=20 from 7.05 to 6.58 points and the median from 3.80 to 3.00, though the 90th percentile rose from 18.08 to 18.83. Inverse-distance weighting with the district-energy rule is still the best configuration we tested, within 0.01 points of its minimum at k=19. Against unweighted matching without the rule, it is 0.10 points better (95% CI 0.01--0.19), and 0.21 points better for district-energy simulations, a borderline difference (95% CI 0.003--0.41).
+Adding stories to the distance lowered the error at k=20 from 7.05 to 6.58 points and the median from 3.80 to 3.00, though the 90th percentile rose from 18.08 to 18.83. Inverse-distance weighting with the district-energy rule was the best configuration we tested (Appendix, @tab:matching-validation).
 
 The error is not even across upgrades. Heat pump options are the hardest to predict: VRF and geothermal miss by about 14--15 points on average cuts of 20--26%, and Packages 2 and 5 by about 10 points on cuts of 18--20%. Single envelope, lighting, and PV measures miss by 1--3 points.
 
@@ -197,7 +197,7 @@ One building makes this concrete. 24--32 Farnsworth Street (BERDO 106476) is a 7
 
 Which matters more, energy prices or how BERDO counts electricity? Of the 99 offices over the limit at today's factor, 18 fall under it in 2030 without a retrofit, only because BERDO's projected factor counts each kilowatt-hour as cleaner @berdo-grid. Prices barely move the answer. With BERDO's factor held at today's level, switching from today's prices to the AEO baseline changes the owner's compliant picks from 42 to 43 of 99. Across AEO's alternative cases, from expensive gas to data-center demand, the owner's cheapest option meets the standard for 34 to 37 of the 81 offices still over the limit, against 36 in the baseline.
 
-How high would the ACP have to be? Every ton over the limit costs the owner the ACP each year, so a higher rate makes compliance cheaper by comparison. For each office over the limit, we found the rate at which a compliant retrofit becomes the owner's cheapest option (@fig:breakeven). Of the 71 offices that have one, 26 would pick it with no ACP at all, and 36 already do at \$234. Another 17 tip below \$1,000 per ton. The last 18 need more than that, five of them more than \$10,000.
+How high would the ACP have to be? Every ton over the limit costs the owner the ACP each year, so a higher rate makes compliance cheaper by comparison. For each office over the limit, we found the rate at which a compliant retrofit becomes the owner's cheapest option (Appendix, @fig:breakeven). Of the 71 offices that have one, 26 would pick it with no ACP at all, and 36 already do at \$234. Another 17 tip below \$1,000 per ton. The last 18 need more than that, five of them more than \$10,000.
 
 How stable are these picks? Across 5,000 Monte Carlo draws, the owner's recommendation stays the cheapest in 74% of draws for the average office, and society's in 80%. It holds in at least 90% of draws for 20 offices from the owner's view and 41 from society's, and in fewer than half for 12 and 10.
 
@@ -208,7 +208,15 @@ Compared with k=20, the owner's cheapest compliant retrofit changed for 40 of 69
 Two buildings show how this plays out. For 104777 (160-170 State Street), Package 2 was the owner's cheapest compliant retrofit at most k, but Package 5 at k=1 and 4. For 105302 (2-16 Tremont Street), roof insulation was the cheapest compliant option at k=1-2, Package 4 at k=3, Package 2 at k=4-13, and wall insulation from k=14 on. The recommendations settle as k grows, and they move most for buildings close to the limit.
 
 
-= Limitations <sec:limitations>
+// ---- 9: discussion --------------------------------------------------------
+
+= Discussion
+
+Did we meet our goals? Partly. We set out to help owners decide which projects to do and when, and to ask whether ACPs are a strong enough incentive. The first and last we can answer. For each of the 81 offices over the limit, the model gives the cheapest 20-year option from the owner's and society's view, and at \$234 per ton the ACP is not enough to make compliance the owner's cheapest choice for most of them. We did not get to the "when." The model makes one decision in 2030, so it cannot say whether to insulate first and add heat pumps later, even though the order matters.
+
+Three results stand out. First, matching on building characteristics transfers retrofit effects better than pooling, but unevenly: envelope, lighting, and PV estimates are close, and heat pump estimates are rough. Second, how BERDO counts electricity matters more than energy prices. 18 of the 99 offices over the limit today fall under it in 2030 without doing anything, while AEO's price cases move the owner's compliant count by no more than two. Third, for owners, the ACP decides. At today's \$234, the owner's cheapest option meets the standard for 36 of 81 buildings, against 41 when society's climate damages are counted instead. Raising the rate to \$1,000 would bring the owner's count to 53, but 18 offices would still need more, and 10 have no compliant option at any price. A flat payment per ton gives no extra reward for getting under the limit, so for many owners paying is the cheaper choice. For the city, the ACP rate does more than energy prices to set how many owners comply.
+
+== Limitations <sec:limitations>
 
 *We validated against simulations, not buildings.* The leave-one-out test asks how well one ComStock simulation predicts another. We have no observed post-retrofit outcomes, so how closely a real office would track its prediction is unknown. That matters most where the model leans hardest. For 46 of the 71 offices with a compliant option, the owner's cheapest compliant option is a heat pump option, the kind we predict worst (10--15 points of error). Those recommendations are only as good as that error allows.
 
@@ -222,13 +230,9 @@ Two buildings show how this plays out. For 104777 (160-170 State Street), Packag
 
 *One decision, once.* The model picks one option in 2030 and holds it for 20 years. It cannot stage work (insulation now, heat pumps when the boiler fails), respect a budget, or plan across a portfolio of buildings. Energy use apart from the retrofit's effect is held constant. And 10 of the 81 offices have no compliant option among the thirteen we tested, so for them the model can only say which partial retrofit costs least.
 
-// ---- 9: discussion --------------------------------------------------------
+== Next Steps
 
-= Discussion
-
-Three results stand out. First, matching on building characteristics transfers retrofit effects better than pooling, but unevenly: envelope, lighting, and PV estimates are close, and heat pump estimates are rough. Second, how BERDO counts electricity matters more than energy prices. 18 of the 99 offices over the limit today fall under it in 2030 without doing anything, while AEO's price cases move the owner's compliant count by no more than two. Third, for owners, the ACP decides. At today's \$234, the owner's cheapest option meets the standard for 36 of 81 buildings, against 41 when society's climate damages are counted instead. Raising the rate to \$1,000 would bring the owner's count to 53, but 18 offices would still need more, and 10 have no compliant option at any price. A flat payment per ton gives no extra reward for getting under the limit, so for many owners paying is the cheaper choice.
-
-Where next? Our first priority is confidence in the predicted outcomes, not more financial detail. HVAC labels are the biggest gain available to the match, if a source accurate enough exists; building permits are one candidate. Checking against real retrofits would need engineering studies, or BERDO disclosures from buildings before and after an upgrade. Second, the 10 offices without a compliant option need more to test: more ComStock upgrades, priced from BTB. Third, time. Letting costs change year by year, and choosing what to retrofit and when under a budget, is the multi-year roadmap we set out to build.
+Our first priority is confidence in the predicted outcomes, not more financial detail. HVAC labels are the biggest gain available to the match, if a source accurate enough exists; building permits are one candidate. Checking against real retrofits would need engineering studies, or BERDO disclosures from buildings before and after an upgrade. Second, the 10 offices without a compliant option need more to test: more ComStock upgrades, priced from BTB. Third, time. Letting costs change year by year, and choosing what to retrofit and when under a budget, is the multi-year roadmap we set out to build.
 
 // ---- 10: statement of contributions ---------------------------------------
 
@@ -487,6 +491,8 @@ Office buildings showed relatively high completeness of floor-area and energy-co
 == Matching Validation
 
 Each of 618 ComStock office simulations in turn plays a BERDO building: it is hidden, its upgrade emissions are predicted from its $k$ nearest other simulations, and the prediction is compared with ComStock's simulated result across the thirteen upgrades. This measures how well retrofit effects transfer between simulated buildings, not real-world accuracy.
+
+Inverse-distance weighting with the district-energy rule comes within 0.01 points of its minimum error at $k = 19$. Against unweighted matching without the rule at $k = 20$, it is 0.10 points better (95% CI 0.01--0.19), and 0.21 points better for district-energy simulations, a borderline difference (95% CI 0.003--0.41).
 
 // two decimals, keeping trailing zeros
 #let two(x) = {
