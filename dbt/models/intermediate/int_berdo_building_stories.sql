@@ -8,7 +8,10 @@
 --   stories_from_height: mean roof height / var("floor_to_floor_ft"). Robust to footprint
 --                        errors, but the heights are from 2010.
 -- stories uses the GFA estimate when the two agree within a factor of 1.6, else the height
--- estimate. Of the 252 matched offices with both, 218 agree (log correlation 0.89, median
+-- estimate. A GFA estimate with no height to check it (the footprint postdates the 2010
+-- LiDAR) is kept only up to var("max_stories"); above that the parcel holds only a fragment
+-- of the building (BERDO 104376: 110,005 sq ft over a 175 sq ft footprint = 630 stories),
+-- so the building gets no estimate. Of the 252 matched offices with both, 218 agree (log correlation 0.89, median
 -- GFA / height ratio 1.10).
 -- Grain: one row per BERDO building on a parcel with a building footprint.
 with buildings as (
@@ -44,7 +47,8 @@ chosen as (
                 then 'gfa_over_footprint'
             when stories_from_height > 0 then 'roof_height'
             -- no measured height to check it against
-            when stories_from_gfa > 0 then 'gfa_over_footprint_unchecked'
+            when stories_from_gfa > 0 and stories_from_gfa <= {{ var("max_stories") }}
+                then 'gfa_over_footprint_unchecked'
         end as stories_source
     from estimates
 )

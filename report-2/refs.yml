@@ -91,6 +91,7 @@ boston-buildings:
   type: repository
   author: City of Boston Planning Department
   title: Boston Buildings with Roof Breaks
+  date: 2025-09-29
   url:
     value: https://data.boston.gov/dataset/boston-buildings-with-roof-breaks
     date: 2026-11-20
@@ -103,6 +104,15 @@ boston-parcels:
   url:
     value: https://data.boston.gov/dataset/parcels-2025
     date: 2026-11-20
+
+boston-assessment:
+  type: repository
+  author: City of Boston Assessing Department
+  title: Property Assessment, FY2026
+  date: 2025-12-26
+  url:
+    value: https://data.boston.gov/dataset/property-assessment
+    date: 2026-11-22
 
 omb-a4:
   type: report

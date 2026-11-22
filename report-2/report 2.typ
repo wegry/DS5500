@@ -70,7 +70,7 @@ Our goal is to develop a decision-support tool that helps building owners in Bos
 
 == Data
 
-This project uses three publicly available data sources: Boston's Building Emissions Reduction and Disclosure Ordinance (BERDO) disclosures, National Lab of the Rockies (NLR) ComStock, and the NLR 2024 Buildings Technology Baseline (BTB).
+This project uses three main publicly available data sources: Boston's Building Emissions Reduction and Disclosure Ordinance (BERDO) disclosures, National Lab of the Rockies (NLR) ComStock, and the NLR 2024 Buildings Technology Baseline (BTB). City of Boston building, parcel, and assessing data supply the building geometry that BERDO lacks.
 
 *BERDO* provides building-level information, including property type, gross floor area, energy consumption by fuel, and greenhouse gas emissions @berdo. The analysis focuses on Boston office buildings because these buildings have a relatively high emissions reporting rate. Records are prepared using dbt to standardize property types for storage in DuckDB, convert the fuels BERDO reports in kBtu (natural gas, district energy, and oil/propane) to kWh to match electricity, aggregate related fuel categories, and identify missing or inconsistent values. BERDO provides:
 - the observed building characteristics
@@ -80,6 +80,8 @@ This project uses three publicly available data sources: Boston's Building Emiss
 *ComStock* provides simulated commercial building characteristics, baseline energy consumption, and estimates of the impacts of energy-efficiency upgrades @comstock. Our data flow uses the Suffolk County basic annual results and full metadata tables, covering the baseline and the upgrades in @tab:upgrades. Energy measurements are standardized, and weighted energy consumption values are converted to per-building quantities using ComStock simulation weights.
 
 *BTB* provides technology-level performance and installation cost estimates for building efficiency measures @btb. Its commercial dataset contains cost parameters for technologies such as lighting, building envelope improvements, and HVAC equipment. We use these data to estimate the installation costs of the components of the thirteen retrofit options in @tab:upgrades, and of the like-for-like equipment that options without heating and cooling upgrades must eventually replace.
+
+*City of Boston data* give each building's shape. The Planning Department's roof outlines have one polygon per roof section, with a roof height recorded for 2010 @boston-buildings. The city created the outlines from a 2011 flyover and updates them from aerial imagery and LiDAR, so some newer buildings have a footprint but no height. The Assessing Department's 2025 parcels @boston-parcels place each roof section on a parcel, which BERDO identifies by its tax parcel ID. Together they give the story estimates used in matching. The FY2026 property assessment @boston-assessment, keyed by the same parcel ID, gives each building's year built. It is used only to explain missing story estimates (Appendix, Story Estimates).
 
 == Data Integration and Optimization
 
@@ -98,7 +100,7 @@ $
 
 where $A$ denotes gross floor area, $"EUI"$ represents site energy use intensity, and $s$ represents the share of energy consumption attributed to each fuel category. The fuel categories include electricity, natural gas, district energy, and oil/propane. $S$ is the number of stories, which sets how much of a building's envelope is roof rather than wall.
 
-Neither BERDO nor the city's assessor reports stories for commercial buildings, so we estimate them from the city's building roof outlines, which carry 2010 LiDAR roof heights @boston-buildings, joined to the 2025 parcels @boston-parcels. A building's stories are its floor area divided by its parcel's footprint when that agrees within a factor of 1.6 with roof height divided by a 13 ft floor-to-floor height, and the height estimate otherwise. The two estimates agree for 218 of the 252 offices with both. Of the 297 offices, 267 receive an estimate; for the other 30 the stories term is zero for every candidate.
+Neither BERDO nor the city's assessor reports stories for commercial buildings, so we estimate them from the city's building roof outlines, which carry roof heights recorded for 2010 @boston-buildings, joined to the 2025 parcels @boston-parcels. A building's stories are its floor area divided by its parcel's footprint when that agrees within a factor of 1.6 with roof height divided by a 13 ft floor-to-floor height, and the height estimate otherwise. The two estimates agree for 218 of the 252 offices with both. Of the 297 offices, 266 receive an estimate; for the other 31 the stories term is zero for every candidate. The appendix (Story Estimates) describes the buildings the method misses.
 
 For each BERDO building, eligible ComStock simulations are ranked by increasing distance. The closest $k$ simulations are retained, where $k$ is a configurable matching parameter. These models provide representative building characteristics and retrofit performance estimates.
 
@@ -181,7 +183,7 @@ The integration workflow is summarized in @fig:pipeline.
       (0, 1),
       "Boston buildings and parcels",
       [
-        data.boston.gov Roof outlines, LiDAR heights, and parcels;
+        data.boston.gov roof outlines, roof heights, and parcels;
         estimated stories
       ],
       <stories>,
@@ -349,7 +351,7 @@ Exploration of the BTB commercial dataset identified installation cost informati
 
 == Integration and Financial Sensitivity
 
-In the integrated analysis, all 297 office buildings were matched to ComStock simulations. Of these, 99 exceed the 2030 emissions standard at today's electricity emissions factor and 81 at BERDO's projected 2030 factor. At k=20, 71 of those 81 buildings had at least one predicted compliant retrofit among thirteen tested options. Over 20 years under projected grid emissions and prices, a retrofit is cheaper than no retrofit for all 81 buildings from both perspectives, and the cheapest option meets the standard for 36 buildings from the owner's perspective and 41 from society's. The owner's cheapest option is most often rooftop PV with roof insulation (Package 12, 46 buildings, 13 of them compliant). Heat pump options are chosen for 18 buildings by the owner and 28 by society. The owner's choice is the same at low, mid, and high BTB installation costs for 40 of the 81 buildings, and society's for 61.
+In the integrated analysis, all 297 office buildings were matched to ComStock simulations. Of these, 99 exceed the 2030 emissions standard at today's electricity emissions factor and 81 at BERDO's projected 2030 factor. At k=20, 71 of those 81 buildings had at least one predicted compliant retrofit among thirteen tested options. Over 20 years under projected grid emissions and prices, a retrofit is cheaper than no retrofit for all 81 buildings from both perspectives, and the cheapest option meets the standard for 36 buildings from the owner's perspective and 41 from society's. The owner's cheapest option is most often rooftop PV with roof insulation (Package 12, 46 buildings, 13 of them compliant). Heat pump options are chosen for 18 buildings by the owner and 27 by society. The owner's choice is the same at low, mid, and high BTB installation costs for 41 of the 81 buildings, and society's for 62.
 
 Which matters more, energy prices or how BERDO counts electricity? Of the 99 offices over the limit at today's factor, 18 fall under it in 2030 without a retrofit, only because BERDO's projected factor counts each kilowatt-hour as cleaner @berdo-grid. Prices barely move the answer. With BERDO's factor held at today's level, switching from today's prices to the AEO baseline changes the owner's compliant picks from 42 to 43 of 99. Across AEO's alternative cases, from expensive gas to data-center demand, the owner's cheapest option meets the standard for 34 to 37 of the 81 offices still over the limit, against 36 in the baseline.
 
@@ -536,6 +538,14 @@ Each of 618 ComStock office simulations in turn plays a BERDO building: it is hi
   ],
   placement: none,
 ) <tab:matching-validation>
+
+== Story Estimates
+
+Stories come from the city's roof outlines, whose heights are recorded for 2010 @boston-buildings, placed on the 2025 parcels @boston-parcels. Of the 297 offices, 218 use floor area over footprint, confirmed by roof height; 45 use roof height, because the two disagree or the parcel holds more than one BERDO building; 3 use floor area over footprint with no height to check it; and 31 have no estimate.
+
+The outlines have been updated since 2010, but the newer footprints carry no height. These skew new. By the FY2026 assessor's year built @boston-assessment, 41 of the 110 BERDO buildings whose footprint has no measured height and whose year is known (37%) were built in 2010 or later, against 7% of buildings with a measured height. Their floor-area estimate is used unchecked, which fails when the parcel holds only a fragment of a building. BERDO 104376, built in 1914, has 110,005 sq ft over a 175 sq ft fragment, or 630 stories. An unchecked estimate above 60 stories, the height of Boston's tallest building, is therefore discarded, and 104376 joins the offices without an estimate. Its matches and recommendations are the only ones affected. At $k = 20$, the owner's cheapest option moved from VRF to Package 5 and society's from VRF to Package 12; none of them meets the 2030 standard.
+
+The other 30 offices without an estimate have no roof section on their parcel. For 16, the parcel ID, a condominium or sub-parcel ID that does not end in 000, has no polygon in the 2025 parcel layer. For the other 14, no roof section's interior point falls inside the parcel, so their building is counted toward neighboring parcels. These are not mainly new buildings: the median year built is 1951, and 13 of the 26 with a year were built before 1920. They are matched on size, EUI, and fuel shares alone.
 
 == Retrofit Emissions Estimation
 

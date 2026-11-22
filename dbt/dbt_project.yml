@@ -36,6 +36,9 @@ vars:
   # floor-to-floor height used to turn roof height into stories (int_berdo_building_stories);
   # 13 ft is the DOE medium and large office prototypes' floor-to-floor height
   floor_to_floor_ft: 13
+  # upper bound on an unchecked GFA / footprint stories estimate: 200 Clarendon, Boston's
+  # tallest building, has 60 stories
+  max_stories: 60
   # BERDO property types to match to ComStock models (via the crosswalk seed)
   match_property_types: ["Office", "Financial Office"]
   # nearest ComStock models per BERDO building

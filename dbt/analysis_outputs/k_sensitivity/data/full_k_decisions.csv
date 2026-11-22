@@ -47,7 +47,7 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 1,104156,46,Photovoltaics with 40pct Roof Coverage,false,3.794340811,206572.89,31118.54,743945.3,1005752.37
 1,104209,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.810704519,193681.92,19945.45,427953.15,615016.66
 1,104256,58,"Package 5, Variable Speed HP RTU or HP Boilers + Economizer + DCV + Energy Recovery",false,3.243030297,89786.04,292.0,413644.3,461868.73
-1,104376,48,Wall Insulation,false,4.060801328,107218.12,98478.54,1627512.92,1763561.1
+1,104376,58,"Package 5, Variable Speed HP RTU or HP Boilers + Economizer + DCV + Energy Recovery",false,3.463761606,338824.36,21481.29,1518656.0,1721128.11
 1,104383,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,11.030230906,52547.88,180637.07,936897.77,1328684.04
 1,104581,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.418421568,1289868.11,45533.71,5263578.66,6220428.74
 1,104777,48,Wall Insulation,false,4.37469583,116056.74,35188.34,517965.18,698199.27
@@ -128,7 +128,7 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 2,104156,46,Photovoltaics with 40pct Roof Coverage,false,3.766732149,229447.17,29515.85,732937.12,981719.75
 2,104209,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.842495883,193681.92,21231.17,424487.86,607889.59
 2,104256,48,Wall Insulation,false,3.604972413,54388.19,10139.6,429476.41,458673.84
-2,104376,48,Wall Insulation,false,4.06194022,110446.11,98621.43,1627992.92,1765315.09
+2,104376,48,Wall Insulation,false,3.88454563,105689.8,75737.72,1596060.28,1708832.11
 2,104383,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,10.991073154,56863.63,179737.06,932506.61,1239444.2
 2,104581,46,Photovoltaics with 40pct Roof Coverage,false,3.643559344,959193.75,134967.02,5740813.28,6787715.81
 2,104777,48,Wall Insulation,false,4.543944223,102854.81,40823.53,525544.19,744529.26
@@ -209,7 +209,7 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 3,104156,46,Photovoltaics with 40pct Roof Coverage,false,3.764771016,238907.37,29402.0,732155.18,985820.95
 3,104209,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.833626519,193681.92,20940.51,420747.77,604335.92
 3,104256,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.721776404,160050.72,14910.38,381955.74,463854.48
-3,104376,48,Wall Insulation,false,4.011253345,124426.48,92115.23,1616657.03,1752371.78
+3,104376,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.900865583,487010.87,80149.2,1441335.24,1725320.2
 3,104383,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,10.889646507,61415.15,177435.51,919081.06,1220125.4
 3,104581,46,Photovoltaics with 40pct Roof Coverage,false,3.665259816,873019.42,143485.67,5799139.76,6860907.69
 3,104777,48,Wall Insulation,false,4.452451857,109122.72,37787.84,520582.56,725094.89
@@ -290,7 +290,7 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 4,104156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.666198083,284694.92,23318.88,717923.04,971978.87
 4,104209,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.823720415,193681.92,20571.75,419622.36,598528.95
 4,104256,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.813194291,136236.19,17878.35,395672.6,470571.87
-4,104376,48,Wall Insulation,false,4.011511071,123878.94,92139.54,1617314.56,1752861.75
+4,104376,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.858080597,581688.33,74897.59,1415339.18,1733699.27
 4,104383,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,10.895481589,59605.75,177568.96,919781.49,1229558.71
 4,104581,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.584200262,1028907.95,109966.52,5698792.17,6720428.21
 4,104777,48,Wall Insulation,false,4.475570341,101737.83,38554.46,521872.88,721728.55
@@ -371,7 +371,7 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 5,104156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.645602279,288735.72,22098.65,711422.44,963269.87
 5,104209,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.791354333,193681.92,19409.68,412987.9,585118.86
 5,104256,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.833396854,123020.8,18534.2,398707.22,468731.1
-5,104376,48,Wall Insulation,false,3.948856054,139836.84,84091.34,1603696.11,1736786.81
+5,104376,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.803637572,643091.73,68121.0,1388686.98,1725970.55
 5,104383,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,10.820192875,64842.37,175868.78,909244.98,1204602.05
 5,104581,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.579784076,1012098.65,108174.79,5690944.26,6705494.53
 5,104777,48,Wall Insulation,false,4.460035111,100969.17,38043.26,520682.3,709002.84
@@ -452,7 +452,7 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 6,104156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.660880667,284707.61,22968.81,718678.41,969472.61
 6,104209,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.826874484,193681.92,20637.13,423580.69,595387.63
 6,104256,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.810138651,124065.48,17786.06,394754.51,464467.51
-6,104376,48,Wall Insulation,false,3.924913844,142032.17,81010.96,1598829.54,1729609.12
+6,104376,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.817147137,616533.76,69766.26,1397781.58,1725594.71
 6,104383,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,10.780516336,66030.61,174971.68,903769.5,1208819.82
 6,104581,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.564078163,1046613.53,101954.04,5652555.53,6662652.87
 6,104777,48,Wall Insulation,false,4.470885235,99181.76,38405.73,521069.48,704904.49
@@ -533,7 +533,7 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 7,104156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.693893256,277443.73,24907.98,730258.6,985168.61
 7,104209,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.811218638,201960.35,20073.53,420474.43,595319.95
 7,104256,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.824801042,117640.47,18236.49,398655.92,466130.2
-7,104376,48,Wall Insulation,false,3.932417839,144392.35,81976.03,1600380.77,1732952.44
+7,104376,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.826422233,592019.49,70941.39,1400910.33,1719638.28
 7,104383,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,10.758721628,66907.0,174474.83,901043.01,1201969.3
 7,104581,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.565455701,1048431.68,102479.27,5657332.65,6676362.83
 7,104777,48,Wall Insulation,false,4.469191457,92016.92,38352.67,520720.53,694575.12
@@ -614,7 +614,7 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 8,104156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.719562175,274835.25,26398.07,740493.36,988187.95
 8,104209,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.79643163,208493.66,19543.55,417378.9,595418.97
 8,104256,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.82018916,118717.0,18102.1,396944.61,464735.07
-8,104376,48,Wall Insulation,false,3.980154376,132931.34,88106.71,1610839.19,1745525.55
+8,104376,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.757082238,723913.33,62211.39,1373745.29,1738946.69
 8,104383,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,10.74136851,66351.98,174086.31,898382.89,1188933.17
 8,104581,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.583614422,1002903.72,109753.1,5696072.31,6744081.93
 8,104777,48,Wall Insulation,false,4.46857142,91608.31,38333.52,520570.72,684540.44
@@ -695,7 +695,7 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 9,104156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.710031889,277527.25,25813.52,738868.65,984941.58
 9,104209,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.798781085,207540.49,19634.94,417373.6,595906.05
 9,104256,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.787920009,133209.75,17066.81,391280.86,464101.9
-9,104376,48,Wall Insulation,false,3.973005815,134729.35,87191.93,1609048.06,1743449.67
+9,104376,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.756975419,720296.28,62255.96,1369737.16,1733469.23
 9,104383,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,10.72987166,65898.65,173821.73,897116.8,1183323.23
 9,104581,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.571516305,1008855.54,104920.55,5669322.37,6699761.54
 9,104777,48,Wall Insulation,false,4.439356244,91727.25,37431.16,513511.87,668602.95
@@ -776,7 +776,7 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 10,104156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.707432451,279878.85,25652.07,738564.92,983570.45
 10,104209,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.784947718,212553.63,19131.18,415028.05,594413.51
 10,104256,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.771463456,137373.65,16547.98,387785.29,461830.26
-10,104376,48,Wall Insulation,false,3.992273765,127995.94,89669.12,1613087.83,1747607.22
+10,104376,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.776396241,697362.54,64747.84,1374147.92,1730773.08
 10,104383,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,10.746868025,64301.15,174206.01,899463.33,1184652.32
 10,104581,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.563721239,1029006.44,101857.54,5648564.25,6648286.07
 10,104777,48,Wall Insulation,false,4.465523569,90884.06,38311.2,513965.33,664770.29
@@ -857,7 +857,7 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 11,104156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.707573714,273844.32,25656.79,738863.43,980679.48
 11,104209,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.796636727,206487.31,19537.96,418316.74,594961.36
 11,104256,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.754356513,140857.57,16004.4,384432.87,459392.44
-11,104376,48,Wall Insulation,false,3.985558418,130411.81,88806.29,1611643.55,1746146.64
+11,104376,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.776626568,707170.34,64819.44,1371325.53,1732127.3
 11,104383,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,10.732493139,66240.07,173884.16,897259.75,1177044.72
 11,104581,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.559182283,1021873.58,100067.88,5636908.67,6626744.02
 11,104777,48,Wall Insulation,false,4.481449805,88567.95,38836.35,515096.86,675391.8
@@ -938,7 +938,7 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 12,104156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.702870437,272065.14,25376.48,737493.81,976333.07
 12,104209,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.797877517,205838.4,19578.7,418834.56,595906.12
 12,104256,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.760939722,139850.68,16222.18,385151.8,459907.72
-12,104376,48,Wall Insulation,false,3.986928033,132413.31,88981.45,1611993.99,1747373.57
+12,104376,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.782193431,685503.7,65588.18,1368867.5,1721369.55
 12,104383,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,10.722537831,66716.33,173653.62,896262.85,1173394.14
 12,104581,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.557006601,1057938.08,99186.52,5632948.5,6618984.08
 12,104777,48,Wall Insulation,false,4.465591694,88473.25,38350.86,510912.52,665263.28
@@ -1019,7 +1019,7 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 13,104156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.702026554,273748.94,25319.71,737697.86,978715.17
 13,104209,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.788243171,209876.83,19225.16,417387.99,592394.18
 13,104256,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.760647761,138770.09,16217.2,384808.65,459107.32
-13,104376,48,Wall Insulation,false,3.978973561,131881.61,87956.06,1610513.01,1744680.89
+13,104376,58,"Package 5, Variable Speed HP RTU or HP Boilers + Economizer + DCV + Energy Recovery",false,3.431979738,338794.42,17424.6,1522045.0,1720446.29
 13,104383,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,10.693422743,68197.23,172989.67,892635.64,1168171.52
 13,104581,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.558154194,1058895.71,99646.24,5635394.71,6606648.44
 13,104777,48,Wall Insulation,false,4.525098305,88127.83,40325.48,514122.64,679736.9
@@ -1100,7 +1100,7 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 14,104156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.723053595,266277.33,26557.96,744857.6,985808.54
 14,104209,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.776548172,213502.69,18803.56,415108.41,591380.23
 14,104256,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.760876315,140425.28,16222.8,384963.94,459960.98
-14,104376,48,Wall Insulation,false,3.987774537,125660.78,89084.18,1612589.12,1745705.32
+14,104376,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.797793991,662644.99,67499.9,1378565.71,1723412.08
 14,104383,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,10.688738026,69513.66,172878.66,892341.14,1171343.24
 14,104581,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.543711175,1087376.81,93824.38,5607101.97,6586301.88
 14,104777,48,Wall Insulation,false,4.523726232,87523.94,40286.1,513546.32,674235.3
@@ -1181,7 +1181,7 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 15,104156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.734029461,264808.42,27195.12,749233.92,984777.33
 15,104209,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.780554203,216792.77,18971.72,414246.52,591642.69
 15,104256,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.767145561,134864.98,16431.69,385548.71,458427.41
-15,104376,48,Wall Insulation,false,3.987015783,126026.47,88987.87,1612345.57,1745493.59
+15,104376,58,"Package 5, Variable Speed HP RTU or HP Boilers + Economizer + DCV + Energy Recovery",false,3.434787949,339818.38,17795.26,1521471.96,1720797.46
 15,104383,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,10.67637494,69083.85,172601.25,890487.97,1168168.75
 15,104581,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.541969154,1087014.62,93125.35,5603470.7,6583654.21
 15,104777,48,Wall Insulation,false,4.525848758,87343.8,40351.09,514105.13,674993.4
@@ -1262,7 +1262,7 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 16,104156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.730844095,263306.91,27004.14,748385.29,978958.81
 16,104209,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.778086815,215867.67,18882.23,413802.48,591470.8
 16,104256,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.7642375,131919.78,16335.82,385209.55,456759.67
-16,104376,48,Wall Insulation,false,3.996416683,124168.63,90196.6,1614309.49,1748015.25
+16,104376,58,"Package 5, Variable Speed HP RTU or HP Boilers + Economizer + DCV + Energy Recovery",false,3.426747094,339748.55,16756.32,1520139.55,1718388.21
 16,104383,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,10.638775539,71689.2,171741.63,885955.47,1161787.51
 16,104581,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.541051871,1086673.25,92769.89,5600685.01,6581650.78
 16,104777,48,Wall Insulation,false,4.538276801,85657.66,40764.33,514707.57,672323.5
@@ -1343,7 +1343,7 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 17,104156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.734740528,258483.56,27230.27,749942.63,979332.68
 17,104209,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.770609184,220439.89,18617.26,412027.52,589788.37
 17,104256,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.769639708,131790.3,16498.89,386839.03,458498.03
-17,104376,48,Wall Insulation,false,4.00001194,124416.31,90659.04,1615049.12,1749304.11
+17,104376,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.823248053,618913.94,70719.63,1387510.24,1717272.96
 17,104383,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,10.621758485,72623.15,171347.58,884250.09,1160500.26
 17,104581,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.534572724,1110808.68,90157.35,5588052.23,6577074.9
 17,104777,48,Wall Insulation,false,4.520641977,86482.15,40174.06,514172.08,670498.34
@@ -1424,7 +1424,7 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 18,104156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.738451788,257783.64,27447.82,751275.97,977310.97
 18,104209,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.763535011,222920.39,18365.8,410401.9,589543.53
 18,104256,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.773037022,131700.97,16604.29,387673.82,459400.84
-18,104376,12,VRF with DOAS,false,3.471719699,416170.56,22861.94,1513365.82,1728267.59
+18,104376,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.813819115,620448.1,69555.58,1382239.11,1711479.89
 18,104383,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,10.627362599,72385.37,171476.74,884853.81,1162238.89
 18,104581,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.545520926,1085651.69,94498.85,5614453.95,6599436.16
 18,104777,48,Wall Insulation,false,4.517988094,87105.96,40092.09,513530.86,666714.0
@@ -1505,7 +1505,7 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 19,104156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.726028833,266849.54,26721.0,746716.02,976474.62
 19,104209,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.765059431,221951.31,18419.58,410780.59,590106.97
 19,104256,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.768385871,130205.59,16455.87,386804.53,457757.24
-19,104376,58,"Package 5, Variable Speed HP RTU or HP Boilers + Economizer + DCV + Energy Recovery",false,3.431233297,339237.68,17381.57,1523604.75,1722172.22
+19,104376,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.825869575,594681.26,71026.84,1390099.18,1710026.64
 19,104383,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,10.662619416,71922.63,172266.41,890237.99,1165061.1
 19,104581,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.536025897,1127752.72,90687.79,5594725.88,6590593.36
 19,104777,48,Wall Insulation,false,4.508023464,87103.66,39763.32,512838.97,663457.97
@@ -1586,7 +1586,7 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 20,104156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.72168213,265139.86,26463.33,745353.82,973600.44
 20,104209,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.757782909,225464.56,18156.19,409436.37,589057.21
 20,104256,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.770064725,127660.02,16505.84,387357.66,457294.92
-20,104376,12,VRF with DOAS,false,3.536885342,387183.79,31232.87,1525990.94,1735887.84
+20,104376,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.83124414,588926.76,71703.5,1392205.09,1710400.69
 20,104383,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,10.655742259,72714.16,172108.3,889469.87,1162201.66
 20,104581,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.539888877,1107872.86,92220.33,5603995.14,6594900.02
 20,104777,48,Wall Insulation,false,4.540385566,82018.35,40825.64,515529.58,664245.79

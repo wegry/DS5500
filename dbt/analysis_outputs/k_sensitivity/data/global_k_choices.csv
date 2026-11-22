@@ -47,7 +47,7 @@ k,perspective,berdo_id,cheapest_upgrade_id,cheapest_meets_standard,cheapest_glob
 1,financial,104156,46,false,2096991.77,58,2864354.42
 1,financial,104209,65,false,1288499.53,58,1339516.34
 1,financial,104256,58,false,1053629.65,12,2244152.83
-1,financial,104376,48,false,4075393.52,,
+1,financial,104376,58,false,3958823.91,,
 1,financial,104383,65,false,2634697.92,,
 1,financial,104581,65,false,13654087.03,58,15929815.49
 1,financial,104777,48,false,1427100.37,58,1907891.86
@@ -128,7 +128,7 @@ k,perspective,berdo_id,cheapest_upgrade_id,cheapest_meets_standard,cheapest_glob
 2,financial,104156,46,false,2076116.43,58,2661375.49
 2,financial,104209,65,false,1280982.11,58,1447541.66
 2,financial,104256,48,false,1055814.34,54,1525111.45
-2,financial,104376,48,false,4079300.8,,
+2,financial,104376,48,false,3950842.22,,
 2,financial,104383,65,false,2562452.0,,
 2,financial,104581,46,false,14664407.32,55,16817986.16
 2,financial,104777,48,false,1475015.81,55,2058270.59
@@ -209,7 +209,7 @@ k,perspective,berdo_id,cheapest_upgrade_id,cheapest_meets_standard,cheapest_glob
 3,financial,104156,46,false,2083919.25,58,2695613.8
 3,financial,104209,65,false,1273001.32,58,1467186.41
 3,financial,104256,65,false,1077650.51,12,2403596.8
-3,financial,104376,48,false,4050371.9,,
+3,financial,104376,65,false,4017100.94,,
 3,financial,104383,65,false,2529351.69,,
 3,financial,104581,46,false,14755799.74,55,17204420.33
 3,financial,104777,48,false,1451811.04,55,1946942.64
@@ -290,7 +290,7 @@ k,perspective,berdo_id,cheapest_upgrade_id,cheapest_meets_standard,cheapest_glob
 4,financial,104156,65,false,2069286.45,58,2680994.69
 4,financial,104209,65,false,1266503.45,58,1431150.69
 4,financial,104256,65,false,1091082.5,12,2963441.65
-4,financial,104376,48,false,4051332.44,,
+4,financial,104376,65,false,4038518.23,,
 4,financial,104383,65,false,2536532.52,,
 4,financial,104581,65,false,14545382.08,55,16679679.08
 4,financial,104777,48,false,1448383.98,58,1935436.62
@@ -371,7 +371,7 @@ k,perspective,berdo_id,cheapest_upgrade_id,cheapest_meets_standard,cheapest_glob
 5,financial,104156,65,false,2054677.64,58,2698521.77
 5,financial,104209,65,false,1245799.92,58,1453821.71
 5,financial,104256,65,false,1086680.59,12,2555663.24
-5,financial,104376,48,false,4015305.6,,
+5,financial,104376,65,false,4023741.12,,
 5,financial,104383,65,false,2504332.94,,
 5,financial,104581,65,false,14510592.26,55,16782330.58
 5,financial,104777,48,false,1435886.58,55,1880218.42
@@ -452,7 +452,7 @@ k,perspective,berdo_id,cheapest_upgrade_id,cheapest_meets_standard,cheapest_glob
 6,financial,104156,65,false,2067729.77,57,2674033.36
 6,financial,104209,65,false,1269281.89,58,1336058.66
 6,financial,104256,65,false,1077695.06,12,2285854.73
-6,financial,104376,48,false,3999113.06,,
+6,financial,104376,65,false,4021833.87,,
 6,financial,104383,65,false,2499673.34,,
 6,financial,104581,65,false,14439112.44,55,16672977.95
 6,financial,104777,48,false,1432976.24,55,1899195.4
@@ -533,7 +533,7 @@ k,perspective,berdo_id,cheapest_upgrade_id,cheapest_meets_standard,cheapest_glob
 7,financial,104156,65,false,2093431.9,57,2675011.27
 7,financial,104209,65,false,1269315.0,58,1356425.53
 7,financial,104256,65,false,1080803.35,12,2051827.58
-7,financial,104376,48,false,4006657.73,,
+7,financial,104376,65,false,4008511.54,,
 7,financial,104383,65,false,2490649.49,,
 7,financial,104581,65,false,14457645.82,55,16741842.17
 7,financial,104777,48,false,1420818.67,55,1839063.66
@@ -614,7 +614,7 @@ k,perspective,berdo_id,cheapest_upgrade_id,cheapest_meets_standard,cheapest_glob
 8,financial,104156,65,false,2109842.91,57,2572443.82
 8,financial,104209,65,false,1268483.5,58,1378355.39
 8,financial,104256,65,false,1077990.43,12,1979549.76
-8,financial,104376,48,false,4034823.52,,
+8,financial,104376,48,false,4031575.85,,
 8,financial,104383,65,false,2476340.04,,
 8,financial,104581,65,false,14543603.55,55,17038058.18
 8,financial,104777,48,false,1412766.09,55,1740204.19
@@ -695,7 +695,7 @@ k,perspective,berdo_id,cheapest_upgrade_id,cheapest_meets_standard,cheapest_glob
 9,financial,104156,65,false,2105906.43,57,2553358.48
 9,financial,104209,65,false,1268428.14,58,1380869.4
 9,financial,104256,65,false,1077266.71,12,1876103.95
-9,financial,104376,48,false,4030223.7,,
+9,financial,104376,48,false,4036064.43,,
 9,financial,104383,65,false,2469722.28,,
 9,financial,104581,65,false,14470888.53,55,16894496.44
 9,financial,104777,48,false,1390024.29,55,1621136.79
@@ -776,7 +776,7 @@ k,perspective,berdo_id,cheapest_upgrade_id,cheapest_meets_standard,cheapest_glob
 10,financial,104156,65,false,2105625.48,57,2530509.13
 10,financial,104209,65,false,1266464.66,58,1387027.72
 10,financial,104256,65,false,1072701.23,12,1789306.55
-10,financial,104376,48,false,4039559.95,,
+10,financial,104376,65,false,4035799.46,,
 10,financial,104383,65,false,2473433.34,,
 10,financial,104581,65,false,14412248.33,55,16548776.2
 10,financial,104777,48,false,1388813.0,55,1606443.98
@@ -857,7 +857,7 @@ k,perspective,berdo_id,cheapest_upgrade_id,cheapest_meets_standard,cheapest_glob
 11,financial,104156,65,false,2100139.79,57,2530770.83
 11,financial,104209,65,false,1268097.13,58,1387160.92
 11,financial,104256,65,false,1067729.24,12,1712207.21
-11,financial,104376,48,false,4036288.74,,
+11,financial,104376,65,false,4039371.39,,
 11,financial,104383,65,false,2465463.42,,
 11,financial,104581,65,false,14373504.04,55,16564867.82
 11,financial,104777,48,false,1398035.67,55,1644233.22
@@ -938,7 +938,7 @@ k,perspective,berdo_id,cheapest_upgrade_id,cheapest_meets_standard,cheapest_glob
 12,financial,104156,65,false,2093510.59,57,2515895.67
 12,financial,104209,65,false,1269150.34,58,1383489.84
 12,financial,104256,65,false,1068820.65,12,1705957.9
-12,financial,104376,48,false,4039045.45,,
+12,financial,104376,65,false,4016314.3,,
 12,financial,104383,65,false,2461302.65,,
 12,financial,104581,65,false,14383002.13,57,16262244.91
 12,financial,104777,48,false,1384038.39,55,1589768.0
@@ -1019,7 +1019,7 @@ k,perspective,berdo_id,cheapest_upgrade_id,cheapest_meets_standard,cheapest_glob
 13,financial,104156,65,false,2096502.91,57,2511618.94
 13,financial,104209,65,false,1266475.15,58,1371942.9
 13,financial,104256,65,false,1067111.8,12,1642130.93
-13,financial,104376,48,false,4032935.48,,
+13,financial,104376,58,false,3958928.75,,
 13,financial,104383,65,false,2452435.26,,
 13,financial,104581,65,false,14378172.2,57,16066685.65
 13,financial,104777,48,false,1402468.04,55,1646803.1
@@ -1100,7 +1100,7 @@ k,perspective,berdo_id,cheapest_upgrade_id,cheapest_meets_standard,cheapest_glob
 14,financial,104156,65,false,2108665.48,57,2513996.19
 14,financial,104209,65,false,1264259.24,58,1376113.88
 14,financial,104256,65,false,1068975.67,,
-14,financial,104376,48,false,4035163.52,,
+14,financial,104376,58,false,3981323.56,,
 14,financial,104383,65,false,2455069.71,,
 14,financial,104581,65,false,14333647.23,55,16078639.09
 14,financial,104777,48,false,1397162.87,55,1604077.57
@@ -1181,7 +1181,7 @@ k,perspective,berdo_id,cheapest_upgrade_id,cheapest_meets_standard,cheapest_glob
 15,financial,104156,65,false,2113705.96,57,2455143.2
 15,financial,104209,65,false,1265668.88,58,1375471.47
 15,financial,104256,65,false,1065548.89,,
-15,financial,104376,48,false,4034707.85,,
+15,financial,104376,58,false,3959774.86,,
 15,financial,104383,65,false,2449542.15,,
 15,financial,104581,65,false,14325539.81,55,16109283.49
 15,financial,104777,48,false,1398479.91,55,1604074.67
@@ -1262,7 +1262,7 @@ k,perspective,berdo_id,cheapest_upgrade_id,cheapest_meets_standard,cheapest_glob
 16,financial,104156,65,false,2106953.83,57,2423314.53
 16,financial,104209,65,false,1264248.01,55,1373841.18
 16,financial,104256,65,false,1061879.45,,
-16,financial,104376,48,false,4040381.27,,
+16,financial,104376,58,false,3954269.57,,
 16,financial,104383,65,false,2438978.4,,
 16,financial,104581,65,false,14319626.3,55,16134206.32
 16,financial,104777,48,false,1397074.13,55,1599643.72
@@ -1343,7 +1343,7 @@ k,perspective,berdo_id,cheapest_upgrade_id,cheapest_meets_standard,cheapest_glob
 17,financial,104156,65,false,2106683.96,57,2420096.78
 17,financial,104209,65,false,1263026.1,58,1359269.41
 17,financial,104256,65,false,1065480.89,,
-17,financial,104376,48,false,4043288.37,,
+17,financial,104376,58,false,3982100.65,,
 17,financial,104383,65,false,2435693.57,,
 17,financial,104581,65,false,14310109.29,55,16044059.45
 17,financial,104777,48,false,1394390.64,55,1593293.39
@@ -1424,7 +1424,7 @@ k,perspective,berdo_id,cheapest_upgrade_id,cheapest_meets_standard,cheapest_glob
 18,financial,104156,65,false,2106812.72,57,2387183.98
 18,financial,104209,65,false,1261832.47,58,1372592.03
 18,financial,104256,65,false,1067362.08,,
-18,financial,104376,12,false,3977591.43,,
+18,financial,104376,58,false,3958106.4,,
 18,financial,104383,65,false,2437867.45,,
 18,financial,104581,65,false,14353129.97,55,16030581.45
 18,financial,104777,48,false,1390876.29,55,1558031.2
@@ -1505,7 +1505,7 @@ k,perspective,berdo_id,cheapest_upgrade_id,cheapest_meets_standard,cheapest_glob
 19,financial,104156,65,false,2104597.19,57,2399150.23
 19,financial,104209,65,false,1262247.21,58,1375813.61
 19,financial,104256,65,false,1063828.09,,
-19,financial,104376,58,false,3964149.88,,
+19,financial,104376,58,false,3957486.23,,
 19,financial,104383,65,false,2447999.64,,
 19,financial,104581,65,false,14340153.22,55,15963408.62
 19,financial,104777,48,false,1386931.04,55,1549496.93
@@ -1586,7 +1586,7 @@ k,perspective,berdo_id,cheapest_upgrade_id,cheapest_meets_standard,cheapest_glob
 20,financial,104156,65,false,2099176.79,57,2405505.95
 20,financial,104209,65,false,1261410.55,58,1363434.75
 20,financial,104256,65,false,1062715.96,,
-20,financial,104376,12,false,3995988.0,,
+20,financial,104376,58,false,3968437.19,,
 20,financial,104383,65,false,2445052.41,,
 20,financial,104581,65,false,14345843.12,55,15967925.11
 20,financial,104777,48,false,1390199.64,55,1537272.21
@@ -1667,7 +1667,7 @@ k,perspective,berdo_id,cheapest_upgrade_id,cheapest_meets_standard,cheapest_glob
 1,societal,104156,65,false,3462488.86,58,4216603.91
 1,societal,104209,58,true,1950072.65,58,1950072.65
 1,societal,104256,58,false,1786216.45,12,2739731.77
-1,societal,104376,48,false,7024483.63,,
+1,societal,104376,58,false,6744252.3,,
 1,societal,104383,65,false,4070859.27,,
 1,societal,104581,65,false,22805671.04,58,24609856.05
 1,societal,104777,48,false,2296348.35,58,2767884.74
@@ -1748,7 +1748,7 @@ k,perspective,berdo_id,cheapest_upgrade_id,cheapest_meets_standard,cheapest_glob
 2,societal,104156,65,false,3418898.3,58,3946133.14
 2,societal,104209,65,false,2086189.47,58,2120027.53
 2,societal,104256,48,false,1799704.06,54,2317929.32
-2,societal,104376,48,false,7028003.68,,
+2,societal,104376,65,false,6712903.77,,
 2,societal,104383,65,false,3975137.53,,
 2,societal,104581,65,false,24421997.6,58,25762728.04
 2,societal,104777,48,false,2372234.12,58,2925974.86
@@ -1829,7 +1829,7 @@ k,perspective,berdo_id,cheapest_upgrade_id,cheapest_meets_standard,cheapest_glob
 3,societal,104156,65,false,3422489.43,58,3999142.55
 3,societal,104209,65,false,2074327.54,58,2157658.45
 3,societal,104256,65,false,1784639.19,12,2842116.71
-3,societal,104376,48,false,6973190.11,,
+3,societal,104376,65,false,6740695.92,,
 3,societal,104383,65,false,3924151.14,,
 3,societal,104581,65,false,24581906.62,58,26219610.62
 3,societal,104777,48,false,2334738.93,58,2783726.86
@@ -1910,7 +1910,7 @@ k,perspective,berdo_id,cheapest_upgrade_id,cheapest_meets_standard,cheapest_glob
 4,societal,104156,65,false,3392857.77,58,4004922.93
 4,societal,104209,65,false,2065317.67,58,2101810.72
 4,societal,104256,65,false,1818473.01,12,3387507.91
-4,societal,104376,48,false,6974988.45,,
+4,societal,104376,65,false,6718170.01,,
 4,societal,104383,65,false,3934312.39,,
 4,societal,104581,65,false,24261954.13,55,25970825.31
 4,societal,104777,48,false,2335605.23,58,2764778.53
@@ -1991,7 +1991,7 @@ k,perspective,berdo_id,cheapest_upgrade_id,cheapest_meets_standard,cheapest_glob
 5,societal,104156,65,false,3369201.53,58,4039932.17
 5,societal,104209,65,false,2035409.15,58,2148209.53
 5,societal,104256,65,false,1819506.35,12,3078722.93
-5,societal,104376,48,false,6907764.1,,
+5,societal,104376,65,false,6660210.11,,
 5,societal,104383,65,false,3885893.11,,
 5,societal,104581,65,false,24219282.11,55,26093833.44
 5,societal,104777,48,false,2319237.5,58,2710905.19
@@ -2072,7 +2072,7 @@ k,perspective,berdo_id,cheapest_upgrade_id,cheapest_meets_standard,cheapest_glob
 6,societal,104156,65,false,3390874.59,58,4001724.66
 6,societal,104209,58,true,1956443.59,58,1956443.59
 6,societal,104256,65,false,1805493.57,12,2845634.77
-6,societal,104376,48,false,6881252.74,,
+6,societal,104376,65,false,6672600.41,,
 6,societal,104383,65,false,3876588.78,,
 6,societal,104581,65,false,24095340.92,55,25923363.34
 6,societal,104777,48,false,2316987.0,58,2749091.54
@@ -2153,7 +2153,7 @@ k,perspective,berdo_id,cheapest_upgrade_id,cheapest_meets_standard,cheapest_glob
 7,societal,104156,65,false,3432426.64,58,4030909.9
 7,societal,104209,58,true,1988959.03,58,1988959.03
 7,societal,104256,65,false,1813716.84,12,2634977.13
-7,societal,104376,48,false,6891044.34,,
+7,societal,104376,65,false,6666976.93,,
 7,societal,104383,65,false,3863307.26,,
 7,societal,104581,65,false,24120538.69,55,26000285.17
 7,societal,104777,48,false,2305274.89,58,2697561.53
@@ -2234,7 +2234,7 @@ k,perspective,berdo_id,cheapest_upgrade_id,cheapest_meets_standard,cheapest_glob
 8,societal,104156,65,false,3459569.91,58,3894564.15
 8,societal,104209,58,true,2020611.85,58,2020611.85
 8,societal,104256,65,false,1808966.47,12,2607598.54
-8,societal,104376,48,false,6942823.59,,
+8,societal,104376,65,false,6656384.55,,
 8,societal,104383,65,false,3843966.48,,
 8,societal,104581,65,false,24267917.27,55,26332463.12
 8,societal,104777,48,false,2295205.16,55,2563626.51
@@ -2315,7 +2315,7 @@ k,perspective,berdo_id,cheapest_upgrade_id,cheapest_meets_standard,cheapest_glob
 9,societal,104156,65,false,3452437.95,58,3862395.25
 9,societal,104209,58,true,2025804.37,58,2025804.37
 9,societal,104256,65,false,1799590.28,12,2518255.59
-9,societal,104376,48,false,6934454.96,,
+9,societal,104376,65,false,6641766.69,,
 9,societal,104383,65,false,3835005.1,,
 9,societal,104581,65,false,24158672.78,55,26178258.06
 9,societal,104777,48,false,2262495.65,55,2394659.16
@@ -2396,7 +2396,7 @@ k,perspective,berdo_id,cheapest_upgrade_id,cheapest_meets_standard,cheapest_glob
 10,societal,104156,65,false,3450961.73,58,3835442.9
 10,societal,104209,58,true,2037316.78,58,2037316.78
 10,societal,104256,65,false,1790437.37,12,2450664.99
-10,societal,104376,48,false,6953855.31,,
+10,societal,104376,65,false,6646827.03,,
 10,societal,104383,65,false,3841563.09,,
 10,societal,104581,65,false,24066030.91,55,25741082.12
 10,societal,104777,48,false,2262341.77,55,2408136.01
@@ -2477,7 +2477,7 @@ k,perspective,berdo_id,cheapest_upgrade_id,cheapest_meets_standard,cheapest_glob
 11,societal,104156,65,false,3446330.02,58,3825828.75
 11,societal,104209,58,true,2039143.14,58,2039143.14
 11,societal,104256,65,false,1781049.4,12,2384913.35
-11,societal,104376,48,false,6947020.4,,
+11,societal,104376,65,false,6646730.23,,
 11,societal,104383,65,false,3829591.4,,
 11,societal,104581,65,false,24013301.62,55,25770512.55
 11,societal,104777,48,false,2276221.83,55,2442646.88
@@ -2558,7 +2558,7 @@ k,perspective,berdo_id,cheapest_upgrade_id,cheapest_meets_standard,cheapest_glob
 12,societal,104156,65,false,3437781.97,58,3814388.54
 12,societal,104209,58,true,2033022.51,58,2033022.51
 12,societal,104256,65,false,1783284.37,12,2391301.55
-12,societal,104376,48,false,6949727.8,,
+12,societal,104376,65,false,6625139.36,,
 12,societal,104383,65,false,3823543.39,,
 12,societal,104581,65,false,24009843.35,57,25322386.88
 12,societal,104777,48,false,2256308.16,55,2369362.35
@@ -2639,7 +2639,7 @@ k,perspective,berdo_id,cheapest_upgrade_id,cheapest_meets_standard,cheapest_glob
 13,societal,104156,65,false,3440993.99,58,3801857.68
 13,societal,104209,58,true,2037952.82,58,2037952.82
 13,societal,104256,65,false,1781373.72,12,2342148.42
-13,societal,104376,48,false,6940732.25,,
+13,societal,104376,65,false,6649782.0,,
 13,societal,104383,65,false,3809735.4,,
 13,societal,104581,65,false,24004744.1,57,25044835.4
 13,societal,104777,48,false,2282888.87,55,2433243.43
@@ -2720,7 +2720,7 @@ k,perspective,berdo_id,cheapest_upgrade_id,cheapest_meets_standard,cheapest_glob
 14,societal,104156,65,false,3463078.31,58,3816130.52
 14,societal,104209,58,true,2045672.79,58,2045672.79
 14,societal,104256,65,false,1783198.98,,
-14,societal,104376,48,false,6948811.3,,
+14,societal,104376,65,false,6643455.66,,
 14,societal,104383,65,false,3812381.65,,
 14,societal,104581,65,false,23921549.21,55,25049088.03
 14,societal,104777,48,false,2276207.72,55,2376840.48
@@ -2801,7 +2801,7 @@ k,perspective,berdo_id,cheapest_upgrade_id,cheapest_meets_standard,cheapest_glob
 15,societal,104156,65,false,3472306.87,58,3734298.96
 15,societal,104209,58,true,2043145.61,58,2043145.61
 15,societal,104256,65,false,1781305.24,,
-15,societal,104376,48,false,6947848.8,,
+15,societal,104376,65,false,6627877.81,,
 15,societal,104383,65,false,3804549.46,,
 15,societal,104581,65,false,23909345.02,55,25088952.97
 15,societal,104777,48,false,2278271.89,55,2375221.22
@@ -2882,7 +2882,7 @@ k,perspective,berdo_id,cheapest_upgrade_id,cheapest_meets_standard,cheapest_glob
 16,societal,104156,65,false,3463787.33,58,3698475.27
 16,societal,104209,58,true,2039284.83,58,2039284.83
 16,societal,104256,65,false,1777504.83,,
-16,societal,104376,48,false,6957952.66,,
+16,societal,104376,65,false,6646055.17,,
 16,societal,104383,65,false,3787648.99,,
 16,societal,104581,65,false,23900552.02,55,25117171.84
 16,societal,104777,48,false,2278009.43,55,2384010.09
@@ -2963,7 +2963,7 @@ k,perspective,berdo_id,cheapest_upgrade_id,cheapest_meets_standard,cheapest_glob
 17,societal,104156,65,false,3466023.03,57,3702593.58
 17,societal,104209,58,true,2019397.71,58,2019397.71
 17,societal,104256,65,false,1782904.79,,
-17,societal,104376,48,false,6962225.88,,
+17,societal,104376,65,false,6648166.94,,
 17,societal,104383,65,false,3782120.02,,
 17,societal,104581,65,false,23872369.96,55,24987618.3
 17,societal,104777,48,false,2273438.23,55,2375194.65
@@ -3044,7 +3044,7 @@ k,perspective,berdo_id,cheapest_upgrade_id,cheapest_meets_standard,cheapest_glob
 18,societal,104156,65,false,3467163.14,57,3661494.91
 18,societal,104209,58,true,2038477.93,58,2038477.93
 18,societal,104256,65,false,1785745.99,,
-18,societal,104376,12,false,6729611.64,,
+18,societal,104376,65,false,6628844.27,,
 18,societal,104383,65,false,3785316.47,,
 18,societal,104581,65,false,23950398.04,55,24978875.92
 18,societal,104777,48,false,2268296.44,55,2328481.45
@@ -3125,7 +3125,7 @@ k,perspective,berdo_id,cheapest_upgrade_id,cheapest_meets_standard,cheapest_glob
 19,societal,104156,65,false,3458593.82,57,3676915.59
 19,societal,104209,58,true,2041534.53,58,2041534.53
 19,societal,104256,65,false,1781333.23,,
-19,societal,104376,12,false,6719013.24,,
+19,societal,104376,65,false,6637479.23,,
 19,societal,104383,65,false,3801165.57,,
 19,societal,104581,65,false,23907404.72,55,24865981.79
 19,societal,104777,48,false,2262723.31,58,2320720.12
@@ -3206,7 +3206,7 @@ k,perspective,berdo_id,cheapest_upgrade_id,cheapest_meets_standard,cheapest_glob
 20,societal,104156,65,false,3451576.0,57,3685993.49
 20,societal,104209,58,true,2025436.1,58,2025436.1
 20,societal,104256,65,false,1781113.31,,
-20,societal,104376,12,false,6773555.09,,
+20,societal,104376,65,false,6641927.33,,
 20,societal,104383,65,false,3796695.74,,
 20,societal,104581,65,false,23926899.07,55,24863207.26
 20,societal,104777,48,false,2271680.0,55,2306708.05
