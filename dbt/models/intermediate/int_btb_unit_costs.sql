@@ -8,6 +8,9 @@
 -- loop, economizer, PV) are appended from the imputed_component_costs seed. Also costed: the
 -- like-for-like equipment of existing_hvac_like_for_like (a gas boiler is one product of
 -- metric_1_typical Btu/h).
+-- All costs are converted to var("dollar_year") dollars: BTB's from var("btb_dollar_year"),
+-- the seed's from each row's dollar_year (to_dollar_year macro). Where a source gives no
+-- price year, the seed uses its publication year.
 with technologies as (
     select
         *,
@@ -35,14 +38,17 @@ select
     cost_unit,
     typical_quantity,
     {% for c in ["low", "mid", "high"] -%}
-    retrofit_installed_cost_{{ c }}_usd / typical_quantity as unit_cost_{{ c }}_usd,
+    retrofit_installed_cost_{{ c }}_usd / typical_quantity
+        * {{ to_dollar_year(var("btb_dollar_year")) }} as unit_cost_{{ c }}_usd,
     {% endfor -%}
     lifetime_years
 from technologies
 
 union all
 select
-    btb_measure_id, display_name, cost_unit, typical_quantity,
-    unit_cost_low_usd, unit_cost_mid_usd, unit_cost_high_usd,
-    lifetime_years
-from {{ ref('imputed_component_costs') }}
+    i.btb_measure_id, i.display_name, i.cost_unit, i.typical_quantity,
+    {% for c in ["low", "mid", "high"] -%}
+    i.unit_cost_{{ c }}_usd * {{ to_dollar_year("i.dollar_year") }} as unit_cost_{{ c }}_usd,
+    {% endfor -%}
+    i.lifetime_years
+from {{ ref('imputed_component_costs') }} as i

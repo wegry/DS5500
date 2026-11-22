@@ -10,7 +10,8 @@
 {%- set k_ = "k, " if by_k else "" %}
 {%- set costs = ["low", "mid", "high"] %}
 {%- set n = var("global_cost_years") %}
-{%- set start = var("decision_period_start") %}
+{#- the horizon starts at horizon_start; compliance is checked in decision_period_start #}
+{%- set start = var("horizon_start") %}
 {%- set fuels = ["electricity", "natural_gas", "oil_propane", "district_heating", "district_cooling"] %}
 {#- which AEO2026 price series each fuel follows #}
 {%- set price_series = {"electricity": "electricity", "district_cooling": "electricity",
@@ -230,13 +231,15 @@ emissions as (
                 when 'financial' then greatest(y.berdo_ghg_kgco2e - y.limit_kgco2e, 0) / 1000
                     * {{ var("acp_usd_per_tco2e") }}
                 else y.grid_ghg_kgco2e / 1000 * {{ var("social_cost_usd_per_tco2e") }}
+                    * {{ to_dollar_year(var("social_cost_dollar_year")) }}
             end
             * power(1 + p.discount_rate, -y.t)
         ) as emissions_cost_pv_usd,
         count(*) filter (where y.berdo_ghg_kgco2e > y.limit_kgco2e) as years_over_limit,
-        -- under the standard in the first year (2030), as BERDO counts it
-        bool_and(y.berdo_ghg_kgco2e <= y.limit_kgco2e) filter (where y.t = 1)
-            as meets_standard_at_start
+        -- under the standard in the first year of the decision period (2030), as BERDO
+        -- counts it; the horizon itself starts earlier, at horizon_start
+        bool_and(y.berdo_ghg_kgco2e <= y.limit_kgco2e)
+            filter (where y.year = {{ var("decision_period_start") }}) as meets_standard_at_start
     from yearly as y
     cross join perspectives as p
     group by {% if by_k %}y.k, {% endif %}y.berdo_id, y.upgrade_id, y.scenario, p.perspective

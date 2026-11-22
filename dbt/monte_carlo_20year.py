@@ -105,7 +105,12 @@ def load_long_inputs(con, folder, buildings, components, scenarios, cambium_over
     starts = {o['period_start'] for opts in buildings.values() for o in opts}
     if len(starts) != 1:
         raise ValueError('Expected one common decision year.')
-    start = next(iter(starts))
+    decision_start = next(iter(starts))
+    # the horizon starts before the decision period (dbt var horizon_start); compliance is
+    # still checked in the decision period's first year
+    start = int(project_var(folder, 'horizon_start'))
+    if not start <= decision_start < start + years:
+        raise ValueError(f'Decision year {decision_start} is outside the horizon from {start}')
     period_rows = query(con, """
         SELECT berdo_id, period_start, period_end, standard_kgco2e_sqft
         FROM berdo_upgrade_compliance WHERE upgrade_id = ?
@@ -175,9 +180,14 @@ def load_long_inputs(con, folder, buildings, components, scenarios, cambium_over
             label = scen if not cambium_overrides else f'{scen}__cambium_{cambium_case}'
             trajectories[label] = (np.asarray(berdo_ix), np.asarray(grid),
                                    np.asarray(prices), scen)
-    return (years, start, rates, expected, fuel, standards, f_prices, life,
-            trajectories, project_var(folder, 'social_cost_usd_per_tco2e'),
-            project_var(folder, 'om_share_per_year'))
+    # social cost of carbon converted to dollar_year dollars, as dbt's to_dollar_year does
+    deflator = {int(r['year']): float(r['gdp_price_index_2017'])
+                for r in query(con, 'SELECT * FROM gdp_price_deflator')}
+    scc = (project_var(folder, 'social_cost_usd_per_tco2e')
+           * deflator[int(project_var(folder, 'dollar_year'))]
+           / deflator[int(project_var(folder, 'social_cost_dollar_year'))])
+    return (years, start, decision_start - start, rates, expected, fuel, standards, f_prices,
+            life, trajectories, scc, project_var(folder, 'om_share_per_year'))
 
 
 def capital_factor(lifetime, horizon, rates):
@@ -218,11 +228,11 @@ def run_simulation(db, folder, args):
             buildings, components, matches, no_upgrade, upgrades, start, _, acp_rate = loaded
         else:
             raise ValueError(f'Unexpected load_inputs() return fields: {len(loaded)}')
-        (years, start, rates, expected, fuel, standards, price_ranges, lifetimes,
+        (years, start, at_decision, rates, expected, fuel, standards, price_ranges, lifetimes,
          trajectories, scc, om_share) = load_long_inputs(con, folder, buildings, components,
                                                          args.scenarios, args.cambium_scenarios)
     errors, error_cols, rows_by_type = load_errors(
-        folder / 'analysis_outputs' / 'loo_residuals.csv', upgrades, start)
+        folder / 'analysis_outputs' / 'loo_residuals.csv', upgrades, start + at_decision)
     n = 1 if args.zero_uncertainty else args.draws
     seed = args.seed
     rng = np.random.default_rng(seed)
@@ -338,7 +348,7 @@ def run_simulation(db, folder, args):
                         scenario=scenario, perspective=p, berdo_id=bid,
                         upgrade_id=int(option_ids[i]), upgrade_name=o['upgrade_name'],
                         probability_cheapest=round(float((winner == i).mean()), 4),
-                        probability_compliant_at_start=round(float(complies[i, :, 0].mean()), 4),
+                        probability_compliant_at_start=round(float(complies[i, :, at_decision].mean()), 4),
                         probability_compliant_at_end=round(float(end_compliance[i].mean()), 4),
                         mean_global_cost_usd=round(float(costs[i].mean()), 2),
                         p05_global_cost_usd=round(float(np.quantile(costs[i], .05)), 2),
@@ -348,7 +358,7 @@ def run_simulation(db, folder, args):
                     scenario=scenario, perspective=p, berdo_id=bid,
                     original_upgrade_id=int(option_ids[originally_best]),
                     probability_original_stays_cheapest=round(float((winner == originally_best).mean()), 4),
-                    probability_original_compliant_at_start=round(float(complies[originally_best, :, 0].mean()), 4),
+                    probability_original_compliant_at_start=round(float(complies[originally_best, :, at_decision].mean()), 4),
                     mean_regret_usd=round(float(regret.mean()), 2),
                     p95_regret_usd=round(float(np.quantile(regret, .95)), 2),
                 ))

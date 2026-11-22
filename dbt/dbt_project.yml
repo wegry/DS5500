@@ -56,10 +56,22 @@ vars:
   # inverse_distance (1 / (distance + 1e-6))
   match_weighting: inverse_distance
   # BERDO Alternative Compliance Payment, $ per metric ton CO2e over the limit
-  # (City of Boston, "Complying with BERDO's Emissions Standard", Feb 2024)
+  # (City of Boston, "Complying with BERDO's Emissions Standard", Feb 2024); taken as
+  # dollar_year dollars and held constant in real terms
   acp_usd_per_tco2e: 234
-  # first year of the 5-year standards period the retrofit decision is made for
+  # first year of the 5-year standards period the retrofit decision is made for; "compliant"
+  # means under this period's standard in its first year
   decision_period_start: 2030
+  # first year of the 20-year global cost (berdo_global_cost): the model looks forward from
+  # the earliest year a decision could take effect, so it charges the ACPs of the rest of the
+  # 2025-2029 period before the decision_period_start standard
+  horizon_start: 2027
+  # every cost is converted to dollar_year dollars with the BEA GDP price deflator
+  # (gdp_price_deflator seed; FRED A191RD3A086NBEA, last updated 2026-09-30). Energy
+  # prices and AEO are already 2025 dollars; BTB is btb_dollar_year dollars; the imputed
+  # costs carry their own dollar_year
+  dollar_year: 2025
+  btb_dollar_year: 2023
   # berdo_decision_options: how much of equipment that lasts ~20 years the 5-year period
   # bears: annualized (equivalent annual cost at discount_rate_financial), straight_line
   # (remaining value credited at the period's end), or full
@@ -80,8 +92,10 @@ vars:
   discount_rate_financial: 0.07
   discount_rate_societal: 0.02
   # US EPA (2023) social cost of CO2 at a 2% discount rate, 2020 dollars: $190 for 2020
-  # emissions, $210 for 2024, rising to about $230 for 2030; held flat over the horizon
+  # emissions, $210 for 2024, rising to about $230 for 2030; held flat over the horizon and
+  # converted from social_cost_dollar_year to dollar_year dollars
   social_cost_usd_per_tco2e: 230
+  social_cost_dollar_year: 2020
   # annual O&M as a share of installed cost, net of the equipment a measure replaces; BTB
   # gives none and no sourced defaults were found, so 0 (set to test sensitivity)
   om_share_per_year: 0

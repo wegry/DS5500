@@ -8,7 +8,8 @@
    matching_validation.csv).
 2. The 20-year Monte Carlo, which stays in Python for its sampling: a zero-uncertainty
    check against dbt, then the full run with the settings below.
-3. Report 2, compiled to check that it still builds (the PDF is not tracked).
+3. Report 2's figures (report-2/make_berdo_figures.py), whose annotations quote model
+   results, then Report 2, compiled to check that it still builds (the PDF is not tracked).
 
 Stops at the first failing step.
 """
@@ -49,6 +50,8 @@ def main() -> None:
     run("20-year Monte Carlo",
         [py, "dbt/monte_carlo_20year.py", "--draws", str(DRAWS), "--seed", str(SEED),
          "--owner-rate-range", *OWNER_RATES, "--societal-rate-range", *SOCIETAL_RATES])
+
+    run("Report 2 figures", [py, "report-2/make_berdo_figures.py"])
 
     if not args.no_report:
         typst = shutil.which("typst")

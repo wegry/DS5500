@@ -1,5 +1,6 @@
 -- EN 15459 global cost of each var("decision_period_start") option in berdo_decision_options,
--- as a present value at that start over var("global_cost_years") years:
+-- as a present value over var("global_cost_years") years from var("horizon_start") (2027),
+-- so it includes the ACPs of the rest of the 2025-2029 period, in var("dollar_year") dollars:
 --   installed cost + replacements - residual value      (per component, BTB lifetimes)
 --   + sum over years t of (energy + O&M + emissions cost) / (1 + r)^t
 -- Two perspectives, after the EU cost-optimal method (Delegated Regulation 244/2012):
@@ -26,7 +27,8 @@
 --     distillate (aeo2026_ne_commercial_prices). The low/mid/high price cases set the 2025
 --     level; the AEO case sets the path from there.
 -- Scenario 'frozen' holds all three at 2025 and reproduces the original model. Whether an
--- option meets the standard at the start is checked in 2030 under each scenario.
+-- option meets the standard (meets_standard_at_start) is checked in var("decision_period_start")
+-- (2030), the first year of the 3.2 kg/sq ft office standard, under each scenario.
 -- Grain: BERDO building x option x perspective x energy price case x energy scenario.
 {{ berdo_global_cost(
     options=ref('berdo_decision_options'),
