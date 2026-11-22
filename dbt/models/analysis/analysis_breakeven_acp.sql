@@ -13,9 +13,11 @@ with g as (
         berdo_id,
         upgrade_id,
         meets_standard_at_start as ok,
-        global_cost_mid_usd - emissions_cost_pv_usd as fixed_usd,
+        -- rounded so options that differ only by floating-point noise (Packages 2 and 4
+        -- often cost the same) compare as exact ties below
+        round(global_cost_mid_usd - emissions_cost_pv_usd, 2) as fixed_usd,
         -- present value of tons over the limit, i.e. dollars per $1/t of ACP
-        emissions_cost_pv_usd / {{ var("acp_usd_per_tco2e") }} as excess_t
+        round(emissions_cost_pv_usd / {{ var("acp_usd_per_tco2e") }}, 6) as excess_t
     from {{ ref('berdo_global_cost') }}
     where perspective = 'financial' and energy_price = 'mid' and scenario = 'projected'
 ),
@@ -44,7 +46,8 @@ bounds as (
 select
     berdo_id,
     round(min(lo), 2) as breakeven_acp_usd_per_t,
-    arg_min(upgrade_id, lo) as upgrade_id_at_breakeven
+    -- ties (e.g. Packages 2 and 4 at identical cost) go to the lower upgrade ID
+    arg_min(upgrade_id, (round(lo, 2), upgrade_id)) as upgrade_id_at_breakeven
 from bounds
 where lo <= hi and tie_ok
 group by berdo_id
