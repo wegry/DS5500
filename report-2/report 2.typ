@@ -289,153 +289,6 @@ Claude Opus 5.5 and ChatGPT 6.1 were used for:
 
 = Appendix
 
-This appendix provides the BERDO data diagnostics cited in the main report, the matching validation, the cost model's equations, and the data flow. The source code and reproducibility scripts are available at
-#link("https://github.com/wegry/DS5500")[github.com/wegry/DS5500].
-
-== BERDO Data Exploration
-
-These exploratory summaries precede the filtering and matching of the integrated analysis, so their populations differ from it and are reported separately.
-
-#figure(
-  image(
-    "figures/berdo-emissions-standards.png",
-    width: 55%,
-  ),
-  caption: [
-    BERDO emissions-intensity standards by building use
-    and five-year compliance period, expressed in
-    kg CO#sub[2]e/ft#super[2]/year @berdo-standards.
-  ],
-  placement: auto,
-) <fig:berdo-limits>
-
-#figure(
-  image(
-    "figures/berdo-completeness.png",
-    width: 80%,
-  ),
-  caption: [
-    Completeness of selected BERDO attributes for the five most common building uses, with Office and Financial Office combined. Each cell is the percentage of records with a value for the corresponding variable.
-  ],
-) <fig:berdo-heatmap>
-
-#figure(
-  image(
-    "figures/berdo-mixed-use-cdf.png",
-    width: 80%,
-  ),
-  caption: [
-    Cumulative distribution of the mixed-use share, the share of non-parking floor area in uses other than office, across the 416 BERDO buildings whose largest property type is Office or Financial Office. The jump at 0% is the buildings with only office and parking space.
-  ],
-) <fig:berdo-types>
-
-#figure(
-  image(
-    "figures/berdo-intensity-cdf.png",
-    width: 80%,
-  ),
-  caption: [
-    Cumulative distribution of reported greenhouse gas emissions intensity for the 300 Office and Financial Office records that report it, compared with the 2030 BERDO office standard.
-  ],
-) <fig:berdo-GHGvsStandard>
-
-Office buildings showed relatively high completeness of floor-area and energy-consumption variables, making them suitable candidates for integration with ComStock. However, missing emissions observations reduce the number of records available for compliance assessment, and missingness may introduce selection bias if buildings with incomplete reporting differ systematically from those retained. Mixed-use composition matters because BERDO reports energy consumption and emissions at the building level, so a building's energy profile may include activities other than those of a typical office.
-
-== Matching Validation
-
-Each of 618 ComStock office simulations in turn plays a BERDO building: it is hidden, its upgrade emissions are predicted from its $k$ nearest other simulations, and the prediction is compared with ComStock's simulated result across the thirteen upgrades. This measures how well retrofit effects transfer between simulated buildings, not real-world accuracy.
-
-// two decimals, keeping trailing zeros
-#let two(x) = {
-  let cents = int(calc.round(float(x) * 100))
-  let r = calc.rem(cents, 100)
-  str(calc.quo(cents, 100)) + "." + (if r < 10 { "0" } else { "" }) + str(r)
-}
-#let validation = csv("data/matching_validation.csv", row-type: dictionary).filter(
-  r => r.k in ("10", "20"),
-)
-
-#figure(
-  table(
-    columns: (auto, auto, auto, auto, auto),
-    align: (right, left, left, right, right),
-    stroke: none,
-    inset: (x: 4pt, y: 3pt),
-    table.hline(),
-    table.header([*$k$*], [*Weighting*], [*District rule*], [*MAE*], [*MAE, district*]),
-    table.hline(stroke: 0.5pt),
-    ..validation
-      .map(r => (
-        r.k,
-        if r.method == "inverse_distance" [Inverse distance] else [Equal],
-        if r.rule == "true" [Yes] else [No],
-        two(r.mae_pp),
-        two(r.mae_pp_district_models),
-      ))
-      .flatten(),
-    table.hline(),
-  ),
-  caption: [
-    Leave-one-out mean absolute error of predicted emissions reductions, in percentage points, for all 618 simulations and the 73 that use district energy. The project uses $k = 20$ with inverse-distance weighting and the district rule.
-  ],
-  placement: none,
-) <tab:matching-validation>
-
-== Story Estimates
-
-Stories come from the city's roof outlines, whose heights are recorded for 2010 @boston-buildings, placed on the 2025 parcels @boston-parcels. Of the 297 offices, 218 use floor area over footprint, confirmed by roof height; 45 use roof height, because the two disagree or the parcel holds more than one BERDO building; 3 use floor area over footprint with no height to check it; and 31 have no estimate.
-
-The outlines have been updated since 2010, but the newer footprints carry no height. These skew new. By the FY2026 assessor's year built @boston-assessment, 41 of the 110 BERDO buildings whose footprint has no measured height and whose year is known (37%) were built in 2010 or later, against 7% of buildings with a measured height. Their floor-area estimate is used unchecked, which fails when the parcel holds only a fragment of a building. BERDO 104376, built in 1914, has 110,005 sq ft over a 175 sq ft fragment, or 630 stories. An unchecked estimate above 60 stories, the height of Boston's tallest building, is therefore discarded, and 104376 joins the offices without an estimate. Its matches and recommendations are the only ones affected. At $k = 20$, the owner's cheapest option moved from VRF to Package 5 and society's from VRF to Package 12; none of them meets the 2030 standard.
-
-The other 30 offices without an estimate have no roof section on their parcel. For 16, the parcel ID, a condominium or sub-parcel ID that does not end in 000, has no polygon in the 2025 parcel layer. For the other 14, no roof section's interior point falls inside the parcel, so their building is counted toward neighboring parcels. These are not mainly new buildings: the median year built is 1951, and 13 of the 26 with a year were built before 1920. They are matched on size, EUI, and fuel shares alone.
-
-== Retrofit Emissions Estimation
-
-For building $b$, upgrade $p$, fuel $f$, and matched simulations $N_b$, with weights $w_(b c)$:
-
-$
-  r_(b,p,f) = (sum_(c in N_b) w_(b c) U_(c,p,f)) / (sum_(c in N_b) w_(b c) B_(c,f))
-$
-
-where $U$ and $B$ are the simulations' upgraded and baseline use of fuel $f$. The projected emissions in year $y$ apply these ratios to the building's reported emissions $G_(b,f)$, with the electricity part scaled by BERDO's electricity factor index $e_y$ (2025 = 1):
-
-$
-  G_(b,p,y) = G_(b,"elec") r_(b,p,"elec") e_y + sum_(f != "elec") G_(b,f) r_(b,p,f)
-$
-
-If the matched simulations have no baseline consumption for a fuel, its ratio is one.
-
-== 20-Year Global Cost
-
-Each option is costed over $N = 20$ years from 2030 ($t = 1$ is 2030) at discount rate $rho$, 0.07 for the owner and 0.02 for society. A component $m$ with installed cost $K_m$ and BTB lifetime $L_m$ is installed at the start and replaced every $L_m$ years, and its last installation is credited its straight-line remaining value at the horizon:
-
-$
-  V_m = K_m (sum_(j=0)^(J_m) (1 + rho)^(-j L_m) - lambda_m (1 + rho)^(-N))
-$
-
-where $J_m$ is the last $j$ with $j L_m < N$ and $lambda_m = ((J_m + 1) L_m - N) \/ L_m$ is the share of the last installation's life left at the horizon. Existing heating and cooling equipment $e in H_b$ is valued the same way, with each replacement delayed by its remaining life. The global cost is
-
-$
-  C_(b,p) = & sum_(m in p) V_m + bb(1)_p sum_(e in H_b) V_e \
-            & + sum_(t=1)^N (E_(b,p,t) + P_(b,p,t)) / (1 + rho)^t
-$
-
-where $bb(1)_p$ is one for options that keep the existing equipment. The energy bill is $E_(b,p,t) = sum_f Q_(b,f) r_(b,p,f) c_f pi_(f,t)$, with $Q_(b,f)$ the building's reported use of fuel $f$, $c_f$ its 2025 price, and $pi_(f,t)$ the AEO price index (2025 = 1). The owner's emissions cost is the ACP, $P_(b,p,t) = 0.234 max(0, G_(b,p,t) - S_t A_b)$, where $S_t$ is the standard in force in year $t$ and $A_b$ is floor area. Society's is $P_(b,p,t) = 0.230 tilde(G)_(b,p,t)$, where $tilde(G)$ replaces BERDO's electricity factor index $e_y$ with Cambium's grid emission rate index. Both rates are in dollars per kilogram. Operation and maintenance costs are left at zero, since BTB gives none.
-
-== Break-Even ACP
-
-From the owner's view, an option's 20-year cost is linear in the ACP rate $a$: $C_(b,p)(a) = F_(b,p) + a T_(b,p)$, where $T_(b,p)$ is the present value of its tons over the limit and $F_(b,p)$ is everything else. A compliant option beats another wherever its line is lower. An office's break-even rate is the lowest $a$ at which some compliant option beats every other option, compliant or not (@fig:breakeven).
-
-#figure(
-  image(
-    "figures/breakeven-acp.png",
-    width: 80%,
-  ),
-  caption: [
-    Over-limit offices whose cheapest 20-year option, from the owner's view, meets the 2030 standard, as the ACP rate rises (projected grid emissions and prices, BTB mid costs). Each step is one office's break-even rate. Global cost is linear in the rate, so each break-even rate is found exactly.
-  ],
-) <fig:breakeven>
-
 // Methodology figure
 
 #let flow_node(pos, heading, detail, name) = node(
@@ -590,3 +443,150 @@ From the owner's view, an option's 20-year cost is linear in the ACP rate $a$: $
     BTB installation costs, AEO energy price scenarios @aeo, and Cambium grid emission rates @cambium support the selection of cost-effective 2030 compliance options.
   ],
 ) <fig:pipeline>
+
+This appendix provides the BERDO data diagnostics cited in the main report, the matching validation, the cost model's equations, and the data flow. The source code and reproducibility scripts are available at
+#link("https://github.com/wegry/DS5500")[github.com/wegry/DS5500].
+
+== BERDO Data Exploration
+
+These exploratory summaries precede the filtering and matching of the integrated analysis, so their populations differ from it and are reported separately.
+
+#figure(
+  image(
+    "figures/berdo-emissions-standards.png",
+    width: 80%,
+  ),
+  caption: [
+    BERDO emissions-intensity standards by building use
+    and five-year compliance period, expressed in
+    kg CO#sub[2]e/ft#super[2]/year @berdo-standards.
+  ],
+) <fig:berdo-limits>
+
+#figure(
+  image(
+    "figures/berdo-completeness.png",
+    width: 80%,
+  ),
+  caption: [
+    Completeness of selected BERDO attributes for the five most common building uses, with Office and Financial Office combined. Each cell is the percentage of records with a value for the corresponding variable.
+  ],
+) <fig:berdo-heatmap>
+
+#figure(
+  image(
+    "figures/berdo-mixed-use-cdf.png",
+    width: 80%,
+  ),
+  caption: [
+    Cumulative distribution of the mixed-use share, the share of non-parking floor area in uses other than office, across the 416 BERDO buildings whose largest property type is Office or Financial Office. The jump at 0% is the buildings with only office and parking space.
+  ],
+) <fig:berdo-types>
+
+#figure(
+  image(
+    "figures/berdo-intensity-cdf.png",
+    width: 80%,
+  ),
+  caption: [
+    Cumulative distribution of reported greenhouse gas emissions intensity for the 300 Office and Financial Office records that report it, compared with the 2030 BERDO office standard.
+  ],
+) <fig:berdo-GHGvsStandard>
+
+Office buildings showed relatively high completeness of floor-area and energy-consumption variables, making them suitable candidates for integration with ComStock. However, missing emissions observations reduce the number of records available for compliance assessment, and missingness may introduce selection bias if buildings with incomplete reporting differ systematically from those retained. Mixed-use composition matters because BERDO reports energy consumption and emissions at the building level, so a building's energy profile may include activities other than those of a typical office.
+
+== Matching Validation
+
+Each of 618 ComStock office simulations in turn plays a BERDO building: it is hidden, its upgrade emissions are predicted from its $k$ nearest other simulations, and the prediction is compared with ComStock's simulated result across the thirteen upgrades. This measures how well retrofit effects transfer between simulated buildings, not real-world accuracy.
+
+// two decimals, keeping trailing zeros
+#let two(x) = {
+  let cents = int(calc.round(float(x) * 100))
+  let r = calc.rem(cents, 100)
+  str(calc.quo(cents, 100)) + "." + (if r < 10 { "0" } else { "" }) + str(r)
+}
+#let validation = csv("data/matching_validation.csv", row-type: dictionary).filter(
+  r => r.k in ("10", "20"),
+)
+
+#figure(
+  table(
+    columns: (auto, auto, auto, auto, auto),
+    align: (right, left, left, right, right),
+    stroke: none,
+    inset: (x: 4pt, y: 3pt),
+    table.hline(),
+    table.header([*$k$*], [*Weighting*], [*District rule*], [*MAE*], [*MAE, district*]),
+    table.hline(stroke: 0.5pt),
+    ..validation
+      .map(r => (
+        r.k,
+        if r.method == "inverse_distance" [Inverse distance] else [Equal],
+        if r.rule == "true" [Yes] else [No],
+        two(r.mae_pp),
+        two(r.mae_pp_district_models),
+      ))
+      .flatten(),
+    table.hline(),
+  ),
+  caption: [
+    Leave-one-out mean absolute error of predicted emissions reductions, in percentage points, for all 618 simulations and the 73 that use district energy. The project uses $k = 20$ with inverse-distance weighting and the district rule.
+  ],
+  placement: none,
+) <tab:matching-validation>
+
+== Story Estimates
+
+Stories come from the city's roof outlines, whose heights are recorded for 2010 @boston-buildings, placed on the 2025 parcels @boston-parcels. Of the 297 offices, 218 use floor area over footprint, confirmed by roof height; 45 use roof height, because the two disagree or the parcel holds more than one BERDO building; 3 use floor area over footprint with no height to check it; and 31 have no estimate.
+
+The outlines have been updated since 2010, but the newer footprints carry no height. These skew new. By the FY2026 assessor's year built @boston-assessment, 41 of the 110 BERDO buildings whose footprint has no measured height and whose year is known (37%) were built in 2010 or later, against 7% of buildings with a measured height. Their floor-area estimate is used unchecked, which fails when the parcel holds only a fragment of a building. BERDO 104376, built in 1914, has 110,005 sq ft over a 175 sq ft fragment, or 630 stories. An unchecked estimate above 60 stories, the height of Boston's tallest building, is therefore discarded, and 104376 joins the offices without an estimate. Its matches and recommendations are the only ones affected. At $k = 20$, the owner's cheapest option moved from VRF to Package 5 and society's from VRF to Package 12; none of them meets the 2030 standard.
+
+The other 30 offices without an estimate have no roof section on their parcel. For 16, the parcel ID, a condominium or sub-parcel ID that does not end in 000, has no polygon in the 2025 parcel layer. For the other 14, no roof section's interior point falls inside the parcel, so their building is counted toward neighboring parcels. These are not mainly new buildings: the median year built is 1951, and 13 of the 26 with a year were built before 1920. They are matched on size, EUI, and fuel shares alone.
+
+== Retrofit Emissions Estimation
+
+For building $b$, upgrade $p$, fuel $f$, and matched simulations $N_b$, with weights $w_(b c)$:
+
+$
+  r_(b,p,f) = (sum_(c in N_b) w_(b c) U_(c,p,f)) / (sum_(c in N_b) w_(b c) B_(c,f))
+$
+
+where $U$ and $B$ are the simulations' upgraded and baseline use of fuel $f$. The projected emissions in year $y$ apply these ratios to the building's reported emissions $G_(b,f)$, with the electricity part scaled by BERDO's electricity factor index $e_y$ (2025 = 1):
+
+$
+  G_(b,p,y) = G_(b,"elec") r_(b,p,"elec") e_y + sum_(f != "elec") G_(b,f) r_(b,p,f)
+$
+
+If the matched simulations have no baseline consumption for a fuel, its ratio is one.
+
+== 20-Year Global Cost
+
+Each option is costed over $N = 20$ years from 2030 ($t = 1$ is 2030) at discount rate $rho$, 0.07 for the owner and 0.02 for society. A component $m$ with installed cost $K_m$ and BTB lifetime $L_m$ is installed at the start and replaced every $L_m$ years, and its last installation is credited its straight-line remaining value at the horizon:
+
+$
+  V_m = K_m (sum_(j=0)^(J_m) (1 + rho)^(-j L_m) - lambda_m (1 + rho)^(-N))
+$
+
+where $J_m$ is the last $j$ with $j L_m < N$ and $lambda_m = ((J_m + 1) L_m - N) \/ L_m$ is the share of the last installation's life left at the horizon. Existing heating and cooling equipment $e in H_b$ is valued the same way, with each replacement delayed by its remaining life. The global cost is
+
+$
+  C_(b,p) = & sum_(m in p) V_m + bb(1)_p sum_(e in H_b) V_e \
+            & + sum_(t=1)^N (E_(b,p,t) + P_(b,p,t)) / (1 + rho)^t
+$
+
+where $bb(1)_p$ is one for options that keep the existing equipment. The energy bill is $E_(b,p,t) = sum_f Q_(b,f) r_(b,p,f) c_f pi_(f,t)$, with $Q_(b,f)$ the building's reported use of fuel $f$, $c_f$ its 2025 price, and $pi_(f,t)$ the AEO price index (2025 = 1). The owner's emissions cost is the ACP, $P_(b,p,t) = 0.234 max(0, G_(b,p,t) - S_t A_b)$, where $S_t$ is the standard in force in year $t$ and $A_b$ is floor area. Society's is $P_(b,p,t) = 0.230 tilde(G)_(b,p,t)$, where $tilde(G)$ replaces BERDO's electricity factor index $e_y$ with Cambium's grid emission rate index. Both rates are in dollars per kilogram. Operation and maintenance costs are left at zero, since BTB gives none.
+
+== Break-Even ACP
+
+From the owner's view, an option's 20-year cost is linear in the ACP rate $a$: $C_(b,p)(a) = F_(b,p) + a T_(b,p)$, where $T_(b,p)$ is the present value of its tons over the limit and $F_(b,p)$ is everything else. A compliant option beats another wherever its line is lower. An office's break-even rate is the lowest $a$ at which some compliant option beats every other option, compliant or not (@fig:breakeven).
+
+#figure(
+  image(
+    "figures/breakeven-acp.png",
+    width: 80%,
+  ),
+  caption: [
+    Over-limit offices whose cheapest 20-year option, from the owner's view, meets the 2030 standard, as the ACP rate rises (projected grid emissions and prices, BTB mid costs). Each step is one office's break-even rate. Global cost is linear in the rate, so each break-even rate is found exactly.
+  ],
+) <fig:breakeven>
+
