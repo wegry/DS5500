@@ -34,3 +34,9 @@ upgrade_id,package_name,component,measure,btb_measure_id
 19,Individual Air-Side Economizers,Economizer controls,economizer_controls,-59
 20,Individual Demand-Controlled Ventilation,Demand-controlled ventilation,hvac_dcv,7
 21,Individual AHU Energy Recovery,Energy recovery wheel,hvac_exhaust_air_energy_or_heat_recovery,5
+3,Variable Speed HP RTU + Energy Recovery,Variable speed HP RTU,add_heat_pump_rtu,2
+3,Variable Speed HP RTU + Energy Recovery,Energy recovery wheel,hvac_exhaust_air_energy_or_heat_recovery,5
+6,Standard HP RTU + Roof Insulation,Standard performance HP RTU,add_heat_pump_rtu,1
+6,Standard HP RTU + Roof Insulation,Roof insulation,roof_insulation_aedg,93
+7,Standard HP RTU + New Windows,Standard performance HP RTU,add_heat_pump_rtu,1
+7,Standard HP RTU + New Windows,New windows,env_new_aedg_windows,54
