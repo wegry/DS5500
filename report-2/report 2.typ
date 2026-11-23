@@ -21,7 +21,7 @@
       department: [
         DS5500 Data Science Capstone, Northeastern University \
         #link("https://github.com/wegry/DS5500")[github.com/wegry/DS5500] \
-        Sponsor: Konstantinos Theodoropoulos
+        Industry Stakeholder: Debra Shepard, Founder & Principal Consultant, Riverstone Sustainability
       ],
     ),
   ),
@@ -247,7 +247,7 @@ Our first priority is confidence in the predicted outcomes, not more financial d
 
 = Statement of Contributions
 
-*Konstantinos Theodoropoulos:* reaching out to potential sponsors; BERDO exploration and validation; attending office hours with Dr. Bemis.
+*Konstantinos Theodoropoulos:* stakeholder communication; BERDO data exploration and validation; inverse-distance weighting evaluation and dbt integration; attending office hours with Dr. Bemis.
 
 *Zachary Wegrzyniak:* data pipeline in dbt and DuckDB (ComStock and BERDO join, mixed-use evaluation); editing; repo setup.
 
