@@ -1,19 +1,19 @@
 k,config,models,n,diff_vs_unweighted_pp,ci95_low_pp,ci95_high_pp
-10,inverse_distance,all,618,-0.0847,-0.1973,0.0246
-10,inverse_distance,district,73,-0.0461,-0.1055,0.0061
-10,unweighted + district rule,all,618,-0.0514,-0.0806,-0.0223
-10,unweighted + district rule,district,73,-0.2591,-0.4455,-0.0716
-10,inverse_distance + district rule,all,618,-0.1362,-0.2505,-0.0169
-10,inverse_distance + district rule,district,73,-0.3364,-0.5265,-0.153
-15,inverse_distance,all,618,-0.0772,-0.1811,0.0273
-15,inverse_distance,district,73,-0.0517,-0.1105,0.004
-15,unweighted + district rule,all,618,-0.0579,-0.1085,-0.0177
-15,unweighted + district rule,district,73,-0.1579,-0.3278,0.0152
-15,inverse_distance + district rule,all,618,-0.1381,-0.2523,-0.0299
-15,inverse_distance + district rule,district,73,-0.2587,-0.4261,-0.0883
-20,inverse_distance,all,618,-0.0587,-0.1523,0.0336
-20,inverse_distance,district,73,-0.0474,-0.1008,0.0035
-20,unweighted + district rule,all,618,-0.0091,-0.0324,0.0152
-20,unweighted + district rule,district,73,-0.1195,-0.2736,0.0382
-20,inverse_distance + district rule,all,618,-0.08,-0.1771,0.0174
-20,inverse_distance + district rule,district,73,-0.2245,-0.3692,-0.0683
+10,inverse_distance,all,618,-0.101,-0.2284,0.0223
+10,inverse_distance,district,73,-0.0414,-0.0944,0.0048
+10,unweighted + district rule,all,618,-0.0582,-0.086,-0.0311
+10,unweighted + district rule,district,73,-0.3461,-0.5139,-0.1856
+10,inverse_distance + district rule,all,618,-0.1579,-0.2845,-0.0241
+10,inverse_distance + district rule,district,73,-0.4099,-0.5786,-0.2498
+15,inverse_distance,all,618,-0.0927,-0.2102,0.0273
+15,inverse_distance,district,73,-0.0471,-0.0978,0.0002
+15,unweighted + district rule,all,618,-0.0699,-0.1257,-0.0281
+15,unweighted + district rule,district,73,-0.2721,-0.414,-0.1308
+15,inverse_distance + district rule,all,618,-0.1637,-0.292,-0.0399
+15,inverse_distance + district rule,district,73,-0.3555,-0.5002,-0.2133
+20,inverse_distance,all,618,-0.0656,-0.173,0.0408
+20,inverse_distance,district,73,-0.0458,-0.0908,-0.003
+20,unweighted + district rule,all,618,-0.0194,-0.0425,0.0038
+20,unweighted + district rule,district,73,-0.2504,-0.3832,-0.1213
+20,inverse_distance + district rule,all,618,-0.0959,-0.2056,0.0138
+20,inverse_distance + district rule,district,73,-0.3371,-0.4635,-0.2077

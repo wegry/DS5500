@@ -5,13 +5,18 @@
 {{ config(post_hook="{{ export_csv('case_study_106476.csv', 'perspective, global_cost_mid_usd') }}") }}
 
 select
-    perspective,
-    upgrade_id,
-    upgrade_name,
-    meets_standard_at_start,
-    years_over_limit,
-    round(global_cost_mid_usd, 2) as global_cost_mid_usd,
-    round(savings_vs_no_upgrade_usd, 2) as savings_vs_no_upgrade_usd,
-    cost_rank_mid
-from {{ ref('berdo_global_cost') }}
-where berdo_id = 106476 and scenario = 'projected' and energy_price = 'mid'
+    g.perspective,
+    g.upgrade_id,
+    g.upgrade_name,
+    g.meets_standard_at_start,
+    g.years_over_limit,
+    round(g.global_cost_mid_usd, 2) as global_cost_mid_usd,
+    round(g.savings_vs_no_upgrade_usd, 2) as savings_vs_no_upgrade_usd,
+    g.cost_rank_mid,
+    g.installed_cost_mid_usd,
+    c.projected_ghg_intensity_kgco2e_sqft as projected_intensity_kgco2e_sqft
+from {{ ref('berdo_global_cost') }} g
+inner join {{ ref('berdo_upgrade_compliance') }} c
+    on g.berdo_id = c.berdo_id and g.upgrade_id = c.upgrade_id
+    and c.period_start = {{ var('decision_period_start') }}
+where g.berdo_id = 106476 and g.scenario = 'projected' and g.energy_price = 'mid'

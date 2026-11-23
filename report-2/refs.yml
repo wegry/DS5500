@@ -203,3 +203,20 @@ omb-m2527:
   url:
     value: https://www.whitehouse.gov/wp-content/uploads/2025/02/M-25-27-Guidance-Implementing-Section-6-of-Executive-Order-14154-Entitled-Unleashing-American-Energy.pdf
     date: 2026-11-21
+
+luddeni-office-retrofits:
+  type: article
+  author:
+    - "Luddeni, Giacomo"
+    - "Krarti, Moncef"
+    - "Pernigotto, Giovanni"
+    - "Gasparella, Andrea"
+  title: "An analysis methodology for large-scale deep energy retrofits of existing building stocks: Case study of the Italian office building"
+  parent:
+    type: periodical
+    title: Sustainable Cities and Society
+    volume: 41
+  page-range: 296-311
+  date: 2018
+  serial-number:
+    doi: 10.1016/j.scs.2018.05.038

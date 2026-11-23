@@ -4,6 +4,8 @@
     figures/berdo-mixed-use-cdf.png    cumulative distribution of the mixed-use share
     figures/berdo-intensity-cdf.png    cumulative distribution of reported GHG intensity
     figures/breakeven-acp.png          over-limit offices a compliant retrofit wins, by ACP rate
+    figures/compliance-outcomes.svg    compliance of the minimum-global-cost recommendations
+    figures/global-k-sensitivity.svg   recommendation changes relative to the configured k
 
 Run from the repo root after `dbt build`:
     uv run python report-2/make_berdo_figures.py
@@ -15,6 +17,7 @@ its own emissions limits. Inside an office building it is another use.
 
 from __future__ import annotations
 
+import csv
 from pathlib import Path
 
 import duckdb
@@ -23,11 +26,14 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
+import yaml
 from matplotlib.colors import LinearSegmentedColormap
 from matplotlib.ticker import PercentFormatter
 
 ROOT = Path(__file__).resolve().parent.parent
 DB = ROOT / "dbt" / "ds5500.duckdb"
+OUTPUTS = DB.parent / "analysis_outputs"
+VARS = yaml.safe_load((DB.parent / "dbt_project.yml").read_text(encoding="utf-8"))["vars"]
 FIGURES = Path(__file__).resolve().parent / "figures"
 
 OFFICE_TYPES = ("Office", "Financial Office")
@@ -145,7 +151,7 @@ def completeness(con: duckdb.DuckDBPyConnection) -> None:
 
 # ---- Fig. 4: mixed-use share ----------------------------------------------------------
 
-def mixed_use(con: duckdb.DuckDBPyConnection) -> None:
+def mixed_use(con: duckdb.DuckDBPyConnection) -> int:
     rows = con.sql(f"""
         with offices as (
             select berdo_id
@@ -204,11 +210,12 @@ def mixed_use(con: duckdb.DuckDBPyConnection) -> None:
     ax.yaxis.set_major_formatter(PercentFormatter(1.0, decimals=0))
     style_axes(ax, f"Cumulative share of offices (n = {n})", "Mixed-use share of floor area")
     save(fig, "berdo-mixed-use-cdf.png")
+    return n
 
 
 # ---- Fig. 5: reported GHG intensity ----------------------------------------------------
 
-def intensity(con: duckdb.DuckDBPyConnection) -> None:
+def intensity(con: duckdb.DuckDBPyConnection) -> tuple[int, int]:
     counts = con.sql(f"""
         select count(*), count(reported_ghg_intensity_kgco2e_sqft)
         from stg_berdo__buildings
@@ -245,11 +252,12 @@ def intensity(con: duckdb.DuckDBPyConnection) -> None:
     style_axes(ax, f"Cumulative share of offices (n = {n})",
                "Reported GHG emissions intensity (kg CO$_2$e/ft²/yr)")
     save(fig, "berdo-intensity-cdf.png")
+    return counts[0], n
 
 
 # ---- break-even ACP ----------------------------------------------------------------
 
-ACP_USD_PER_T = 234
+ACP_USD_PER_T = VARS["acp_usd_per_tco2e"]
 BREAKEVEN_XMAX = 2000
 
 
@@ -303,12 +311,99 @@ def breakeven(con: duckdb.DuckDBPyConnection) -> None:
     save(fig, "breakeven-acp.png")
 
 
+def analysis_rows(path: str) -> list[dict[str, str]]:
+    with (OUTPUTS / path).open(newline="", encoding="utf-8") as file:
+        return list(csv.DictReader(file))
+
+
+def save_results_svg(fig: plt.Figure, name: str) -> None:
+    fig.savefig(FIGURES / name, bbox_inches="tight", pad_inches=0.03,
+                metadata={"Date": None})
+    plt.close(fig)
+
+
+def compliance_outcomes() -> None:
+    rows = {r["perspective"]: r for r in analysis_rows("energy_scenario_outcomes.csv")
+            if r["scenario"] == "projected"}
+    labels = ("Owner", "Society")
+    perspectives = ("financial", "societal")
+    counts = []
+    for perspective in perspectives:
+        row = rows[perspective]
+        total = int(row["offices"]) - int(row["under_limit_anyway"])
+        good = int(row["retrofit_compliant"])
+        other = int(row["retrofit_over"]) + int(row["no_retrofit"])
+        if good + other != total:
+            raise ValueError(f"Inconsistent compliance counts for {perspective}")
+        counts.append((good, other))
+    cohort = sum(counts[0])
+    if sum(counts[1]) != cohort:
+        raise ValueError("Compliance perspectives use different cohorts")
+
+    fig, ax = plt.subplots(figsize=(3.45, 1.23))
+    for i, (good, other) in enumerate(counts):
+        ax.barh(i, good, color="#245b86", height=0.55)
+        ax.barh(i, other, left=good, color="#dce7ef", height=0.55)
+        ax.text(good / 2, i, f"{good} meet limit", ha="center", va="center",
+                color="white", fontsize=8)
+        ax.text(good + other / 2, i, f"{other} over limit", ha="center", va="center",
+                fontsize=8)
+    ax.set(yticks=range(len(labels)), yticklabels=labels, xlim=(0, cohort),
+           xticks=[*range(0, cohort - 5, 20), cohort], xlabel="Office buildings")
+    ax.invert_yaxis()
+    ax.tick_params(axis="y", length=0, pad=4)
+    for edge in ("left", "right", "top"):
+        ax.spines[edge].set_visible(False)
+    save_results_svg(fig, "compliance-outcomes.svg")
+
+
+def global_k_sensitivity() -> None:
+    rows = analysis_rows("k_sensitivity/data/global_k_summary.csv")
+    k_ref = VARS["match_k"]
+    neighbors = list(range(1, k_ref + 1))
+    series = []
+    for perspective in ("financial", "societal"):
+        data = sorted((r for r in rows if r["perspective"] == perspective), key=lambda r: int(r["k"]))
+        if [int(r["k"]) for r in data] != neighbors:
+            raise ValueError(f"Unexpected neighbor sweep for {perspective}")
+        series.append(data)
+    panels = (
+        ("Cheapest overall", "cheapest_changed_vs_ref"),
+        ("Cheapest compliant", "cheapest_compliant_changed_vs_ref"),
+    )
+    peak = max(int(r[key]) for rows in series for r in rows for _, key in panels)
+    upper = max(20, 20 * ((peak + 19) // 20))
+    fig, axes = plt.subplots(1, 2, figsize=(6.5, 2.25), sharey=True)
+    for ax, (title, key) in zip(axes, panels):
+        for data, label, color, marker in zip(
+            series, ("Owner", "Society"), ("#245b86", "#a65021"), ("o", "s")
+        ):
+            ax.plot(neighbors, [int(r[key]) for r in data], label=label, color=color,
+                    marker=marker, ms=2.6, lw=1.2)
+        ax.set(title=title, xlabel="Neighbors (k)",
+               xticks=sorted({1, k_ref, *range(5, k_ref, 5)}), ylim=(0, upper))
+        ax.grid(axis="y", alpha=0.25)
+        for edge in ("right", "top"):
+            ax.spines[edge].set_visible(False)
+    axes[0].set_ylabel("Offices with a different choice")
+    axes[1].legend(frameon=False, loc="upper right")
+    fig.tight_layout()
+    save_results_svg(fig, "global-k-sensitivity.svg")
+
+
 def main() -> None:
     with duckdb.connect(str(DB), read_only=True) as con:
         completeness(con)
-        mixed_use(con)
-        intensity(con)
+        mixed_use_count = mixed_use(con)
+        office_records, intensity_count = intensity(con)
         breakeven(con)
+    with (OUTPUTS / "berdo_figure_counts.csv").open("w", newline="", encoding="utf-8") as file:
+        writer = csv.writer(file)
+        writer.writerow(("mixed_use_offices", "office_records", "reported_intensity_offices"))
+        writer.writerow((mixed_use_count, office_records, intensity_count))
+    with plt.rc_context({"font.size": 9, "svg.fonttype": "path", "svg.hashsalt": "ds5500-report-2"}):
+        compliance_outcomes()
+        global_k_sensitivity()
 
 
 if __name__ == "__main__":
