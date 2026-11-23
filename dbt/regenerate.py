@@ -8,7 +8,9 @@
    matching_validation.csv).
 2. The 20-year Monte Carlo, which stays in Python for its sampling: a zero-uncertainty
    check against dbt, then the full run with the settings below.
-3. Report 2's figures (report-2/make_berdo_figures.py), whose annotations quote model
+3. The matching sensitivity (dbt/portfolio_matching_sensitivity.py --with-hvac): the
+   feature, HVAC-label, and per-option leave-one-out tables in Report 2's appendix.
+4. Report 2's figures (report-2/make_berdo_figures.py), whose annotations quote model
    results, then Report 2, compiled to check that it still builds (the PDF is not tracked).
 
 Stops at the first failing step.
@@ -51,6 +53,9 @@ def main() -> None:
         [py, "dbt/monte_carlo_20year.py", "--draws", str(DRAWS), "--seed", str(SEED),
          "--owner-rate-range", *OWNER_RATES, "--societal-rate-range", *SOCIETAL_RATES])
 
+    run("Matching sensitivity",
+        [py, "dbt/portfolio_matching_sensitivity.py", "--with-hvac", "--seed", str(SEED)])
+
     run("Report 2 figures", [py, "report-2/make_berdo_figures.py"])
 
     if not args.no_report:
@@ -58,7 +63,7 @@ def main() -> None:
         if typst is None:
             print("\n== Report 2: typst not found, skipped")
         else:
-            run("Report 2", [typst, "compile", "report 2.typ"], cwd=ROOT / "report-2")
+            run("Report 2", [typst, "compile", "--root", ".", "report-2/report 2.typ"])
 
     print("\nDone. Review the changes with `git diff --stat`.")
 

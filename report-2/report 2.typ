@@ -4,6 +4,12 @@
 
 #import "@preview/charged-ieee:0.1.4": ieee
 #import "@preview/fletcher:0.5.8" as fletcher: diagram, edge, node
+#import "@preview/zero:0.6.1": num, set-group, set-num, set-round, ztable
+
+// Computed numbers: three significant figures, text font, commas only in integers.
+#set-num(math: false)
+#set-round(mode: "figures", precision: 3)
+#set-group(separator: ",", threshold: (integer: 4, fractional: calc.inf))
 
 // Red placeholder so unfinished rubric sections stand out in the PDF.
 #let todo(body) = text(fill: red)[*TODO:* #body]
@@ -146,11 +152,11 @@ Only 297 of the 416 (71%) report GHG emissions, and those 297 are the offices we
 
 == Matching Accuracy
 
-Matching is worth doing. At $k = 20$, the mean absolute error (MAE), the average size of the prediction error regardless of sign, is 6.650 percentage points of emissions reduction. Pooling all other offices gives 7.55 points and pooling the same size class gives 7.45 (Appendix, @tab:matching-validation).
+Matching is worth doing. At $k = 20$, the mean absolute error (MAE), the average size of the prediction error regardless of sign, is 6.65 percentage points of emissions reduction. Pooling all other offices gives 7.55 points and pooling the same size class gives 7.45 (Appendix, @tab:matching-validation). Adding stories to the distance lowered the MAE from 6.92 to 6.65 points and the median error from 3.32 to 2.82, though the 90th percentile rose from 19.3 to 19.9 (Appendix, @tab:feature-analysis).
 
 == Recommendations
 
-Under projected grid factors, baseline energy prices, and mid installation costs, 81 offices exceed the 2030 limit without a retrofit and 71 have a modeled compliant option. A retrofit is cheapest at all 81 from both perspectives. The societal optimum is compliant at 11 more offices than the owner optimum (@fig:compliance-outcomes). Compared with no retrofit, the cheapest 20-year options save owners \$39.0 million and society \$102.7 million in total. Package 12, rooftop PV with roof insulation, is the most common choice from both perspectives (28 owner picks and 40 societal picks).
+Under projected grid factors, baseline energy prices, and mid installation costs, 81 offices exceed the 2030 limit without a retrofit and 71 have a modeled compliant option. A retrofit is cheapest at all 81 from both perspectives. The societal optimum is compliant at 11 more offices than the owner optimum (@fig:compliance-outcomes). Compared with no retrofit, the cheapest 20-year options save owners \$39.0 million and society \$103 million in total. Package 12, rooftop PV with roof insulation, is the most common choice from both perspectives (28 owner picks and 40 societal picks).
 
 #figure(
   image("figures/compliance-outcomes.svg", width: 94%),
@@ -175,7 +181,7 @@ Of the 71 offices with a compliant option, 29 would choose one at a zero ACP, 35
   placement: none,
 ) <fig:breakeven>
 
-Across 5,000 Monte Carlo draws per office, recommendation stability is the fraction of draws in which the original option remains cheapest. Under projected conditions, the averages are 75.01% for owners and 80.22% for society. Compliance confidence instead measures how often that option meets the limit in a given year (Appendix, @sec:additional-results).
+Across 5,000 Monte Carlo draws per office, recommendation stability is the fraction of draws in which the original option remains cheapest. Under projected conditions, the averages are 75.0% for owners and 80.2% for society. Compliance confidence instead measures how often that option meets the limit in a given year (Appendix, @sec:additional-results).
 
 == Sensitivity to the Number of Neighbors
 
@@ -512,28 +518,13 @@ The mixed-use figure covers the #diagnostic-counts.mixed_use_offices offices wit
 
 == Matching Validation
 
-Each of 618 ComStock office simulations in turn plays a BERDO building: it is hidden, its upgrade emissions are predicted from its $k$ nearest other simulations, and the prediction is compared with ComStock's simulated result across the 23 upgrades. Each configuration evaluates $618 \\times 23 = 14,214$ predictions. This measures how well retrofit effects transfer between simulated buildings, not real-world accuracy.
+Each of 618 ComStock office simulations in turn plays a BERDO building: it is hidden, its upgrade emissions are predicted from its $k$ nearest other simulations, and the prediction is compared with ComStock's simulated result across the 23 upgrades. Each configuration evaluates $618 times 23 =$ 14,214 predictions. This measures how well retrofit effects transfer between simulated buildings, not real-world accuracy.
 
-With inverse-distance weighting and the district rule, MAE falls from 7.788 points at $k = 1$ to 6.772 at $k = 10$ and reaches 6.646 at $k = 19$. At $k = 20$ it is 6.650. The paired bootstrap reports production MAE minus unweighted MAE without the rule. The overall difference is −0.0959 points (95% CI −0.2056 to 0.0138), which is not statistically significant. For the 73 district-energy simulations it is −0.3371 points (95% CI −0.4635 to −0.2077), indicating lower error for that group.
+With inverse-distance weighting and the district rule, MAE falls from 7.79 points at $k = 1$ to 6.77 at $k = 10$ and 6.65 at $k = 19$ and 20. The paired bootstrap reports production MAE minus unweighted MAE without the rule. The overall difference is −0.0959 points (95% CI −0.206 to 0.0138), which is not statistically significant. For the 73 district-energy simulations it is −0.337 points (95% CI −0.464 to −0.208), indicating lower error for that group.
 
-#let pad-number(number, digits) = {
-  let value = str(number)
-  "0" * calc.max(0, digits - value.len()) + value
-}
+// zero pads a zero to "0.000", so reference rows show a dash instead
+#let or-dash(value) = if float(value) == 0 [—] else { str(value) }
 
-#let fixed(number, digits, signed: false) = {
-  let value = float(number)
-  let scale = int(calc.pow(10, digits))
-  let units = int(calc.round(calc.abs(value) * scale))
-  let sign = if value < 0 { "-" } else if signed { "+" } else { "" }
-  sign + str(calc.quo(units, scale)) + "." + pad-number(calc.rem(units, scale), digits)
-}
-
-#let grouped(number) = if number < 1000 {
-  str(number)
-} else {
-  grouped(calc.quo(number, 1000)) + "," + pad-number(calc.rem(number, 1000), 3)
-}
 #let experiment-dir = "../dbt/analysis_outputs/portfolio_matching_sensitivity/"
 
 #let district-bootstrap = csv("../dbt/analysis_outputs/weighted_district/bootstrap.csv", row-type: dictionary)
@@ -543,8 +534,9 @@ With inverse-distance weighting and the district rule, MAE falls from 7.788 poin
 )
 
 #figure(
-  table(
+  ztable(
     columns: (auto, auto, auto, auto, auto),
+    format: (none, none, none, auto, auto),
     align: (right, left, left, right, right),
     stroke: none,
     inset: (x: 4pt, y: 3pt),
@@ -556,8 +548,8 @@ With inverse-distance weighting and the district rule, MAE falls from 7.788 poin
         r.k,
         if r.method == "inverse_distance" [Inverse distance] else [Equal],
         if r.rule == "true" [Yes] else [No],
-        fixed(r.mae_pp, 3),
-        fixed(r.mae_pp_district_models, 3),
+        r.mae_pp,
+        r.mae_pp_district_models,
       ))
       .flatten(),
     table.hline(),
@@ -570,9 +562,9 @@ With inverse-distance weighting and the district rule, MAE falls from 7.788 poin
 
 === Matching Features and Weights <sec:feature-matching>
 
-We reran leave-one-out matching on the final 618 simulations and 23 retrofits (14,214 predictions per configuration) using the same fuel-ratio predictions and emissions factors as production. At $k = 20$ with the district rule, uniform pooling has 6.727 points MAE versus 6.650 for inverse distance. With inverse distance, dropping the district rule raises MAE to 6.680. The 96 combinations of $k = 1$--24, pooling method, and district rule reproduce the report's validation export to its displayed precision.
+We reran leave-one-out matching on the final 618 simulations and 23 retrofits (14,214 predictions per configuration) using the same fuel-ratio predictions and emissions factors as production. At $k = 20$ with the district rule, uniform pooling has 6.73 points MAE versus 6.65 for inverse distance. With inverse distance, dropping the district rule raises MAE to 6.68. The 96 combinations of $k = 1$--24, pooling method, and district rule reproduce the report's validation export to its displayed precision.
 
-Removing stories raises mean and median error but lowers the 90th percentile. Four-term scaling divides each term by its standard deviation over eligible BERDO--ComStock pairs before the district restriction and rescales the weights to sum to four. The resulting weights for area, EUI, fuel share, and stories are 0.356, 1.092, 1.983, and 0.569. The fuel variants change the coefficient on the sum of absolute fuel-share differences from 0.5 to 0.25 or 1.5. Scaling and tripling the fuel term reduce MAE on this cohort. These comparisons use the same held-out simulations for every variant and do not validate a newly selected metric on independent data. We keep the production configuration.
+Removing stories raises mean and median error but lowers the 90th percentile. Four-term scaling divides each term by its standard deviation over eligible BERDO--ComStock pairs before the district restriction and rescales the weights to sum to four. The resulting weights for area, EUI, fuel share, and stories are 0.356, 1.09, 1.98, and 0.569. The fuel variants change the coefficient on the sum of absolute fuel-share differences from 0.5 to 0.25 or 1.5. Scaling and tripling the fuel term reduce MAE on this cohort. These comparisons use the same held-out simulations for every variant and do not validate a newly selected metric on independent data. We keep the production configuration.
 
 #let feature-names = (
   ("production", [Production]),
@@ -584,9 +576,10 @@ Removing stories raises mean and median error but lowers the 90th percentile. Fo
 #let feature-results = csv(experiment-dir + "configuration_summary.csv", row-type: dictionary)
 
 #figure(
-  table(
+  ztable(
     columns: (1fr, auto, auto, auto, auto),
     align: (left, right, right, right, right),
+    format: (none, auto, auto, auto, (positive-sign: true)),
     inset: (x: 3pt, y: 2pt),
     stroke: none,
     table.hline(),
@@ -594,8 +587,8 @@ Removing stories raises mean and median error but lowers the 90th percentile. Fo
     table.hline(stroke: 0.5pt),
     ..feature-names.map(((key, name),) => {
       let row = feature-results.find(r => r.experiment == key)
-      (name, fixed(row.mae_pp, 3), fixed(row.median_ae_pp, 3),
-       fixed(row.p90_ae_pp, 3), fixed(row.mae_minus_production_pp, 3, signed: true))
+      (name, row.mae_pp, row.median_ae_pp,
+       row.p90_ae_pp, or-dash(row.mae_minus_production_pp))
     }).flatten(),
     table.hline(),
   ),
@@ -611,9 +604,11 @@ The public ComStock full baseline contains a primary HVAC-system label for each 
 #let hvac-rates = hvac-results.map(r => float(r.target_error_rate)).dedup().sorted()
 
 #figure(
-  table(
+  ztable(
     columns: (1fr, auto, auto, auto, auto),
     align: (left, right, right, right, right),
+    // P90 spans 9.26 to 14.2, so one decimal keeps the column even
+    format: (none, auto, auto, (round: (mode: "places", precision: 1)), (positive-sign: true)),
     inset: (x: 3pt, y: 2pt),
     stroke: none,
     table.hline(),
@@ -623,8 +618,8 @@ The public ComStock full baseline contains a primary HVAC-system label for each 
       let runs = hvac-results.filter(r => float(r.target_error_rate) == rate)
       let mean(field) = runs.fold(0.0, (sum, row) => sum + float(row.at(field))) / runs.len()
       (str(int(calc.round(100 * rate))) + "%",
-       fixed(mean("mae_pp"), 3), fixed(mean("median_ae_pp"), 3),
-       fixed(mean("p90_ae_pp"), 3), fixed(mean("mae_minus_production_pp"), 3, signed: true))
+       str(mean("mae_pp")), str(mean("median_ae_pp")),
+       str(mean("p90_ae_pp")), or-dash(mean("mae_minus_production_pp")))
     }).flatten(),
     table.hline(),
   ),
@@ -632,7 +627,7 @@ The public ComStock full baseline contains a primary HVAC-system label for each 
   placement: none,
 ) <tab:hvac-analysis>
 
-Accurate simulated HVAC labels lower MAE from 6.650 to 3.736 points in this test. The gain shrinks as labels become less accurate but remains at 50% corruption under this procedure. The result depends on the mismatch penalty and the way labels are corrupted. BERDO and assessor records lack commercial HVAC labels, and this experiment does not establish how a real label source would perform. Earlier tests of year built, wall construction, window type, and operating hours lack a recoverable protocol and were not rerun.
+Accurate simulated HVAC labels lower MAE from 6.65 to 3.74 points in this test. The gain shrinks as labels become less accurate but remains at 50% corruption under this procedure. The result depends on the mismatch penalty and the way labels are corrupted. BERDO and assessor records lack commercial HVAC labels, and this experiment does not establish how a real label source would perform. Earlier tests of year built, wall construction, window type, and operating hours lack a recoverable protocol and were not rerun.
 
 #block(breakable: false)[
 === Prediction Errors by Retrofit Option
@@ -640,9 +635,10 @@ Accurate simulated HVAC labels lower MAE from 6.650 to 3.736 points in this test
 #let upgrade-errors = csv(experiment-dir + "production_by_upgrade.csv", row-type: dictionary)
 
 #figure(
-  table(
+  ztable(
     columns: (auto, 1fr, auto, auto),
     align: (right, left, right, right),
+    format: (none, none, (round: (mode: "places", precision: 2)), (round: (mode: "places", precision: 2))),
     inset: (x: 3pt, y: 2pt),
     stroke: none,
     table.hline(),
@@ -650,7 +646,7 @@ Accurate simulated HVAC labels lower MAE from 6.650 to 3.736 points in this test
     table.hline(stroke: 0.5pt),
     ..upgrade-errors.map(row => (
       row.upgrade_id, retrofit-names.at(row.upgrade_id),
-      fixed(row.mean_simulated_reduction_pct, 2), fixed(row.mae_pp, 2),
+      row.mean_simulated_reduction_pct, row.mae_pp,
     )).flatten(),
     table.hline(),
   ),
@@ -659,7 +655,7 @@ Accurate simulated HVAC labels lower MAE from 6.650 to 3.736 points in this test
 ) <tab:per-upgrade-validation>
 ]
 
-RTU options miss by 8.14--10.48 points against simulated cuts of 6.7--8.6%. The electric-backup boiler misses by 4.05 points on a 7.0% cut. VRF and geothermal have the largest errors. Individual envelope, lighting, and rooftop PV measures miss by 1.10--2.68 points, ventilation measures by 0.11--4.77, and combined Packages 2--5 by 8.64--10.57 points.
+RTU options miss by 8.14--10.48 points against simulated cuts of 6.68--8.55%. The electric-backup boiler misses by 4.05 points on a 7.02% cut. VRF and geothermal have the largest errors. Individual envelope, lighting, and rooftop PV measures miss by 1.10--2.68 points, ventilation measures by 0.11--4.77, and combined Packages 2--5 by 8.64--10.57 points.
 
 == Story Estimates
 
@@ -721,24 +717,25 @@ The Farnsworth Street boiler's global cost is \$2.78 million for the owner and \
 )
 
 #figure(
-  table(
+  ztable(
     columns: (1fr, auto, auto, auto),
     align: (left, right, right, right),
+    format: (none, (round: (mode: none)), (round: (mode: none)), (round: (mode: "places", precision: 1))),
     inset: (x: 3pt, y: 3pt),
     stroke: none,
     table.hline(),
-    table.header([*Option*], [*Install.*], [*Global*], [*2030 cut*]),
+    table.header([*Option*], [*Install.*], [*Global*], [*2030 cut (%)*]),
     table.hline(stroke: 0.5pt),
     ..case-options.map(((id, name),) => {
       let row = case-results.find(r => r.upgrade_id == id)
-      let thousands(value) = grouped(int(calc.round(float(value) / 1000)))
+      let thousands(value) = str(int(calc.round(float(value) / 1000)))
       let cut = 100 * (1 - float(row.projected_intensity_kgco2e_sqft) / case-base)
       ([#name (#id)], thousands(row.installed_cost_mid_usd),
-       thousands(row.global_cost_mid_usd), fixed(cut, 1) + "%")
+       thousands(row.global_cost_mid_usd), or-dash(cut))
     }).flatten(),
     table.hline(),
   ),
-  caption: [Representative options for BERDO 106476. Gross installation and owner global costs are in thousands of 2025 dollars. Global cost covers 2027--2046 at mid installation costs and baseline prices with projected grid factors. The modeled 2030 emissions cut is relative to the no-retrofit intensity of #fixed(case-base, 2) kg CO#sub[2]e/ft#super[2]/year. Source: dbt global-cost and upgrade-compliance outputs.],
+  caption: [Representative options for BERDO 106476. Gross installation and owner global costs are in thousands of 2025 dollars. Global cost covers 2027--2046 at mid installation costs and baseline prices with projected grid factors. The modeled 2030 emissions cut is relative to the no-retrofit intensity of #num(str(case-base)) kg CO#sub[2]e/ft#super[2]/year. Source: dbt global-cost and upgrade-compliance outputs.],
 ) <tab:farnsworth-results>
 
 == Neighbor Sensitivity
@@ -753,12 +750,12 @@ How close are the matches? For the median office, its 20 matched simulations dif
 
 Matching against all-office pooling improves MAE by 0.90 points (95% CI 0.58--1.22) and lowers error for 68.9% of the held-out simulations. Under the frozen grid factor, the owner's compliant count remains 42 of 99 when switching to AEO baseline prices. Under projected conditions, the societal count ranges from 44 to 47 across alternative price cases. Of the 71 offices with a compliant option, 21 have a break-even ACP above \$1,000 per metric ton, including six above \$10,000.
 
-At $k = 20$, the median absolute error is 2.820 points and the 90th percentile is 19.928. Heat pump options are chosen for 33 buildings from each perspective.
+At $k = 20$, the median absolute error is 2.82 points and the 90th percentile is 19.9. Heat pump options are chosen for 33 buildings from each perspective.
 
 The cheapest choice is unchanged across low, mid, and high BTB installation costs for 33 offices from the owner's view and 61 from society's. At Farnsworth Street, Packages 2 and 4 tie for second. Air-handler energy recovery is the owner's cheapest option that misses the 2030 limit and costs about \$162,000 more than the boiler.
 
 Under projected conditions, the cheapest option stays cheapest in at least 90% of Monte Carlo draws for 25 offices from the owner's view and 32 from society's. It stays cheapest in fewer than half for 12 and 7, respectively. Under frozen conditions, the corresponding counts are 22 and 32 at or above 90%, and 11 and 5 below half. Expected regret is the extra cost of keeping the original recommendation compared with choosing the cheapest option in each draw. Summed across offices, expected regret is \$0.92 million for the owner and \$3.40 million for society under projected conditions, and \$1.33 million and \$4.04 million under frozen conditions.
 
-With grid factors and prices frozen at 2025 levels, mean recommendation stability is 71.94% for the owner and 79.89% for society. Of the 35 owner recommendations that meet the 2030 limit in the central projection, 26 meet it in at least 90% of draws. Only one of those 35 meets the 2046 limit in at least 90% of draws.
+With grid factors and prices frozen at 2025 levels, mean recommendation stability is 71.9% for the owner and 79.9% for society. Of the 35 owner recommendations that meet the 2030 limit in the central projection, 26 meet it in at least 90% of draws. Only one of those 35 meets the 2046 limit in at least 90% of draws.
 
 At $k = 1$, $10$, and $19$, the owner's cheapest option overall changed for 52, 17, and 1 of the 81 offices, and society's for 38, 13, and 2. The owner next selects the variable-speed heat pump RTU with energy recovery (16 offices, 5 compliant) and the electric-backup boiler (12 offices, 11 compliant). Six owner Package 12 picks are compliant. The heat pump boiler is the second most common societal pick (21 offices).
