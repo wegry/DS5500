@@ -1,5 +1,5 @@
 
-// Optimizing Decarbonization Investment Decisions for Boston Office Buildings
+// Is the Cheapest Retrofit Compliant? Estimating BERDO Retrofit Costs for Boston Office Buildings
 // Build from the repository root: typst compile --root . "report-2/report 2.typ"
 
 #import "@preview/charged-ieee:0.1.4": ieee
@@ -18,7 +18,7 @@
 // ---- 1 & 2: name and title ------------------------------------------------
 
 #show: ieee.with(
-  title: [Optimizing Decarbonization Investment Decisions for Boston Office Buildings],
+  title: [Is the Cheapest Retrofit Compliant? Estimating BERDO Retrofit Costs for Boston Office Buildings],
   // One combined entry keeps the author block to two short lines instead of
   // a full column per author. PDF metadata is set separately below.
   authors: (
