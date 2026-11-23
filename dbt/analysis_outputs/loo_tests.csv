@@ -1,4 +1,4 @@
 comparison,mean_diff_pp,ci95_low_pp,ci95_high_pp,share_models_reference_better
-20 minus all,-1.07,-1.35,-0.79,0.725
-20 minus type,-0.95,-1.17,-0.72,0.748
-20 minus 1,-1.28,-1.64,-0.92,0.595
+20 minus all,-0.9,-1.22,-0.58,0.689
+20 minus type,-0.8,-1.05,-0.54,0.717
+20 minus 1,-1.14,-1.55,-0.72,0.558

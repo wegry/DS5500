@@ -7,7 +7,7 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 1,100238,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,2.614273591,290387.28,0.0,525855.41,714220.1
 1,100297,46,Photovoltaics with 40pct Roof Coverage,false,3.888182269,166766.81,42420.15,969861.93,1244201.83
 1,100436,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.923568943,113703.59,22802.98,518332.16,851659.92
-1,100609,48,Wall Insulation,true,2.764812977,123875.36,0.0,514124.9,657131.05
+1,100609,15,"HP Boiler, Electric Backup",true,0.81791948,437447.24,0.0,359875.97,557614.74
 1,100668,43,LED Lighting,true,2.907968513,72070.96,0.0,556371.76,693980.28
 1,101229,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.491294765,274885.91,7421.63,809012.55,994743.63
 1,101321,48,Wall Insulation,true,2.77402568,174074.87,0.0,1510681.6,1571678.1
@@ -16,7 +16,7 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 1,101505,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,5.385166094,215335.46,163272.36,1760298.03,2192442.84
 1,101654,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.87466912,109538.06,23540.11,605654.6,766213.75
 1,101687,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,2.671267911,147373.13,0.0,398668.19,460316.18
-1,101784,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,0.965263245,376177.91,0.0,276976.69,447019.96
+1,101784,15,"HP Boiler, Electric Backup",true,0.965263245,376177.91,0.0,276976.69,447019.96
 1,102361,21,Energy Recovery for AHUs,true,2.877787358,41510.74,0.0,875825.91,928422.53
 1,102396,46,Photovoltaics with 40pct Roof Coverage,false,4.765175436,634335.53,1274249.4,19255512.22,20801924.92
 1,102398,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.902926746,318353.4,164478.71,3766789.98,4064439.81
@@ -31,10 +31,10 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 1,103036,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,10.187785752,84968.87,118773.43,1286534.81,1753476.01
 1,103156,46,Photovoltaics with 40pct Roof Coverage,true,3.056693503,163341.4,0.0,847283.53,917365.58
 1,103336,46,Photovoltaics with 40pct Roof Coverage,false,5.146935697,347897.36,3864.06,1994704.81,2392934.8
-1,103361,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,1.94664009,175112.41,0.0,260429.0,341233.75
+1,103361,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,1.971117544,175112.41,0.0,260041.06,340845.81
 1,103362,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.693616803,146932.34,7187.15,235980.79,304631.53
-1,103395,48,Wall Insulation,true,2.981713432,65686.67,0.0,284220.49,374005.18
-1,103770,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.037557638,242696.28,0.0,472638.52,584629.5
+1,103395,15,"HP Boiler, Electric Backup",true,0.975906555,293247.76,0.0,210665.79,343222.24
+1,103770,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,2.294497448,242696.28,0.0,456443.41,568434.4
 1,103807,46,Photovoltaics with 40pct Roof Coverage,true,3.141586568,127858.26,0.0,860194.57,1013848.08
 1,103856,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.577062381,244715.81,10210.77,279842.49,464451.11
 1,103877,46,Photovoltaics with 40pct Roof Coverage,true,3.098978075,307319.71,0.0,790693.76,995628.08
@@ -57,11 +57,11 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 1,104891,48,Wall Insulation,false,3.949604789,907068.08,662176.34,13876626.23,14856642.7
 1,104900,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.236723302,2440833.86,1285021.47,19558346.17,21864398.3
 1,104934,48,Wall Insulation,false,6.178118652,190783.45,899717.78,5729423.59,6695992.63
-1,104984,58,"Package 5, Variable Speed HP RTU or HP Boilers + Economizer + DCV + Energy Recovery",true,0.159482421,412709.22,0.0,11945.92,206186.16
+1,104984,15,"HP Boiler, Electric Backup",true,0.159452222,321407.74,0.0,12091.66,157377.24
 1,105031,46,Photovoltaics with 40pct Roof Coverage,true,3.192280167,194756.87,0.0,1020118.42,1135547.39
-1,105032,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,2.041041755,724248.4,0.0,933018.44,1260399.63
+1,105032,15,"HP Boiler, Electric Backup",true,2.041041755,724248.4,0.0,933018.44,1260399.63
 1,105159,48,Wall Insulation,false,3.830632355,98887.32,20578.57,354012.31,503420.98
-1,105257,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,0.961314431,430194.4,0.0,299990.61,494450.9
+1,105257,15,"HP Boiler, Electric Backup",true,0.961314431,430194.4,0.0,299990.61,494450.9
 1,105302,48,Wall Insulation,false,3.302536882,31229.97,2396.63,451722.43,465062.16
 1,105612,46,Photovoltaics with 40pct Roof Coverage,false,3.77021435,131859.33,23368.85,610479.25,690422.69
 1,105642,48,Wall Insulation,false,3.521647389,61696.54,45950.88,1496874.52,1564444.1
@@ -75,7 +75,7 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 1,106091,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.567220749,212096.83,143886.93,2314013.34,2782604.92
 1,106092,46,Photovoltaics with 40pct Roof Coverage,false,3.434986545,142471.76,11339.69,1105637.94,1178105.51
 1,106121,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.805433316,229581.78,64265.39,1747520.88,2163259.08
-1,106365,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,1.387112627,1584917.19,0.0,1167551.94,2045694.8
+1,106365,15,"HP Boiler, Electric Backup",true,1.482001213,1289802.1,0.0,1258762.08,1841789.86
 1,106476,48,Wall Insulation,false,4.248332423,108276.14,87055.51,1201456.98,1526887.47
 1,106673,21,Energy Recovery for AHUs,true,2.411148756,156686.87,0.0,2056007.21,2129957.87
 1,107803,46,Photovoltaics with 40pct Roof Coverage,true,3.14304273,919508.21,0.0,17682369.33,18076886.7
@@ -88,7 +88,7 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 2,100238,46,Photovoltaics with 40pct Roof Coverage,true,2.83468847,250731.69,0.0,547844.48,722313.69
 2,100297,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.850455006,166544.54,39598.1,968633.59,1203165.72
 2,100436,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.919285752,102258.2,22652.78,517651.65,734868.97
-2,100609,48,Wall Insulation,true,2.723826533,121070.75,0.0,509759.43,665910.32
+2,100609,15,"HP Boiler, Electric Backup",true,0.820117681,499495.92,0.0,363309.29,589095.86
 2,100668,43,LED Lighting,true,3.030370704,71924.78,0.0,599543.36,716079.99
 2,101229,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.427101964,274885.91,4801.72,798081.04,981192.21
 2,101321,48,Wall Insulation,true,2.843569879,197572.32,0.0,1521564.01,1590794.11
@@ -97,25 +97,25 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 2,101505,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,5.400158295,189195.27,164419.02,1768071.75,2155931.02
 2,101654,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.36659202,96427.87,2716.96,599473.44,646686.56
 2,101687,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.585738248,98126.12,0.0,412495.89,457775.7
-2,101784,48,Wall Insulation,false,3.946068786,86011.07,27476.34,363733.74,513523.15
+2,101784,15,"HP Boiler, Electric Backup",true,1.150733483,404834.98,0.0,314750.82,497747.91
 2,102361,48,Wall Insulation,false,3.231806564,56988.65,567.99,910508.17,998853.31
 2,102396,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.766802974,734661.68,1275662.8,19265189.48,20848170.25
 2,102398,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.892260759,270195.3,163268.78,3758945.99,4142403.54
 2,102539,46,Photovoltaics with 40pct Roof Coverage,true,5.017477209,936580.55,0.0,7664089.2,8178984.35
 2,102696,21,Energy Recovery for AHUs,true,2.741325115,32828.34,0.0,308144.18,323637.99
-2,102785,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.443594407,81666.35,0.0,217632.94,255317.47
+2,102785,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,2.417994477,81666.35,0.0,212216.59,249901.12
 2,102919,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,9.766643076,91100.94,188769.75,968117.77,1333130.66
 2,102965,21,Energy Recovery for AHUs,false,4.312211629,32647.04,60659.0,824663.92,1038847.43
 2,103032,46,Photovoltaics with 40pct Roof Coverage,true,4.316244375,499324.97,0.0,2117932.71,2564461.1
-2,103034,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,1.109410192,222600.0,0.0,246896.77,349614.43
+2,103034,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,1.106588769,222600.0,0.0,246268.87,348986.53
 2,103035,21,Energy Recovery for AHUs,false,3.868583097,29152.83,30128.77,699896.94,868369.22
 2,103036,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,9.875186469,123908.34,107531.96,1228750.31,1550974.83
 2,103156,46,Photovoltaics with 40pct Roof Coverage,true,3.084489439,132617.1,0.0,855795.1,947759.18
 2,103336,46,Photovoltaics with 40pct Roof Coverage,false,5.025326201,395965.34,287.58,1911087.37,2280331.23
 2,103361,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.704634602,94906.39,0.0,361836.42,405630.5
 2,103362,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.781373811,123359.69,8771.73,242240.39,315756.95
-2,103395,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,0.768517734,378724.53,0.0,185408.87,376901.96
-2,103770,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.48588035,127494.29,5145.05,507823.74,571800.39
+2,103395,15,"HP Boiler, Electric Backup",true,0.834625636,341681.21,0.0,204282.26,358732.03
+2,103770,2,"Variable Speed HP RTU, Original Heating Fuel Backup",false,3.618212247,127494.29,9841.85,499414.24,568087.69
 2,103807,46,Photovoltaics with 40pct Roof Coverage,true,3.121479817,143305.59,0.0,848092.25,1021592.77
 2,103856,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.600973532,244715.81,10899.27,285589.38,465760.95
 2,103877,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.677741717,165196.85,11124.37,957791.03,1045144.66
@@ -138,11 +138,11 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 2,104891,21,Energy Recovery for AHUs,false,3.37493121,565781.47,76447.69,13049258.93,13392735.47
 2,104900,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.321005214,2202793.52,1400327.43,19901649.12,22223432.02
 2,104934,48,Wall Insulation,false,6.086313081,222537.19,870783.61,5680902.4,6629663.89
-2,104984,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,0.104625736,320431.29,0.0,9008.51,171396.73
+2,104984,15,"HP Boiler, Electric Backup",true,0.104625736,288414.96,0.0,9100.94,139472.83
 2,105031,46,Photovoltaics with 40pct Roof Coverage,true,3.120259444,259029.08,0.0,980675.1,1148481.15
 2,105032,21,Energy Recovery for AHUs,false,4.351902993,41197.62,79364.43,1007363.63,1277443.32
 2,105159,48,Wall Insulation,false,3.792732714,80393.75,19229.44,351935.0,484150.74
-2,105257,21,Energy Recovery for AHUs,false,3.741685207,22544.69,19963.78,412945.39,535719.11
+2,105257,15,"HP Boiler, Electric Backup",true,1.123049681,404813.81,0.0,331439.65,514427.18
 2,105302,48,Wall Insulation,false,3.208226878,50879.1,73.15,444499.18,462400.56
 2,105612,46,Photovoltaics with 40pct Roof Coverage,false,3.820277312,113893.24,25628.21,628330.91,702825.31
 2,105642,21,Energy Recovery for AHUs,true,2.538799532,89920.23,0.0,1228730.71,1271169.88
@@ -151,12 +151,12 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 2,105955,21,Energy Recovery for AHUs,false,3.424735032,44174.28,14035.39,753404.65,788288.74
 2,105956,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.521219978,134810.42,7829.0,420206.29,533288.11
 2,106009,46,Photovoltaics with 40pct Roof Coverage,true,3.032377138,572041.14,0.0,3082784.7,3670297.17
-2,106015,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.215083248,129176.07,85.9,383181.36,442874.9
+2,106015,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,3.196497676,129176.07,0.0,379769.53,439377.18
 2,106043,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.577203389,415365.95,157520.94,1656863.57,2269860.06
 2,106091,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.543246072,221029.43,141179.54,2295554.69,2739303.75
 2,106092,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.465589182,191078.77,13406.17,1152048.26,1245385.02
 2,106121,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.786667267,241155.72,61970.06,1732075.47,2116837.91
-2,106365,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,1.37104083,1489620.79,0.0,1159855.36,1994921.52
+2,106365,15,"HP Boiler, Electric Backup",true,1.469107116,1194505.67,0.0,1254121.09,1794072.14
 2,106476,21,Energy Recovery for AHUs,false,4.157139085,50033.2,78474.16,1201600.34,1512707.71
 2,106673,21,Energy Recovery for AHUs,true,2.35991424,158021.2,0.0,2017526.39,2092106.81
 2,107803,46,Photovoltaics with 40pct Roof Coverage,true,3.149856009,919508.21,0.0,17741650.23,18136167.6
@@ -169,7 +169,7 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 3,100238,46,Photovoltaics with 40pct Roof Coverage,true,2.802750021,250731.69,0.0,536585.06,715583.05
 3,100297,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.824395028,173162.9,37765.46,959713.07,1196937.07
 3,100436,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.936954936,100299.53,23246.2,522965.67,719060.26
-3,100609,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,1.326545496,438250.03,0.0,398571.88,630389.57
+3,100609,15,"HP Boiler, Electric Backup",true,1.340459992,376721.2,0.0,406330.26,576619.12
 3,100668,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.05471238,78542.38,0.0,666471.91,702714.9
 3,101229,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.461513654,274885.91,6258.43,796620.5,996096.93
 3,101321,48,Wall Insulation,true,2.883773622,179301.3,0.0,1534402.63,1597230.49
@@ -178,25 +178,25 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 3,101505,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,5.374993753,195973.1,162510.52,1753892.89,2113152.79
 3,101654,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.607187601,70320.04,11800.52,634720.92,678970.27
 3,101687,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.769415888,68259.19,0.0,442700.07,474197.94
-3,101784,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,1.09991231,413239.14,0.0,303441.97,502175.21
+3,101784,15,"HP Boiler, Electric Backup",true,1.109741125,391454.75,0.0,306262.29,483211.14
 3,102361,48,Wall Insulation,false,3.265088858,51349.09,1588.06,915524.2,1025157.68
-3,102396,21,Energy Recovery for AHUs,false,4.11829404,505119.07,663292.35,18811885.04,19758925.4
+3,102396,15,"HP Boiler, Electric Backup",false,4.014129805,199178.1,560824.56,19023287.35,19674146.15
 3,102398,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.882348692,256179.55,162150.13,3751257.49,4101819.45
 3,102539,46,Photovoltaics with 40pct Roof Coverage,true,4.966306212,936580.55,0.0,7572689.16,8159196.63
 3,102696,21,Energy Recovery for AHUs,true,2.601185688,32828.34,0.0,294667.51,310161.33
-3,102785,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,1.992408898,98103.67,0.0,194361.82,239631.26
+3,102785,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,1.962076057,98103.67,0.0,187944.09,233213.54
 3,102919,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,9.820689946,86945.05,190263.42,979551.07,1306109.81
 3,102965,21,Energy Recovery for AHUs,false,4.322061478,32719.57,61264.85,824628.05,1037230.78
 3,103032,46,Photovoltaics with 40pct Roof Coverage,true,4.26794088,518880.74,0.0,2078455.7,2518022.53
-3,103034,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.291850888,130239.85,0.0,336825.69,396924.22
+3,103034,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,2.290027353,130239.85,0.0,336419.87,396518.4
 3,103035,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.104395597,243482.43,44566.37,600224.52,862562.0
 3,103036,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,9.80047055,130557.18,104891.82,1211705.7,1497094.82
 3,103156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,2.804718764,332783.48,0.0,773975.21,937828.91
 3,103336,46,Photovoltaics with 40pct Roof Coverage,true,4.989314287,411382.24,0.0,1886325.95,2245634.99
 3,103361,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.426808035,105935.61,0.0,317184.28,366067.74
-3,103362,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.649901429,40929.52,5434.96,299473.83,323795.51
-3,103395,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,0.752977778,357245.33,0.0,197425.86,386671.49
-3,103770,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.995505422,87618.98,22616.67,522017.27,585065.28
+3,103362,2,"Variable Speed HP RTU, Original Heating Fuel Backup",false,3.716079985,40929.52,6717.65,298124.77,323729.14
+3,103395,15,"HP Boiler, Electric Backup",true,0.814760992,306584.94,0.0,215063.03,353648.27
+3,103770,2,"Variable Speed HP RTU, Original Heating Fuel Backup",false,4.081021518,87618.98,25667.01,515437.32,581535.66
 3,103807,46,Photovoltaics with 40pct Roof Coverage,true,3.112586109,151820.82,0.0,842739.1,993531.54
 3,103856,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.581710852,244715.81,10308.43,283965.11,458743.65
 3,103877,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.190448086,202615.09,0.0,882327.13,975822.85
@@ -219,12 +219,12 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 3,104891,21,Energy Recovery for AHUs,false,3.58491258,565781.47,283458.85,13387942.65,13938430.34
 3,104900,21,Energy Recovery for AHUs,false,3.985430089,765393.8,910240.58,20683635.94,21955115.32
 3,104934,48,Wall Insulation,false,6.061594672,239028.64,862998.79,5667464.09,6614219.43
-3,104984,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,0.142331749,461982.77,0.0,10136.06,232102.1
+3,104984,15,"HP Boiler, Electric Backup",true,0.142331749,438009.81,0.0,10201.2,208194.28
 3,105031,46,Photovoltaics with 40pct Roof Coverage,true,3.163388319,227527.58,0.0,1004295.33,1174257.2
-3,105032,21,Energy Recovery for AHUs,false,4.381078013,40917.27,81600.65,1008878.41,1254940.71
+3,105032,15,"HP Boiler, Electric Backup",true,2.064393535,637506.98,0.0,937809.47,1225981.02
 3,105159,48,Wall Insulation,false,3.75836912,87159.71,18005.36,350123.95,480208.48
-3,105257,58,"Package 5, Variable Speed HP RTU or HP Boilers + Economizer + DCV + Energy Recovery",true,1.100086382,445552.04,0.0,331223.09,539230.15
-3,105302,57,"Package 4, Package 2 with Standard Performance HP RTU",true,3.156316411,51111.87,0.0,439073.26,462658.58
+3,105257,15,"HP Boiler, Electric Backup",true,1.142017743,359514.87,0.0,344299.58,506810.68
+3,105302,4,"Standard Performance HP RTU, Electric Backup",true,3.156316411,51111.87,0.0,439073.26,462658.58
 3,105612,46,Photovoltaics with 40pct Roof Coverage,false,3.824576875,112372.04,25822.25,629864.07,703899.83
 3,105642,21,Energy Recovery for AHUs,true,2.641624828,89920.23,0.0,1259420.97,1301860.14
 3,105703,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.367273322,133401.26,1242.63,510432.02,573232.0
@@ -232,25 +232,25 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 3,105955,21,Energy Recovery for AHUs,false,3.301440117,43719.15,4097.25,737121.22,761852.36
 3,105956,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.536817209,128818.42,8366.23,420818.76,576503.33
 3,106009,46,Photovoltaics with 40pct Roof Coverage,true,3.018526658,572041.14,0.0,3060389.25,3638811.78
-3,106015,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.857686575,141497.48,0.0,370486.0,435779.3
+3,106015,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,2.843248179,141497.48,0.0,367801.91,433095.22
 3,106043,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.555029005,385420.45,154979.95,1639139.29,2216629.61
 3,106091,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.559217367,217564.44,142960.52,2309427.96,2772884.91
 3,106092,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.49667844,190570.53,15880.51,1167452.28,1263050.77
 3,106121,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.789304878,247186.12,62268.46,1735921.55,2122459.44
-3,106365,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,1.38788742,1417309.63,0.0,1184272.2,1986651.64
+3,106365,15,"HP Boiler, Electric Backup",true,1.474488822,1122194.51,0.0,1267519.8,1774784.11
 3,106476,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.255028823,319294.96,89162.89,1099247.2,1535273.49
 3,106673,21,Energy Recovery for AHUs,true,2.353102637,157627.29,0.0,2018064.08,2172721.83
 3,107803,48,Wall Insulation,true,3.163398609,837142.33,0.0,17850307.39,18143645.26
 3,108082,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.65815877,78044.85,0.0,298723.71,334737.12
 4,100036,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,6.359577135,377017.99,109259.26,1722722.52,2160686.3
-4,100054,7,"Standard Performance HP RTU, Electric Backup + New Windows",true,3.173714078,41777.02,0.0,322690.2,341967.99
+4,100054,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,3.147572762,59410.62,0.0,314366.65,341781.38
 4,100064,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.898727681,32036.66,0.0,216008.83,230791.98
-4,100093,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.494872687,1237924.64,148914.73,16804136.99,18005821.52
+4,100093,15,"HP Boiler, Electric Backup",true,2.639451257,2349443.64,0.0,16857899.53,17919915.88
 4,100111,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.027388307,66949.14,16635.75,355307.67,479098.09
 4,100238,46,Photovoltaics with 40pct Roof Coverage,true,2.79776006,237422.29,0.0,534825.92,705376.5
 4,100297,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.860074094,158191.04,40226.51,975249.93,1214148.02
 4,100436,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.943497645,103053.09,23461.02,525403.98,718075.32
-4,100609,21,Energy Recovery for AHUs,true,2.887958343,39706.64,0.0,531026.41,640179.23
+4,100609,15,"HP Boiler, Electric Backup",true,1.272646636,397097.24,0.0,399708.0,579207.41
 4,100668,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.950914538,162010.24,0.0,638465.17,713223.99
 4,101229,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.476224749,274885.91,6842.33,801661.24,1010467.42
 4,101321,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.342750564,218154.86,6933.52,1496604.77,1594795.15
@@ -261,23 +261,23 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 4,101687,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,2.700865875,147373.13,0.0,407585.21,481223.12
 4,101784,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.228449348,45380.11,38676.47,370846.31,430463.2
 4,102361,46,Photovoltaics with 40pct Roof Coverage,true,3.152429531,322765.3,0.0,783532.21,1030422.41
-4,102396,21,Energy Recovery for AHUs,false,4.131018943,504065.12,674343.07,18887546.63,19837942.28
+4,102396,15,"HP Boiler, Electric Backup",false,4.010110038,167564.14,557333.66,18999386.03,19632463.51
 4,102398,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.901018703,230528.47,164257.9,3765688.91,4088551.39
 4,102539,46,Photovoltaics with 40pct Roof Coverage,true,4.95313259,936580.55,0.0,7549126.99,8160281.18
 4,102696,21,Energy Recovery for AHUs,true,2.833994623,32828.34,0.0,316266.99,331760.8
-4,102785,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,1.748008027,113290.57,0.0,180863.29,233140.66
+4,102785,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,1.73125853,113290.57,0.0,177319.48,229596.85
 4,102919,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,9.769160316,88466.61,188805.86,971178.45,1298810.38
 4,102965,21,Energy Recovery for AHUs,false,4.360615333,32650.02,63582.64,828403.74,1042761.82
 4,103032,46,Photovoltaics with 40pct Roof Coverage,true,4.301037096,534328.67,0.0,2105504.26,2533306.81
-4,103034,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.102479732,132266.42,0.0,332326.35,393360.03
+4,103034,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,2.096280879,132266.42,0.0,330946.81,391980.49
 4,103035,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.116780534,240273.15,45161.51,606275.21,865860.51
 4,103036,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,9.879273775,123927.86,107699.22,1228103.57,1492248.22
 4,103156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,2.645554366,429592.55,0.0,725236.5,923958.2
 4,103336,46,Photovoltaics with 40pct Roof Coverage,true,4.971513393,419130.4,0.0,1874086.24,2229655.24
 4,103361,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.748903509,82125.03,0.0,353130.77,391026.95
 4,103362,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.791939893,122930.82,8987.8,241245.02,327176.9
-4,103395,58,"Package 5, Variable Speed HP RTU or HP Boilers + Economizer + DCV + Energy Recovery",true,0.832998176,387125.05,0.0,215904.84,396132.18
-4,103770,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.160358185,69281.09,28307.25,523669.19,583945.85
+4,103395,15,"HP Boiler, Electric Backup",true,0.849037886,316841.48,0.0,220483.17,363704.67
+4,103770,2,"Variable Speed HP RTU, Original Heating Fuel Backup",false,4.235545559,69281.09,30972.33,519156.56,582098.3
 4,103807,46,Photovoltaics with 40pct Roof Coverage,true,3.116917978,155734.37,0.0,845346.47,1014239.04
 4,103856,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.57955743,244715.81,10266.16,281808.63,458809.32
 4,103877,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.039221279,232387.52,0.0,843004.31,950238.37
@@ -285,7 +285,7 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 4,104012,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.415311337,49013.23,47923.07,606110.23,676650.21
 4,104020,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.56393338,92503.49,8397.36,490435.89,614346.92
 4,104040,21,Energy Recovery for AHUs,true,3.138943703,43213.47,0.0,995909.47,1038150.35
-4,104055,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,2.545916407,4843212.45,0.0,17819373.7,21063935.15
+4,104055,15,"HP Boiler, Electric Backup",true,2.783274853,2917400.03,0.0,19592220.93,20910969.96
 4,104112,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.801707914,43526.23,0.0,305151.17,325236.13
 4,104156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.666198083,293189.13,23318.88,717923.04,981336.01
 4,104209,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.872971986,36951.63,21376.39,496388.68,534816.22
@@ -300,12 +300,12 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 4,104891,21,Energy Recovery for AHUs,false,3.70983989,565781.47,412831.9,13579221.11,14259081.85
 4,104900,21,Energy Recovery for AHUs,false,4.092600232,765393.8,1060420.38,20873257.61,22294916.79
 4,104934,48,Wall Insulation,false,5.998156091,260836.7,842988.48,5635032.6,6569419.26
-4,104984,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,0.113822417,468084.6,0.0,9028.63,236711.21
+4,104984,15,"HP Boiler, Electric Backup",true,0.113822417,438712.93,0.0,9102.02,207412.93
 4,105031,46,Photovoltaics with 40pct Roof Coverage,true,3.136128321,250507.58,0.0,989365.95,1175001.49
-4,105032,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,1.929216557,725779.5,0.0,864753.81,1239469.43
+4,105032,15,"HP Boiler, Electric Backup",true,1.998431039,640661.25,0.0,898128.84,1187726.22
 4,105159,48,Wall Insulation,false,3.798563155,83423.83,19435.6,352376.59,509680.93
-4,105257,6,"Standard Performance HP RTU, Electric Backup + Roof Insulation",false,4.118260464,40811.24,35635.91,421118.18,475586.24
-4,105302,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.778279621,106353.19,0.0,399029.19,448105.34
+4,105257,15,"HP Boiler, Electric Backup",true,1.242577562,292575.69,0.0,326398.67,458651.33
+4,105302,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,2.777934728,106353.19,0.0,398900.31,447976.46
 4,105612,46,Photovoltaics with 40pct Roof Coverage,false,3.818717805,112008.74,25557.83,627774.82,701390.28
 4,105642,21,Energy Recovery for AHUs,true,2.494768299,89920.23,0.0,1217277.32,1259716.48
 4,105703,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.636105668,102921.65,5717.31,556273.93,609483.92
@@ -313,25 +313,25 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 4,105955,21,Energy Recovery for AHUs,false,3.301324617,42614.36,4090.19,737059.07,766606.54
 4,105956,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.555230216,58919.45,8253.34,481188.09,516629.52
 4,106009,46,Photovoltaics with 40pct Roof Coverage,true,3.022173965,549906.03,0.0,3066286.74,3629002.04
-4,106015,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.171450932,109043.92,0.0,392350.99,442668.76
-4,106043,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,1.842347431,965667.12,0.0,1512231.65,2017947.58
+4,106015,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,3.16070766,109043.92,0.0,390351.88,440669.65
+4,106043,15,"HP Boiler, Electric Backup",true,1.892935944,839371.2,0.0,1556393.82,1935813.83
 4,106091,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.562308429,205362.29,143321.16,2311000.83,2719463.24
 4,106092,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.494995986,190256.32,15751.81,1166177.85,1261516.21
-4,106121,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.78062271,249243.66,61208.17,1728661.97,2074034.79
-4,106365,58,"Package 5, Variable Speed HP RTU or HP Boilers + Economizer + DCV + Energy Recovery",true,1.471477829,1506482.01,0.0,1261383.53,1976802.33
+4,106121,15,"HP Boiler, Electric Backup",true,2.14415007,790143.22,0.0,1691074.32,2048241.87
+4,106365,15,"HP Boiler, Electric Backup",true,1.482006895,1087152.58,0.0,1271505.09,1762929.43
 4,106476,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.238327195,298799.99,87716.34,1090620.06,1503504.22
 4,106673,21,Energy Recovery for AHUs,true,2.656805599,158088.06,0.0,2169830.34,2313470.61
 4,107803,48,Wall Insulation,true,3.170611419,730169.78,0.0,17913064.53,18168918.81
 4,108082,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.760331112,66023.27,0.0,308340.4,338806.51
 5,100036,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,6.334405056,386924.96,107292.62,1709389.24,2139989.72
-5,100054,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.756305949,77895.52,0.0,303470.39,339414.89
+5,100054,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,2.804167159,77895.52,0.0,302319.6,338264.1
 5,100064,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.97595527,26390.17,0.0,217206.57,229384.18
 5,100093,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.495660157,1247769.54,149575.45,16806107.91,18061375.03
 5,100111,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.030235611,66295.39,16693.09,356168.89,475569.24
 5,100238,46,Photovoltaics with 40pct Roof Coverage,true,2.792188108,240183.91,0.0,532861.61,705481.64
 5,100297,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.850212271,164006.87,39562.44,969837.0,1192997.16
 5,100436,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.942101018,104863.54,23415.32,524868.92,719166.2
-5,100609,48,Wall Insulation,true,2.809613411,103233.5,0.0,517324.17,653469.62
+5,100609,15,"HP Boiler, Electric Backup",true,1.100516085,439082.38,0.0,392905.16,591383.07
 5,100668,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.010643546,143182.47,0.0,651468.34,717539.17
 5,101229,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.997147957,54487.64,32005.1,968166.86,1025315.01
 5,101321,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.341116784,220319.54,6834.8,1491191.55,1590188.71
@@ -342,31 +342,31 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 5,101687,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,2.716721125,147373.13,0.0,410421.92,481954.49
 5,101784,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.299913003,40330.64,41468.74,376119.21,436198.32
 5,102361,46,Photovoltaics with 40pct Roof Coverage,true,3.191385224,290540.13,0.0,805628.12,1040286.67
-5,102396,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",false,3.627452112,1744407.89,201593.02,18373435.74,19894611.2
+5,102396,15,"HP Boiler, Electric Backup",false,3.668969226,775269.75,235122.1,18766533.36,19352099.77
 5,102398,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.901751835,226437.01,164339.79,3766316.43,4131848.26
 5,102539,46,Photovoltaics with 40pct Roof Coverage,true,4.907831175,1006170.85,0.0,7468169.45,8118036.19
 5,102696,21,Energy Recovery for AHUs,true,2.828869582,32694.21,0.0,315747.99,331178.5
-5,102785,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,1.619752418,115422.52,0.0,174141.43,227402.57
-5,102919,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,9.657870843,33922.38,184405.84,1047732.79,1247791.94
+5,102785,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,1.60558515,115422.52,0.0,171143.97,224405.11
+5,102919,2,"Variable Speed HP RTU, Original Heating Fuel Backup",false,9.703047091,33922.38,185812.32,1045350.35,1246815.98
 5,102965,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.508324493,206882.16,73722.0,750840.79,1042187.09
 5,103032,46,Photovoltaics with 40pct Roof Coverage,true,4.291039032,519466.41,0.0,2097333.13,2515705.52
-5,103034,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.141621838,110561.88,0.0,341037.34,392055.57
+5,103034,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,2.136555907,110561.88,0.0,339909.93,390928.16
 5,103035,21,Energy Recovery for AHUs,false,3.991159782,29298.14,36829.14,703735.65,857168.74
 5,103036,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,9.854589443,123153.32,106822.2,1222802.77,1490879.94
 5,103156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,2.686095417,385001.21,0.0,736790.99,913332.25
 5,103336,46,Photovoltaics with 40pct Roof Coverage,true,4.966615222,423736.4,0.0,1870718.31,2232467.44
 5,103361,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.934899638,67367.99,0.0,378014.04,409100.67
 5,103362,46,Photovoltaics with 40pct Roof Coverage,false,3.922454575,109911.16,11450.81,243195.7,328160.01
-5,103395,58,"Package 5, Variable Speed HP RTU or HP Boilers + Economizer + DCV + Energy Recovery",true,0.845238177,388593.58,0.0,215940.12,396306.24
-5,103770,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.28077386,57527.63,32450.1,525918.75,584914.69
+5,103395,15,"HP Boiler, Electric Backup",true,0.863124943,323725.91,0.0,221045.68,367379.14
+5,103770,2,"Variable Speed HP RTU, Original Heating Fuel Backup",false,4.346708193,57527.63,34781.49,522392.66,583719.99
 5,103807,46,Photovoltaics with 40pct Roof Coverage,true,3.114578056,150504.96,0.0,843938.06,1011062.08
-5,103856,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.647517112,38982.23,11273.89,376970.95,406232.99
+5,103856,2,"Variable Speed HP RTU, Original Heating Fuel Backup",false,3.701407384,38982.23,13002.52,375230.4,406221.08
 5,103877,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.944931243,254104.51,0.0,815781.44,933036.7
 5,103991,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.388996189,82867.91,2284.81,540084.36,627266.03
 5,104012,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.172917798,66609.36,37346.85,594459.7,662543.1
 5,104020,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.558492898,94643.48,8229.65,488791.36,639298.63
 5,104040,21,Energy Recovery for AHUs,true,3.137338688,43316.73,0.0,994975.29,1033665.74
-5,104055,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,2.542062726,5100776.17,0.0,18137604.56,21415263.16
+5,104055,15,"HP Boiler, Electric Backup",true,2.758425381,3327032.15,0.0,19753769.57,21257684.14
 5,104112,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.607291628,61168.67,0.0,289575.22,317801.2
 5,104156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.645602279,297350.49,22098.65,711422.44,972535.54
 5,104209,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.990326911,27816.69,25853.26,502226.03,540915.16
@@ -381,11 +381,11 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 5,104891,21,Energy Recovery for AHUs,false,3.748500942,565781.47,452761.57,13645551.85,14365342.27
 5,104900,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.355626724,2080469.37,1447636.13,20046620.28,22364542.19
 5,104934,48,Wall Insulation,false,6.001966086,251940.82,844184.69,5637350.68,6569816.4
-5,104984,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,0.139548548,460288.74,0.0,9758.65,235959.8
+5,104984,15,"HP Boiler, Electric Backup",true,0.139548548,427189.66,0.0,9854.66,202956.72
 5,105031,46,Photovoltaics with 40pct Roof Coverage,true,3.138533774,242492.26,0.0,990683.33,1178824.87
-5,105032,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,1.939291172,709978.6,0.0,867588.71,1229412.46
+5,105032,15,"HP Boiler, Electric Backup",true,2.002149114,635352.54,0.0,897898.64,1185096.33
 5,105159,48,Wall Insulation,false,3.808238174,83360.27,19777.7,353109.85,513363.39
-5,105257,6,"Standard Performance HP RTU, Electric Backup + Roof Insulation",false,4.139092377,37177.61,36485.43,423072.98,476713.83
+5,105257,15,"HP Boiler, Electric Backup",true,1.250281708,303764.62,0.0,330412.17,467722.54
 5,105302,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.579780631,135138.68,0.0,374040.05,436399.11
 5,105612,46,Photovoltaics with 40pct Roof Coverage,false,3.81628501,108574.68,25448.03,626907.32,698939.6
 5,105642,21,Energy Recovery for AHUs,true,2.736031255,89920.23,0.0,1283702.71,1326141.87
@@ -395,24 +395,24 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 5,105956,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.605413355,50346.29,9985.46,482869.98,516087.48
 5,106009,46,Photovoltaics with 40pct Roof Coverage,true,3.024105791,542319.36,0.0,3069410.4,3616633.13
 5,106015,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.967266822,119256.48,0.0,385105.69,440136.0
-5,106043,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,1.893317298,897461.13,0.0,1541206.95,2002173.08
+5,106043,15,"HP Boiler, Electric Backup",true,1.938478642,796565.67,0.0,1580631.36,1940702.04
 5,106091,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.560170989,211983.0,143070.01,2310036.91,2725604.77
 5,106092,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.475793163,195773.65,14214.97,1157384.66,1253494.14
 5,106121,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.759136435,267978.17,58511.2,1715746.06,2068814.5
-5,106365,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,1.426777745,1287408.94,0.0,1213665.77,1932112.04
+5,106365,15,"HP Boiler, Electric Backup",true,1.503676213,1038307.75,0.0,1287586.48,1756931.56
 5,106476,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.247448928,288478.41,88513.07,1094869.24,1474371.18
 5,106673,21,Energy Recovery for AHUs,true,3.088779979,157917.59,0.0,2380984.79,2516146.8
 5,107803,48,Wall Insulation,true,3.041485148,834757.76,0.0,17686962.43,18020547.56
 5,108082,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.587374113,97715.94,0.0,305375.32,350465.85
 6,100036,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,6.409548662,362746.41,113206.29,1746188.33,2175650.37
-6,100054,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.893907583,65977.18,0.0,307722.11,338166.95
+6,100054,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,2.933001897,65977.18,0.0,306666.43,337111.27
 6,100064,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.641780495,47370.66,0.0,210925.55,232784.51
 6,100093,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.486309313,1303245.55,142061.3,16744194.73,18053487.66
 6,100111,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.027324534,67180.18,16629.39,355678.25,476595.19
 6,100238,46,Photovoltaics with 40pct Roof Coverage,true,2.825695645,233350.75,0.0,544674.19,705244.35
 6,100297,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.842982899,167213.5,39065.63,966560.56,1189560.12
 6,100436,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.853352978,43038.42,19774.39,561317.36,600951.61
-6,100609,48,Wall Insulation,true,2.817204536,104855.76,0.0,518310.9,656134.03
+6,100609,15,"HP Boiler, Electric Backup",true,1.07476998,443954.18,0.0,389385.2,590065.3
 6,100668,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.060459852,128831.1,0.0,662327.86,721776.32
 6,101229,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.497714293,274885.91,7694.96,809058.78,1017994.47
 6,101321,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.33700276,229073.31,6534.66,1490334.07,1592692.89
@@ -423,23 +423,23 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 6,101687,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,2.721551495,147373.13,0.0,411286.14,481360.58
 6,101784,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.33996208,36309.33,43030.49,379326.5,439111.76
 6,102361,46,Photovoltaics with 40pct Roof Coverage,true,3.183668478,292409.3,0.0,801251.14,1038852.87
-6,102396,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",false,3.627415808,1629524.89,201567.3,18373219.87,19807464.72
+6,102396,15,"HP Boiler, Electric Backup",false,3.658604012,724212.13,226120.62,18704902.36,19258387.77
 6,102398,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.890065594,227631.07,163020.45,3757284.14,4127112.87
 6,102539,46,Photovoltaics with 40pct Roof Coverage,true,5.004055191,975718.7,0.0,7640120.51,8259520.1
 6,102696,48,Wall Insulation,true,2.721080756,77830.53,0.0,304518.06,331790.17
-6,102785,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,1.554005967,115956.56,0.0,171459.42,224966.99
-6,102919,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,9.765837383,28924.38,187639.9,1051659.61,1252646.52
+6,102785,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,1.540211959,115956.56,0.0,168540.93,222048.5
+6,102919,2,"Variable Speed HP RTU, Original Heating Fuel Backup",false,9.803283788,28924.38,188807.11,1049580.62,1251734.73
 6,102965,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.49672979,204532.87,73049.04,747944.27,1032606.14
 6,103032,46,Photovoltaics with 40pct Roof Coverage,true,4.294768927,505793.07,0.0,2100381.47,2507742.38
-6,103034,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.166527688,95377.13,0.0,346580.08,390591.38
+6,103034,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,2.162182628,95377.13,0.0,345613.1,389624.4
 6,103035,21,Energy Recovery for AHUs,false,3.985547118,29321.03,36531.14,702950.3,852166.22
 6,103036,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,9.727696769,141975.23,102314.19,1195526.58,1459497.45
 6,103156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,2.654523218,384072.26,0.0,729973.11,912986.62
 6,103336,46,Photovoltaics with 40pct Roof Coverage,true,4.961390133,411615.11,0.0,1867125.59,2217660.0
 6,103361,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.041166771,57655.72,0.0,392230.87,418835.82
-6,103362,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.65668359,42420.43,5489.96,304624.75,329689.4
-6,103395,58,"Package 5, Variable Speed HP RTU or HP Boilers + Economizer + DCV + Energy Recovery",true,0.854268806,400571.5,0.0,218441.9,404952.01
-6,103770,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.380033574,49198.2,35866.42,527672.76,586241.44
+6,103362,2,"Variable Speed HP RTU, Original Heating Fuel Backup",false,3.724429256,42420.43,6819.24,302121.69,328515.63
+6,103395,15,"HP Boiler, Electric Backup",true,0.877531634,328177.65,0.0,225077.33,373423.11
+6,103770,2,"Variable Speed HP RTU, Original Heating Fuel Backup",false,4.438504897,49198.2,37927.78,525010.24,585640.28
 6,103807,46,Photovoltaics with 40pct Roof Coverage,true,3.111230133,152999.35,0.0,841922.93,1010824.65
 6,103856,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.701156778,33361.07,12969.49,377314.31,405678.11
 6,103877,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.9988814,258143.33,0.0,831357.62,950476.57
@@ -447,7 +447,7 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 6,104012,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.205343219,62178.42,38740.24,597522.59,664954.75
 6,104020,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.559464991,93880.59,8255.68,489409.69,629186.83
 6,104040,21,Energy Recovery for AHUs,true,3.137420609,42595.84,0.0,995022.97,1034728.86
-6,104055,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,2.56026283,5233858.46,0.0,18291341.39,21648418.61
+6,104055,15,"HP Boiler, Electric Backup",true,2.775741538,3424963.69,0.0,19900907.72,21449090.18
 6,104112,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.716905426,53331.17,0.0,293301.01,317910.42
 6,104156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.660880667,293202.19,22968.81,718678.41,978676.44
 6,104209,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.78933619,68763.07,18506.57,470040.12,520277.07
@@ -462,12 +462,12 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 6,104891,21,Energy Recovery for AHUs,false,3.824533039,564614.38,531422.77,13767066.69,14564967.48
 6,104900,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.37026704,2015860.51,1467261.82,20134250.64,22444771.56
 6,104934,48,Wall Insulation,false,6.014510637,245360.59,848144.32,5643582.79,6577702.39
-6,104984,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,0.130614253,440048.84,0.0,9276.31,227735.3
+6,104984,15,"HP Boiler, Electric Backup",true,0.130614253,404382.34,0.0,9404.8,192197.29
 6,105031,46,Photovoltaics with 40pct Roof Coverage,true,3.086271739,344487.46,0.0,962061.18,1188630.32
-6,105032,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,2.116417092,630086.72,0.0,876729.16,1196871.4
+6,105032,15,"HP Boiler, Electric Backup",true,2.171710162,565621.9,0.0,903391.31,1159068.73
 6,105159,48,Wall Insulation,false,3.812377367,84492.11,19923.23,353496.53,513746.62
 6,105257,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.792464094,70017.43,22232.9,400637.55,455179.64
-6,105302,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.489248963,150814.35,0.0,368684.69,438277.22
+6,105302,4,"Standard Performance HP RTU, Electric Backup",true,2.543655263,106051.32,0.0,389016.29,437953.14
 6,105612,46,Photovoltaics with 40pct Roof Coverage,false,3.811971616,117428.44,25253.37,625369.23,701005.58
 6,105642,21,Energy Recovery for AHUs,true,2.74163137,89652.52,0.0,1285067.33,1327380.14
 6,105703,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.803626002,100359.86,9594.04,595938.15,651842.76
@@ -475,25 +475,25 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 6,105955,21,Energy Recovery for AHUs,false,3.293781058,42703.31,3640.74,731642.84,759588.65
 6,105956,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.632425214,44059.31,10919.42,483645.63,514895.99
 6,106009,46,Photovoltaics with 40pct Roof Coverage,true,3.042560249,522393.93,0.0,3099250.22,3652570.21
-6,106015,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.826548363,121987.87,0.0,381698.71,437989.41
-6,106043,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,1.9170562,929530.24,0.0,1565879.85,2036778.7
+6,106015,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,2.811100283,121987.87,0.0,378844.68,435135.37
+6,106043,15,"HP Boiler, Electric Backup",true,1.95981072,836962.69,0.0,1603203.19,1981534.48
 6,106091,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.568593216,203946.41,144020.23,2316582.98,2707062.62
 6,106092,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.457378754,198688.59,12749.66,1148239.06,1244102.59
 6,106121,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.769094918,261745.35,59733.97,1723615.57,2091376.85
-6,106365,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,1.425251756,1363890.82,0.0,1212313.35,1969952.91
+6,106365,15,"HP Boiler, Electric Backup",true,1.494703115,1106356.21,0.0,1279074.69,1779179.64
 6,106476,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.241361845,282702.56,87951.6,1094095.04,1465415.54
 6,106673,21,Energy Recovery for AHUs,true,3.091084608,158426.11,0.0,2383601.86,2555947.27
-6,107803,21,Energy Recovery for AHUs,true,2.954872783,719145.7,0.0,17555599.15,18122840.2
+6,107803,15,"HP Boiler, Electric Backup",true,2.45750299,1000639.92,0.0,17097645.36,17549963.49
 6,108082,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.684208526,87093.21,0.0,311975.94,352164.66
 7,100036,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,6.387809322,371559.64,111510.85,1734462.68,2147109.38
-7,100054,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.992267259,57295.42,0.0,310774.61,337213.29
+7,100054,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,3.025008608,57295.42,0.0,309768.89,336207.58
 7,100064,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.74985512,41422.06,0.0,213290.65,232404.65
 7,100093,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.471956852,1399303.08,130578.31,16643315.65,17904422.09
 7,100111,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.018529051,69631.58,16435.79,354283.43,470244.18
 7,100238,7,"Standard Performance HP RTU, Electric Backup + New Windows",true,3.066591017,28739.09,0.0,665819.89,679081.4
 7,100297,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.837290993,164484.59,38666.88,964506.57,1184543.04
 7,100436,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.90690702,38146.24,21680.77,567121.16,606404.33
-7,100609,48,Wall Insulation,true,2.815025859,109333.29,0.0,513602.99,638018.94
+7,100609,15,"HP Boiler, Electric Backup",true,1.108603347,378178.23,0.0,382038.63,552986.11
 7,100668,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.103910706,110526.37,0.0,671465.36,722467.2
 7,101229,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.851784385,77389.99,24581.9,943044.96,1003338.09
 7,101321,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.412607283,195431.98,13596.64,1540912.15,1636260.37
@@ -504,23 +504,23 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 7,101687,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,2.711582379,147373.13,0.0,410399.33,479483.96
 7,101784,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.375126203,31389.02,44393.93,382786.58,441664.81
 7,102361,46,Photovoltaics with 40pct Roof Coverage,true,3.176827753,301910.43,0.0,797371.03,1039496.42
-7,102396,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",false,3.627384436,1479242.24,201545.07,18373033.33,19693572.48
+7,102396,15,"HP Boiler, Electric Backup",false,3.649646924,657421.79,218342.0,18651644.0,19167159.62
 7,102398,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.885127049,229326.73,162462.64,3753484.99,4137295.96
 7,102539,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,4.908806029,1125551.08,0.0,7562475.15,8214199.45
 7,102696,21,Energy Recovery for AHUs,true,2.850138499,31925.27,0.0,317735.89,332803.48
-7,102785,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,1.490385657,119148.36,0.0,168850.68,223831.09
-7,102919,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,9.763744583,25294.51,187581.84,1051233.23,1250487.1
+7,102785,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,1.476423013,119148.36,0.0,165896.51,220876.92
+7,102919,2,"Variable Speed HP RTU, Original Heating Fuel Backup",false,9.804011833,25294.51,188827.3,1049728.95,1250228.27
 7,102965,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.471342094,215137.44,71589.1,740611.22,1024897.26
 7,103032,46,Photovoltaics with 40pct Roof Coverage,true,4.284434164,511398.88,0.0,2091935.17,2499424.9
-7,103034,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,1.985005682,132957.38,0.0,328973.24,390325.76
+7,103034,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,1.98177891,132957.38,0.0,328255.13,389607.65
 7,103035,21,Energy Recovery for AHUs,false,3.910946849,29344.72,32509.02,696758.77,839261.97
 7,103036,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,9.746588118,143037.81,102978.3,1200073.57,1465810.97
 7,103156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,2.638920742,383554.05,0.0,726348.44,932192.95
 7,103336,46,Photovoltaics with 40pct Roof Coverage,true,4.962525851,417441.54,0.0,1867906.5,2235468.53
 7,103361,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.104897748,51058.86,0.0,400757.05,424317.9
-7,103362,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.784002991,37017.23,7884.06,307123.78,332089.25
+7,103362,2,"Variable Speed HP RTU, Original Heating Fuel Backup",false,3.841020053,37017.23,9006.26,304779.7,330867.38
 7,103395,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.708883493,19082.91,17517.99,322870.24,349193.94
-7,103770,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.127398097,69172.53,27269.21,515801.93,574990.46
+7,103770,2,"Variable Speed HP RTU, Original Heating Fuel Backup",false,4.204850273,69172.53,29991.27,512914.38,574824.97
 7,103807,46,Photovoltaics with 40pct Roof Coverage,true,3.116204189,152394.81,0.0,844916.83,1015477.4
 7,103856,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.754150288,29238.13,14630.91,378796.37,406919.07
 7,103877,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.134363732,226443.8,0.0,854198.87,958690.23
@@ -528,7 +528,7 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 7,104012,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.238635989,56197.84,40154.78,601800.91,667887.9
 7,104020,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.600522652,32040.23,9141.1,533212.84,557138.74
 7,104040,21,Energy Recovery for AHUs,true,3.139842168,42725.84,0.0,996432.41,1045759.11
-7,104055,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,2.566753965,5450705.77,0.0,18368332.13,21850259.26
+7,104055,15,"HP Boiler, Electric Backup",true,2.782864794,3592851.0,0.0,19982613.64,21606686.01
 7,104112,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.792901643,47293.22,0.0,295850.96,317674.18
 7,104156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.693893256,285721.58,24907.98,730258.6,994557.93
 7,104209,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.841494685,62884.88,20475.64,474065.44,523559.0
@@ -543,9 +543,9 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 7,104891,21,Energy Recovery for AHUs,false,3.843361269,563696.93,550862.3,13799805.28,14616712.59
 7,104900,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.367909327,2082905.45,1464153.54,20116511.76,22451970.13
 7,104934,48,Wall Insulation,false,5.962733599,263038.85,831815.57,5616901.06,6540886.45
-7,104984,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,0.11251335,410930.21,0.0,8585.97,210628.4
+7,104984,15,"HP Boiler, Electric Backup",true,0.11251335,381202.15,0.0,8695.77,181010.15
 7,105031,46,Photovoltaics with 40pct Roof Coverage,true,3.040286013,449925.07,0.0,936876.34,1211347.9
-7,105032,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,2.10711224,627898.09,0.0,871895.64,1196321.45
+7,105032,15,"HP Boiler, Electric Backup",true,2.166246716,553810.72,0.0,900410.73,1150749.16
 7,105159,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.205570429,27408.09,34003.16,367729.06,414379.55
 7,105257,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.842067356,61880.58,24256.54,405218.43,458029.46
 7,105302,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.389550694,160081.83,0.0,361433.55,435302.51
@@ -556,25 +556,25 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 7,105955,21,Energy Recovery for AHUs,false,3.295036016,42745.81,3717.47,732318.13,774323.7
 7,105956,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.670484157,36731.56,12234.21,484829.17,514012.97
 7,106009,46,Photovoltaics with 40pct Roof Coverage,true,3.041060824,526873.16,0.0,3096825.74,3622368.06
-7,106015,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.055715233,105812.93,0.0,394799.85,443626.7
-7,106043,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,2.053350264,859687.4,0.0,1578752.99,2013231.98
+7,106015,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,3.042568744,105812.93,0.0,392370.99,441197.84
+7,106043,15,"HP Boiler, Electric Backup",true,2.092771172,775968.61,0.0,1613166.19,1963926.4
 7,106091,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.567457145,204535.95,143895.8,2315438.35,2694384.08
 7,106092,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.468927301,202297.98,13640.63,1156344.8,1254609.15
 7,106121,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.747399673,277478.71,57018.25,1710056.57,2076981.88
-7,106365,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,1.417681803,1373015.26,0.0,1220615.16,1984155.79
+7,106365,15,"HP Boiler, Electric Backup",true,1.487638391,1112238.56,0.0,1287862.37,1790626.31
 7,106476,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.239878027,279361.48,87807.82,1094384.65,1464185.77
 7,106673,21,Energy Recovery for AHUs,true,3.08890164,135670.12,0.0,2378189.99,2543353.94
-7,107803,21,Energy Recovery for AHUs,true,2.863033944,720475.35,0.0,17404336.15,17991696.72
+7,107803,15,"HP Boiler, Electric Backup",true,2.505155181,1086249.64,0.0,17244501.18,17735517.37
 7,108082,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.742712511,78698.85,0.0,316103.04,352418.23
 8,100036,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,6.363233941,376294.24,109558.04,1723742.55,2135095.52
-8,100054,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.050794146,51125.6,0.0,312567.58,336159.23
+8,100054,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,3.079906681,51125.6,0.0,311623.22,335214.87
 8,100064,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.809433664,37077.02,0.0,214406.16,231515.17
 8,100093,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.479146375,1374331.09,136483.18,16676107.89,17928081.26
 8,100111,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.019817277,68976.25,16461.68,354677.24,465752.85
 8,100238,7,"Standard Performance HP RTU, Electric Backup + New Windows",true,3.066926433,26083.36,0.0,665938.14,677974.17
 8,100297,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.838232874,164558.7,38720.47,965704.03,1186505.4
 8,100436,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.949969718,32541.93,23200.52,573046.87,611263.7
-8,100609,48,Wall Insulation,true,2.79813393,107951.38,0.0,512317.86,638358.76
+8,100609,15,"HP Boiler, Electric Backup",true,1.05999074,387441.89,0.0,378188.29,553323.21
 8,100668,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.14608995,97560.03,0.0,680066.86,725085.45
 8,101229,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.767667465,103191.25,20186.25,935432.92,1003236.26
 8,101321,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.441950891,175566.09,16985.86,1559786.1,1650213.4
@@ -585,21 +585,21 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 8,101687,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,2.72413271,147373.13,0.0,412644.75,480987.49
 8,101784,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.444613737,25198.98,47104.09,388316.19,447048.22
 8,102361,46,Photovoltaics with 40pct Roof Coverage,true,3.18353815,292050.02,0.0,801177.21,1040172.0
-8,102396,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",false,3.439764308,2105262.11,76574.79,18015325.66,19562572.73
+8,102396,15,"HP Boiler, Electric Backup",false,3.511340136,1158071.64,114872.46,18552464.22,19190818.49
 8,102398,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.873039302,235757.33,161097.98,3744141.49,4120218.55
 8,102539,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,4.989545189,1053085.41,0.0,7673509.08,8331219.48
 8,102696,21,Energy Recovery for AHUs,true,2.953742414,32006.77,0.0,327296.86,342402.92
-8,102785,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,1.756462025,107966.81,0.0,180884.54,230705.28
-8,102919,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,9.825275835,22503.29,189425.0,1053468.76,1253277.79
+8,102785,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,1.744443844,107966.81,0.0,178341.77,228162.52
+8,102919,2,"Variable Speed HP RTU, Original Heating Fuel Backup",false,9.861156063,22503.29,190534.6,1052141.4,1253060.02
 8,102965,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.478109527,218460.2,71974.88,742813.26,1032149.61
 8,103032,46,Photovoltaics with 40pct Roof Coverage,true,4.283568029,506912.4,0.0,2091227.31,2503891.88
-8,103034,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.104799175,124354.4,0.0,337485.52,394868.23
+8,103034,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,2.101744405,124354.4,0.0,336805.68,394188.4
 8,103035,21,Energy Recovery for AHUs,false,4.018147353,29296.29,38325.87,703091.74,855680.11
 8,103036,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,10.346472607,68157.96,124431.49,1319225.2,1475107.84
 8,103156,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.09399849,62956.51,0.0,894867.15,923918.12
 8,103336,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,4.798958011,489608.14,0.0,1827168.25,2204318.89
 8,103361,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.100415359,71351.76,0.0,400157.37,433082.29
-8,103362,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.808884971,122713.66,9324.52,240326.59,333155.21
+8,103362,2,"Variable Speed HP RTU, Original Heating Fuel Backup",false,3.934185442,32845.3,10753.55,306924.86,332834.7
 8,103395,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.746354376,16894.82,18922.16,324743.97,351462.15
 8,103770,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.201299214,62037.37,29802.68,517867.84,576297.36
 8,103807,46,Photovoltaics with 40pct Roof Coverage,true,3.128223417,146973.95,0.0,852151.25,1005670.04
@@ -609,7 +609,7 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 8,104012,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.282895764,48994.53,42049.45,606493.17,671150.9
 8,104020,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.638952384,29178.21,10432.36,536033.07,559929.57
 8,104040,21,Energy Recovery for AHUs,true,3.14151881,42722.97,0.0,996601.06,1043758.72
-8,104055,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,2.602847648,5308669.73,0.0,18294763.22,21745494.71
+8,104055,15,"HP Boiler, Electric Backup",true,2.82912361,3390576.84,0.0,20010153.68,21542792.29
 8,104112,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.849518157,42599.07,0.0,297760.23,317417.36
 8,104156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.719562175,283035.28,26398.07,740493.36,997144.77
 8,104209,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.881648057,58245.82,21992.07,477123.86,525993.18
@@ -624,9 +624,9 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 8,104891,21,Energy Recovery for AHUs,false,3.875373574,563900.23,584078.22,13844532.21,14694751.4
 8,104900,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.365175524,2101087.24,1460597.63,20092602.12,22432110.25
 8,104934,48,Wall Insulation,false,5.935544291,271902.52,823245.12,5602614.2,6521135.0
-8,104984,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,0.260185207,386608.71,0.0,14005.21,206240.03
+8,104984,15,"HP Boiler, Electric Backup",true,0.248388473,354715.56,0.0,13689.35,174031.02
 8,105031,46,Photovoltaics with 40pct Roof Coverage,true,3.048488072,431458.0,0.0,941368.34,1213207.12
-8,105032,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,2.097354663,627814.53,0.0,868977.96,1196619.34
+8,105032,15,"HP Boiler, Electric Backup",true,2.157692763,547790.09,0.0,898073.45,1145690.38
 8,105159,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.219276682,25375.2,34484.72,369038.71,415232.69
 8,105257,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.868462899,58356.8,25336.91,407353.24,459618.6
 8,105302,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.270029443,161770.89,0.0,353954.48,428602.85
@@ -637,25 +637,25 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 8,105955,21,Energy Recovery for AHUs,false,3.29689542,42891.18,3831.15,733318.67,785056.04
 8,105956,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.682787498,33562.7,12660.63,485100.72,513248.69
 8,106009,46,Photovoltaics with 40pct Roof Coverage,true,3.042033233,523946.3,0.0,3098398.07,3622795.17
-8,106015,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.942149021,123606.68,0.0,395148.18,452185.86
-8,106043,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,2.021494455,916915.92,0.0,1556116.8,2027958.61
+8,106015,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,2.920755051,123606.68,0.0,391207.5,448245.19
+8,106043,15,"HP Boiler, Electric Backup",true,2.074556492,812221.83,0.0,1602437.56,1969585.27
 8,106091,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.561996324,210308.36,143280.05,2311169.65,2697740.55
 8,106092,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.451414628,207621.41,12260.33,1146524.63,1245635.54
 8,106121,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.740302807,282070.2,56151.98,1704093.5,2074770.81
-8,106365,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,1.401549193,1265845.63,0.0,1205106.95,1922074.63
-8,106476,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.253229108,275171.98,88950.75,1102210.0,1453178.29
+8,106365,15,"HP Boiler, Electric Backup",true,1.470591974,1001654.85,0.0,1271475.72,1724252.63
+8,106476,15,"HP Boiler, Electric Backup",true,2.121818125,645235.15,0.0,1117296.82,1408961.74
 8,106673,21,Energy Recovery for AHUs,true,3.138660165,137605.2,0.0,2403262.13,2561588.56
-8,107803,21,Energy Recovery for AHUs,true,2.807162408,723261.35,0.0,17368324.83,18125093.7
+8,107803,15,"HP Boiler, Electric Backup",true,2.383884011,1824524.61,0.0,17090435.27,17915173.06
 8,108082,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.804572819,71904.43,0.0,319533.27,352713.21
 9,100036,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,6.349468325,382536.65,108433.93,1719859.45,2142982.0
-9,100054,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.082846645,46244.33,0.0,313433.62,334772.83
+9,100054,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,3.11072295,46244.33,0.0,312679.77,334018.98
 9,100064,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.634245626,48174.52,0.0,211505.39,233735.28
 9,100093,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.481481968,1338094.38,138360.87,16691498.32,17894059.22
 9,100111,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.021819338,69385.66,16503.05,355202.44,464422.65
 9,100238,7,"Standard Performance HP RTU, Electric Backup + New Windows",true,3.07394461,24410.82,0.0,666535.58,677799.83
 9,100297,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.827078771,173966.96,37962.55,960053.6,1188782.6
 9,100436,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.980259289,30195.2,24289.69,575283.25,613506.37
-9,100609,48,Wall Insulation,true,2.840147783,106326.68,0.0,517304.23,649481.09
+9,100609,15,"HP Boiler, Electric Backup",true,1.00725617,416891.73,0.0,376423.07,564870.17
 9,100668,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.087329787,115307.83,0.0,664212.19,717420.42
 9,101229,46,Photovoltaics with 40pct Roof Coverage,false,3.557169523,248275.74,10802.1,804604.88,1004108.14
 9,101321,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.438795114,180215.82,16626.64,1557371.31,1649384.44
@@ -666,22 +666,22 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 9,101687,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,2.715281894,147373.13,0.0,411741.86,483533.67
 9,101784,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.457119202,23749.85,47591.58,389332.01,447882.84
 9,102361,21,Energy Recovery for AHUs,true,3.140069488,47280.44,0.0,908037.36,1038372.84
-9,102396,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",false,3.54591217,2088107.19,141333.87,18177082.56,19758833.43
+9,102396,15,"HP Boiler, Electric Backup",false,3.617184063,1181978.66,191003.01,18697354.59,19422646.07
 9,102398,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.854128058,243260.8,158962.97,3729523.61,4096033.79
 9,102539,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,5.01109137,1028096.79,0.0,7712011.87,8342820.07
 9,102696,21,Energy Recovery for AHUs,true,2.967589227,32048.81,0.0,328570.4,343696.31
-9,102785,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,1.848353193,98999.92,0.0,184882.66,230565.68
-9,102919,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,9.858973554,20320.11,190434.46,1054689.14,1254500.22
+9,102785,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,1.837459898,98999.92,0.0,182577.89,228260.91
+9,102919,2,"Variable Speed HP RTU, Original Heating Fuel Backup",false,9.89248105,20320.11,191470.48,1053465.15,1254312.24
 9,102965,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.48401761,213304.64,72308.44,744972.41,1029128.95
 9,103032,46,Photovoltaics with 40pct Roof Coverage,true,4.308420396,493145.32,0.0,2111538.41,2523662.66
-9,103034,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.049035384,135896.14,0.0,332672.63,395381.22
+9,103034,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,2.046460587,135896.14,0.0,332099.61,394808.21
 9,103035,21,Energy Recovery for AHUs,false,4.022087921,29312.82,38543.36,703070.69,853711.2
 9,103036,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,9.724518715,145536.38,102179.92,1196321.65,1470855.91
 9,103156,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.073873391,82672.73,0.0,888704.52,926853.44
 9,103336,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,4.790151087,493740.45,0.0,1822600.31,2195580.68
 9,103361,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.193405899,64872.44,0.0,407593.57,437528.63
 9,103362,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.784055627,125157.94,8889.6,237627.27,332161.39
-9,103395,6,"Standard Performance HP RTU, Electric Backup + Roof Insulation",false,3.66143887,30667.57,15768.64,318019.91,347939.95
+9,103395,4,"Standard Performance HP RTU, Electric Backup",false,3.659238561,30667.57,15692.16,317391.29,347234.85
 9,103770,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.267896511,56317.15,32080.71,520111.69,578179.67
 9,103807,46,Photovoltaics with 40pct Roof Coverage,true,3.123135549,149383.03,0.0,849088.84,1005091.38
 9,103856,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.399095729,63912.41,3449.43,373022.14,405963.64
@@ -690,7 +690,7 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 9,104012,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.331348821,43463.62,44134.57,610860.32,675050.97
 9,104020,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.657969414,26832.82,11056.63,538642.51,562081.01
 9,104040,21,Energy Recovery for AHUs,true,3.128298497,42720.15,0.0,988906.31,1033928.05
-9,104055,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,2.630455633,5061803.07,0.0,18445605.62,21702718.6
+9,104055,15,"HP Boiler, Electric Backup",true,2.841147118,3293403.57,0.0,20042569.51,21531282.99
 9,104112,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.886523194,38857.95,0.0,298990.43,316921.24
 9,104156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.710031889,285807.6,25813.52,738868.65,993817.54
 9,104209,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.90784587,54497.57,22974.1,479628.81,527750.54
@@ -705,9 +705,9 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 9,104891,21,Energy Recovery for AHUs,false,3.87185537,563953.03,580421.04,13840062.32,14686649.25
 9,104900,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.364356296,2094504.67,1459487.02,20088559.8,22424203.74
 9,104934,48,Wall Insulation,false,5.936061268,268113.14,823404.59,5603117.82,6520470.28
-9,104984,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,0.55650757,367454.36,0.0,25053.22,209564.08
+9,104984,15,"HP Boiler, Electric Backup",true,0.538436362,333856.08,0.0,24504.55,175417.13
 9,105031,46,Photovoltaics with 40pct Roof Coverage,true,3.044618463,417775.6,0.0,939249.08,1208437.05
-9,105032,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,2.074960717,640050.54,0.0,875033.55,1212341.2
+9,105032,15,"HP Boiler, Electric Backup",true,2.138218399,552479.64,0.0,905536.9,1155273.65
 9,105159,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.240485025,22641.1,35229.86,371064.74,416742.22
 9,105257,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.88940395,55289.02,26191.89,409230.56,460935.29
 9,105302,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.147531449,177335.14,0.0,338878.07,420708.49
@@ -718,25 +718,25 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 9,105955,21,Energy Recovery for AHUs,false,3.442456514,42904.32,15501.84,753422.78,813839.34
 9,105956,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.717544991,29353.95,13856.99,486531.14,513933.36
 9,106009,46,Photovoltaics with 40pct Roof Coverage,true,3.057373963,520008.08,0.0,3123203.17,3657413.69
-9,106015,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.849694031,128174.1,0.0,394132.15,453277.45
-9,106043,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,1.997897086,835810.45,0.0,1535517.05,1965622.25
+9,106015,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,2.817858665,128174.1,0.0,388276.38,447421.67
+9,106043,15,"HP Boiler, Electric Backup",true,2.045805672,740377.03,0.0,1577339.01,1912010.8
 9,106091,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.565196965,218983.49,143643.4,2313500.89,2691569.35
 9,106092,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.448889552,210372.83,12059.08,1145297.54,1245358.15
 9,106121,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.737923064,285248.95,55873.12,1701290.28,2065473.55
-9,106365,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,1.406404045,1248771.68,0.0,1207804.36,1918923.99
-9,106476,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.236195969,283657.27,87453.14,1094957.83,1446121.98
+9,106365,15,"HP Boiler, Electric Backup",true,1.476870032,981168.58,0.0,1275540.9,1719057.43
+9,106476,15,"HP Boiler, Electric Backup",true,2.115557791,637083.39,0.0,1118597.91,1406578.0
 9,106673,21,Energy Recovery for AHUs,true,3.13940681,138890.96,0.0,2402185.39,2583876.92
-9,107803,21,Energy Recovery for AHUs,true,2.810843358,723210.25,0.0,17400352.0,18126140.83
+9,107803,15,"HP Boiler, Electric Backup",true,2.381636723,1688564.56,0.0,17070882.09,17834162.02
 9,108082,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.840944086,66416.23,0.0,322219.8,352867.24
 10,100036,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,6.319431346,388553.11,106036.43,1707506.89,2126032.07
-10,100054,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.104817049,42559.78,0.0,314001.7,333640.7
+10,100054,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,3.132011539,42559.78,0.0,313413.03,333052.02
 10,100064,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.717709384,44027.06,0.0,213337.4,233653.47
 10,100093,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.482005258,1335870.27,138791.83,16693748.32,17904669.95
 10,100111,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.041353502,68892.05,16936.96,357997.56,464279.51
 10,100238,7,"Standard Performance HP RTU, Electric Backup + New Windows",true,3.079676739,22962.72,0.0,667030.04,677626.07
 10,100297,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.830938102,175294.32,38226.89,961863.46,1183244.32
 10,100436,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.994564103,28197.72,24794.34,577270.57,615076.61
-10,100609,48,Wall Insulation,true,2.8275959,106960.53,0.0,516235.6,650182.48
+10,100609,15,"HP Boiler, Electric Backup",true,0.983748959,423690.26,0.0,375251.35,566771.58
 10,100668,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.105111699,109233.52,0.0,668234.53,718639.79
 10,101229,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.457694282,286661.61,6109.83,794963.93,997443.76
 10,101321,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.433417675,183128.73,15999.42,1554359.2,1646963.6
@@ -747,22 +747,22 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 10,101687,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,2.710003773,147373.13,0.0,410530.69,486395.62
 10,101784,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.458526902,21684.83,47642.93,389735.94,447385.23
 10,102361,21,Energy Recovery for AHUs,true,3.157776227,47304.71,0.0,909982.34,1039892.86
-10,102396,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",false,3.59521509,1947821.88,178187.16,18247287.46,19769120.09
+10,102396,15,"HP Boiler, Electric Backup",false,3.659678313,1102569.79,226875.79,18723589.51,19448858.68
 10,102398,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.855682578,235562.34,159138.61,3730715.39,4087811.26
 10,102539,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,4.968139944,1034409.18,0.0,7646589.33,8293254.66
 10,102696,48,Wall Insulation,true,2.822797049,77138.96,0.0,314037.05,341066.83
-10,102785,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,1.802614602,102073.05,0.0,182276.28,229377.38
-10,102919,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,9.888727467,18530.1,191325.55,1055784.53,1255660.7
+10,102785,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,1.791981813,102073.05,0.0,180026.63,227127.73
+10,102919,2,"Variable Speed HP RTU, Original Heating Fuel Backup",false,9.920003943,18530.1,192292.84,1054622.25,1255465.72
 10,102965,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.485454844,212597.5,72392.25,745302.59,1032103.55
 10,103032,46,Photovoltaics with 40pct Roof Coverage,true,4.322637861,502381.62,0.0,2123157.92,2518224.93
-10,103034,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.011879628,138847.26,0.0,331593.38,395663.76
+10,103034,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,2.008229947,138847.26,0.0,330781.15,394851.53
 10,103035,21,Energy Recovery for AHUs,false,4.034120939,29293.31,39199.76,703541.38,852926.29
 10,103036,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,9.724050401,145754.41,102163.46,1196208.93,1463124.32
 10,103156,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.087793502,77516.11,0.0,892128.46,927897.89
 10,103336,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,4.807342765,497839.11,0.0,1833868.76,2192876.39
 10,103361,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.372679405,59642.52,998.56,415945.83,444466.14
 10,103362,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.788596467,126146.53,8966.51,238302.85,333655.06
-10,103395,7,"Standard Performance HP RTU, Electric Backup + New Windows",false,3.508860381,44638.95,10038.11,311505.53,342142.06
+10,103395,4,"Standard Performance HP RTU, Electric Backup",false,3.507952362,44638.95,10006.56,311245.81,341850.79
 10,103770,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.344851933,48869.84,34714.37,522604.68,579869.79
 10,103807,48,Wall Insulation,true,2.880266924,100882.45,0.0,876469.07,996045.41
 10,103856,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.459908245,58876.33,5361.43,374270.65,406800.27
@@ -771,7 +771,7 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 10,104012,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.347743798,39908.5,44828.18,613176.51,676420.27
 10,104020,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.685037136,23737.85,11946.82,542221.97,565122.5
 10,104040,21,Energy Recovery for AHUs,false,3.225063346,42717.11,401.79,1002195.5,1045325.36
-10,104055,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,2.634408122,4500571.76,0.0,18475100.05,21371078.12
+10,104055,15,"HP Boiler, Electric Backup",true,2.82595294,2928244.91,0.0,19929186.87,21252838.1
 10,104112,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.906968134,35993.37,0.0,299626.87,316235.84
 10,104156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.707432451,288229.35,25652.07,738564.92,992375.77
 10,104209,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.934735105,51205.25,23989.17,481706.33,529323.91
@@ -786,9 +786,9 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 10,104891,21,Energy Recovery for AHUs,false,3.883799891,564001.82,592769.79,13859738.04,14718696.74
 10,104900,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.362912021,2092300.54,1457606.41,20076067.89,22408909.21
 10,104934,48,Wall Insulation,false,5.936621696,260130.45,823581.71,5603381.73,6518114.14
-10,104984,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,0.505021941,395278.6,0.0,23170.95,218965.2
+10,104984,15,"HP Boiler, Electric Backup",true,0.489121667,364041.71,0.0,22691.17,187248.53
 10,105031,46,Photovoltaics with 40pct Roof Coverage,true,3.029885866,427098.24,0.0,931180.53,1207985.14
-10,105032,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,2.065746868,643203.21,0.0,869329.43,1209787.51
+10,105032,15,"HP Boiler, Electric Backup",true,2.128231522,552483.73,0.0,899460.02,1149198.61
 10,105159,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.257520786,21267.67,35832.64,372319.49,417965.98
 10,105257,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.963506245,48350.58,29234.33,414411.65,465957.11
 10,105302,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.120341322,180428.28,0.0,337333.66,420591.39
@@ -799,25 +799,25 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 10,105955,21,Energy Recovery for AHUs,false,3.443583362,42987.19,15586.28,754029.14,822406.23
 10,105956,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.514154824,46955.57,6979.15,468350.26,496996.82
 10,106009,46,Photovoltaics with 40pct Roof Coverage,true,3.044920732,537037.83,0.0,3103066.99,3636696.33
-10,106015,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.995019896,118297.61,0.0,401289.46,455877.3
-10,106043,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,1.986179936,863244.47,0.0,1535151.94,1988915.99
-10,106091,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.55962925,220387.66,143015.23,2309173.46,2676982.5
+10,106015,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,2.964950692,118297.61,0.0,395759.01,450346.85
+10,106043,15,"HP Boiler, Electric Backup",true,2.037711378,747266.42,0.0,1580137.24,1917923.23
+10,106091,15,"HP Boiler, Electric Backup",false,3.354063137,582399.03,4885.33,2395343.19,2663489.69
 10,106092,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.436570862,220368.33,11097.49,1137600.17,1240880.43
 10,106121,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.73726999,288585.39,55793.36,1700744.21,2055578.57
-10,106365,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,1.392620228,1232638.71,0.0,1207178.93,1912582.28
-10,106476,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.216125414,296900.66,85669.98,1087691.1,1440582.3
+10,106365,15,"HP Boiler, Electric Backup",true,1.462990883,962159.02,0.0,1274824.02,1709747.67
+10,106476,15,"HP Boiler, Electric Backup",true,2.117330792,628168.99,0.0,1124781.61,1408732.13
 10,106673,21,Energy Recovery for AHUs,true,3.071225305,140262.88,0.0,2367479.16,2542584.91
-10,107803,21,Energy Recovery for AHUs,true,2.855607546,692852.14,0.0,17489180.71,18208187.42
+10,107803,15,"HP Boiler, Electric Backup",true,2.427651043,1721706.3,0.0,17165063.26,17943324.21
 10,108082,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.907969173,61968.03,0.0,326064.4,354659.24
 11,100036,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,6.311079735,383094.93,105365.27,1704390.96,2116851.37
-11,100054,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.129217437,39420.69,0.0,314708.85,332899.33
+11,100054,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,3.155160608,39420.69,0.0,314200.4,332390.88
 11,100064,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.760923017,40571.95,0.0,213955.94,232677.66
 11,100093,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.482464766,1342411.55,139197.74,16692533.22,17974462.77
 11,100111,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.064247955,68522.44,17439.66,361723.95,465159.41
 11,100238,7,"Standard Performance HP RTU, Electric Backup + New Windows",true,3.090577765,20930.15,0.0,667904.99,677563.1
 11,100297,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.839590396,170789.27,38823.0,965680.01,1175139.64
 11,100436,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.999021355,25627.15,24944.11,578604.17,615373.79
-11,100609,48,Wall Insulation,true,2.813744174,108279.28,0.0,515034.27,650926.26
+11,100609,15,"HP Boiler, Electric Backup",true,0.981077016,430203.75,0.0,373611.11,568075.63
 11,100668,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.12145847,103795.39,0.0,671791.52,719687.39
 11,101229,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.468912385,282669.72,6555.37,798775.24,1000882.17
 11,101321,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.425313803,188950.53,15069.19,1548725.19,1642834.69
@@ -828,23 +828,23 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 11,101687,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,2.708582228,147373.13,0.0,410276.36,485160.68
 11,101784,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.497106401,19003.77,49154.16,392268.12,450191.47
 11,102361,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.299679511,41249.53,3131.8,922489.71,944655.9
-11,102396,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",false,3.696999495,1929772.82,267314.22,18390137.12,19976959.86
+11,102396,15,"HP Boiler, Electric Backup",false,3.760670376,1113679.63,321410.45,18851574.42,19676400.21
 11,102398,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.846265194,235793.5,158075.43,3723436.01,4072389.68
 11,102539,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,4.977681801,1016229.11,0.0,7660096.94,8310316.72
 11,102696,21,Energy Recovery for AHUs,true,2.920545783,32173.34,0.0,324192.09,339376.76
-11,102785,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,1.757755571,107959.01,0.0,178606.63,228423.78
+11,102785,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,1.747909723,107959.01,0.0,176523.48,226340.62
 11,102919,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,9.667732207,39216.22,184673.34,1050198.8,1252968.27
 11,102965,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.742609329,15534.11,86820.11,845890.64,939878.89
 11,103032,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,4.210880014,576461.93,0.0,2093989.28,2513874.24
-11,103034,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.092036104,132139.36,0.0,337371.83,398346.88
+11,103034,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,2.088530885,132139.36,0.0,336591.75,397566.8
 11,103035,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.5480052,27928.28,67149.55,729354.94,809391.85
 11,103036,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,9.693919413,146220.41,101115.41,1188183.37,1452149.79
 11,103156,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.097984677,71869.84,0.0,895249.17,928413.14
 11,103336,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,4.846853866,482934.83,0.0,1856694.97,2214167.42
 11,103361,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.408105263,55193.38,1291.67,420685.24,447445.62
 11,103362,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.790030712,123699.76,8989.05,238637.75,333947.42
-11,103395,7,"Standard Performance HP RTU, Electric Backup + New Windows",false,3.536987081,42285.52,11091.59,312958.16,343562.19
-11,103770,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.414557596,45327.35,37097.59,525038.62,583052.29
+11,103395,4,"Standard Performance HP RTU, Electric Backup",false,3.536102714,42285.52,11060.85,312705.22,343278.51
+11,103770,2,"Variable Speed HP RTU, Original Heating Fuel Backup",false,4.467520629,45327.35,38958.14,523126.9,583001.12
 11,103807,48,Wall Insulation,true,2.921244555,93093.68,0.0,883047.38,1007993.1
 11,103856,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.303554573,68962.13,1131.87,367004.05,399958.15
 11,103877,46,Photovoltaics with 40pct Roof Coverage,true,3.002407639,298546.44,0.0,762812.5,967946.17
@@ -852,7 +852,7 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 11,104012,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.36198589,36921.31,45431.32,615146.1,677614.57
 11,104020,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.690061244,22393.68,12104.99,543469.37,565907.81
 11,104040,21,Energy Recovery for AHUs,false,3.225496312,42777.92,408.73,1002447.51,1044391.29
-11,104055,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,2.679931739,4063594.35,0.0,18569241.95,21184038.64
+11,104055,15,"HP Boiler, Electric Backup",true,2.853799522,2643930.62,0.0,19890959.82,21086092.78
 11,104112,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.859627764,41018.15,0.0,296672.49,315600.1
 11,104156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.707573714,282014.78,25656.79,738863.43,989375.71
 11,104209,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.963789565,46589.14,25071.87,484927.66,531497.86
@@ -867,9 +867,9 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 11,104891,21,Energy Recovery for AHUs,false,3.837530553,558226.14,544879.0,13787222.03,14595564.03
 11,104900,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.350003541,2229331.95,1440718.27,19969956.85,22343231.94
 11,104934,48,Wall Insulation,false,5.938826283,258296.94,824278.34,5604426.2,6519212.77
-11,104984,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,0.486819288,382540.01,0.0,22447.67,211362.07
+11,104984,15,"HP Boiler, Electric Backup",true,0.471492112,353350.02,0.0,21980.08,181704.48
 11,105031,7,"Standard Performance HP RTU, Electric Backup + New Windows",false,3.377663148,51068.02,6009.84,1142575.01,1172149.92
-11,105032,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,2.059850639,646268.88,0.0,872656.05,1212664.12
+11,105032,15,"HP Boiler, Electric Backup",true,2.12061415,558899.55,0.0,901956.69,1154595.42
 11,105159,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.26553546,20083.28,36114.72,373041.31,418423.36
 11,105257,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.999274828,42980.44,30697.72,417357.2,467888.03
 11,105302,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.337941146,168365.67,0.0,355516.41,433207.91
@@ -880,25 +880,25 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 11,105955,21,Energy Recovery for AHUs,false,3.443801087,43077.97,15602.59,754146.3,828658.25
 11,105956,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.529634675,44036.3,7504.28,469601.31,497425.92
 11,106009,46,Photovoltaics with 40pct Roof Coverage,true,3.054451239,531075.2,0.0,3118477.29,3656062.73
-11,106015,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.920777357,133635.19,0.0,393589.22,455254.51
-11,106043,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,1.983473185,868657.39,0.0,1533850.14,1994612.77
-11,106091,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.561491718,213719.72,143225.36,2310621.04,2663829.57
+11,106015,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,2.894395066,133635.19,0.0,388736.18,450401.47
+11,106043,15,"HP Boiler, Electric Backup",true,2.037342586,744372.71,0.0,1580876.4,1917354.35
+11,106091,15,"HP Boiler, Electric Backup",false,3.334578586,529600.59,3954.5,2380199.08,2623548.33
 11,106092,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.428960317,220341.74,10494.62,1133589.11,1236255.37
 11,106121,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.737415339,290759.35,55820.74,1700199.41,2060164.12
-11,106365,58,"Package 5, Variable Speed HP RTU or HP Boilers + Economizer + DCV + Energy Recovery",true,1.565513012,1288798.38,0.0,1270613.31,1884690.31
-11,106476,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.227065989,287473.35,86619.6,1093200.89,1441288.98
+11,106365,15,"HP Boiler, Electric Backup",true,1.588076084,899198.41,0.0,1291524.25,1697987.88
+11,106476,15,"HP Boiler, Electric Backup",true,2.105739539,620223.0,0.0,1118526.94,1398885.64
 11,106673,21,Energy Recovery for AHUs,false,3.216219237,141466.05,954.38,2439390.02,2609674.47
-11,107803,21,Energy Recovery for AHUs,true,2.852874994,694596.49,0.0,17465405.35,18171348.51
+11,107803,15,"HP Boiler, Electric Backup",true,2.426225293,1660714.61,0.0,17152658.11,17903349.05
 11,108082,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.951613538,55925.06,0.0,329360.62,355166.96
 12,100036,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,6.298428694,387160.01,104354.53,1699256.1,2108008.15
-12,100054,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.151635491,36732.3,0.0,315344.47,332294.41
+12,100054,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,3.176520256,36732.3,0.0,314928.78,331878.72
 12,100064,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.65966569,48141.85,0.0,207557.38,229772.2
 12,100093,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.476477756,1360655.72,134334.86,16658913.76,17962313.82
 12,100111,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.064255931,69702.06,17438.01,361865.41,469450.66
 12,100238,7,"Standard Performance HP RTU, Electric Backup + New Windows",true,3.096189192,19878.69,0.0,668358.18,677531.1
-12,100297,48,Wall Insulation,false,3.748700306,90576.3,31287.92,1013666.05,1169231.06
+12,100297,15,"HP Boiler, Electric Backup",true,2.338550313,406435.21,0.0,979892.88,1163613.33
 12,100436,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.953250916,59687.37,23406.14,564909.82,615858.4
-12,100609,48,Wall Insulation,true,2.812273841,111707.88,0.0,512831.24,644397.24
+12,100609,15,"HP Boiler, Electric Backup",true,0.989300639,405927.18,0.0,370624.73,554115.53
 12,100668,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.156622771,93611.89,0.0,681279.56,724476.29
 12,101229,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.473845183,282101.65,6744.94,801187.39,1002857.01
 12,101321,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.41522726,200753.44,13921.48,1540974.43,1638873.53
@@ -907,25 +907,25 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 12,101505,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,5.38407078,195250.01,163118.04,1764659.27,2135855.01
 12,101654,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.980168953,62520.0,27242.26,670175.18,726266.98
 12,101687,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,2.704911017,147373.13,0.0,409619.53,485946.0
-12,101784,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.502909585,18210.05,49380.18,392755.61,450538.72
+12,101784,15,"HP Boiler, Electric Backup",true,1.225814949,381692.71,0.0,277371.45,449907.57
 12,102361,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.305525566,39237.55,3444.41,923336.25,944886.63
-12,102396,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",false,3.638909854,2029043.09,211889.94,18389085.7,19950603.26
+12,102396,15,"HP Boiler, Electric Backup",false,3.702129559,1239874.55,265745.11,18837409.83,19663614.03
 12,102398,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.842318419,238788.98,157629.85,3720385.26,4066799.59
 12,102539,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,4.953666078,1039594.41,0.0,7615740.77,8263503.49
 12,102696,21,Energy Recovery for AHUs,true,2.924785337,32208.85,0.0,324541.31,339742.75
-12,102785,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,1.640295741,114405.46,0.0,170987.88,223779.71
+12,102785,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,1.63140704,114405.46,0.0,169107.24,221899.07
 12,102919,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,9.682617412,36380.7,185124.9,1050310.59,1252223.19
 12,102965,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.745877945,14650.35,87012.28,846527.49,940300.1
 12,103032,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,4.291289041,555457.84,0.0,2159320.3,2554767.01
-12,103034,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.143023529,126349.35,0.0,341726.54,400029.81
+12,103034,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,2.139689874,126349.35,0.0,340984.64,399287.91
 12,103035,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.549313235,26833.66,67215.15,729804.09,809401.49
 12,103036,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,9.691819255,144779.56,101042.67,1187602.09,1460058.16
 12,103156,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.134872786,67212.7,0.0,899476.75,930491.72
 12,103336,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,4.84014339,486238.39,0.0,1852080.91,2201476.27
 12,103361,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.470495852,51418.91,2032.23,424788.03,450547.26
 12,103362,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.778558548,125533.3,8776.8,238171.97,335696.08
-12,103395,7,"Standard Performance HP RTU, Electric Backup + New Windows",false,3.568493822,40214.24,12271.46,314602.94,345431.06
-12,103770,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.449143765,42268.03,38282.06,526096.96,583883.39
+12,103395,4,"Standard Performance HP RTU, Electric Backup",false,3.567655606,40214.24,12242.33,314363.2,345162.19
+12,103770,2,"Variable Speed HP RTU, Original Heating Fuel Backup",false,4.499275535,42268.03,40042.5,524336.48,583883.36
 12,103807,48,Wall Insulation,true,2.913412169,95030.59,0.0,881983.01,1011126.35
 12,103856,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.335838065,64714.78,1767.18,367297.78,398927.27
 12,103877,46,Photovoltaics with 40pct Roof Coverage,true,2.994567213,299154.76,0.0,760548.86,964337.46
@@ -933,7 +933,7 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 12,104012,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.38690418,33450.52,46500.38,617621.95,679557.9
 12,104020,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.707484625,21261.33,12688.42,544913.42,567412.77
 12,104040,21,Energy Recovery for AHUs,false,3.226932986,42831.66,431.76,1003283.71,1051464.9
-12,104055,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,2.683645842,4281436.17,0.0,18664749.56,21394439.64
+12,104055,15,"HP Boiler, Electric Backup",true,2.855083423,2831802.6,0.0,19965748.56,21245805.08
 12,104112,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.871017312,39176.88,0.0,297111.09,315189.07
 12,104156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.702870437,280182.52,25376.48,737493.81,984904.83
 12,104209,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.980037684,44228.28,25678.27,486665.27,532752.46
@@ -948,9 +948,9 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 12,104891,21,Energy Recovery for AHUs,false,3.833247494,558527.78,540391.4,13784134.1,14588130.85
 12,104900,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.344986854,2260595.13,1434181.47,19926878.67,22306694.73
 12,104934,48,Wall Insulation,false,5.928608594,260123.77,821051.91,5599434.23,6511634.5
-12,104984,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,0.823293438,367468.65,0.0,34981.67,217910.87
+12,104984,15,"HP Boiler, Electric Backup",true,0.792111962,336768.57,0.0,33936.32,186165.43
 12,105031,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.277146649,102670.54,1599.32,1127009.64,1175985.77
-12,105032,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,2.050108349,603273.0,0.0,855595.83,1179076.42
+12,105032,15,"HP Boiler, Electric Backup",true,2.112750523,510596.99,0.0,886007.45,1116812.03
 12,105159,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.284607587,19047.02,36789.64,374438.6,420017.39
 12,105257,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.015693234,39532.99,31365.78,419024.63,468632.71
 12,105302,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.34369697,158221.47,0.0,357667.36,430677.87
@@ -961,25 +961,25 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 12,105955,21,Energy Recovery for AHUs,false,3.44384734,43138.53,15606.06,754171.18,832981.58
 12,105956,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.559234669,41498.76,8517.81,471242.63,498909.84
 12,106009,46,Photovoltaics with 40pct Roof Coverage,true,3.053142045,533048.55,0.0,3116360.4,3639872.83
-12,106015,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.869840682,135113.13,0.0,389785.28,452132.56
-12,106043,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,1.981842858,875707.24,0.0,1537641.59,2005404.13
-12,106091,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.556614931,217609.35,142679.19,2306549.29,2658021.56
+12,106015,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,2.84214896,135113.13,0.0,384692.3,447039.58
+12,106043,15,"HP Boiler, Electric Backup",true,2.036891281,744463.83,0.0,1585697.1,1922216.24
+12,106091,15,"HP Boiler, Electric Backup",false,3.384811468,517227.5,6399.28,2387474.84,2627675.88
 12,106092,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.427620916,225276.95,10372.06,1134276.48,1238884.64
 12,106121,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.744112243,281282.12,56653.14,1704792.73,2049618.95
-12,106365,58,"Package 5, Variable Speed HP RTU or HP Boilers + Economizer + DCV + Energy Recovery",true,1.565163737,1267225.46,0.0,1268668.57,1873239.96
-12,106476,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.222340383,287578.82,86203.34,1091242.27,1439059.55
+12,106365,15,"HP Boiler, Electric Backup",true,1.590210479,874997.1,0.0,1292010.32,1687534.26
+12,106476,15,"HP Boiler, Electric Backup",true,2.098359612,620668.06,0.0,1118016.98,1398576.86
 12,106673,21,Energy Recovery for AHUs,false,3.215453603,142830.93,909.33,2437684.43,2628627.48
-12,107803,21,Energy Recovery for AHUs,true,2.84835836,696191.1,0.0,17426107.07,18120108.15
+12,107803,15,"HP Boiler, Electric Backup",true,2.424629094,1604958.94,0.0,17138769.92,17864257.69
 12,108082,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.985536072,52934.72,0.0,331417.5,355843.96
 13,100036,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,6.279028516,389829.1,102791.45,1692300.27,2098986.9
-13,100054,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.16855089,34443.16,0.0,315823.63,331717.26
+13,100054,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,3.192639877,34443.16,0.0,315478.54,331372.16
 13,100064,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.723024923,45091.92,0.0,209267.69,230075.13
 13,100093,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.466063756,1521964.72,126001.62,16585867.68,17933874.92
 13,100111,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.332226321,9960.66,23274.39,409134.49,437005.18
 13,100238,7,"Standard Performance HP RTU, Electric Backup + New Windows",true,3.102750123,18936.86,0.0,668900.65,677638.97
-13,100297,48,Wall Insulation,false,3.734514389,90797.03,30236.75,1012515.32,1167779.88
+13,100297,15,"HP Boiler, Electric Backup",true,2.326129429,409392.74,0.0,980907.08,1165964.42
 13,100436,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.9752263,55360.07,24177.66,568318.18,618041.48
-13,100609,48,Wall Insulation,true,2.778911257,113340.76,0.0,509556.56,642152.15
+13,100609,15,"HP Boiler, Electric Backup",true,0.975485839,407936.17,0.0,369395.64,553794.57
 13,100668,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.056226141,101089.43,0.0,670884.18,717531.39
 13,101229,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.461330746,289052.79,6241.32,797702.65,1000628.15
 13,101321,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.410635578,203509.98,13399.81,1537388.15,1635918.68
@@ -988,25 +988,25 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 13,101505,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,5.392753161,191706.17,163784.27,1769009.36,2130723.32
 13,101654,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.997383701,60167.04,27951.55,672091.76,727807.08
 13,101687,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,2.694053892,147373.13,0.0,408225.52,486599.44
-13,101784,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.512292526,17483.63,49746.98,393433.09,451247.8
+13,101784,15,"HP Boiler, Electric Backup",true,1.361924426,371013.9,0.0,282628.11,450337.1
 13,102361,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.31239822,37462.17,3812.33,924232.8,945331.86
-13,102396,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",false,3.534919148,2311288.3,131505.57,18348558.52,19975253.8
+13,102396,15,"HP Boiler, Electric Backup",false,3.602732902,1489309.46,179042.61,18811313.76,19663567.23
 13,102398,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.840585912,234721.06,157434.26,3719046.08,4055994.18
 13,102539,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,4.981982145,1014065.26,0.0,7661893.26,8311651.54
 13,102696,48,Wall Insulation,true,2.850416637,74469.98,0.0,316705.68,342800.24
-13,102785,6,"Standard Performance HP RTU, Electric Backup + Roof Insulation",true,1.671186346,89090.03,0.0,184354.29,225464.43
+13,102785,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,1.581966078,126693.89,0.0,165477.35,223939.62
 13,102919,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,9.708539906,33974.28,185903.43,1051099.28,1252679.98
 13,102965,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.751454649,13696.92,87343.84,847344.26,941008.48
 13,103032,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,4.284273272,543323.62,0.0,2154424.95,2543731.56
-13,103034,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.151363129,121084.87,0.0,343582.5,399456.5
+13,103034,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,2.148191723,121084.87,0.0,342876.71,398750.71
 13,103035,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.550948382,25519.97,67297.15,730365.56,809438.78
 13,103036,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,9.688128496,141093.01,100912.58,1186738.13,1455235.09
 13,103156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,2.676481344,343781.15,0.0,738627.48,928015.44
 13,103336,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,4.847201721,482070.45,0.0,1853301.41,2205924.54
 13,103361,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.497750505,48142.33,2364.41,428434.27,453013.71
 13,103362,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.772212949,127071.79,8657.41,238052.16,335716.28
-13,103395,7,"Standard Performance HP RTU, Electric Backup + New Windows",false,3.644220216,35454.08,15107.61,318527.77,349995.49
-13,103770,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.493994951,39629.49,39812.68,527876.83,585976.34
+13,103395,4,"Standard Performance HP RTU, Electric Backup",false,3.643461194,35454.08,15081.23,318310.72,349752.06
+13,103770,2,"Variable Speed HP RTU, Original Heating Fuel Backup",false,4.539565312,39629.49,41415.83,526058.81,585761.47
 13,103807,48,Wall Insulation,true,2.906343895,98798.17,0.0,876809.91,1002302.47
 13,103856,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.361023797,61025.73,2402.96,367307.43,397870.41
 13,103877,46,Photovoltaics with 40pct Roof Coverage,true,3.004469256,299473.19,0.0,763407.72,967708.86
@@ -1014,7 +1014,7 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 13,104012,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.393555351,32496.4,46784.52,618367.38,680147.2
 13,104020,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.710687429,20251.08,12789.25,545708.62,567842.63
 13,104040,21,Energy Recovery for AHUs,false,3.321658762,42905.02,3696.63,1016334.23,1065812.18
-13,104055,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,2.678218474,4175247.37,0.0,18624856.63,21331611.61
+13,104055,15,"HP Boiler, Electric Backup",true,2.848577136,2679871.8,0.0,19917197.08,21128576.49
 13,104112,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.837115725,43331.05,0.0,297060.48,317055.37
 13,104156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.702026554,281916.55,25319.71,737697.86,987388.05
 13,104209,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.996474294,42119.12,26294.05,488260.75,533990.46
@@ -1029,11 +1029,11 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 13,104891,21,Energy Recovery for AHUs,false,3.837053457,558788.12,544323.82,13790559.09,14598611.14
 13,104900,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.317896972,2520921.16,1398026.64,19753650.23,22206209.03
 13,104934,48,Wall Insulation,false,5.930442663,252496.65,821631.43,5600305.23,6510412.44
-13,104984,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,0.766118807,372478.17,0.0,32875.43,218800.8
+13,104984,15,"HP Boiler, Electric Backup",true,0.737571926,340442.74,0.0,31921.95,185811.9
 13,105031,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.282225288,97888.88,1773.99,1127935.76,1174880.08
-13,105032,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,2.024575338,630378.88,0.0,856581.55,1194734.94
+13,105032,15,"HP Boiler, Electric Backup",true,2.096516683,533286.29,0.0,891448.19,1132508.99
 13,105159,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.302312822,18124.19,37417.79,375594.33,421375.44
-13,105257,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.030127199,36621.82,31953.4,420463.84,469316.2
+13,105257,15,"HP Boiler, Electric Backup",true,1.386428148,293754.77,0.0,335704.66,468490.3
 13,105302,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.349059897,149381.75,0.0,359671.48,428602.95
 13,105612,46,Photovoltaics with 40pct Roof Coverage,false,3.762627104,127011.16,23026.44,607773.76,685294.66
 13,105642,21,Energy Recovery for AHUs,true,2.790959572,88606.89,0.0,1292888.15,1373200.34
@@ -1042,25 +1042,25 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 13,105955,21,Energy Recovery for AHUs,false,3.444064493,43219.9,15622.33,754288.03,829787.18
 13,105956,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.415321587,51012.71,3634.46,465333.58,492507.6
 13,106009,46,Photovoltaics with 40pct Roof Coverage,true,3.045014506,536018.33,0.0,3103218.62,3621592.36
-13,106015,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.941425938,127278.69,0.0,393600.47,452332.59
-13,106043,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,1.94483102,812131.82,0.0,1505331.43,1950247.17
+13,106015,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,2.915028287,127278.69,0.0,388745.5,447477.62
+13,106043,15,"HP Boiler, Electric Backup",true,2.003899229,670137.62,0.0,1556896.08,1859817.63
 13,106091,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.55874639,211907.8,142943.0,2306579.04,2675583.45
 13,106092,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.4258034,226922.85,10226.06,1133489.46,1238640.13
 13,106121,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.746388772,279010.28,56934.3,1706478.57,2043143.02
-13,106365,58,"Package 5, Variable Speed HP RTU or HP Boilers + Economizer + DCV + Energy Recovery",true,1.555722339,1220754.34,0.0,1250952.21,1834667.87
-13,106476,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.220552429,287701.06,86050.28,1090194.31,1429677.3
+13,106365,15,"HP Boiler, Electric Backup",true,1.578347003,826917.19,0.0,1271968.64,1645759.09
+13,106476,15,"HP Boiler, Electric Backup",true,2.077808421,584511.11,0.0,1105971.49,1370187.38
 13,106673,21,Energy Recovery for AHUs,false,3.215795029,144294.13,929.42,2437062.0,2647938.05
-13,107803,21,Energy Recovery for AHUs,true,2.88678404,697668.61,0.0,17501972.97,18237375.45
+13,107803,15,"HP Boiler, Electric Backup",true,2.378040201,1783733.31,0.0,17106695.23,17912994.18
 13,108082,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.005357579,48727.6,0.0,333056.04,355541.15
 14,100036,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,6.256347901,402788.23,101011.96,1680812.49,2091613.21
-14,100054,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.189959371,32445.57,0.0,316464.83,331436.68
+14,100054,2,"Variable Speed HP RTU, Original Heating Fuel Backup",false,3.212815904,32445.57,62.98,316162.01,331196.84
 14,100064,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.752381061,42421.59,0.0,209883.97,229459.2
 14,100093,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.465621619,1505986.34,125659.51,16581408.83,17894315.52
 14,100111,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.331908127,9540.52,23267.41,409082.46,436752.3
 14,100238,7,"Standard Performance HP RTU, Electric Backup + New Windows",true,3.115398052,17827.16,0.0,669900.67,678126.93
 14,100297,48,Wall Insulation,false,3.726951712,92224.26,29678.61,1011746.43,1169027.96
 14,100436,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.007840215,50545.3,25337.5,571961.07,620622.45
-14,100609,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,0.949340772,484808.25,0.0,354471.83,628710.14
+14,100609,15,"HP Boiler, Electric Backup",true,0.96707038,384271.96,0.0,364703.39,538405.41
 14,100668,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.071479851,97164.92,0.0,674587.95,719424.21
 14,101229,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.486943886,285003.68,7259.89,806250.17,1004799.08
 14,101321,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.410505472,205132.66,13388.03,1537067.22,1636264.76
@@ -1071,23 +1071,23 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 14,101687,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,2.690275773,147373.13,0.0,407549.56,486985.2
 14,101784,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.526130657,16818.99,50288.85,394357.07,452406.95
 14,102361,7,"Standard Performance HP RTU, Electric Backup + New Windows",false,3.278447121,69703.43,2052.73,925846.39,960063.43
-14,102396,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",false,3.534242163,2242643.39,131025.89,18344533.2,19926341.9
+14,102396,15,"HP Boiler, Electric Backup",false,3.599343248,1445077.2,176640.86,18791159.07,19621016.53
 14,102398,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.831505378,237988.1,156409.1,3712027.07,4046139.67
 14,102539,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,4.974170057,1029245.13,0.0,7648600.26,8307551.27
 14,102696,21,Energy Recovery for AHUs,true,2.957488282,32313.2,0.0,327715.08,342965.77
-14,102785,6,"Standard Performance HP RTU, Electric Backup + Roof Insulation",true,1.96414873,84373.6,0.0,197579.62,236513.39
+14,102785,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,1.880785867,119986.72,0.0,179941.98,235309.25
 14,102919,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,9.741763495,31884.72,186899.77,1052220.86,1253833.68
 14,102965,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.754277434,13186.45,87510.61,847835.19,941430.62
 14,103032,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,4.280560028,541246.36,0.0,2151113.09,2534005.47
-14,103034,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.156525597,116258.04,0.0,344731.39,398378.09
+14,103034,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,2.153454628,116258.04,0.0,344047.95,397694.65
 14,103035,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.552202022,23835.44,67360.02,730796.04,809154.81
 14,103036,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,9.662909762,143717.51,100001.48,1182367.02,1448603.93
 14,103156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,2.665002264,345751.63,0.0,735428.24,925940.31
 14,103336,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,4.82668192,487319.55,0.0,1844359.45,2195104.54
 14,103361,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,3.173139935,139864.66,0.0,382786.3,454495.85
 14,103362,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.767458264,127727.39,8570.86,237761.3,336999.4
-14,103395,7,"Standard Performance HP RTU, Electric Backup + New Windows",false,3.656619105,33999.36,15571.71,319193.84,350454.38
-14,103770,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.531387794,37314.78,41093.5,529003.69,587315.91
+14,103395,4,"Standard Performance HP RTU, Electric Backup",false,3.655899251,33999.36,15546.69,318987.98,350223.51
+14,103770,2,"Variable Speed HP RTU, Original Heating Fuel Backup",false,4.573935065,37314.78,42589.58,527360.0,587168.3
 14,103807,48,Wall Insulation,true,2.913558242,94663.93,0.0,878758.6,994575.28
 14,103856,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.424687079,57824.58,4308.42,369031.62,400022.91
 14,103877,46,Photovoltaics with 40pct Roof Coverage,true,2.995762296,299946.2,0.0,760893.9,964472.51
@@ -1095,7 +1095,7 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 14,104012,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.39941401,31619.49,47033.57,619111.61,680735.83
 14,104020,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.718789892,19337.97,13054.28,546899.37,568877.05
 14,104040,21,Energy Recovery for AHUs,false,3.321682399,42945.62,3697.73,1016347.99,1069727.86
-14,104055,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,2.675484293,4080258.87,0.0,18604453.5,21290692.47
+14,104055,15,"HP Boiler, Electric Backup",true,2.841467578,2543965.93,0.0,19864143.83,21014089.86
 14,104112,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.824649804,45343.44,0.0,296613.86,317537.36
 14,104156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.723053595,274222.02,26557.96,744857.6,994485.8
 14,104209,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.011208576,40225.44,26850.18,489405.34,534817.36
@@ -1110,9 +1110,9 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 14,104891,21,Energy Recovery for AHUs,false,3.831956848,558628.95,539040.47,13783113.31,14585806.88
 14,104900,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.306688763,2609360.31,1383080.98,19681070.62,22155678.92
 14,104934,48,Wall Insulation,false,5.940328992,245648.2,824744.53,5605712.81,6516533.41
-14,104984,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,0.766118807,356853.81,0.0,32782.34,212244.75
+14,104984,15,"HP Boiler, Electric Backup",true,0.737571926,323723.99,0.0,31848.45,178181.04
 14,105031,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.28691006,93088.47,1935.08,1128810.92,1173701.2
-14,105032,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,1.996951303,661350.56,0.0,847763.94,1203707.6
+14,105032,15,"HP Boiler, Electric Backup",true,2.066125978,557341.22,0.0,881274.28,1133208.6
 14,105159,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.307841578,17291.55,37612.36,376093.94,421685.4
 14,105257,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.933911469,49435.15,27983.5,415419.16,466214.26
 14,105302,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.35355294,141536.81,0.0,361350.53,426661.99
@@ -1123,25 +1123,25 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 14,105955,21,Energy Recovery for AHUs,false,3.444224242,43265.49,15634.3,754373.99,828020.51
 14,105956,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.430832276,48486.59,4093.51,466331.29,492798.69
 14,106009,46,Photovoltaics with 40pct Roof Coverage,true,3.04068209,549490.1,0.0,3096212.05,3620887.66
-14,106015,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.90463134,129268.26,0.0,391373.93,451024.13
-14,106043,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,1.937177449,819241.87,0.0,1504483.09,1954811.62
+14,106015,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,2.878178273,129268.26,0.0,386509.11,446159.3
+14,106043,15,"HP Boiler, Electric Backup",true,1.997648746,673234.99,0.0,1557272.6,1861594.25
 14,106091,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.555481919,215825.06,142574.69,2304041.77,2669249.55
 14,106092,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.438038659,221807.94,11185.59,1140758.71,1244729.27
 14,106121,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.744528289,278290.5,56703.72,1705156.34,2041963.99
-14,106365,58,"Package 5, Variable Speed HP RTU or HP Boilers + Economizer + DCV + Energy Recovery",true,1.541444196,1179561.28,0.0,1237226.68,1802452.75
-14,106476,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.222390312,285715.77,86211.71,1090987.96,1429768.58
+14,106365,15,"HP Boiler, Electric Backup",true,1.567594556,784413.83,0.0,1261632.36,1616210.05
+14,106476,15,"HP Boiler, Electric Backup",true,2.074322256,584364.74,0.0,1103510.01,1367659.74
 14,106673,21,Energy Recovery for AHUs,false,3.215974972,145203.07,940.01,2436088.69,2670900.82
-14,107803,21,Energy Recovery for AHUs,true,2.885243011,698934.26,0.0,17510712.74,18291062.53
+14,107803,15,"HP Boiler, Electric Backup",true,2.31953579,1978520.66,0.0,17055455.03,17949803.48
 14,108082,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.020712289,46514.71,0.0,334193.05,355657.04
 15,100036,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,6.256693823,399014.94,101028.06,1681761.47,2085487.13
-15,100054,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.101084537,39347.38,0.0,315574.03,333730.68
+15,100054,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,3.131152369,39347.38,0.0,315141.1,333297.76
 15,100064,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.774109999,40114.33,0.0,210239.17,228749.72
 15,100093,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.455504269,1566339.13,117523.63,16515091.76,17836415.02
 15,100111,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.332001874,9154.72,23270.31,409032.79,436527.5
 15,100238,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.040864547,45845.93,0.0,653335.41,674490.79
-15,100297,48,Wall Insulation,false,3.716449068,95685.59,28967.85,1006226.01,1159415.95
+15,100297,15,"HP Boiler, Electric Backup",true,2.314298161,398330.51,0.0,976939.78,1156996.67
 15,100436,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.025737848,48626.89,25971.84,574165.73,622576.21
-15,100609,58,"Package 5, Variable Speed HP RTU or HP Boilers + Economizer + DCV + Energy Recovery",true,0.953465571,561918.42,0.0,355674.23,624797.91
+15,100609,15,"HP Boiler, Electric Backup",true,0.995016749,373538.59,0.0,367064.53,535914.75
 15,100668,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.085836321,91520.18,0.0,677340.93,719572.46
 15,101229,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.479463895,284341.36,6961.58,803852.29,1001376.97
 15,101321,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.405748129,208051.29,12839.56,1533934.22,1633804.18
@@ -1152,23 +1152,23 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 15,101687,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,2.683370268,147373.13,0.0,406172.23,488071.55
 15,101784,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.536657201,16208.88,50700.11,395136.53,453316.15
 15,102361,7,"Standard Performance HP RTU, Electric Backup + New Windows",false,3.289747528,67057.99,2574.92,927108.94,960627.43
-15,102396,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",false,3.483654615,2403692.91,100148.24,18323719.42,19973682.41
+15,102396,15,"HP Boiler, Electric Backup",false,3.552277757,1558253.92,140935.65,18785043.75,19630355.15
 15,102398,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.827157994,240251.74,155918.29,3708667.04,4048479.88
 15,102539,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,4.974233225,1030579.08,0.0,7645829.72,8315714.89
 15,102696,21,Energy Recovery for AHUs,true,2.948760838,32330.49,0.0,326895.99,342154.83
-15,102785,6,"Standard Performance HP RTU, Electric Backup + Roof Insulation",true,1.958723485,80243.96,0.0,196431.76,233459.94
+15,102785,4,"Standard Performance HP RTU, Electric Backup",true,1.955901037,80243.96,0.0,195834.6,232862.78
 15,102919,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,9.756824803,30041.61,187353.23,1052593.95,1253809.74
 15,102965,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.756702073,12579.49,87652.34,848367.28,941824.36
 15,103032,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,4.27521997,545553.86,0.0,2146165.65,2531272.16
-15,103034,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.163130325,109071.73,0.0,346201.26,396531.86
+15,103034,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,2.160187853,109071.73,0.0,345546.42,395877.02
 15,103035,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.55268512,23354.2,67384.25,730961.92,809122.85
 15,103036,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,9.65039556,144069.61,99552.22,1180000.2,1443205.62
 15,103156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,2.685184893,335062.73,0.0,741608.48,925775.15
 15,103336,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,4.841215808,491630.64,0.0,1855329.85,2205024.25
 15,103361,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,3.160308409,141273.84,0.0,381069.65,452637.2
 15,103362,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.756333255,128946.93,8373.51,236723.45,335871.4
-15,103395,7,"Standard Performance HP RTU, Electric Backup + New Windows",false,3.667557692,31827.76,15981.03,319792.0,350459.78
-15,103770,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.554326757,35262.01,41878.62,529740.56,587890.66
+15,103395,4,"Standard Performance HP RTU, Electric Backup",false,3.666884173,31827.76,15957.62,319599.37,350243.75
+15,103770,2,"Variable Speed HP RTU, Original Heating Fuel Backup",false,4.594919926,35262.01,43305.96,528175.43,587752.86
 15,103807,48,Wall Insulation,true,2.906257234,95527.93,0.0,878358.77,995953.53
 15,103856,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.45194732,55085.18,5165.79,369568.29,400152.86
 15,103877,46,Photovoltaics with 40pct Roof Coverage,true,2.985652881,300361.96,0.0,757975.17,961003.33
@@ -1176,7 +1176,7 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 15,104012,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.339764728,42304.34,44433.94,616032.59,679987.66
 15,104020,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.734854777,18504.36,13590.28,548390.68,570519.7
 15,104040,21,Energy Recovery for AHUs,false,3.321886764,42993.12,3707.21,1016466.94,1074215.68
-15,104055,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,2.677038204,4171713.95,0.0,18628627.39,21368553.46
+15,104055,15,"HP Boiler, Electric Backup",true,2.84506257,2612889.26,0.0,19902456.08,21083557.45
 15,104112,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.80414921,47118.46,0.0,293191.35,314933.93
 15,104156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.734029461,272709.28,27195.12,749233.92,993150.93
 15,104209,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.856958243,50116.6,20928.52,484314.04,528368.62
@@ -1191,11 +1191,11 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 15,104891,21,Energy Recovery for AHUs,false,3.835250255,559014.04,542375.45,13793190.46,14599400.76
 15,104900,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.306446105,2611664.73,1382829.04,19674531.48,22149851.82
 15,104934,48,Wall Insulation,false,5.939874103,246778.19,824598.68,5605637.58,6516708.28
-15,104984,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,0.737896246,352105.8,0.0,31741.52,209600.06
+15,104984,15,"HP Boiler, Electric Backup",true,0.710400985,317986.21,0.0,30849.15,174588.1
 15,105031,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.297680361,89227.07,2305.95,1130452.26,1173931.6
-15,105032,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,1.979339013,629142.87,0.0,839271.13,1177880.38
+15,105032,15,"HP Boiler, Electric Backup",true,2.043269054,530198.77,0.0,870252.47,1109917.62
 15,105159,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.320270435,16547.96,38053.32,376905.74,422595.03
-15,105257,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.971674993,44955.19,29533.93,418062.71,468340.99
+15,105257,15,"HP Boiler, Electric Backup",true,1.449826688,278925.28,0.0,339963.3,466045.57
 15,105302,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.276393361,145983.23,0.0,357014.09,424377.32
 15,105612,46,Photovoltaics with 40pct Roof Coverage,false,3.766203286,128081.77,23187.83,609048.97,687190.61
 15,105642,21,Energy Recovery for AHUs,true,2.719404741,88624.13,0.0,1274537.0,1363577.33
@@ -1204,25 +1204,25 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 15,105955,21,Energy Recovery for AHUs,false,3.583692638,43328.1,26897.54,773601.81,855951.38
 15,105956,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.454742698,46206.78,4912.24,467655.97,493890.1
 15,106009,46,Photovoltaics with 40pct Roof Coverage,true,3.03411505,558493.78,0.0,3085593.58,3610907.18
-15,106015,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.859124755,131466.53,0.0,385753.74,446418.31
-15,106043,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,1.922558926,846507.58,0.0,1494765.47,1961829.86
+15,106015,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,2.835494462,131466.53,0.0,381407.34,442071.91
+15,106043,15,"HP Boiler, Electric Backup",true,1.99106943,692451.05,0.0,1554572.54,1867580.4
 15,106091,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.545911304,225092.42,141483.11,2297425.95,2671018.52
 15,106092,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.43059056,225609.48,10593.57,1137003.49,1241972.27
-15,106121,48,Wall Insulation,false,3.675574813,119135.29,46270.44,1786727.06,2029817.29
-15,106365,58,"Package 5, Variable Speed HP RTU or HP Boilers + Economizer + DCV + Energy Recovery",true,1.53495923,1180505.81,0.0,1225581.11,1791804.62
-15,106476,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,1.991553354,654021.0,0.0,1054997.38,1403672.7
+15,106121,15,"HP Boiler, Electric Backup",true,2.288358386,681094.46,0.0,1713574.36,2021448.72
+15,106365,15,"HP Boiler, Electric Backup",true,1.625849013,746896.86,0.0,1268010.79,1605629.73
+15,106476,15,"HP Boiler, Electric Backup",true,2.043091051,557229.48,0.0,1085204.73,1337088.54
 15,106673,21,Energy Recovery for AHUs,false,3.215520565,145673.75,913.27,2435476.96,2678035.25
-15,107803,21,Energy Recovery for AHUs,true,2.879379115,700188.13,0.0,17459692.22,18227546.21
+15,107803,15,"HP Boiler, Electric Backup",true,2.317777749,1921039.32,0.0,17040158.68,17908523.91
 15,108082,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.032418141,44502.53,0.0,335130.28,355665.75
 16,100036,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,6.249238507,400400.21,100401.97,1680868.78,2083378.44
-16,100054,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.031258799,44850.37,0.0,315182.0,335877.98
+16,100054,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,3.068723772,44850.37,0.0,314478.19,335174.17
 16,100064,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.815899023,38141.24,0.0,211366.08,228966.17
 16,100093,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.466005431,1524953.77,125951.85,16585818.6,17875814.26
 16,100111,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.333781812,8803.89,23312.81,409059.73,436435.05
 16,100238,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.968477573,55689.44,0.0,643632.85,669330.47
 16,100297,48,Wall Insulation,false,3.706547516,96450.27,28231.73,1005590.08,1159408.12
 16,100436,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.953458908,59182.3,23336.38,572310.59,622956.35
-16,100609,58,"Package 5, Variable Speed HP RTU or HP Boilers + Economizer + DCV + Energy Recovery",true,0.935763815,572322.22,0.0,355321.29,629208.47
+16,100609,15,"HP Boiler, Electric Backup",true,0.975712977,383322.75,0.0,366455.38,539728.33
 16,100668,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.105339327,85295.61,0.0,681938.72,721297.96
 16,101229,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.467537978,289569.53,6484.64,800182.63,998755.07
 16,101321,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.415678187,196468.99,13969.2,1541583.24,1637737.82
@@ -1233,23 +1233,23 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 16,101687,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,2.681423529,147373.13,0.0,405823.94,486771.0
 16,101784,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.546050686,15650.44,51067.88,395768.79,454058.49
 16,102361,7,"Standard Performance HP RTU, Electric Backup + New Windows",false,3.292996404,63960.44,2749.56,927364.69,959628.48
-16,102396,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",false,3.482836805,2339695.1,99705.24,18318856.77,19927113.26
+16,102396,15,"HP Boiler, Electric Backup",false,3.549182225,1516765.74,138742.3,18766637.89,19591002.08
 16,102398,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.830819113,234831.97,156331.62,3711496.99,4043881.18
 16,102539,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,4.964270695,1018594.21,0.0,7627719.5,8294286.17
 16,102696,21,Energy Recovery for AHUs,true,2.957801846,32323.1,0.0,327745.44,343000.8
-16,102785,6,"Standard Performance HP RTU, Electric Backup + Roof Insulation",true,1.955559349,76529.49,0.0,195762.31,231076.46
+16,102785,4,"Standard Performance HP RTU, Electric Backup",true,1.952882179,76529.49,0.0,195195.88,230510.03
 16,102919,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,9.477618701,118167.61,180543.85,924982.82,1252322.72
 16,102965,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.758757704,12321.41,87775.05,848632.05,942092.76
 16,103032,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,4.271376554,543602.81,0.0,2143024.54,2519785.94
-16,103034,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.173544769,102749.53,0.0,348518.97,395932.23
+16,103034,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,2.170804913,102749.53,0.0,347909.22,395322.48
 16,103035,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.553216005,22594.79,67410.88,731144.22,808981.35
 16,103036,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,9.641975027,144373.22,99246.97,1178612.36,1435838.97
 16,103156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,2.712201678,322030.77,0.0,749709.35,925679.94
 16,103336,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,4.822323015,494290.45,0.0,1846274.18,2195597.06
 16,103361,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,3.145646094,142529.67,0.0,379475.03,452732.65
 16,103362,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.7670367,127114.12,8560.17,237944.08,336891.31
-16,103395,7,"Standard Performance HP RTU, Electric Backup + New Windows",false,3.574811998,39882.77,12490.97,316415.0,347309.68
-16,103770,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.601511708,31496.92,43494.65,531177.71,589206.45
+16,103395,4,"Standard Performance HP RTU, Electric Backup",false,3.574476034,39882.77,12479.3,316318.74,347201.75
+16,103770,2,"Variable Speed HP RTU, Original Heating Fuel Backup",false,4.638256929,31496.92,44785.86,529823.1,589143.06
 16,103807,48,Wall Insulation,true,2.90002936,99178.77,0.0,874610.19,990733.94
 16,103856,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.472514935,52663.34,5814.94,369783.94,399900.11
 16,103877,46,Photovoltaics with 40pct Roof Coverage,true,2.977148109,300732.58,0.0,755519.72,961453.34
@@ -1257,7 +1257,7 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 16,104012,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.348551642,41294.1,44811.94,616834.08,680700.98
 16,104020,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.739191038,17740.48,13729.08,549278.75,571194.08
 16,104040,21,Energy Recovery for AHUs,false,3.322665209,42984.0,3743.32,1016920.02,1077655.03
-16,104055,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,2.681595319,4179461.41,0.0,18583503.77,21338368.83
+16,104055,15,"HP Boiler, Electric Backup",true,2.852434062,2599765.31,0.0,19894503.69,21069672.65
 16,104112,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.79078595,49699.08,0.0,291004.19,313937.58
 16,104156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.730844095,271162.97,27004.14,748385.29,987095.67
 16,104209,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.779806572,64244.08,17979.2,480900.72,528525.03
@@ -1272,11 +1272,11 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 16,104891,21,Energy Recovery for AHUs,false,3.838085186,558766.02,545253.94,13801346.86,14610318.6
 16,104900,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.303989124,2640949.36,1379501.12,19662202.14,22146444.68
 16,104934,48,Wall Insulation,false,5.950537494,233722.53,827955.01,5611567.85,6521420.13
-16,104984,57,"Package 4, Package 2 with Standard Performance HP RTU",true,0.716071196,347209.89,0.0,30918.0,207119.84
+16,104984,15,"HP Boiler, Electric Backup",true,0.826028028,304176.78,0.0,35159.4,172656.09
 16,105031,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.301567556,86138.73,2439.68,1131126.67,1173314.64
-16,105032,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,1.968418528,628213.56,0.0,838004.14,1177585.07
+16,105032,15,"HP Boiler, Electric Backup",true,2.033937146,526729.62,0.0,869746.17,1107843.16
 16,105159,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.340466492,14794.06,38769.77,378229.67,423826.09
-16,105257,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.984336807,43716.61,30054.29,418904.88,469131.98
+16,105257,15,"HP Boiler, Electric Backup",true,1.438956184,282763.73,0.0,340750.56,468567.93
 16,105302,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.28000887,138944.34,0.0,358365.2,422480.37
 16,105612,46,Photovoltaics with 40pct Roof Coverage,false,3.764916204,125499.39,23129.75,608590.01,685565.6
 16,105642,21,Energy Recovery for AHUs,true,2.744525165,88703.4,0.0,1281610.16,1367800.08
@@ -1285,52 +1285,52 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 16,105955,21,Energy Recovery for AHUs,false,3.580921306,43367.81,26689.87,772110.56,852628.57
 16,105956,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.473225584,42851.52,5543.3,468825.95,494142.87
 16,106009,46,Photovoltaics with 40pct Roof Coverage,true,3.040507013,549505.4,0.0,3095929.07,3610624.93
-16,106015,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.834811199,131309.65,0.0,385019.07,445611.25
-16,106043,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,1.911819034,833268.6,0.0,1478191.38,1934703.8
+16,106015,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,2.811813,131309.65,0.0,380788.96,441381.14
+16,106043,15,"HP Boiler, Electric Backup",true,2.051886692,652207.91,0.0,1554712.51,1849529.32
 16,106091,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.549499751,218187.98,141887.46,2300250.26,2672209.59
 16,106092,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.418071019,234738.45,9608.86,1129810.08,1237612.9
-16,106121,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.742967879,279177.23,56515.36,1703699.21,2037777.96
-16,106365,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,1.504486484,1017286.36,0.0,1190261.39,1778350.53
-16,106476,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,2.002513337,639846.87,0.0,1061413.27,1399554.67
+16,106121,15,"HP Boiler, Electric Backup",true,2.275327553,706154.69,0.0,1718538.93,2037741.23
+16,106365,15,"HP Boiler, Electric Backup",true,1.609922054,749568.65,0.0,1264162.61,1602989.27
+16,106476,15,"HP Boiler, Electric Backup",true,2.051201228,550586.43,0.0,1089950.29,1338831.25
 16,106673,21,Energy Recovery for AHUs,false,3.281525901,146671.64,11561.7,2469717.4,2712078.27
-16,107803,21,Energy Recovery for AHUs,true,2.879365534,700807.26,0.0,17459574.06,18215624.13
+16,107803,15,"HP Boiler, Electric Backup",true,2.314840692,1867912.52,0.0,17014603.97,17858954.35
 16,108082,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.046932187,41526.61,0.0,336317.79,355480.04
 17,100036,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,6.251105592,402017.53,100519.53,1683841.44,2086347.6
-17,100054,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.045267421,43005.77,0.0,315443.72,335288.52
+17,100054,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,3.081861857,43005.77,0.0,314792.1,334636.9
 17,100064,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.828883978,36386.37,0.0,211503.76,228294.07
 17,100093,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.464099779,1538163.49,124391.7,16576546.29,17897605.38
 17,100111,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.33354044,8490.04,23307.8,408997.94,436223.42
 17,100238,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.974633215,53038.76,0.0,644803.42,669277.9
 17,100297,48,Wall Insulation,false,3.698201038,97525.86,27617.67,1004608.27,1160672.6
 17,100436,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.962030994,57140.14,23636.78,573693.25,623697.07
-17,100609,58,"Package 5, Variable Speed HP RTU or HP Boilers + Economizer + DCV + Energy Recovery",true,0.917716947,597373.72,0.0,354084.71,639482.42
+17,100609,15,"HP Boiler, Electric Backup",true,0.953640343,406469.35,0.0,364270.86,548006.74
 17,100668,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.117833472,82964.54,0.0,683703.88,721987.45
 17,101229,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.461756875,294302.67,6254.74,798253.38,995840.0
 17,101321,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.413482263,201481.09,13721.98,1539703.28,1637707.26
 17,101322,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.777915099,201237.38,51414.68,1649395.83,1784990.56
 17,101470,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.596644512,9171.65,13334.88,957376.97,974944.06
-17,101505,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,5.42805972,190383.57,166486.24,1787204.51,2139474.23
+17,101505,15,"HP Boiler, Electric Backup",false,3.829617586,466188.62,30796.17,1897093.48,2138620.35
 17,101654,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.039978421,49562.53,29674.8,679431.97,731977.15
 17,101687,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,2.677134069,147373.13,0.0,404895.88,486634.65
 17,101784,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.549069484,15131.56,51185.31,396034.27,454201.97
 17,102361,7,"Standard Performance HP RTU, Electric Backup + New Windows",false,3.296434232,61183.06,2934.19,927674.17,958840.98
-17,102396,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",false,3.505214944,2188150.7,112304.56,18339848.18,19862993.62
+17,102396,15,"HP Boiler, Electric Backup",false,3.567305939,1418523.3,152556.49,18761439.69,19555209.66
 17,102398,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.824231484,240044.78,155587.9,3706404.93,4035369.05
 17,102539,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,4.954601994,1008356.66,0.0,7608433.66,8271732.22
 17,102696,48,Wall Insulation,true,2.880739686,69578.25,0.0,319560.18,343940.67
-17,102785,6,"Standard Performance HP RTU, Electric Backup + Roof Insulation",true,1.952503491,73163.25,0.0,195115.76,228876.57
+17,102785,4,"Standard Performance HP RTU, Electric Backup",true,1.949966627,73163.25,0.0,194579.02,228339.83
 17,102919,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,9.482025184,116924.69,180665.44,925929.4,1252433.29
 17,102965,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.759144086,11917.19,87796.68,848786.7,942082.51
 17,103032,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,4.26899451,546670.34,0.0,2140231.93,2521164.65
-17,103034,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.181591164,109915.1,0.0,350309.68,401029.45
+17,103034,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,2.1783628,109915.1,0.0,349591.21,400310.99
 17,103035,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.553924478,21726.68,67446.41,731387.49,808859.57
 17,103036,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,9.642211338,142815.23,99248.24,1179156.48,1432625.05
 17,103156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,2.703743064,323998.75,0.0,747119.19,925479.85
 17,103336,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,4.815295724,510846.52,0.0,1841442.29,2190115.27
 17,103361,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,3.147293959,140935.65,0.0,379671.67,453303.66
 17,103362,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.770068256,128189.24,8614.65,238178.26,338627.42
-17,103395,7,"Standard Performance HP RTU, Electric Backup + New Windows",false,3.587078506,38467.68,12950.85,317010.74,347712.31
-17,103770,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.619362638,30048.23,44105.0,531798.57,589769.18
+17,103395,4,"Standard Performance HP RTU, Electric Backup",false,3.586755521,38467.68,12939.62,316918.19,347608.54
+17,103770,2,"Variable Speed HP RTU, Original Heating Fuel Backup",false,4.654483569,30048.23,45339.51,530475.56,589680.68
 17,103807,48,Wall Insulation,true,2.896513167,100168.67,0.0,874373.72,992840.52
 17,103856,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.488965668,50477.62,6332.95,370056.6,399682.19
 17,103877,46,Photovoltaics with 40pct Roof Coverage,true,2.969394776,320992.71,0.0,753281.22,962944.01
@@ -1338,7 +1338,7 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 17,104012,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.325792029,60245.63,43893.87,610469.73,682163.66
 17,104020,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.7480889,17039.33,14026.5,550059.51,571948.73
 17,104040,21,Energy Recovery for AHUs,false,3.318219637,43019.53,3537.09,1014332.52,1073354.91
-17,104055,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,2.671765096,4311545.69,0.0,18625933.35,21457809.02
+17,104055,15,"HP Boiler, Electric Backup",true,2.841103075,2700270.02,0.0,19922841.16,21143441.15
 17,104112,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.792505302,48633.85,0.0,291206.26,313648.11
 17,104156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.734740528,266195.71,27230.27,749942.63,987442.51
 17,104209,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.79801303,60309.49,18664.96,482413.79,528908.26
@@ -1353,9 +1353,9 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 17,104891,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.963263435,2271977.22,690507.2,12953199.17,14594102.23
 17,104900,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.277081321,3005981.42,1343777.2,19477107.03,22078323.03
 17,104934,48,Wall Insulation,false,5.948928806,235132.61,827454.53,5610284.1,6520129.99
-17,104984,7,"Standard Performance HP RTU, Electric Backup + New Windows",false,4.48564242,7702.78,35633.03,171888.97,211076.41
+17,104984,15,"HP Boiler, Electric Backup",true,0.820318407,319895.26,0.0,34895.63,179497.52
 17,105031,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.305305972,82477.5,2568.3,1131775.78,1172402.91
-17,105032,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,1.9541025,610346.02,0.0,831100.82,1163554.33
+17,105032,15,"HP Boiler, Electric Backup",true,2.020125934,507129.85,0.0,863086.28,1092323.61
 17,105159,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.341205161,13923.32,38794.22,378432.64,423651.71
 17,105257,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.995884924,42547.95,30528.63,419694.09,469856.26
 17,105302,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.2843832,132668.94,0.0,359999.89,421219.31
@@ -1366,25 +1366,25 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 17,105955,21,Energy Recovery for AHUs,false,3.603995003,40874.65,28551.62,775405.19,854690.44
 17,105956,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.488781003,39989.29,6074.11,469833.86,494360.83
 17,106009,46,Photovoltaics with 40pct Roof Coverage,true,3.047913527,543734.34,0.0,3107905.05,3629138.83
-17,106015,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.879814422,126096.3,0.0,387543.58,445730.09
-17,106043,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,1.902215055,809989.77,0.0,1469807.41,1917827.04
+17,106015,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,2.857570647,126096.3,0.0,383452.21,441638.71
+17,106043,15,"HP Boiler, Electric Backup",true,2.043708442,626611.59,0.0,1547573.16,1830819.69
 17,106091,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.546695951,218699.74,141566.89,2298366.89,2670965.45
 17,106092,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.428269936,226889.44,10403.29,1136326.89,1241640.81
 17,106121,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.735373336,283099.96,55566.81,1698807.02,2033627.62
-17,106365,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,1.558408534,997384.33,0.0,1201342.91,1777127.93
-17,106476,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,2.00124709,644913.51,0.0,1063924.41,1403335.68
+17,106365,15,"HP Boiler, Electric Backup",true,1.661214328,736571.83,0.0,1273557.72,1606509.45
+17,106476,15,"HP Boiler, Electric Backup",true,2.049129404,557515.19,0.0,1091989.26,1344002.22
 17,106673,21,Energy Recovery for AHUs,false,3.351497033,146944.77,31770.71,2504548.67,2764149.94
-17,107803,21,Energy Recovery for AHUs,true,2.874910279,703641.36,0.0,17378452.89,18106645.61
+17,107803,15,"HP Boiler, Electric Backup",true,2.331277132,1739686.78,0.0,17023908.79,17810297.43
 17,108082,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.062705018,38964.9,0.0,337321.74,355301.9
 18,100036,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,6.250660916,403202.49,100472.49,1684468.15,2086404.84
-18,100054,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.057215746,41373.38,0.0,315666.53,334758.07
+18,100054,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,3.09306846,41373.38,0.0,315059.62,334151.16
 18,100064,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.849944397,34797.81,0.0,211985.15,228042.43
 18,100093,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.462704754,1537583.15,123241.72,16570673.6,17906983.15
 18,100111,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.338886445,8208.74,23434.58,409145.27,436367.73
 18,100238,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.987266439,50039.78,0.0,646444.3,669534.91
 18,100297,48,Wall Insulation,false,3.702202605,94125.25,27902.2,1005761.7,1153751.61
 18,100436,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.86232511,63022.25,20015.5,569774.38,618871.19
-18,100609,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,0.915675628,521847.78,0.0,353314.13,644091.56
+18,100609,15,"HP Boiler, Electric Backup",true,0.933829292,421683.45,0.0,364849.08,555462.17
 18,100668,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.127478911,80772.34,0.0,685250.71,722522.7
 18,101229,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.46286221,293969.7,6298.98,798590.31,996993.23
 18,101321,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.40848889,205361.43,13157.52,1535594.96,1634657.68
@@ -1395,23 +1395,23 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 18,101687,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,2.675760254,147373.13,0.0,404610.79,488152.62
 18,101784,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.553988883,14113.67,51376.29,396498.69,454387.67
 18,102361,7,"Standard Performance HP RTU, Electric Backup + New Windows",false,3.302076175,59606.07,3236.68,928305.55,959047.16
-18,102396,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",false,3.46070053,2287734.28,86982.73,18359011.35,19892014.37
+18,102396,15,"HP Boiler, Electric Backup",false,3.521964928,1536055.36,119971.85,18769743.08,19584056.29
 18,102398,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.82318167,236152.49,155469.38,3705593.45,4028533.71
 18,102539,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,4.978704318,988387.09,0.0,7649430.75,8317642.68
 18,102696,21,Energy Recovery for AHUs,true,2.873450038,32386.94,0.0,319891.68,335177.17
-18,102785,6,"Standard Performance HP RTU, Electric Backup + Roof Insulation",true,1.950799297,75498.66,0.0,194755.19,229593.67
+18,102785,4,"Standard Performance HP RTU, Electric Backup",true,1.947528747,75498.66,0.0,194063.22,228901.7
 18,102919,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,9.504390412,114111.33,181300.37,929388.44,1255434.84
 18,102965,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.76322388,11139.94,88038.56,849433.91,942612.94
 18,103032,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,4.250393509,554300.36,0.0,2126290.16,2507255.47
-18,103034,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.132807528,116367.63,0.0,346170.64,399867.91
+18,103034,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,2.128612491,116367.63,0.0,345237.05,398934.31
 18,103035,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.554505254,21119.39,67475.54,731586.92,808807.89
 18,103036,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,9.632154793,143023.38,98884.81,1177420.75,1430141.83
 18,103156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,2.696981584,325746.21,0.0,745048.71,924943.57
 18,103336,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,4.805333459,511686.81,0.0,1836891.58,2185915.27
 18,103361,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,3.15092871,139505.96,0.0,379765.7,452116.95
 18,103362,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.757355288,129139.58,8391.09,236857.06,337422.33
-18,103395,7,"Standard Performance HP RTU, Electric Backup + New Windows",false,3.597657394,36334.65,13347.66,317506.81,347620.91
-18,103770,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.633727017,28839.42,44596.14,532298.8,590202.74
+18,103395,4,"Standard Performance HP RTU, Electric Backup",false,3.597353691,36334.65,13337.1,317419.77,347523.32
+18,103770,2,"Variable Speed HP RTU, Original Heating Fuel Backup",false,4.667539551,28839.42,45784.97,531000.83,590093.6
 18,103807,48,Wall Insulation,true,2.898303389,101397.37,0.0,875451.26,991185.91
 18,103856,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.508692683,48481.26,6950.75,370663.48,399985.66
 18,103877,46,Photovoltaics with 40pct Roof Coverage,true,2.951546958,338776.69,0.0,748128.3,961064.49
@@ -1419,7 +1419,7 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 18,104012,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.331443193,58934.57,44134.44,611163.73,682493.24
 18,104020,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.756495445,15689.07,14303.88,551096.48,572640.0
 18,104040,21,Energy Recovery for AHUs,false,3.333278623,40849.52,4260.62,1016569.86,1073516.96
-18,104055,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,2.676999661,4420851.37,0.0,18680797.59,21571689.38
+18,104055,15,"HP Boiler, Electric Backup",true,2.846609844,2792044.12,0.0,19977682.7,21239767.24
 18,104112,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.793949743,47614.2,0.0,291391.19,313362.52
 18,104156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.738451788,265474.91,27447.82,751275.97,985239.69
 18,104209,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.828313332,58174.9,19816.53,484220.21,530881.26
@@ -1434,9 +1434,9 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 18,104891,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.954799641,2357880.52,682242.8,12906917.24,14575490.29
 18,104900,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.267869637,3113948.81,1331635.28,19407645.8,22041883.96
 18,104934,48,Wall Insulation,false,5.951237773,234031.45,828179.25,5611703.23,6521888.0
-18,104984,7,"Standard Performance HP RTU, Electric Backup + New Windows",false,4.490950826,7397.9,35780.16,172087.75,211281.63
+18,104984,15,"HP Boiler, Electric Backup",true,0.797307562,318364.91,0.0,34047.52,177957.65
 18,105031,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.308946475,79881.19,2693.63,1132355.25,1171909.66
-18,105032,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,1.952222746,594307.98,0.0,826206.75,1152277.97
+18,105032,15,"HP Boiler, Electric Backup",true,2.017771386,489508.91,0.0,857981.78,1079253.94
 18,105159,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.357097224,12524.75,39356.01,379649.05,424784.54
 18,105257,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.002673421,41457.06,30806.35,420254.53,470191.04
 18,105302,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.34520293,125237.56,0.0,365936.46,423726.71
@@ -1447,25 +1447,25 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 18,105955,21,Energy Recovery for AHUs,false,3.604485889,40934.63,28588.4,775669.34,857892.81
 18,105956,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.502620991,38476.4,6547.6,470634.19,494936.53
 18,106009,46,Photovoltaics with 40pct Roof Coverage,true,3.044258845,540766.87,0.0,3101995.68,3619609.81
-18,106015,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.852419587,128223.02,0.0,387931.77,447099.64
-18,106043,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,1.90494394,813718.57,0.0,1472728.52,1920457.54
+18,106015,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,2.826662776,128223.02,0.0,383195.69,442363.56
+18,106043,15,"HP Boiler, Electric Backup",true,2.043476107,634766.09,0.0,1549079.3,1836011.89
 18,106091,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.538003312,224153.02,140565.9,2293023.68,2669021.52
 18,106092,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.419779677,233756.5,9737.9,1131244.76,1238765.87
 18,106121,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.921003799,27374.93,78449.13,1839318.83,1930399.99
-18,106365,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,1.551670796,1007368.28,0.0,1204714.96,1782218.85
-18,106476,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,1.97807868,622132.83,0.0,1050344.9,1381971.87
+18,106365,15,"HP Boiler, Electric Backup",true,1.651092464,752388.66,0.0,1274984.74,1615086.13
+18,106476,15,"HP Boiler, Electric Backup",true,2.029633002,530148.12,0.0,1080562.0,1320204.25
 18,106673,21,Energy Recovery for AHUs,false,3.351081279,138139.68,31659.53,2503608.82,2756778.3
-18,107803,21,Energy Recovery for AHUs,true,2.85173088,704106.87,0.0,17348341.23,18090134.52
+18,107803,15,"HP Boiler, Electric Backup",true,2.319469589,1798456.28,0.0,17023495.78,17836449.94
 18,108082,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.071448787,37624.58,0.0,337903.87,355265.55
 19,100036,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,6.251387071,404041.9,100519.29,1685548.65,2089416.98
-19,100054,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.965598741,46153.4,0.0,314054.99,335352.25
+19,100054,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,3.010873274,46153.4,0.0,313140.85,334438.1
 19,100064,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.806604066,38244.13,0.0,209860.67,227508.23
 19,100093,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.452697052,1582889.49,115039.84,16522981.86,17882549.45
 19,100111,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.253604852,12848.95,21414.17,406640.96,433984.22
 19,100238,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.991421364,47893.42,0.0,647909.06,670009.24
 19,100297,48,Wall Insulation,false,3.694258311,97143.08,27358.07,1002036.17,1148117.95
 19,100436,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.872152598,61002.51,20366.2,570757.32,619272.82
-19,100609,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,0.911049654,508320.97,0.0,350734.81,636354.44
+19,100609,15,"HP Boiler, Electric Backup",true,0.929470303,406410.71,0.0,362418.61,546127.99
 19,100668,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.13795034,77373.02,0.0,686797.39,722500.78
 19,101229,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.473926166,291535.65,6738.96,802282.53,1002281.35
 19,101321,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.407123694,206543.46,13002.46,1534525.32,1633927.43
@@ -1474,24 +1474,24 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 19,101505,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,5.420669783,194944.59,165927.48,1782922.65,2136150.5
 19,101654,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.060043198,44572.76,30492.23,682425.08,733485.19
 19,101687,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,2.669938226,147373.13,0.0,403855.63,486555.5
-19,101784,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.541716176,36733.56,50928.56,392977.11,460856.2
+19,101784,15,"HP Boiler, Electric Backup",true,1.484937639,356809.42,0.0,282866.29,444154.45
 19,102361,7,"Standard Performance HP RTU, Electric Backup + New Windows",false,3.301843349,57253.0,3224.64,928173.49,957817.25
-19,102396,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",false,3.45581628,2341764.43,84187.46,18365080.92,19933030.12
+19,102396,15,"HP Boiler, Electric Backup",false,3.518908719,1565780.82,118175.18,18784718.51,19610671.83
 19,102398,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.817124518,238533.52,154785.55,3700911.43,4022174.34
 19,102539,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,4.973380408,990869.4,0.0,7639708.4,8311477.13
 19,102696,21,Energy Recovery for AHUs,true,2.876163626,32404.75,0.0,320157.68,335451.57
-19,102785,6,"Standard Performance HP RTU, Electric Backup + Roof Insulation",true,1.948698038,72450.06,0.0,194310.61,227742.33
+19,102785,4,"Standard Performance HP RTU, Electric Backup",true,1.945555826,72450.06,0.0,193645.79,227077.51
 19,102919,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,9.503609607,112464.12,181278.71,929229.36,1250112.35
 19,102965,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.767810064,10530.01,88312.48,850014.52,943186.02
 19,103032,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,4.261926982,545765.05,0.0,2134687.57,2511940.58
-19,103034,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.137650398,112870.79,0.0,347248.41,399332.08
+19,103034,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,2.133599391,112870.79,0.0,346346.87,398430.53
 19,103035,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.555765975,20052.59,67538.76,732019.82,808811.75
 19,103036,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,9.815302706,62193.55,104138.56,1303459.9,1436297.37
 19,103156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,2.702195347,321542.04,0.0,746399.54,925837.24
 19,103336,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,4.795281086,512883.68,0.0,1830703.24,2178718.89
 19,103361,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,3.151448308,138204.07,0.0,379952.97,452609.87
 19,103362,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.768655248,127636.86,8584.93,238368.59,338149.17
-19,103395,7,"Standard Performance HP RTU, Electric Backup + New Windows",false,3.498165105,41975.69,9623.93,312131.9,341125.3
+19,103395,4,"Standard Performance HP RTU, Electric Backup",false,3.496563071,41975.69,9568.25,311674.29,340612.01
 19,103770,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.645604064,27063.46,45006.33,532401.86,589896.5
 19,103807,48,Wall Insulation,true,2.880491217,102730.43,0.0,873853.53,990676.98
 19,103856,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.443331163,58849.15,4914.96,367723.92,399794.53
@@ -1500,7 +1500,7 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 19,104012,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.342131499,56900.68,44593.59,612184.15,683034.27
 19,104020,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.761129274,15142.39,14457.32,551622.42,573067.13
 19,104040,21,Energy Recovery for AHUs,false,3.397027486,41111.98,8493.03,1025477.83,1083849.5
-19,104055,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,2.678509557,4515695.88,0.0,18702985.7,21645861.79
+19,104055,15,"HP Boiler, Electric Backup",true,2.848025441,2870260.3,0.0,19998066.05,21295506.55
 19,104112,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.792681608,49761.36,0.0,291183.63,314145.77
 19,104156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.726028833,274811.31,26721.0,746716.02,984548.88
 19,104209,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.840957877,56246.75,20294.25,485171.08,531420.11
@@ -1515,9 +1515,9 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 19,104891,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.955029101,2349265.51,682452.6,12909120.27,14574299.36
 19,104900,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.26811774,3104367.81,1331946.95,19410581.48,22041123.45
 19,104934,48,Wall Insulation,false,5.939469826,237028.86,824482.96,5604647.09,6512185.87
-19,104984,7,"Standard Performance HP RTU, Electric Backup + New Windows",false,4.320452205,11868.71,31054.6,165703.25,202234.6
+19,104984,15,"HP Boiler, Electric Backup",true,0.942424616,306363.38,0.0,39471.03,177956.12
 19,105031,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.312190963,77480.07,2805.29,1132892.57,1171450.65
-19,105032,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,1.946860706,596725.13,0.0,826951.01,1154919.56
+19,105032,15,"HP Boiler, Electric Backup",true,2.012576397,490457.56,0.0,858801.77,1080502.75
 19,105159,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.360204172,12164.3,39466.32,379844.45,424923.93
 19,105257,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.016831217,39780.13,31387.68,421240.27,470984.29
 19,105302,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.34772634,120133.69,0.0,366879.46,422314.55
@@ -1528,25 +1528,25 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 19,105955,21,Energy Recovery for AHUs,false,3.605290325,41102.92,28648.68,776102.21,864113.93
 19,105956,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.519683664,36194.28,7131.92,471574.39,495407.98
 19,106009,46,Photovoltaics with 40pct Roof Coverage,true,3.047479162,541737.3,0.0,3107202.75,3616371.29
-19,106015,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.78158309,133675.04,0.0,378883.82,440567.5
-19,106043,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,1.887595865,785877.78,0.0,1457584.2,1895199.56
+19,106015,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,2.758854975,133675.04,0.0,374704.07,436387.75
+19,106043,15,"HP Boiler, Electric Backup",true,2.029829106,604020.46,0.0,1537165.9,1810200.58
 19,106091,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.537572127,221612.49,140517.25,2292688.55,2660464.91
 19,106092,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.419477816,233531.48,9712.48,1131213.49,1238615.05
 19,106121,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.923611419,26586.92,78789.43,1839988.26,1931046.09
-19,106365,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,1.54888927,978301.09,0.0,1202041.09,1762881.34
-19,106476,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,1.961230191,608704.01,0.0,1040469.64,1367490.02
+19,106365,15,"HP Boiler, Electric Backup",true,1.646083854,730678.8,0.0,1270169.98,1600457.89
+19,106476,15,"HP Boiler, Electric Backup",true,2.013947391,514048.3,0.0,1071368.33,1303733.0
 19,106673,21,Energy Recovery for AHUs,false,3.351026607,139179.09,31647.49,2503305.7,2763049.65
-19,107803,21,Energy Recovery for AHUs,true,2.846389243,705577.09,0.0,17350869.8,18122639.88
+19,107803,15,"HP Boiler, Electric Backup",true,2.309357935,1927068.28,0.0,17026765.89,17897856.38
 19,108082,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.093072224,36386.43,0.0,339005.26,355795.6
 20,100036,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,6.269663154,395746.59,101972.22,1693473.04,2090671.96
-20,100054,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.92489761,51175.92,0.0,311289.14,334904.02
+20,100054,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,2.971924514,51175.92,0.0,310500.8,334115.68
 20,100064,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.761751899,41367.03,0.0,208936.92,228025.53
 20,100093,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.454925139,1566859.53,116852.41,16535165.47,17886818.94
 20,100111,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.255637311,12457.45,21462.68,406673.31,433884.42
 20,100238,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.010483841,45115.28,0.0,649998.97,670817.19
 20,100297,48,Wall Insulation,false,3.67607097,98449.38,26012.4,1000422.63,1146032.14
 20,100436,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.916301163,55472.22,21947.11,574648.6,622193.09
-20,100609,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,0.899606771,504690.54,0.0,351686.5,633497.54
+20,100609,15,"HP Boiler, Electric Backup",true,0.917585933,406735.85,0.0,363029.46,546885.81
 20,100668,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.110059642,83877.38,0.0,687000.38,725705.17
 20,101229,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.48233042,288552.07,7074.91,804885.73,1001480.38
 20,101321,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.404933751,207014.2,12751.35,1532982.87,1632330.79
@@ -1555,24 +1555,24 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 20,101505,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,5.413278934,196648.96,165353.4,1779705.03,2133665.46
 20,101654,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.066397153,42688.38,30748.08,683619.91,734066.33
 20,101687,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,2.680151298,147373.13,0.0,405682.89,487609.48
-20,101784,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.546746476,34584.54,51121.13,393675.96,460755.95
+20,101784,15,"HP Boiler, Electric Backup",true,1.473611799,352679.86,0.0,279898.06,439319.53
 20,102361,7,"Standard Performance HP RTU, Electric Backup + New Windows",false,3.304529453,55305.21,3368.93,928408.19,957297.44
-20,102396,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",false,3.450054257,2330738.54,81066.18,18330820.25,19903270.06
+20,102396,15,"HP Boiler, Electric Backup",false,3.516632695,1531750.23,116942.26,18771185.4,19580522.98
 20,102398,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.82093855,233669.48,155216.14,3703859.58,4019976.82
 20,102539,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,4.975629871,987776.86,0.0,7643136.86,8315060.6
 20,102696,21,Energy Recovery for AHUs,true,2.887281251,32394.35,0.0,321200.84,336489.83
-20,102785,6,"Standard Performance HP RTU, Electric Backup + Roof Insulation",true,1.945587928,69647.48,0.0,193652.59,225791.07
+20,102785,4,"Standard Performance HP RTU, Electric Backup",true,1.942635671,69647.48,0.0,193027.96,225166.44
 20,102919,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,9.492618254,112808.33,180951.01,928712.95,1246636.61
 20,102965,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.768721463,10054.35,88363.5,850379.31,943382.34
 20,103032,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,4.248233628,550624.8,0.0,2125571.74,2501444.11
-20,103034,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.12513816,116174.14,0.0,344463.84,398071.82
+20,103034,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,2.121759844,116174.14,0.0,343712.01,397319.98
 20,103035,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.55627457,19539.53,67564.27,732194.46,808775.15
 20,103036,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,9.622722872,143512.01,98545.96,1175654.1,1429843.28
 20,103156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,2.694698345,323217.1,0.0,744112.47,924896.2
 20,103336,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,4.790629355,513451.75,0.0,1827587.01,2176335.49
 20,103361,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",true,3.14365789,139350.47,0.0,378910.74,451419.12
 20,103362,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.784354671,125230.29,8863.67,239816.24,337738.37
-20,103395,7,"Standard Performance HP RTU, Electric Backup + New Windows",false,3.514260059,39907.66,10227.04,312938.94,341581.17
+20,103395,4,"Standard Performance HP RTU, Electric Backup",false,3.512712104,39907.66,10173.24,312496.77,341085.21
 20,103770,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.654694269,26103.91,45318.68,532601.68,589965.88
 20,103807,48,Wall Insulation,true,2.880306384,102944.13,0.0,873790.71,989168.76
 20,103856,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.398025068,63533.54,3493.79,366520.67,399331.69
@@ -1581,7 +1581,7 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 20,104012,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.346726292,55772.28,44788.23,612815.69,683339.76
 20,104020,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.768324077,14081.64,14693.18,552636.67,573827.75
 20,104040,21,Energy Recovery for AHUs,false,3.408104293,41173.17,9379.73,1027077.06,1085680.85
-20,104055,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,2.682840229,4665089.4,0.0,18693699.85,21718278.19
+20,104055,15,"HP Boiler, Electric Backup",true,2.856708203,2993791.0,0.0,20020017.33,21373297.28
 20,104112,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.772375389,51529.89,0.0,287860.12,311638.33
 20,104156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.72168213,273050.62,26463.33,745353.82,981625.43
 20,104209,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.853195425,53364.96,20754.4,486242.02,531621.42
@@ -1596,9 +1596,9 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 20,104891,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.954848343,2353082.43,682268.56,12908633.83,14575225.55
 20,104900,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.267887988,3109834.91,1331635.37,19409455.43,22041972.78
 20,104934,48,Wall Insulation,false,5.93293618,238635.46,822424.26,5601160.96,6507204.0
-20,104984,7,"Standard Performance HP RTU, Electric Backup + New Windows",false,4.321052104,11439.63,31071.23,165719.94,202069.92
+20,104984,15,"HP Boiler, Electric Backup",true,0.949796289,295287.71,0.0,39659.07,173137.64
 20,105031,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.312601017,74830.09,2819.18,1133117.14,1170466.29
-20,105032,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,1.946443554,603179.5,0.0,828144.57,1159303.44
+20,105032,15,"HP Boiler, Electric Backup",true,2.012175186,496414.17,0.0,859998.99,1084392.53
 20,105159,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.256373434,18252.15,35759.78,375070.28,419252.42
 20,105257,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,4.029209762,38839.63,31896.57,422049.42,471868.34
 20,105302,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.34928746,115430.28,0.0,367462.85,420727.58
@@ -1609,13 +1609,13 @@ k,berdo_id,recommended_upgrade_id,recommended_option,meets_standard,projected_gh
 20,105955,21,Energy Recovery for AHUs,false,3.630243972,41181.21,30663.36,779579.19,868623.75
 20,105956,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.535568054,34974.72,7676.82,472375.13,496190.86
 20,106009,46,Photovoltaics with 40pct Roof Coverage,true,3.048292443,542638.59,0.0,3108517.78,3609842.39
-20,106015,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,2.814590474,129593.07,0.0,380833.56,440633.64
-20,106043,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,1.886863628,823777.65,0.0,1459140.06,1916969.2
+20,106015,2,"Variable Speed HP RTU, Original Heating Fuel Backup",true,2.79242964,129593.07,0.0,376758.1,436558.17
+20,106043,15,"HP Boiler, Electric Backup",true,2.022721432,638271.09,0.0,1536501.47,1825018.43
 20,106091,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,4.538550424,220870.61,140627.62,2293448.91,2659690.34
 20,106092,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",false,3.42648814,228447.04,10279.03,1133957.86,1239799.08
 20,106121,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",false,3.925588144,25177.92,79045.92,1840597.19,1931261.33
-20,106365,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,1.5336096,1009729.9,0.0,1204911.9,1783711.35
-20,106476,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",true,1.964561775,606517.53,0.0,1044061.96,1368602.37
+20,106365,15,"HP Boiler, Electric Backup",true,1.625030705,757972.17,0.0,1270523.52,1613148.82
+20,106476,15,"HP Boiler, Electric Backup",true,2.015890942,514583.89,0.0,1074147.09,1306753.86
 20,106673,21,Energy Recovery for AHUs,false,3.351072367,139865.73,31662.54,2503213.66,2769207.93
-20,107803,21,Energy Recovery for AHUs,true,2.858967619,706405.4,0.0,17382440.7,18181623.0
+20,107803,15,"HP Boiler, Electric Backup",true,2.2922345,2045747.13,0.0,17026501.82,17951238.57
 20,108082,3,"Variable Speed HP RTU, Electric Backup, Energy Recovery",true,3.108096597,35235.89,0.0,339905.42,356164.84
