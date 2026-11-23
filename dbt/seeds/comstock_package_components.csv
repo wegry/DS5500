@@ -40,3 +40,7 @@ upgrade_id,package_name,component,measure,btb_measure_id
 6,Standard HP RTU + Roof Insulation,Roof insulation,roof_insulation_aedg,93
 7,Standard HP RTU + New Windows,Standard performance HP RTU,add_heat_pump_rtu,1
 7,Standard HP RTU + New Windows,New windows,env_new_aedg_windows,54
+1,Variable Speed HP RTU Electric Backup,Variable speed HP RTU,add_heat_pump_rtu,2
+2,Variable Speed HP RTU Original Fuel Backup,Variable speed HP RTU,add_heat_pump_rtu,2
+4,Standard Performance HP RTU Electric Backup,Standard HP RTU,add_heat_pump_rtu,1
+15,HP Boiler Electric Backup,Heat pump boiler,replace_boiler_by_heatpump,3
