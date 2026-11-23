@@ -116,7 +116,7 @@ If the matched simulations have no baseline consumption for a particular fuel, i
 
 *Installation cost estimation.* Selected ComStock upgrades and packages are mapped to corresponding BTB technologies @btb. Installation costs are estimated from applicable component quantities and BTB unit prices, with building-level scaling where appropriate. Low, mid, and high cost estimates are retained. Options that keep the existing heating and cooling equipment are also charged for replacing it like-for-like with gas rooftop units and boilers, sized from the matched simulations; heat pump, VRF, and geothermal options replace it instead. All costs are in 2025 dollars, converted with the GDP price deflator @bea-deflator: BTB's from 2023 dollars, and the PV, ground-loop, and economizer costs from their sources' years.
 
-The integration workflow is summarized in @fig:pipeline in the appendix.
+The pipeline is written as SQL models in dbt, a data transformation tool @dbt, and its workflow is summarized in Appendix @fig:pipeline.
 
 
 *2030 compliance assessment.* BERDO establishes an office building emissions standard of 3.2 kg $"CO"_2"e"$ per square foot per year for the 2030-2034 compliance period @berdo-standards. For each building and retrofit scenario, estimated emissions are divided by gross floor area and compared with the applicable standard. The electricity portion of each building's emissions follows BERDO's projected grid emissions factor year by year @berdo-grid, net of the Massachusetts Renewable Portfolio Standard Class I share @ma-rps. The resulting net factor falls 12% from 2027 to 2030 and 58% from 2027 to 2046.
@@ -252,35 +252,44 @@ This appendix provides the data flow (@fig:pipeline), the BERDO data diagnostics
 == Retrofit Options
 
 #let retrofit-groups = (
-  ([Individual measures], (
-    (43, [LED lighting], [LED lighting]),
-    (48, [Wall insulation], [Exterior wall insulation]),
-    (49, [Roof insulation], [Roof insulation]),
-    (52, [New windows], [High-performance windows]),
-    (12, [VRF], [VRF with dedicated outdoor air]),
-    (29, [Geothermal], [Ground-source HP]),
-    (46, [Rooftop PV], [Photovoltaics on 40% of the roof]),
-    (19, [Economizers], [Air-side economizers]),
-    (20, [DCV], [Demand-controlled ventilation]),
-    (21, [Energy recovery], [Air-handler energy recovery]),
-    (15, [HP boiler], [Electric backup]),
-  )),
-  ([Heat pump RTU upgrades], (
-    (1, [Variable HP RTU], [Electric backup]),
-    (2, [Variable HP RTU], [Original-fuel backup]),
-    (4, [Standard HP RTU], [Electric backup]),
-    (3, [HP RTU + ER], [Variable-speed HP RTU; energy recovery]),
-    (6, [HP RTU + roof], [Standard HP RTU; roof insulation]),
-    (7, [HP RTU + windows], [Standard HP RTU; new windows]),
-  )),
-  ([Packages], (
-    (54, [Package 1], [Wall and roof insulation; new windows]),
-    (55, [Package 2], [LED lighting; variable-speed HP RTU or HP boiler]),
-    (56, [Package 3], [Packages 1 and 2 combined]),
-    (57, [Package 4], [Package 2 with a standard HP RTU]),
-    (58, [Package 5], [HP RTU or boiler; economizer; DCV; energy recovery]),
-    (65, [Package 12], [Rooftop PV and roof insulation]),
-  )),
+  (
+    [Individual measures],
+    (
+      (43, [LED lighting], [LED lighting]),
+      (48, [Wall insulation], [Exterior wall insulation]),
+      (49, [Roof insulation], [Roof insulation]),
+      (52, [New windows], [High-performance windows]),
+      (12, [VRF], [VRF with dedicated outdoor air]),
+      (29, [Geothermal], [Ground-source HP]),
+      (46, [Rooftop PV], [Photovoltaics on 40% of the roof]),
+      (19, [Economizers], [Air-side economizers]),
+      (20, [DCV], [Demand-controlled ventilation]),
+      (21, [Energy recovery], [Air-handler energy recovery]),
+      (15, [HP boiler], [Electric backup]),
+    ),
+  ),
+  (
+    [Heat pump RTU upgrades],
+    (
+      (1, [Variable HP RTU], [Electric backup]),
+      (2, [Variable HP RTU], [Original-fuel backup]),
+      (4, [Standard HP RTU], [Electric backup]),
+      (3, [HP RTU + ER], [Variable-speed HP RTU; energy recovery]),
+      (6, [HP RTU + roof], [Standard HP RTU; roof insulation]),
+      (7, [HP RTU + windows], [Standard HP RTU; new windows]),
+    ),
+  ),
+  (
+    [Packages],
+    (
+      (54, [Package 1], [Wall and roof insulation; new windows]),
+      (55, [Package 2], [LED lighting; variable-speed HP RTU or HP boiler]),
+      (56, [Package 3], [Packages 1 and 2 combined]),
+      (57, [Package 4], [Package 2 with a standard HP RTU]),
+      (58, [Package 5], [HP RTU or boiler; economizer; DCV; energy recovery]),
+      (65, [Package 12], [Rooftop PV and roof insulation]),
+    ),
+  ),
 )
 #let retrofit-names = retrofit-groups.fold((:), (names, group) => {
   for (id, name, measures) in group.at(1) {
@@ -298,11 +307,14 @@ This appendix provides the data flow (@fig:pipeline), the BERDO data diagnostics
     table.hline(),
     table.header([*ID*], [*Upgrade*], [*Measures*]),
     table.hline(stroke: 0.5pt),
-    ..retrofit-groups.map(((heading, rows),) => (
-      table.cell(colspan: 3, emph(heading)),
-      ..rows.map(((id, name, measures),) => (str(id), name, measures)).flatten(),
-      table.hline(stroke: 0.5pt),
-    )).flatten().slice(0, -1),
+    ..retrofit-groups
+      .map(((heading, rows)) => (
+        table.cell(colspan: 3, emph(heading)),
+        ..rows.map(((id, name, measures)) => (str(id), name, measures)).flatten(),
+        table.hline(stroke: 0.5pt),
+      ))
+      .flatten()
+      .slice(0, -1),
     table.hline(),
   ),
   caption: [ComStock upgrades considered. IDs are ComStock 2025 upgrade numbers. HP: heat pump; RTU: rooftop unit; DCV: demand-controlled ventilation. Heat pump RTUs may use electric or original-fuel backup heat.],
@@ -585,11 +597,12 @@ Removing stories raises mean and median error but lowers the 90th percentile. Fo
     table.hline(),
     table.header([*Distance*], [*MAE*], [*Median*], [*P90*], [*Δ MAE*]),
     table.hline(stroke: 0.5pt),
-    ..feature-names.map(((key, name),) => {
-      let row = feature-results.find(r => r.experiment == key)
-      (name, row.mae_pp, row.median_ae_pp,
-       row.p90_ae_pp, or-dash(row.mae_minus_production_pp))
-    }).flatten(),
+    ..feature-names
+      .map(((key, name)) => {
+        let row = feature-results.find(r => r.experiment == key)
+        (name, row.mae_pp, row.median_ae_pp, row.p90_ae_pp, or-dash(row.mae_minus_production_pp))
+      })
+      .flatten(),
     table.hline(),
   ),
   caption: [Feature sensitivity at $k = 20$, with inverse-distance pooling and the district rule. All errors and MAE differences from production are in percentage points.],
@@ -614,13 +627,19 @@ The public ComStock full baseline contains a primary HVAC-system label for each 
     table.hline(),
     table.header([*Wrong labels*], [*MAE*], [*Median*], [*P90*], [*Δ MAE*]),
     table.hline(stroke: 0.5pt),
-    ..hvac-rates.map(rate => {
-      let runs = hvac-results.filter(r => float(r.target_error_rate) == rate)
-      let mean(field) = runs.fold(0.0, (sum, row) => sum + float(row.at(field))) / runs.len()
-      (str(int(calc.round(100 * rate))) + "%",
-       str(mean("mae_pp")), str(mean("median_ae_pp")),
-       str(mean("p90_ae_pp")), or-dash(mean("mae_minus_production_pp")))
-    }).flatten(),
+    ..hvac-rates
+      .map(rate => {
+        let runs = hvac-results.filter(r => float(r.target_error_rate) == rate)
+        let mean(field) = runs.fold(0.0, (sum, row) => sum + float(row.at(field))) / runs.len()
+        (
+          str(int(calc.round(100 * rate))) + "%",
+          str(mean("mae_pp")),
+          str(mean("median_ae_pp")),
+          str(mean("p90_ae_pp")),
+          or-dash(mean("mae_minus_production_pp")),
+        )
+      })
+      .flatten(),
     table.hline(),
   ),
   caption: [Experimental HVAC matching at $k = 20$ with inverse-distance pooling and the district rule. Units are percentage points. At nonzero noise rates, entries are averages of the per-replicate statistics. Differences use the production result without HVAC labels.],
@@ -630,32 +649,36 @@ The public ComStock full baseline contains a primary HVAC-system label for each 
 Accurate simulated HVAC labels lower MAE from 6.65 to 3.74 points in this test. The gain shrinks as labels become less accurate but remains at 50% corruption under this procedure. The result depends on the mismatch penalty and the way labels are corrupted. BERDO and assessor records lack commercial HVAC labels, and this experiment does not establish how a real label source would perform. Earlier tests of year built, wall construction, window type, and operating hours lack a recoverable protocol and were not rerun.
 
 #block(breakable: false)[
-=== Prediction Errors by Retrofit Option
+  === Prediction Errors by Retrofit Option
 
-#let upgrade-errors = csv(experiment-dir + "production_by_upgrade.csv", row-type: dictionary)
+  #let upgrade-errors = csv(experiment-dir + "production_by_upgrade.csv", row-type: dictionary)
 
-#figure(
-  ztable(
-    columns: (auto, 1fr, auto, auto),
-    align: (right, left, right, right),
-    format: (none, none, (round: (mode: "places", precision: 2)), (round: (mode: "places", precision: 2))),
-    inset: (x: 3pt, y: 2pt),
-    stroke: none,
-    table.hline(),
-    table.header([*ID*], [*Upgrade*], [*Mean cut (%)*], [*MAE (pp)*]),
-    table.hline(stroke: 0.5pt),
-    ..upgrade-errors.map(row => (
-      row.upgrade_id, retrofit-names.at(row.upgrade_id),
-      row.mean_simulated_reduction_pct, row.mae_pp,
-    )).flatten(),
-    table.hline(),
-  ),
-  caption: [Final production leave-one-out errors by ComStock upgrade. Each upgrade is evaluated on #upgrade-errors.first().predictions held-out ComStock simulations. Mean cut is the average simulated emissions reduction; MAE is expressed in percentage points of baseline emissions.],
-  placement: none,
-) <tab:per-upgrade-validation>
+  #figure(
+    ztable(
+      columns: (auto, 1fr, auto, auto),
+      align: (right, left, right, right),
+      format: (none, none, (round: (mode: "places", precision: 2)), (round: (mode: "places", precision: 2))),
+      inset: (x: 3pt, y: 2pt),
+      stroke: none,
+      table.hline(),
+      table.header([*ID*], [*Upgrade*], [*Mean cut (%)*], [*MAE (pp)*]),
+      table.hline(stroke: 0.5pt),
+      ..upgrade-errors
+        .map(row => (
+          row.upgrade_id,
+          retrofit-names.at(row.upgrade_id),
+          row.mean_simulated_reduction_pct,
+          row.mae_pp,
+        ))
+        .flatten(),
+      table.hline(),
+    ),
+    caption: [Final production leave-one-out errors by ComStock upgrade. Each upgrade is evaluated on #upgrade-errors.first().predictions held-out ComStock simulations. Mean cut is the average simulated emissions reduction; MAE is expressed in percentage points of baseline emissions.],
+    placement: none,
+  ) <tab:per-upgrade-validation>
 ]
 
-RTU options miss by 8.14--10.48 points against simulated cuts of 6.68--8.55%. The electric-backup boiler misses by 4.05 points on a 7.02% cut. VRF and geothermal have the largest errors. Individual envelope, lighting, and rooftop PV measures miss by 1.10--2.68 points, ventilation measures by 0.11--4.77, and combined Packages 2--5 by 8.64--10.57 points.
+Heat pump rooftop unit (RTU) options miss by 8.14--10.48 points against simulated cuts of 6.68--8.55%. The electric-backup boiler misses by 4.05 points on a 7.02% cut. VRF and geothermal have the largest errors. Individual envelope, lighting, and rooftop PV measures miss by 1.10--2.68 points, ventilation measures by 0.11--4.77, and combined Packages 2--5 by 8.64--10.57 points.
 
 == Story Estimates
 
@@ -711,9 +734,14 @@ The Farnsworth Street boiler's global cost is \$2.78 million for the owner and \
 )
 #let case-base = float(case-results.find(r => r.upgrade_id == "0").projected_intensity_kgco2e_sqft)
 #let case-options = (
-  ("0", [No retrofit]), ("15", [Heat pump boiler]), ("21", [Air-handler recovery]),
-  ("55", [Package 2]), ("56", [Package 3]), ("57", [Package 4]),
-  ("58", [Package 5]), ("65", [Package 12]),
+  ("0", [No retrofit]),
+  ("15", [Heat pump boiler]),
+  ("21", [Air-handler recovery]),
+  ("55", [Package 2]),
+  ("56", [Package 3]),
+  ("57", [Package 4]),
+  ("58", [Package 5]),
+  ("65", [Package 12]),
 )
 
 #figure(
@@ -726,13 +754,14 @@ The Farnsworth Street boiler's global cost is \$2.78 million for the owner and \
     table.hline(),
     table.header([*Option*], [*Install.*], [*Global*], [*2030 cut (%)*]),
     table.hline(stroke: 0.5pt),
-    ..case-options.map(((id, name),) => {
-      let row = case-results.find(r => r.upgrade_id == id)
-      let thousands(value) = str(int(calc.round(float(value) / 1000)))
-      let cut = 100 * (1 - float(row.projected_intensity_kgco2e_sqft) / case-base)
-      ([#name (#id)], thousands(row.installed_cost_mid_usd),
-       thousands(row.global_cost_mid_usd), or-dash(cut))
-    }).flatten(),
+    ..case-options
+      .map(((id, name)) => {
+        let row = case-results.find(r => r.upgrade_id == id)
+        let thousands(value) = str(int(calc.round(float(value) / 1000)))
+        let cut = 100 * (1 - float(row.projected_intensity_kgco2e_sqft) / case-base)
+        ([#name (#id)], thousands(row.installed_cost_mid_usd), thousands(row.global_cost_mid_usd), or-dash(cut))
+      })
+      .flatten(),
     table.hline(),
   ),
   caption: [Representative options for BERDO 106476. Gross installation and owner global costs are in thousands of 2025 dollars. Global cost covers 2027--2046 at mid installation costs and baseline prices with projected grid factors. The modeled 2030 emissions cut is relative to the no-retrofit intensity of #num(str(case-base)) kg CO#sub[2]e/ft#super[2]/year. Source: dbt global-cost and upgrade-compliance outputs.],

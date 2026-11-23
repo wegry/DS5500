@@ -124,6 +124,14 @@ bea-deflator:
     value: https://fred.stlouisfed.org/series/A191RD3A086NBEA
     date: 2026-11-22
 
+dbt:
+  type: web
+  author: dbt Labs
+  title: "dbt: Data Build Tool, version 2.0.8"
+  url:
+    value: https://www.getdbt.com
+    date: 2026-11-23
+
 omb-a4:
   type: report
   author: U.S. Office of Management and Budget
