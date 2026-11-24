@@ -62,6 +62,9 @@ vars:
   # first year of the 5-year standards period the retrofit decision is made for; "compliant"
   # means under this period's standard in its first year
   decision_period_start: 2030
+  # later standards periods whose first year is also checked (meets_standard_<year> in
+  # berdo_global_cost); each must fall inside the 20-year horizon
+  later_period_starts: [2035, 2040, 2045]
   # first year of the 20-year global cost (berdo_global_cost): the model looks forward from
   # the earliest year a decision could take effect, so it charges the ACPs of the rest of the
   # 2025-2029 period before the decision_period_start standard

@@ -36,7 +36,7 @@
   index-terms: (
     "Building decarbonization",
     "BERDO",
-    "Retrofit optimization",
+    "Retrofit cost comparison",
     "Office buildings",
     "Emissions compliance",
   ),
@@ -85,7 +85,7 @@ This project uses three main publicly available data sources: Boston's Building 
 
 *City of Boston data* give each building's shape. The Planning Department's roof outlines have one polygon per roof section, with a roof height recorded for 2010 @boston-buildings. The city created the outlines from a 2011 flyover and updates them from aerial imagery and LiDAR, so some newer buildings have a footprint but no height. The Assessing Department's 2025 parcels @boston-parcels place each roof section on a parcel, which BERDO identifies by its tax parcel ID. Together they give the story estimates used in matching. The FY2026 property assessment @boston-assessment, keyed by the same parcel ID, gives each building's year built. It is used only to explain missing story estimates (Appendix, Story Estimates).
 
-== Data Integration and Optimization
+== Data Integration and Cost Comparison
 
 *Building matching.* BERDO and ComStock cannot be joined directly by building identifier because BERDO represents real buildings, while ComStock contains synthetic building simulations. We use k-nearest-neighbor (KNN) matching to borrow retrofit effects from the $k$ most similar eligible ComStock models for each BERDO office @berdo @comstock.
 
@@ -124,7 +124,7 @@ The pipeline is written as SQL models in dbt, a data transformation tool @dbt, a
 For emissions exceeding the limit, BERDO permits ACPs. The current payment rate is \$234 per metric ton of CO#sub[2]e above the emissions limit @berdo-acp, which we hold constant in 2025 dollars. Annual ACP obligations are estimated from the remaining excess emissions in each year after each retrofit scenario, against a limit of 5.3 kg $"CO"_2"e"$ per square foot through 2029 and 3.2 from 2030, stepping down to 2.4, 1.6 and 0.8 in 2035, 2040 and 2045 @berdo-standards.
 
 
-*Cost optimization.* We compare no retrofit and 23 retrofit options over 2027--2046 using the EU global cost method for commercial buildings @eu-cost-optimal. Global cost is the present value of installation, replacement, energy bills, and emissions costs, less the straight-line residual value of equipment in 2046. Options that keep existing HVAC include like-for-like replacement. Massachusetts commercial energy prices @eia-prices @doer-oil follow AEO2026 New England projections @aeo. Owner costs include any ACPs owed from 2027 onward. A compliant option meets the modeled 2030 emissions limit before ACPs.
+*Cost comparison.* We compare no retrofit and 23 retrofit options over 2027--2046 using the EU global cost method for commercial buildings @eu-cost-optimal. Global cost is the present value of installation, replacement, energy bills, and emissions costs, less the straight-line residual value of equipment in 2046. Options that keep existing HVAC include like-for-like replacement. Massachusetts commercial energy prices @eia-prices @doer-oil follow AEO2026 New England projections @aeo. Owner costs include any ACPs owed from 2027 onward. A compliant option meets the modeled 2030 emissions limit before ACPs.
 
 Two perspectives are compared. The owner pays ACPs on emissions above each year's limit and discounts at a 7% real rate, the return on private capital in OMB's regulatory guidance @omb-a4, reinstated in 2025 @omb-m2515. Society leaves out ACPs, which are a transfer to the city, and instead prices every ton at about \$230 per metric ton of CO#sub[2]e in 2020 dollars (\$281 in 2025 dollars) @epa-scghg, discounting at 2%, the rate underlying that estimate. Society's electricity emissions follow NLR Cambium's projected ISO-NE grid emission rates @cambium rather than BERDO's factor. For each perspective, the model identifies the lowest-cost option and, separately, the cheapest option that meets the 2030 standard.
 
@@ -156,13 +156,35 @@ Matching is worth doing. At $k = 20$, the mean absolute error (MAE), the average
 
 == Recommendations
 
-Under projected grid factors, baseline energy prices, and mid installation costs, 81 offices exceed the 2030 limit without a retrofit and 71 have a modeled compliant option. A retrofit is cheapest at all 81 from both perspectives. The societal optimum is compliant at 11 more offices than the owner optimum (@fig:compliance-outcomes). Compared with no retrofit, the cheapest 20-year options save owners \$39.0 million and society \$103 million in total. Package 12, rooftop PV with roof insulation, is the most common choice from both perspectives (28 owner picks and 40 societal picks).
+Under projected grid factors, baseline energy prices, and mid installation costs, 81 offices exceed the 2030 limit without a retrofit and 71 have a modeled compliant option. A retrofit is cheapest at all 81 from both perspectives. The societal optimum is compliant at 11 more offices than the owner optimum, and the gap widens as the limit falls: in 2045, 267 offices are over 0.8, and the options chosen now keep 20 of them under it for owners and 54 for society (@tab:compliance-outcomes). Compared with no retrofit, the cheapest 20-year options save owners \$39.0 million and society \$103 million in total. Package 12, rooftop PV with roof insulation, is the most common choice from both perspectives (28 owner picks and 40 societal picks).
+
+#let by-period = csv("../dbt/analysis_outputs/compliance_by_period.csv", row-type: dictionary)
 
 #figure(
-  image("figures/compliance-outcomes.svg", width: 94%),
-  caption: [Modeled 2030 compliance of minimum-global-cost retrofits for the #at-risk-count at-risk offices, by perspective. Both sets are evaluated against the BERDO limit under projected conditions.],
+  table(
+    columns: (auto, auto, auto, auto, auto, auto),
+    align: right,
+    stroke: none,
+    inset: (x: 4pt, y: 3pt),
+    table.hline(),
+    table.header(
+      table.cell(rowspan: 2, align: bottom)[*Year*],
+      table.cell(rowspan: 2, align: bottom)[*Limit*],
+      table.cell(rowspan: 2, align: bottom)[*Over*],
+      table.cell(rowspan: 2, align: bottom)[*Any option*],
+      table.cell(colspan: 2, align: center)[*Cheapest option meets*],
+      [*Owner*], [*Society*],
+    ),
+    table.hline(stroke: 0.5pt),
+    ..by-period.map(r => (
+      r.period_start, r.office_standard_kgco2e_sqft, r.offices_over_limit,
+      r.has_compliant_option, r.owner_choice_compliant, r.societal_choice_compliant,
+    )).flatten(),
+    table.hline(),
+  ),
+  caption: [Offices over the office limit (kg CO#sub[2]e/ft#super[2]) in the first year of each BERDO period without a retrofit, those with any option that meets it, and those whose cheapest 20-year option, chosen in 2027, meets it. Projected grid factors, baseline prices, and mid installation costs.],
   placement: bottom,
-) <fig:compliance-outcomes>
+) <tab:compliance-outcomes>
 
 One building makes this concrete. 24--32 Farnsworth Street (BERDO 106476) is a 78,860 sq ft office in Fort Point that gets 65% of its energy from natural gas. It reports 4.8 kg $"CO"_2"e"$ per square foot, well over the 2030 limit of 3.2. From both the owner's and society's view, its cheapest 20-year option is the electric-backup heat pump boiler. It meets the 2030 standard and saves the owner \$261,000 and society \$1.26 million compared with no retrofit (Appendix, @tab:farnsworth-results).
 
@@ -178,7 +200,6 @@ Of the 71 offices with a compliant option, 29 would choose one at a zero ACP, 35
   caption: [
     Over-limit offices whose cheapest 20-year option, from the owner's view, meets the 2030 standard, as the ACP rate rises (projected grid emissions and prices, BTB mid costs). The curve counts offices by the first rate at which a compliant option is cheapest and shows rates up to \$2,000 per metric ton. Break-even rates are calculated from the cost-line intersections and rounded to cents.
   ],
-  placement: none,
 ) <fig:breakeven>
 
 Across 5,000 Monte Carlo draws per office, recommendation stability is the fraction of draws in which the original option remains cheapest. Under projected conditions, the averages are 75.0% for owners and 80.2% for society. Compliance confidence instead measures how often that option meets the limit in a given year (Appendix, @sec:additional-results).
@@ -470,7 +491,7 @@ This appendix provides the data flow (@fig:pipeline), the BERDO data diagnostics
   placement: none,
 
   caption: [
-    Data integration and optimization framework
+    Data integration and cost comparison framework
     for Boston office buildings. BERDO observations, with story counts estimated from data.boston.gov building and parcel data @boston-buildings @boston-parcels, are linked to ComStock simulations through property-type-constrained nearest-neighbor matching. Estimated retrofit performance,
     BTB installation costs, AEO energy price scenarios @aeo, and Cambium grid emission rates @cambium support the 2027 decision and the comparison of costs over 2027--2046, with 2030 as the compliance milestone.
   ],
