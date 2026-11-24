@@ -373,22 +373,95 @@ def global_k_sensitivity() -> None:
     )
     peak = max(int(r[key]) for rows in series for r in rows for _, key in panels)
     upper = max(20, 20 * ((peak + 19) // 20))
-    fig, axes = plt.subplots(1, 2, figsize=(6.5, 2.25), sharey=True)
+    fig, axes = plt.subplots(1, 2, figsize=(3.45, 1.95), sharey=True)
     for ax, (title, key) in zip(axes, panels):
-        for data, label, color, marker in zip(
-            series, ("Owner", "Society"), ("#245b86", "#a65021"), ("o", "s")
-        ):
-            ax.plot(neighbors, [int(r[key]) for r in data], label=label, color=color,
-                    marker=marker, ms=2.6, lw=1.2)
-        ax.set(title=title, xlabel="Neighbors (k)",
-               xticks=sorted({1, k_ref, *range(5, k_ref, 5)}), ylim=(0, upper))
+        for data, label, color in zip(series, ("Owner", "Society"), ("#245b86", "#a65021")):
+            ax.plot(neighbors, [int(r[key]) for r in data], label=label, color=color, lw=1.4)
+        ax.set_title(title, fontsize=8.5)
+        ax.set(xlabel="Neighbors (k)", xticks=sorted({1, k_ref, *range(5, k_ref, 5)}), ylim=(0, upper))
         ax.grid(axis="y", alpha=0.25)
         for edge in ("right", "top"):
             ax.spines[edge].set_visible(False)
-    axes[0].set_ylabel("Offices with a different choice")
-    axes[1].legend(frameon=False, loc="upper right")
+    axes[0].set_ylabel("Offices with a\ndifferent choice")
+    axes[1].legend(frameon=False, loc="upper right", fontsize=7.5)
     fig.tight_layout()
     save_results_svg(fig, "global-k-sensitivity.svg")
+
+
+def matching_error() -> None:
+    """Leave-one-out MAE by neighbor count, against pooling without matching."""
+    with (ROOT / "report-2/data/matching_validation.csv").open(newline="", encoding="utf-8") as f:
+        rows = list(csv.DictReader(f))
+    pooled = {r["k"]: float(r["mae_pp"]) for r in analysis_rows("loo_k_summary.csv")
+              if r["k"] in ("all", "type")}
+    k_ref = VARS["match_k"]
+    fig, ax = plt.subplots(figsize=(3.45, 2.45))
+    for method, rule, label, color, marker in (
+        ("inverse_distance", "true", "Production: inverse distance, district rule", "#245b86", "o"),
+        ("unweighted", "false", "Equal weights, no district rule", "#a65021", "s"),
+    ):
+        pts = sorted((int(r["k"]), float(r["mae_pp"])) for r in rows
+                     if r["method"] == method and r["rule"] == rule)
+        ax.plot(*zip(*pts), label=label, color=color, marker=marker, ms=2.4, lw=1.1)
+    for key, text, dy, va in (("all", "Pool all offices", 0.02, "bottom"),
+                              ("type", "Pool same size class", -0.02, "top")):
+        ax.axhline(pooled[key], color=INK_2, lw=0.8, ls=(0, (4, 3)))
+        ax.text(24, pooled[key] + dy, f"{text} ({pooled[key]:.2f})", ha="right", va=va,
+                color=INK_2, fontsize=7.5)
+    ax.axvline(k_ref, color=GRID, lw=0.8, zorder=0)
+    ax.set(xlabel="Neighbors (k)", ylabel="MAE (percentage points)", xlim=(1, 24),
+           ylim=(6.5, 7.9), xticks=[1, 5, 10, 15, 20, 24])
+    ax.grid(axis="y", alpha=0.25)
+    for edge in ("right", "top"):
+        ax.spines[edge].set_visible(False)
+    ax.legend(frameon=False, fontsize=7.5, loc="lower left", bbox_to_anchor=(0, 1.0), borderaxespad=0.2)
+    fig.tight_layout()
+    save_results_svg(fig, "matching-error.svg")
+
+
+OPTION_LABELS = {
+    "2": "HP RTU, fuel backup", "3": "HP RTU + energy recov.",
+    "4": "Standard HP RTU", "7": "HP RTU + windows", "15": "HP boiler",
+    "21": "Energy recovery", "46": "Rooftop PV", "48": "Wall insulation",
+    "55": "Package 2", "58": "Package 5", "65": "Package 12 (PV + roof)",
+}
+
+
+def option_choices() -> None:
+    """How often each option is the cheapest 20-year choice, and compliant when it is."""
+    rows = [r for r in analysis_rows("option_summary.csv")
+            if int(r["owner_picks"]) + int(r["societal_picks"]) > 0]
+    rows.sort(key=lambda r: int(r["owner_picks"]) + int(r["societal_picks"]))
+    unlabeled = [r["upgrade_id"] for r in rows if r["upgrade_id"] not in OPTION_LABELS]
+    if unlabeled:
+        raise ValueError(f"No short label for upgrades {unlabeled}")
+    y = np.arange(len(rows))
+    fig, ax = plt.subplots(figsize=(3.45, 3.8))
+    for offset, (who, key, dark, light) in zip((0.2, -0.2), (
+        ("Owner", "owner_picks", "#245b86", "#c9d9e6"),
+        ("Society", "societal_picks", "#a65021", "#efd5c4"),
+    )):
+        ok = np.array([int(r[f"{key}_compliant"]) for r in rows])
+        total = np.array([int(r[key]) for r in rows])
+        ax.barh(y + offset, ok, color=dark, height=0.38,
+                label=f"{who}: meets ({ok.sum()} of {total.sum()})")
+        ax.barh(y + offset, total - ok, left=ok, color=light, height=0.38,
+                label=f"{who}: over limit")
+        for yi, t, o in zip(y, total, ok):
+            if t:
+                ax.text(t + 0.5, yi + offset, f"{t}" + (f" ({o})" if o else ""),
+                        va="center", fontsize=6.5, color=INK)
+    ax.set_yticks(y, [OPTION_LABELS[r["upgrade_id"]] for r in rows], fontsize=7.5)
+    ax.set(xlabel="Offices where cheapest", xlim=(0, 46))
+    ax.tick_params(axis="y", length=0)
+    ax.grid(axis="x", alpha=0.25)
+    for edge in ("right", "top"):
+        ax.spines[edge].set_visible(False)
+    handles, labels = ax.get_legend_handles_labels()
+    ax.legend(handles, labels, frameon=False, fontsize=6.5, ncol=2, loc="lower left",
+              bbox_to_anchor=(-0.55, 1.0), columnspacing=1.0, handlelength=1.2)
+    fig.tight_layout()
+    save_results_svg(fig, "option-choices.svg")
 
 
 def main() -> None:
@@ -404,6 +477,8 @@ def main() -> None:
     with plt.rc_context({"font.size": 9, "svg.fonttype": "path", "svg.hashsalt": "ds5500-report-2"}):
         compliance_outcomes()
         global_k_sensitivity()
+        matching_error()
+        option_choices()
 
 
 if __name__ == "__main__":

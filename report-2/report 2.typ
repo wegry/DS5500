@@ -15,263 +15,25 @@
 #let todo(body) = text(fill: red)[*TODO:* #body]
 #set page(numbering: "1")
 
-// ---- 1 & 2: name and title ------------------------------------------------
-
-#show: ieee.with(
-  title: [Is the Cheapest Retrofit Compliant? Estimating BERDO Retrofit Costs for Boston Office Buildings],
-  // One combined entry keeps the author block to two short lines instead of
-  // a full column per author. PDF metadata is set separately below.
-  authors: (
-    (
-      name: "Konstantinos Theodoropoulos, Zachary Wegrzyniak, and Kateryna Lysytsyna",
-      department: [
-        DS5500 Data Science Capstone, Northeastern University \
-        #link("https://github.com/wegry/DS5500")[github.com/wegry/DS5500] \
-        Industry Stakeholder: Debra Shepard, Founder & Principal Consultant, Riverstone Sustainability
-      ],
-    ),
-  ),
-  abstract: [Boston's Building Emissions Reduction and Disclosure Ordinance (BERDO) requires large buildings to meet increasingly strict greenhouse gas emissions limits, with a major compliance milestone in 2030. This project aims to identify cost-effective decarbonization options for Boston office buildings by considering BERDO disclosures, ComStock building simulations, and Buildings Technology Baseline (BTB) installation cost data. The integrated analysis includes 297 matched office buildings, 81 of which exceed the 2030 emissions standard under BERDO's projected 2030 electricity emissions factor. A data integration pipeline was developed to match BERDO buildings with representative ComStock simulations and estimate potential retrofit emissions reductions. Installation costs, energy bills, and Alternative Compliance Payments (ACP) or climate damages are combined in a 20-year life-cycle cost over 2027--2046 to select among 23 retrofit options and a no-retrofit baseline for each building, from the owner's and society's perspectives, complemented by a Monte Carlo uncertainty analysis. The resulting framework aims to support investment decisions for office buildings by balancing emissions reductions, compliance requirements, and long-term investment costs.
-  ],
-  index-terms: (
-    "Building decarbonization",
-    "BERDO",
-    "Retrofit cost comparison",
-    "Office buildings",
-    "Emissions compliance",
-  ),
-  // Placed manually at the end of the body so the appendix can follow it.
-  bibliography: none,
-)
-
-#set document(author: (
-  "Konstantinos Theodoropoulos",
-  "Zachary Wegrzyniak",
-  "Kateryna Lysytsyna",
-))
-
-
-// ---- 3: goal / outcome ----------------------------------------------------
-
-= Introduction
-
-How can municipalities work to decarbonize? Part of Boston's approach is to give a financial reason for building owners to cut emissions. Under Boston's Building Emissions Reduction and Disclosure Ordinance (BERDO), residential buildings with 15 or more units and nonresidential
-buildings of 20,000 sq ft or more have to report their energy use
-every year and meet emissions limits that step down over time, reaching net
-zero by 2050 (Appendix, @fig:berdo-limits) @berdo. The owner of one of these buildings, say an office, has a list of candidate
-projects: heat pumps, envelope upgrades, LED retrofits, rooftop solar,
-switching off fuel oil, etc. If a retrofit is not economical, the owner can instead make an _Alternative Compliance Payment_ (ACP). Are ACPs a strong enough incentive to drive decarbonization?
-
-Owners might lack the capital to do all of the updates at once. Judging each project on its own savings doesn't work. A heat pump in a building that was just insulated saves less than the two estimates added together. Which investment minimizes an owner's long-term costs, and will the cheapest choice meet the 2030 BERDO emissions standard? The owner weighs installation costs, energy bills, and ACPs on emissions above the limit. The societal comparison values climate damage from every ton, so it can favor a different retrofit.
-
-Luddeni et al. combined building-stock simulation with cost-optimal retrofit selection for Italian offices @luddeni-office-retrofits, and the EU framework compares packages by discounted life-cycle cost for reference buildings @eu-cost-optimal. Applying these methods to individual Boston offices requires linking three data sources. BERDO reports actual energy use and emissions without showing how a building would perform after a retrofit @berdo @berdo-standards. ComStock simulates those effects for synthetic buildings with no direct match to BERDO records @comstock. Buildings Technology Baseline (BTB) installation costs must be assigned to applicable measures and scaled to each building @btb.
-
-We use constrained $k$-nearest-neighbor matching to find comparable simulations, estimate energy and emissions changes with fuel-specific ratios, and map retrofit components to BTB costs. We compare 23 retrofits and no retrofit for one decision in 2027, using global costs over 2027--2046 from owner and societal perspectives (Appendix, @fig:pipeline). We evaluate matching accuracy, sensitivity, and uncertainty. A staged, budget-constrained investment roadmap remains future work.
-
-= Methods
-
-== Data
-
-This project uses three main publicly available data sources: Boston's Building Emissions Reduction and Disclosure Ordinance (BERDO) disclosures, National Lab of the Rockies (NLR) ComStock, and the NLR 2024 Buildings Technology Baseline (BTB). City of Boston building, parcel, and assessing data supply the building geometry that BERDO lacks.
-
-*BERDO* provides building-level information, including property type, gross floor area, energy consumption by fuel, and greenhouse gas emissions @berdo. The analysis focuses on Boston office buildings because these buildings have a relatively high emissions reporting rate. Records are prepared using dbt to standardize property types for storage in DuckDB, convert the fuels BERDO reports in kBtu (natural gas, district energy, and oil/propane) to kWh to match electricity, aggregate related fuel categories, and identify missing or inconsistent values. BERDO provides:
-- the observed building characteristics
-- baseline emissions for the analysis
-- a way to derive ACPs and identify noncompliant buildings
-
-*ComStock* provides simulated commercial building characteristics, baseline energy consumption, and estimates of the impacts of energy-efficiency upgrades @comstock. Our data flow uses the Suffolk County basic annual results and full metadata tables, covering the baseline and the upgrades in @tab:upgrades. Energy measurements are standardized, and weighted energy consumption values are converted to per-building quantities using ComStock simulation weights.
-
-*BTB* provides technology-level performance and installation cost estimates for building efficiency measures @btb. Its commercial dataset contains cost parameters for technologies such as lighting, building envelope improvements, and HVAC equipment. We use these data to estimate the installation costs of the components of the 23 retrofit options in @tab:upgrades, and of the like-for-like equipment that options without heating and cooling upgrades must eventually replace.
-
-*City of Boston data* give each building's shape. The Planning Department's roof outlines have one polygon per roof section, with a roof height recorded for 2010 @boston-buildings. The city created the outlines from a 2011 flyover and updates them from aerial imagery and LiDAR, so some newer buildings have a footprint but no height. The Assessing Department's 2025 parcels @boston-parcels place each roof section on a parcel, which BERDO identifies by its tax parcel ID. Together they give the story estimates used in matching. The FY2026 property assessment @boston-assessment, keyed by the same parcel ID, gives each building's year built. It is used only to explain missing story estimates (Appendix, Story Estimates).
-
-== Data Integration and Cost Comparison
-
-*Building matching.* BERDO and ComStock cannot be joined directly by building identifier because BERDO represents real buildings, while ComStock contains synthetic building simulations. We use k-nearest-neighbor (KNN) matching to borrow retrofit effects from the $k$ most similar eligible ComStock models for each BERDO office @berdo @comstock.
-
-First, a property-type crosswalk restricts candidate ComStock models to building types compatible with each BERDO property type. Then similarity is calculated using gross floor area, site energy use per unit of floor area (energy use intensity, or EUI), fuel-consumption shares, and number of stories.
-
-The distance function combines the absolute logarithmic differences in building size, EUI, and stories with half the sum of absolute differences in fuel shares:
-
-$
-  d(b,c) & = abs(ln(A_b / A_c)) \
-         & + abs(ln("EUI"_b / "EUI"_c)) \
-         & + 0.5 sum_f abs(s_(b,f) - s_(c,f)) \
-         & + abs(ln(S_b / S_c))
-$
-
-Here $A$ is floor area, $S$ is the story count, and $s_f$ is the share of energy from fuel $f$. The three absolute log ratios measure proportional differences on the same scale. We use unit coefficients for the three logarithmic differences and a coefficient of 0.5 for the sum of fuel-share differences. The coefficients are heuristic rather than systematically optimized. Halving the sum of fuel-share differences avoids counting a shift from one fuel to another twice and bounds that term between zero and one.
-
-Neither BERDO nor the city's assessor reports stories for commercial buildings, so we estimate them from the city's building roof outlines, which carry roof heights recorded for 2010 @boston-buildings, joined to the 2025 parcels @boston-parcels. A building's stories are its floor area divided by its parcel's footprint when that agrees within a factor of 1.6 with roof height divided by a 13 ft floor-to-floor height, and the height estimate otherwise. The two estimates agree for 218 of the 252 offices with both. Of the 297 offices, 266 receive an estimate; for the other 31 the stories term is zero for every candidate. The appendix (Story Estimates) describes the buildings the method misses.
-
-We rank eligible simulations by distance and retain the $k$ closest.
-
-We match only simulations with the same district-energy use status. This preserves a district-fuel baseline for district-heated offices. We use $k = 20$ because its validation error is near the minimum and recommendations change less as $k$ approaches 20 (@tab:matching-validation and @fig:k-sensitivity). We pool the neighbors with inverse-distance weights $w_(b c) = 1 \/ (d(b,c) + 10^(-6))$.
-
-*Retrofit performance estimation.* ComStock baseline and upgrade scenarios are linked using their synthetic building identifiers. For each BERDO building and upgrade, the ratio of total upgraded to baseline energy consumption, weighted by $w_(b c)$, is calculated separately for electricity, natural gas, oil/propane, district heating, and district cooling across the matched simulations. The 23 retrofit options considered are listed in Appendix @tab:upgrades.
-
-The fuel-specific ratios are applied to the corresponding BERDO building's observed energy consumption and greenhouse gas emissions. This approach preserves the building's reported emissions baseline and fuel-specific emissions factors while transferring the modeled effects of ComStock upgrades.
-
-If the matched simulations have no baseline consumption for a particular fuel, its ratio is set to one, leaving that fuel unchanged. Upgrade applicability is also summarized across the matched simulations. Because BERDO does not contain a complete inventory of installed equipment, the estimated impacts represent modeled retrofit opportunities rather than verified building-specific improvements.
-
-*Installation cost estimation.* Selected ComStock upgrades and packages are mapped to corresponding BTB technologies @btb. Installation costs are estimated from applicable component quantities and BTB unit prices, with building-level scaling where appropriate. Low, mid, and high cost estimates are retained. Options that keep the existing heating and cooling equipment are also charged for replacing it like-for-like with gas rooftop units and boilers, sized from the matched simulations; heat pump, VRF, and geothermal options replace it instead. All costs are in 2025 dollars, converted with the GDP price deflator @bea-deflator: BTB's from 2023 dollars, and the PV, ground-loop, and economizer costs from their sources' years.
-
-The pipeline is written as SQL models in dbt, a data transformation tool @dbt, and its workflow is summarized in Appendix @fig:pipeline.
-
-
-*2030 compliance assessment.* BERDO establishes an office building emissions standard of 3.2 kg $"CO"_2"e"$ per square foot per year for the 2030-2034 compliance period @berdo-standards. For each building and retrofit scenario, estimated emissions are divided by gross floor area and compared with the applicable standard. The electricity portion of each building's emissions follows BERDO's projected grid emissions factor year by year @berdo-grid, net of the Massachusetts Renewable Portfolio Standard Class I share @ma-rps. The resulting net factor falls 12% from 2027 to 2030 and 58% from 2027 to 2046.
-
-For emissions exceeding the limit, BERDO permits ACPs. The current payment rate is \$234 per metric ton of CO#sub[2]e above the emissions limit @berdo-acp, which we hold constant in 2025 dollars. Annual ACP obligations are estimated from the remaining excess emissions in each year after each retrofit scenario, against a limit of 5.3 kg $"CO"_2"e"$ per square foot through 2029 and 3.2 from 2030, stepping down to 2.4, 1.6 and 0.8 in 2035, 2040 and 2045 @berdo-standards.
-
-
-*Cost comparison.* We compare no retrofit and 23 retrofit options over 2027--2046 using the EU global cost method for commercial buildings @eu-cost-optimal. Global cost is the present value of installation, replacement, energy bills, and emissions costs, less the straight-line residual value of equipment in 2046. Options that keep existing HVAC include like-for-like replacement. Massachusetts commercial energy prices @eia-prices @doer-oil follow AEO2026 New England projections @aeo. Owner costs include any ACPs owed from 2027 onward. A compliant option meets the modeled 2030 emissions limit before ACPs.
-
-Two perspectives are compared. The owner pays ACPs on emissions above each year's limit and discounts at a 7% real rate, the return on private capital in OMB's regulatory guidance @omb-a4, reinstated in 2025 @omb-m2515. Society leaves out ACPs, which are a transfer to the city, and instead prices every ton at about \$230 per metric ton of CO#sub[2]e in 2020 dollars (\$281 in 2025 dollars) @epa-scghg, discounting at 2%, the rate underlying that estimate. Society's electricity emissions follow NLR Cambium's projected ISO-NE grid emission rates @cambium rather than BERDO's factor. For each perspective, the model identifies the lowest-cost option and, separately, the cheapest option that meets the 2030 standard.
-
-*Uncertainty.* The decisions are recomputed at low and high BTB installation costs and under AEO's alternative price cases. A Monte Carlo analysis samples installation costs, energy prices, discount rates (5--9% for the owner, 1--3% for society), and the leave-one-out retrofit-performance errors to estimate how often each recommendation stays the cheapest.
-
-
-== Evaluation
-
-Leave-one-out validation hides each of 618 ComStock offices in turn and compares its simulated retrofit reductions with predictions from the remaining simulations. We compare neighbor counts, weighting, and district-energy rules with pooling across all other offices or the same size class. We also compare 20-year cost rankings for $k = 1$ through 20 and estimate the owner's break-even ACP where a compliant option exists.
-
-The recommendations are investment estimates for a decision made in 2027, not verified retrofit plans. @sec:limitations covers what these checks cannot tell us.
-
-
-#let scenario-summary = csv("../dbt/analysis_outputs/energy_scenario_outcomes.csv", row-type: dictionary)
-#let projected-owner = scenario-summary.find(r => r.scenario == "projected" and r.perspective == "financial")
-#let at-risk-count = int(projected-owner.offices) - int(projected-owner.under_limit_anyway)
-
-= Results
-
-== BERDO Coverage
-
-The 2026 BERDO disclosure has 5,591 building records @berdo. Owners report their own data, so completeness varies a lot by building type, and offices are among the most complete (Appendix, @fig:berdo-heatmap). 416 buildings with a BERDO ID have Office or Financial Office as their largest property type. Medical Office is left out because BERDO holds it to the separate Healthcare standard. 185 of the 416 (44.5%) also have non-office, non-parking space, and half of those give at least 14% of their floor area to other uses (Appendix, @fig:berdo-types).
-
-Only 297 of the 416 (71%) report GHG emissions, and those 297 are the offices we analyze. At today's electricity factor, the model puts 99 of them (33%) above the 2030 office standard of 3.2 kg $"CO"_2"e"$ per square foot @berdo-standards. The distribution of reported intensities is in Appendix @fig:berdo-GHGvsStandard. A third of reporting offices is a lot of buildings with a decision to make before 2030.
-
-== Matching Accuracy
-
-Matching is worth doing. At $k = 20$, the mean absolute error (MAE), the average size of the prediction error regardless of sign, is 6.65 percentage points of emissions reduction. Pooling all other offices gives 7.55 points and pooling the same size class gives 7.45 (Appendix, @tab:matching-validation). Adding stories to the distance lowered the MAE from 6.92 to 6.65 points and the median error from 3.32 to 2.82, though the 90th percentile rose from 19.3 to 19.9 (Appendix, @tab:feature-analysis).
-
-== Recommendations
-
-Under projected grid factors, baseline energy prices, and mid installation costs, 81 offices exceed the 2030 limit without a retrofit and 71 have a modeled compliant option. A retrofit is cheapest at all 81 from both perspectives. The societal optimum is compliant at 11 more offices than the owner optimum, and the gap widens as the limit falls: in 2045, 267 offices are over 0.8, and the options chosen now keep 20 of them under it for owners and 54 for society (@tab:compliance-outcomes). Compared with no retrofit, the cheapest 20-year options save owners \$39.0 million and society \$103 million in total. Package 12, rooftop PV with roof insulation, is the most common choice from both perspectives (28 owner picks and 40 societal picks).
-
-#let by-period = csv("../dbt/analysis_outputs/compliance_by_period.csv", row-type: dictionary)
-
-#figure(
-  table(
-    columns: (auto, auto, auto, auto, auto, auto),
-    align: right,
-    stroke: none,
-    inset: (x: 4pt, y: 3pt),
-    table.hline(),
-    table.header(
-      table.cell(rowspan: 2, align: bottom)[*Year*],
-      table.cell(rowspan: 2, align: bottom)[*Limit*],
-      table.cell(rowspan: 2, align: bottom)[*Over*],
-      table.cell(rowspan: 2, align: bottom)[*Any option*],
-      table.cell(colspan: 2, align: center)[*Cheapest option meets*],
-      [*Owner*], [*Society*],
-    ),
-    table.hline(stroke: 0.5pt),
-    ..by-period.map(r => (
-      r.period_start, r.office_standard_kgco2e_sqft, r.offices_over_limit,
-      r.has_compliant_option, r.owner_choice_compliant, r.societal_choice_compliant,
-    )).flatten(),
-    table.hline(),
-  ),
-  caption: [Offices over the office limit (kg CO#sub[2]e/ft#super[2]) in the first year of each BERDO period without a retrofit, those with any option that meets it, and those whose cheapest 20-year option, chosen in 2027, meets it. Projected grid factors, baseline prices, and mid installation costs.],
-  placement: bottom,
-) <tab:compliance-outcomes>
-
-One building makes this concrete. 24--32 Farnsworth Street (BERDO 106476) is a 78,860 sq ft office in Fort Point that gets 65% of its energy from natural gas. It reports 4.8 kg $"CO"_2"e"$ per square foot, well over the 2030 limit of 3.2. From both the owner's and society's view, its cheapest 20-year option is the electric-backup heat pump boiler. It meets the 2030 standard and saves the owner \$261,000 and society \$1.26 million compared with no retrofit (Appendix, @tab:farnsworth-results).
-
-BERDO's projected electricity factor brings 18 of the 99 offices below the 2030 limit without a retrofit @berdo-grid. Among the remaining 81, the owner's cheapest option is compliant for 35 to 37 offices across the AEO price cases.
-
-Of the 71 offices with a compliant option, 29 would choose one at a zero ACP, 35 at \$234, and 50 at \$1,000 per metric ton (@fig:breakeven).
-
-#figure(
-  image(
-    "figures/breakeven-acp.png",
-    width: 100%,
-  ),
-  caption: [
-    Over-limit offices whose cheapest 20-year option, from the owner's view, meets the 2030 standard, as the ACP rate rises (projected grid emissions and prices, BTB mid costs). The curve counts offices by the first rate at which a compliant option is cheapest and shows rates up to \$2,000 per metric ton. Break-even rates are calculated from the cost-line intersections and rounded to cents.
-  ],
-) <fig:breakeven>
-
-Across 5,000 Monte Carlo draws per office, recommendation stability is the fraction of draws in which the original option remains cheapest. Under projected conditions, the averages are 75.0% for owners and 80.2% for society. Compliance confidence instead measures how often that option meets the limit in a given year (Appendix, @sec:additional-results).
-
-== Sensitivity to the Number of Neighbors
-
-Compared with $k = 20$, the owner's cheapest compliant choice changes for 34 of 69 offices eligible at both settings at $k = 1$, 15 of 70 at $k = 10$, and 2 of 71 at $k = 19$. For both perspectives, fewer recommendations generally differ from the reference as $k$ approaches 20 (@fig:k-sensitivity).
-
-#figure(
-  image("figures/global-k-sensitivity.svg", width: 78%),
-  caption: [Changes in the lowest 20-year cost recommendations relative to $k = 20$ for the #at-risk-count at-risk offices. The compliant comparison includes only offices with a compliant option at both neighbor counts. Projected conditions and mid costs. Source: dbt 20-year neighbor-sensitivity output.],
-  placement: bottom,
-  scope: "parent",
-) <fig:k-sensitivity>
-
-
-// ---- 9: discussion --------------------------------------------------------
-
-= Discussion
-
-Did we meet our goals? Partly. We set out to help owners decide which projects to do and when, and to ask whether ACPs are a strong enough incentive. The first and last we can answer. For each of the 81 offices over the limit, the model gives the cheapest 20-year option from the owner's and society's view, and at \$234 per ton the ACP is not enough to make compliance the owner's cheapest choice for most of them. We did not get to the "when." The model makes one decision in 2027, so it cannot say whether to insulate first and add heat pumps later, even though the order matters.
-
-Three results stand out. First, matching improves on pooling, though heat pump estimates remain rough. Second, the projected electricity factor has a larger effect on 2030 compliance than the AEO price cases. Third, owners face ACPs only on excess emissions, while society counts damages from every ton. That difference helps explain why more societal recommendations meet the limit. Raising the ACP to \$1,000 would make compliance cheapest for 50 owners, but 10 offices have no compliant option in the modeled portfolio.
-
-== Limitations <sec:limitations>
-
-*We validated against simulations, not buildings.* The leave-one-out test asks how well one ComStock simulation predicts another. We have no observed post-retrofit outcomes, so how closely a real office would track its prediction is unknown. That matters most where the model leans hardest. For 51 of the 71 offices with a compliant option, the owner's cheapest compliant option is a heat pump option, with 4--15 points of error depending on the upgrade. Those recommendations are only as good as that error allows.
-
-*The match cannot see a building's HVAC system.* BERDO and the assessor lack commercial HVAC labels. Simulated story counts are exact, while BERDO story counts are estimated and missing for 31 offices. The distance coefficients were not systematically optimized.
-
-*BERDO is self-reported.* 119 of the 416 offices report no GHG emissions, so they are not in the compliance analysis at all. If those buildings differ from the ones that report, the count of 81 offices over the limit is biased, and we cannot tell in which direction. Mixed use adds noise. BERDO reports energy for the whole building, so an office with a restaurant on the ground floor is matched as if it were all office. Splitting that out would take property-level data from owners.
-
-*Costs are benchmarks.* Installation costs come from BTB technology prices, scaled by the matched simulations' equipment sizes, not from engineering estimates for a specific building. The type and age of existing equipment are inferred from the matched simulations rather than observed. Equipment prices are BTB's 2030 projection, its nearest to 2027, held for all 20 years. BTB estimates represent gross installation costs. We do not include Massachusetts incentives for heat pumps, such as Mass Save rebates, so the owner's cost of heat pump options is likely overstated. Since a heat pump option is already the cheapest compliant choice for 51 of the 71 offices, rebates would likely make it cheaper still and tip some offices toward compliance.
-
-*The grid assumptions are policy, not physics.* BERDO's Review Board reviews the projected factors at least every five years and may change them @berdo-grid, and the RPS rises 1% a year after 2030 only "unless modified by law" @ma-rps. Cambium 2024 was published before the 2025 changes to federal clean-energy tax credits, so society's grid may be cleaner than the one Boston actually gets. Society's \$230 per ton uses the EPA's 2023 estimate. In May 2025, OMB directed agencies to limit consideration of GHG emissions in regulatory and permitting decisions @omb-m2527.
-
-*One decision, once.* The model picks one option in 2027 and holds it for 20 years. It cannot stage work (insulation now, heat pumps when the boiler fails), respect a budget, or plan across a portfolio of buildings. Energy use apart from the retrofit's effect is held constant. And 10 of the 81 offices have no compliant option among the 23 we tested, so for them the model can only say which partial retrofit costs least.
-
-== Next Steps
-
-Our first priority is confidence in the predicted outcomes, not more financial detail. Simulated HVAC labels improve leave-one-out predictions in our sensitivity test (@sec:feature-matching). Building permits are one candidate source. Checking against real retrofits would need engineering studies, or BERDO disclosures from buildings before and after an upgrade. Second, the 10 offices without a compliant option. The expanded portfolio offers no compliant option for these offices, and even Package 3, heat pumps with a full envelope retrofit, leaves them over the limit. Seven get within 0.65 kg CO#sub[2]e/ft#super[2]/year of the standard with their best option, close enough that renewable energy purchases, which BERDO allows but we do not model, might close the gap. The other three stay at 5.3 to 6.8 kg CO#sub[2]e/ft#super[2]/year. Third, time. Letting costs change year by year, and choosing what to retrofit and when under a budget, is the multi-year roadmap we set out to build.
-
-// ---- 10: statement of contributions ---------------------------------------
-
-= Statement of Contributions
-
-*Konstantinos Theodoropoulos:* stakeholder communication; BERDO data exploration and validation; inverse-distance weighting evaluation and dbt integration; attending office hours with Dr. Bemis.
-
-*Zachary Wegrzyniak:* data pipeline in dbt and DuckDB (ComStock and BERDO join, mixed-use evaluation); editing; repo setup.
-
-*Kateryna Lysytsyna:* ComStock exploration and retrofit selection; BTB–ComStock cost integration and validation; expansion to 23 retrofit options; BERDO–ComStock matching evaluation; emissions, compliance, and financial sensitivity analyses; 20-year Monte Carlo uncertainty analysis; visualizations.
-
-= AI Use Disclosure
-
-Claude Opus 5.5 and ChatGPT 6.1 were used for data retrieval, portions of the data pipeline, typesetting, visualizations, and editing.
-
-// ---- 11: references -------------------------------------------------------
-
-#pagebreak()
-#bibliography("refs.yml")
-
-// ---- 12: appendix ---------------------------------------------------------
-
-#show figure.caption: set align(center)
-
-= Appendix
-
-This appendix provides the data flow (@fig:pipeline), the BERDO data diagnostics cited in the main report, the matching validation, the story estimates, the cost and break-even ACP equations, and supporting results. The source code and reproducibility scripts are available at
-#link("https://github.com/wegry/DS5500")[github.com/wegry/DS5500].
-
-== Retrofit Options
-
+// Fixed decimals for computed values in prose and tables, e.g. 53 -> "53.0".
+#let fixed(value, digits) = {
+  let text = str(calc.round(float(value), digits: digits))
+  if digits == 0 { return text }
+  if not text.contains(".") { text += "." }
+  text + "0" * (digits - text.split(".").at(1).len())
+}
+#let with-commas(value) = {
+  let digits = str(int(value))
+  let groups = ()
+  while digits.len() > 3 {
+    groups.insert(0, digits.slice(-3))
+    digits = digits.slice(0, -3)
+  }
+  groups.insert(0, digits)
+  groups.join(",")
+}
+
+// Retrofit options: ComStock upgrade ID, short name, and measures (Appendix table).
 #let retrofit-groups = (
   (
     [Individual measures],
@@ -319,6 +81,280 @@ This appendix provides the data flow (@fig:pipeline), the BERDO data diagnostics
   names
 })
 
+// ---- 1 & 2: name and title ------------------------------------------------
+
+#show: ieee.with(
+  title: [Is the Cheapest Retrofit Compliant? Estimating BERDO Retrofit Costs for Boston Office Buildings],
+  // One combined entry keeps the author block to two short lines instead of
+  // a full column per author. PDF metadata is set separately below.
+  authors: (
+    (
+      name: "Konstantinos Theodoropoulos, Zachary Wegrzyniak, and Kateryna Lysytsyna",
+      department: [
+        DS5500 Data Science Capstone, Northeastern University \
+        #link("https://github.com/wegry/DS5500")[github.com/wegry/DS5500] \
+        Industry Stakeholder: Debra Shepard, Founder & Principal Consultant, Riverstone Sustainability
+      ],
+    ),
+  ),
+  abstract: [Boston's Building Emissions Reduction and Disclosure Ordinance (BERDO) requires large buildings to meet increasingly strict greenhouse gas emissions limits, with a major compliance milestone in 2030. This project aims to identify cost-effective decarbonization options for Boston office buildings by considering BERDO disclosures, ComStock building simulations, and Buildings Technology Baseline (BTB) installation cost data. The integrated analysis includes 297 matched office buildings, 81 of which exceed the 2030 emissions standard under BERDO's projected 2030 electricity emissions factor. A data integration pipeline was developed to match BERDO buildings with representative ComStock simulations and estimate potential retrofit emissions reductions. Installation costs, energy bills, and Alternative Compliance Payments (ACP) or climate damages are combined in a 20-year life-cycle cost over 2027--2046 to select among 23 retrofit options and a no-retrofit baseline for each building, from the owner's and society's perspectives, complemented by a Monte Carlo uncertainty analysis. Leave-one-out tests on held-out simulations show that matching lowers retrofit prediction error relative to pooling and more often identifies whether a building has a compliant option. The resulting framework aims to support investment decisions for office buildings by balancing emissions reductions, compliance requirements, and long-term investment costs.
+  ],
+  index-terms: (
+    "Building decarbonization",
+    "BERDO",
+    "Retrofit cost comparison",
+    "Office buildings",
+    "Emissions compliance",
+  ),
+  // Placed manually at the end of the body so the appendix can follow it.
+  bibliography: none,
+)
+
+#set document(author: (
+  "Konstantinos Theodoropoulos",
+  "Zachary Wegrzyniak",
+  "Kateryna Lysytsyna",
+))
+
+
+// ---- 3: goal / outcome ----------------------------------------------------
+
+= Introduction
+
+How can municipalities work to decarbonize? Part of Boston's approach is to give a financial reason for building owners to cut emissions. Under Boston's Building Emissions Reduction and Disclosure Ordinance (BERDO), residential buildings with 15 or more units and nonresidential
+buildings of 20,000 sq ft or more have to report their energy use
+every year and meet emissions limits that step down over time, reaching net
+zero by 2050 (Appendix, @fig:berdo-limits) @berdo. The owner of one of these buildings, say an office, has a list of candidate
+projects: heat pumps, envelope upgrades, LED retrofits, rooftop solar,
+switching off fuel oil, etc. If a retrofit is not economical, the owner can instead make an _Alternative Compliance Payment_ (ACP). Are ACPs a strong enough incentive to drive decarbonization?
+
+Owners might lack the capital to do all of the updates at once. Judging each project on its own savings doesn't work. A heat pump in a building that was just insulated saves less than the two estimates added together. Which investment minimizes an owner's long-term costs, and will the cheapest choice meet the 2030 BERDO emissions standard? The owner weighs installation costs, energy bills, and ACPs on emissions above the limit. The societal comparison values climate damage from every ton, so it can favor a different retrofit.
+
+Prior work evaluates building performance standards at city scale @andrews-bps-decarbonization @bergfeld-dc-beps, selects cost-optimal retrofits for reference buildings @luddeni-office-retrofits @eu-cost-optimal, and assigns real buildings to simulated archetypes, including in Boston @reinhart-ubem-review @cerezo-modeling-boston. Marginal abatement cost curves rank measures one at a time and miss their interactions @kesicki-macc-caution. None estimates, for each real building under an enacted standard, which retrofit is cheapest and whether it complies.
+
+*Domain problem.* Which retrofit should the owner of a Boston office over its BERDO limit choose, and does the cheapest choice comply? *Analytic problem.* BERDO reports each building's energy and emissions but not its retrofit outcomes @berdo, and ComStock simulates retrofit outcomes for synthetic buildings, not these @comstock @parker-comstock. We must transfer simulated effects to real buildings, assign Buildings Technology Baseline (BTB) installation costs @btb, rank each building's options over 20 years, and measure the error the transfer adds. We contribute a reproducible pipeline linking these sources for 297 offices (Appendix, @fig:pipeline); matching validated on held-out simulations for both emissions error and compliance; and owner and societal 20-year cost rankings of 23 retrofits, with break-even ACPs and uncertainty analysis. A staged, budget-constrained investment roadmap remains future work.
+
+= Methods
+
+== Data
+
+This project uses three main publicly available data sources: Boston's Building Emissions Reduction and Disclosure Ordinance (BERDO) disclosures, National Lab of the Rockies (NLR) ComStock, and the NLR 2024 Buildings Technology Baseline (BTB). City of Boston building, parcel, and assessing data supply the building geometry that BERDO lacks.
+
+*BERDO* provides building-level information, including property type, gross floor area, energy consumption by fuel, and greenhouse gas emissions @berdo. The analysis focuses on Boston office buildings because these buildings have a relatively high emissions reporting rate. Records are prepared using dbt to standardize property types for storage in DuckDB, convert the fuels BERDO reports in kBtu (natural gas, district energy, and oil/propane) to kWh to match electricity, aggregate related fuel categories, and identify missing or inconsistent values. BERDO provides the observed building characteristics and baseline emissions, and identifies noncompliant buildings and their ACPs.
+
+*ComStock* provides simulated commercial building characteristics, baseline energy consumption, and estimates of the impacts of energy-efficiency upgrades @comstock. Our data flow uses the Suffolk County basic annual results and full metadata tables, covering the baseline and the upgrades in @tab:upgrades. Energy measurements are standardized, and weighted energy consumption values are converted to per-building quantities using ComStock simulation weights.
+
+*BTB* provides technology-level performance and installation cost estimates for building efficiency measures @btb. Its commercial dataset contains cost parameters for technologies such as lighting, building envelope improvements, and heating, ventilation, and air conditioning (HVAC) equipment. We use these data to estimate the installation costs of the components of the 23 retrofit options in @tab:upgrades, and of the like-for-like equipment that options without heating and cooling upgrades must eventually replace.
+
+*City of Boston data* give each building's shape. The Planning Department's roof outlines carry roof heights recorded for 2010 @boston-buildings, and the Assessing Department's 2025 parcels @boston-parcels place each roof section on the tax parcel BERDO identifies. Together they give the story estimates used in matching. The FY2026 property assessment @boston-assessment gives year built, used only to explain missing story estimates (Appendix, Story Estimates).
+
+== Data Integration and Cost Comparison
+
+*Building matching.* BERDO and ComStock cannot be joined directly by building identifier because BERDO represents real buildings, while ComStock contains synthetic building simulations. We use k-nearest-neighbor (KNN) matching to borrow retrofit effects from the $k$ most similar eligible ComStock models for each BERDO office @berdo @comstock.
+
+First, a property-type crosswalk restricts candidate ComStock models to building types compatible with each BERDO property type. Then similarity is calculated using gross floor area, site energy use per unit of floor area (energy use intensity, or EUI), fuel-consumption shares, and number of stories.
+
+A simulation is close to a building when it has a similar size, energy use per square foot, fuel mix, and number of floors; each term scores one comparison, and zero means identical. The distance combines the absolute logarithmic differences in building size, EUI, and stories with half the sum of absolute differences in fuel shares:
+
+$
+  d(b,c) & = abs(ln(A_b / A_c)) \
+         & + abs(ln("EUI"_b / "EUI"_c)) \
+         & + 0.5 sum_f abs(s_(b,f) - s_(c,f)) \
+         & + abs(ln(S_b / S_c))
+$
+
+Here $A$ is floor area, $S$ is the story count, and $s_f$ is the share of energy from fuel $f$. The three absolute log ratios measure proportional differences on the same scale. We use unit coefficients for the three logarithmic differences and a coefficient of 0.5 for the sum of fuel-share differences. Halving the sum of fuel-share differences avoids counting a shift from one fuel to another twice and bounds that term between zero and one. Coefficients chosen by cross-validation do not significantly improve on these (@sec:matching-accuracy).
+
+Neither BERDO nor the city's assessor reports stories for commercial buildings, so we estimate them from the city's building roof outlines, which carry roof heights recorded for 2010 @boston-buildings, joined to the 2025 parcels @boston-parcels. A building's stories are its floor area divided by its parcel's footprint when that agrees within a factor of 1.6 with roof height divided by a 13 ft floor-to-floor height, and the height estimate otherwise. The two estimates agree for 218 of the 252 offices with both. Of the 297 offices, 266 receive an estimate; for the other 31 the stories term is zero for every candidate. The appendix (Story Estimates) describes the buildings the method misses.
+
+We rank eligible simulations by distance and retain the $k$ closest, matching only simulations with the same district-energy use status. This preserves a district-fuel baseline for district-heated offices. We use $k = 20$ because its validation error is near the minimum and recommendations change less as $k$ approaches 20 (@tab:matching-validation and @fig:k-sensitivity). We pool the neighbors with inverse-distance weights $w_(b c) = 1 \/ (d(b,c) + 10^(-6))$.
+
+*Retrofit performance estimation.* ComStock baseline and upgrade scenarios are linked using their synthetic building identifiers. For each BERDO building and upgrade, the ratio of total upgraded to baseline energy consumption, weighted by $w_(b c)$, is calculated separately for electricity, natural gas, oil/propane, district heating, and district cooling across the matched simulations. The 23 retrofit options considered are listed in Appendix @tab:upgrades.
+
+The fuel-specific ratios are applied to the corresponding BERDO building's observed energy consumption and greenhouse gas emissions. This approach preserves the building's reported emissions baseline and fuel-specific emissions factors while transferring the modeled effects of ComStock upgrades.
+
+If the matched simulations have no baseline consumption for a particular fuel, its ratio is set to one, leaving that fuel unchanged. Upgrade applicability is also summarized across the matched simulations. Because BERDO does not contain a complete inventory of installed equipment, the estimated impacts represent modeled retrofit opportunities rather than verified building-specific improvements.
+
+*Installation cost estimation.* Selected ComStock upgrades and packages are mapped to corresponding BTB technologies @btb. Installation costs are estimated from applicable component quantities and BTB unit prices, with building-level scaling where appropriate. Low, mid, and high cost estimates are retained. Options that keep the existing heating and cooling equipment are also charged for replacing it like-for-like with gas rooftop units and boilers, sized from the matched simulations; heat pump, variable refrigerant flow (VRF), and geothermal options replace it instead. All costs are in 2025 dollars, converted with the GDP price deflator @bea-deflator: BTB's from 2023 dollars, and the photovoltaic (PV), ground-loop, and economizer costs from their sources' years.
+
+The pipeline is written as SQL models in dbt, a data transformation tool @dbt, and its workflow is summarized in Appendix @fig:pipeline.
+
+
+
+
+*2030 compliance assessment.* BERDO establishes an office building emissions standard of 3.2 kg $"CO"_2"e"$ per square foot per year for the 2030-2034 compliance period @berdo-standards. For each building and retrofit scenario, estimated emissions are divided by gross floor area and compared with the applicable standard. The electricity portion of each building's emissions follows BERDO's projected grid emissions factor year by year @berdo-grid, net of the Massachusetts Renewable Portfolio Standard Class I share @ma-rps. The resulting net factor falls 12% from 2027 to 2030 and 58% from 2027 to 2046.
+
+For emissions exceeding the limit, BERDO permits ACPs. The current payment rate is \$234 per metric ton of CO#sub[2]e above the emissions limit @berdo-acp, which we hold constant in 2025 dollars. Annual ACP obligations are estimated from the remaining excess emissions in each year after each retrofit scenario, against a limit of 5.3 kg $"CO"_2"e"$ per square foot through 2029 and 3.2 from 2030, stepping down to 2.4, 1.6 and 0.8 in 2035, 2040 and 2045 @berdo-standards.
+
+
+*Cost comparison.* We compare no retrofit and 23 retrofit options over 2027--2046 using the EU global cost method for commercial buildings @eu-cost-optimal. Global cost is the present value of installation, replacement, energy bills, and emissions costs, less the straight-line residual value of equipment in 2046. Options that keep existing HVAC include like-for-like replacement. Massachusetts commercial energy prices @eia-prices @doer-oil follow the New England projections of the EIA's Annual Energy Outlook 2026 (AEO2026) @aeo. Owner costs include any ACPs owed from 2027 onward. A compliant option meets the modeled 2030 emissions limit before ACPs.
+
+Two perspectives are compared. The owner pays ACPs on emissions above each year's limit and discounts at a 7% real rate, the return on private capital in the regulatory guidance of the Office of Management and Budget (OMB) @omb-a4, reinstated in 2025 @omb-m2515. Society leaves out ACPs, which are a transfer to the city, and instead prices every ton at the Environmental Protection Agency's (EPA) social cost of about \$230 per metric ton of CO#sub[2]e in 2020 dollars (\$281 in 2025 dollars) @epa-scghg, discounting at 2%, the rate underlying that estimate. Society's electricity emissions follow NLR Cambium's projected grid emission rates for ISO New England (ISO-NE), the regional grid operator @cambium, rather than BERDO's factor. For each perspective, the model identifies the lowest-cost option and, separately, the cheapest option that meets the 2030 standard.
+
+*Uncertainty.* The decisions are recomputed at low and high BTB installation costs and under AEO's alternative price cases. A Monte Carlo analysis samples installation costs, energy prices, discount rates (5--9% for the owner, 1--3% for society), and the leave-one-out retrofit-performance errors to estimate how often each recommendation stays the cheapest.
+
+
+== Evaluation
+
+Leave-one-out validation hides each of 618 ComStock offices in turn and compares its simulated retrofit reductions with predictions from the remaining simulations. We compare neighbor counts, weighting, and district-energy rules with pooling across all other offices or the same size class. We also check whether predictions put each option on the correct side of the 2030 limit and choose distance coefficients by cross-validation. We compare 20-year cost rankings for $k = 1$ through 20 and estimate the owner's break-even ACP where a compliant option exists.
+
+The recommendations are investment estimates for a decision made in 2027, not verified retrofit plans. @sec:limitations covers what these checks cannot tell us.
+
+
+#let scenario-summary = csv("../dbt/analysis_outputs/energy_scenario_outcomes.csv", row-type: dictionary)
+#let projected-owner = scenario-summary.find(r => r.scenario == "projected" and r.perspective == "financial")
+#let at-risk-count = int(projected-owner.offices) - int(projected-owner.under_limit_anyway)
+
+= Results
+
+== BERDO Coverage
+
+The 2026 BERDO disclosure has 5,591 building records @berdo. Owners report their own data, so completeness varies a lot by building type, and offices are among the most complete (Appendix, @fig:berdo-heatmap). 416 buildings with a BERDO ID have Office or Financial Office as their largest property type. Medical Office is left out because BERDO holds it to the separate Healthcare standard. 185 of the 416 (44.5%) also have non-office, non-parking space, and half of those give at least 14% of their floor area to other uses (Appendix, @fig:berdo-types).
+
+Only 297 of the 416 (71%) report GHG emissions, and those 297 are the offices we analyze. At today's electricity factor, the model puts 99 of them (33%) above the 2030 office standard of 3.2 kg $"CO"_2"e"$ per square foot @berdo-standards. The distribution of reported intensities is in Appendix @fig:berdo-GHGvsStandard. A third of reporting offices is a lot of buildings with a decision to make before 2030. Appendix @tab:cohort traces the records to the offices whose decisions we compare.
+
+
+
+Most of the 119 offices without GHG emissions report through a portfolio or campus (51) or await BERDO review (34). Estimated from their reported energy use, 47 of the 82 with energy data (57%) exceed the 2030 limit, against 35% of analyzed offices, so leaving them out likely undercounts the offices at risk (Appendix, @sec:nonreporting).
+
+== Matching Accuracy <sec:matching-accuracy>
+
+#let agreement = csv("../dbt/analysis_outputs/portfolio_matching_sensitivity/decision_agreement.csv", row-type: dictionary)
+#let agree-prod = agreement.find(r => r.matching == "production")
+#let agree-all = agreement.find(r => r.matching == "all_offices")
+#let pct(value) = fixed(100 * float(value), 1) + "%"
+#let pts(value) = fixed(value, 2)
+
+Matching is worth doing. At $k = 20$, the mean absolute error (MAE), the average size of the prediction error regardless of sign, is 6.65 percentage points of emissions reduction, against 7.55 for pooling all other offices and 7.45 for pooling the same size class (Appendix, @fig:matching-error). It also gets the compliance decision right more often. Of the #agree-prod.models_over_limit held-out simulations over the 2030 limit, matching correctly says whether any compliant option exists for #pct(agree-prod.any_compliant_option_agreement), against #pct(agree-all.any_compliant_option_agreement) for pooling, and finds #pct(agree-prod.truly_compliant_predicted_compliant) of truly compliant options, against #pct(agree-all.truly_compliant_predicted_compliant), though #pct(1 - float(agree-prod.predicted_compliant_truly_compliant)) of those it calls compliant are not (Appendix, @tab:decision-agreement). The appendix also covers match closeness, the stories term, and cross-validated coefficients (@sec:feature-matching).
+
+== Recommendations
+
+Under projected grid factors, baseline energy prices, and mid installation costs, 81 offices exceed the 2030 limit without a retrofit and 71 have a modeled compliant option. A retrofit is cheapest at all 81 from both perspectives. The societal optimum is compliant at 11 more offices than the owner optimum, and the gap widens as the limit falls: in 2045, 267 offices are over 0.8, and the options chosen now keep 20 of them under it for owners and 54 for society (@tab:compliance-outcomes). Compared with no retrofit, the cheapest 20-year options save owners \$39.0 million and society \$103 million in total. Package 12, rooftop PV with roof insulation, is the most common choice from both perspectives (28 owner and 40 societal picks; @fig:option-choices). It is cheap, a median \$3.67 per square foot, but cuts 2030 emissions by only 8.8%, so it meets the limit for 6 of its 28 owner picks. The heat pump boiler, at \$6.01 and a 33.7% cut, meets it for 11 of 12 (Appendix, @tab:option-summary).
+
+#figure(
+  image("figures/option-choices.svg", width: 100%),
+  caption: [Cheapest 20-year option for each of the #at-risk-count offices over the 2030 limit without a retrofit, for owners (blue) and society (orange). Dark segments meet the 2030 limit; labels give the count, with the compliant count in parentheses. No retrofit is never cheapest. Projected grid factors, baseline prices, and mid installation costs.],
+  placement: auto,
+) <fig:option-choices>
+
+
+
+
+
+#let by-period = csv("../dbt/analysis_outputs/compliance_by_period.csv", row-type: dictionary)
+
+#figure(
+  table(
+    columns: (auto, auto, auto, auto, auto, auto),
+    align: right,
+    stroke: none,
+    inset: (x: 4pt, y: 3pt),
+    table.hline(),
+    table.header(
+      table.cell(rowspan: 2, align: bottom)[*Year*],
+      table.cell(rowspan: 2, align: bottom)[*Limit*],
+      table.cell(rowspan: 2, align: bottom)[*Over*],
+      table.cell(rowspan: 2, align: bottom)[*Any option*],
+      table.cell(colspan: 2, align: center)[*Cheapest option meets*],
+      [*Owner*], [*Society*],
+    ),
+    table.hline(stroke: 0.5pt),
+    ..by-period.map(r => (
+      r.period_start, r.office_standard_kgco2e_sqft, r.offices_over_limit,
+      r.has_compliant_option, r.owner_choice_compliant, r.societal_choice_compliant,
+    )).flatten(),
+    table.hline(),
+  ),
+  caption: [Offices over the office limit (kg CO#sub[2]e/ft#super[2]) in the first year of each BERDO period without a retrofit, those with any option that meets it, and those whose cheapest 20-year option, chosen in 2027, meets it. Projected grid factors, baseline prices, and mid installation costs.],
+  placement: bottom,
+) <tab:compliance-outcomes>
+
+For example, 24--32 Farnsworth Street (BERDO 106476), a 78,860 sq ft office that gets 65% of its energy from natural gas, reports 4.8 kg $"CO"_2"e"$ per square foot. For both perspectives its cheapest option is the electric-backup heat pump boiler, which meets the 2030 limit and saves the owner \$261,000 and society \$1.26 million over no retrofit (Appendix, @tab:farnsworth-results).
+
+BERDO's projected electricity factor brings 18 of the 99 offices below the 2030 limit without a retrofit @berdo-grid. Among the remaining 81, the owner's cheapest option is compliant for 35 to 37 offices across the AEO price cases.
+
+Of the 71 offices with a compliant option, 29 would choose one at a zero ACP, 35 at \$234, and 50 at \$1,000 per metric ton (@fig:breakeven).
+
+#figure(
+  image(
+    "figures/breakeven-acp.png",
+    width: 100%,
+  ),
+  caption: [
+    Over-limit offices whose cheapest 20-year option, from the owner's view, meets the 2030 standard, as the ACP rate rises (projected grid emissions and prices, BTB mid costs). The curve counts offices by the first rate at which a compliant option is cheapest and shows rates up to \$2,000 per metric ton. Break-even rates are calculated from the cost-line intersections and rounded to cents.
+  ],
+) <fig:breakeven>
+
+Across 5,000 Monte Carlo draws per office, recommendation stability is the fraction of draws in which the original option remains cheapest. Under projected conditions, the averages are 75.0% for owners and 80.2% for society. Compliance confidence instead measures how often that option meets the limit in a given year (Appendix, @sec:additional-results).
+
+== Sensitivity to the Number of Neighbors
+
+Compared with $k = 20$, the owner's cheapest compliant choice changes for 34 of 69 offices eligible at both settings at $k = 1$, 15 of 70 at $k = 10$, and 2 of 71 at $k = 19$. For both perspectives, fewer recommendations generally differ from the reference as $k$ approaches 20 (@fig:k-sensitivity).
+
+#figure(
+  image("figures/global-k-sensitivity.svg", width: 100%),
+  caption: [Changes in the lowest 20-year cost recommendations relative to $k = 20$ for the #at-risk-count at-risk offices. The compliant comparison includes only offices with a compliant option at both neighbor counts. Projected conditions and mid costs.],
+  placement: auto,
+) <fig:k-sensitivity>
+
+
+// ---- 9: discussion --------------------------------------------------------
+
+= Discussion
+
+Did we meet our goals? Partly. We set out to help owners decide which projects to do and when, and to ask whether ACPs are a strong enough incentive. The first and last we can answer. For each of the 81 offices over the limit, the model gives the cheapest 20-year option from the owner's and society's view, and at \$234 per ton the ACP is not enough to make compliance the owner's cheapest choice for most of them. We did not get to the "when." The model makes one decision in 2027, so it cannot say whether to insulate first and add heat pumps later, even though the order matters.
+
+Three results stand out. First, matching improves on pooling, both in prediction error and in telling whether a building has a compliant option, though heat pump estimates remain rough. Second, the projected electricity factor has a larger effect on 2030 compliance than the AEO price cases. Third, owners face ACPs only on excess emissions, while society counts damages from every ton. That difference helps explain why more societal recommendations meet the limit. Raising the ACP to \$1,000 would make compliance cheapest for 50 owners, but 10 offices have no compliant option in the modeled portfolio.
+
+== Limitations <sec:limitations>
+
+*We validated against simulations, not buildings.* The leave-one-out test asks how well one ComStock simulation predicts another. We have no observed post-retrofit outcomes, so how closely a real office would track its prediction is unknown. That matters most where the model leans hardest. For 51 of the 71 offices with a compliant option, the owner's cheapest compliant option is a heat pump option, with 4--15 points of error depending on the upgrade (Appendix, @tab:per-upgrade-validation). Even among simulations, 28% of the options matching calls compliant are not (@tab:decision-agreement). Those recommendations are only as good as that error allows.
+
+*The match cannot see a building's HVAC system.* BERDO and the assessor lack commercial HVAC labels. Simulated story counts are exact, while BERDO story counts are estimated and missing for 31 offices. Cross-validated distance coefficients did not significantly beat ours, but the search covered only one grid, scored against simulations rather than buildings.
+
+*BERDO is self-reported.* 119 of the 416 offices report no GHG emissions, so they are not in the compliance analysis at all. Estimated from their energy use, 57% of those with data are over the 2030 limit against 35% of the analyzed offices, so the count of 81 offices over the limit is likely low. Mixed use adds noise: BERDO reports energy for the whole building, so an office with a ground-floor restaurant is matched as if it were all office.
+
+*Costs are benchmarks.* Installation costs are BTB technology prices scaled by the matched simulations' equipment sizes, not building-specific engineering estimates, and existing equipment is inferred rather than observed. Equipment prices are BTB's 2030 projection, its nearest to 2027, held for all 20 years. BTB estimates represent gross installation costs. We do not include Massachusetts incentives for heat pumps, such as Mass Save rebates, so the owner's cost of heat pump options is likely overstated. Since a heat pump option is already the cheapest compliant choice for 51 of the 71 offices, rebates would likely make it cheaper still and tip some offices toward compliance.
+
+*The grid assumptions are policy, not physics.* BERDO's projected factors may be revised @berdo-grid, and the RPS rises after 2030 only "unless modified by law" @ma-rps. Cambium 2024 predates the 2025 changes to federal clean-energy tax credits, so society's grid may be too clean. Society's \$230 per ton is the EPA's 2023 estimate, and in May 2025 OMB directed agencies to limit consideration of GHG emissions @omb-m2527.
+
+*One decision, once.* The model picks one option in 2027 and holds it for 20 years. It cannot stage work (insulation now, heat pumps when the boiler fails), respect a budget, or plan across a portfolio of buildings. Energy use apart from the retrofit's effect is held constant.
+
+== Next Steps
+
+Our first priority is confidence in the predicted outcomes, not more financial detail. Simulated HVAC labels improve leave-one-out predictions in our sensitivity test (@sec:feature-matching). Building permits are one candidate source. Checking against real retrofits would need engineering studies, or BERDO disclosures from buildings before and after an upgrade. Second, the 10 offices without a compliant option, where even Package 3 leaves them over the limit. Seven get within 0.65 kg CO#sub[2]e/ft#super[2]/year of it, close enough that renewable energy purchases, which BERDO allows but we do not model, might close the gap. Third, time. Letting costs change year by year, and choosing what to retrofit and when under a budget, is the multi-year roadmap we set out to build.
+
+// ---- 10: statement of contributions ---------------------------------------
+
+= Statement of Contributions
+
+*Konstantinos Theodoropoulos:* stakeholder communication; BERDO data exploration and validation; inverse-distance weighting evaluation and dbt integration; attending office hours with Dr. Bemis.
+
+*Zachary Wegrzyniak:* data pipeline in dbt and DuckDB (ComStock and BERDO join, mixed-use evaluation); editing; repo setup.
+
+*Kateryna Lysytsyna:* ComStock exploration and retrofit selection; BTB–ComStock cost integration and validation; expansion to 23 retrofit options; BERDO–ComStock matching evaluation; emissions, compliance, and financial sensitivity analyses; 20-year Monte Carlo uncertainty analysis; visualizations.
+
+= AI Use Disclosure
+
+Claude Opus 5.5 and ChatGPT 6.1 were used for data retrieval, portions of the data pipeline, typesetting, visualizations, and editing.
+
+// ---- 11: references -------------------------------------------------------
+
+#pagebreak()
+#bibliography("refs.yml")
+
+// ---- 12: appendix ---------------------------------------------------------
+
+#show figure.caption: set align(center)
+
+= Appendix
+
+This appendix provides the BERDO data diagnostics cited in the main report, the matching validation, the story estimates, the cost and break-even ACP equations, and supporting results. The source code and reproducibility scripts are available at
+#link("https://github.com/wegry/DS5500")[github.com/wegry/DS5500].
+
+== Retrofit Options
+
+
 #figure(
   table(
     columns: (auto, auto, 1fr),
@@ -342,9 +378,60 @@ This appendix provides the data flow (@fig:pipeline), the BERDO data diagnostics
   placement: none,
 ) <tab:upgrades>
 
-#set page(columns: 1)
+== Analysis Cohort and Offices Without Emissions <sec:nonreporting>
 
-// Methodology figure
+#figure(
+  table(
+    columns: (1fr, auto),
+    align: (left, right),
+    stroke: none,
+    inset: (x: 4pt, y: 2.5pt),
+    table.hline(),
+    table.header([*Step*], [*Offices*]),
+    table.hline(stroke: 0.5pt),
+    [BERDO 2026 records, all uses], [5,591],
+    [Office or Financial Office with a BERDO ID], [416],
+    [Report GHG emissions; analyzed and matched], [297],
+    [Over the 2030 limit at today's grid factor], [99],
+    [Over it at BERDO's projected 2030 factor], [81],
+    [With a modeled compliant option], [71],
+    [Cheapest option compliant: owner / society], [35 / 46],
+    table.hline(),
+  ),
+  caption: [From BERDO records to the offices whose retrofit decisions are compared. Projected grid factors, baseline prices, and mid installation costs.],
+  placement: none,
+) <tab:cohort>
+
+Are the 119 offices without GHG emissions different? Most file through another channel: 49 comply as part of a portfolio and 2 as part of a campus, 34 await review by the BERDO team, 25 have not yet reported, 8 are not covered until 2030, and 1 is vacant. Their median floor area, 71,820 sq ft, is close to the analyzed offices' 72,900. 82 of them report energy use by fuel, so we estimate their emissions intensity from it using the analyzed offices' median emissions factor for each fuel. This estimate puts 293 of the 297 analyzed offices on the same side of the 2030 limit as their reported intensity (correlation 0.97). It puts 47 of the 82 (57%) over the limit, against 105 of the 297 (35%) analyzed offices by the same estimate, and their median EUI is 18.5 kWh per square foot against 14.8. Leaving them out therefore likely undercounts the offices at risk, though portfolio members may meet one combined limit.
+
+#let option-summary = csv("../dbt/analysis_outputs/option_summary.csv", row-type: dictionary).filter(r => r.upgrade_id != "0")
+
+#figure(
+  table(
+    columns: (auto, 1fr, auto, auto, auto, auto),
+    align: (right, left, right, right, right, right),
+    stroke: none,
+    inset: (x: 3pt, y: 2pt),
+    table.hline(),
+    table.header([*ID*], [*Option*], [*Applies*], [*\$/ft#super[2]*], [*Cut (%)*], [*Meets*]),
+    table.hline(stroke: 0.5pt),
+    ..option-summary
+      .map(r => (
+        r.upgrade_id,
+        retrofit-names.at(r.upgrade_id),
+        r.applicable_offices,
+        fixed(r.median_installed_usd_sqft, 2),
+        fixed(r.median_cut_2030_pct, 1),
+        r.meets_2030,
+      ))
+      .flatten(),
+    table.hline(),
+  ),
+  caption: [Retrofit options across the #at-risk-count offices over the 2030 limit without a retrofit: offices each applies to, median installation cost in 2025 dollars per square foot (BTB mid), median modeled cut in 2030 emissions intensity, and offices it brings under the 2030 limit. Options are described in Appendix @tab:upgrades.],
+  placement: none,
+) <tab:option-summary>
+
+#set page(columns: 1)
 
 #let flow_node(pos, heading, detail, name) = node(
   pos,
@@ -454,7 +541,7 @@ This appendix provides the data flow (@fig:pipeline), the BERDO data diagnostics
       <cambium>,
     ),
 
-    // Optimization
+    // Comparison
     flow_node(
       (3, 2),
       "20-year cost comparison",
@@ -466,7 +553,7 @@ This appendix provides the data flow (@fig:pipeline), the BERDO data diagnostics
     ),
     flow_node(
       (4, 2),
-      "Optimal building-level decision",
+      "Building-level recommendation",
       [
         Minimum-cost option:
         a retrofit or no retrofit;
@@ -496,6 +583,8 @@ This appendix provides the data flow (@fig:pipeline), the BERDO data diagnostics
     BTB installation costs, AEO energy price scenarios @aeo, and Cambium grid emission rates @cambium support the 2027 decision and the comparison of costs over 2027--2046, with 2030 as the compliance milestone.
   ],
 ) <fig:pipeline>
+
+
 
 == BERDO Data Exploration
 
@@ -593,11 +682,48 @@ With inverse-distance weighting and the district rule, MAE falls from 7.79 point
   placement: none,
 ) <tab:matching-validation>
 
+#figure(
+  image("figures/matching-error.svg", width: 100%),
+  caption: [Leave-one-out MAE of predicted emissions reductions for 618 held-out ComStock offices and 23 options, by number of neighbors. Dashed lines pool all other offices, or all of the same size class, without matching. The light vertical line marks the production $k = 20$.],
+  placement: none,
+) <fig:matching-error>
+
+=== Decision-Level Agreement
+
+We put each held-out simulation's emissions on BERDO's 2030 scale, with BERDO's emissions factors, its projected electricity factor, and the 3.2 limit, and compare compliance calls from matching and from pooling all other offices (@tab:decision-agreement). Matching puts #pct(agree-prod.compliance_agreement) of option outcomes on the correct side of the limit, against #pct(agree-all.compliance_agreement) for pooling.
+
+#figure(
+  table(
+    columns: (1fr, auto, auto),
+    align: (left, right, right),
+    stroke: none,
+    inset: (x: 4pt, y: 2.5pt),
+    table.hline(),
+    table.header([*Measure*], [*Matching*], [*Pooling*]),
+    table.hline(stroke: 0.5pt),
+    [Option on correct side of limit], pct(agree-prod.compliance_agreement), pct(agree-all.compliance_agreement),
+    [Predicted compliant and is], pct(agree-prod.predicted_compliant_truly_compliant), pct(agree-all.predicted_compliant_truly_compliant),
+    [Compliant and predicted so], pct(agree-prod.truly_compliant_predicted_compliant), pct(agree-all.truly_compliant_predicted_compliant),
+    [Any compliant option, correct], pct(agree-prod.any_compliant_option_agreement), pct(agree-all.any_compliant_option_agreement),
+    [Largest-cut option, correct], pct(agree-prod.largest_cut_option_agreement), pct(agree-all.largest_cut_option_agreement),
+    [Median cut lost if wrong (pp)], pts(agree-prod.median_regret_pp), pts(agree-all.median_regret_pp),
+    table.hline(),
+  ),
+  caption: [Decision-level leave-one-out agreement for production matching ($k = 20$, inverse distance, district rule) and for pooling all other offices without matching. Compliance rows cover the #agree-prod.models_over_limit held-out simulations over the 2030 limit, at #with-commas(agree-prod.over_limit_predictions) option outcomes; the last two rows cover all #agree-prod.models. Lost cut is the true emissions cut of the best option minus that of the option predicted best, in percentage points of baseline emissions.],
+  placement: none,
+) <tab:decision-agreement>
+
 === Matching Features and Weights <sec:feature-matching>
+
+How close are the real matches? For the median BERDO office, its 20 matched simulations differ on average by about 32% in floor area, 23% in EUI, and 28% in stories, and 17% of their energy is in a different fuel. For the worst-matched tenth, floor area and EUI differ by 66% and 74%.
+
+#let weight-cv = csv("../dbt/analysis_outputs/portfolio_matching_sensitivity/weight_cv_summary.csv", row-type: dictionary).first()
+
+Are the distance coefficients right? We chose them by five-fold cross-validation over #weight-cv.settings settings: area and EUI coefficients of 0.5, 1, or 2; fuel coefficients from 0.25 to 3; stories coefficients of 0, 0.5, or 1; and standard-deviation scaling. Each fold's choice is scored only on simulations it did not see. The selected coefficients give an MAE of #pts(weight-cv.selected_mae_pp) points against #pts(weight-cv.production_mae_pp) for ours, a difference of #pts(weight-cv.difference_pp) (95% CI #pts(weight-cv.ci95_low_pp) to #pts(weight-cv.ci95_high_pp)). Every fold tripled the fuel coefficient, but the gain is within noise, so we keep unit coefficients.
 
 We reran leave-one-out matching on the final 618 simulations and 23 retrofits (14,214 predictions per configuration) using the same fuel-ratio predictions and emissions factors as production. At $k = 20$ with the district rule, uniform pooling has 6.73 points MAE versus 6.65 for inverse distance. With inverse distance, dropping the district rule raises MAE to 6.68. The 96 combinations of $k = 1$--24, pooling method, and district rule reproduce the report's validation export to its displayed precision.
 
-Removing stories raises mean and median error but lowers the 90th percentile. Four-term scaling divides each term by its standard deviation over eligible BERDO--ComStock pairs before the district restriction and rescales the weights to sum to four. The resulting weights for area, EUI, fuel share, and stories are 0.356, 1.09, 1.98, and 0.569. The fuel variants change the coefficient on the sum of absolute fuel-share differences from 0.5 to 0.25 or 1.5. Scaling and tripling the fuel term reduce MAE on this cohort. These comparisons use the same held-out simulations for every variant and do not validate a newly selected metric on independent data. We keep the production configuration.
+Removing stories raises mean and median error but lowers the 90th percentile (@tab:feature-analysis). Four-term scaling divides each term by its standard deviation over eligible BERDO--ComStock pairs before the district restriction and rescales the weights to sum to four. The resulting weights for area, EUI, fuel share, and stories are 0.356, 1.09, 1.98, and 0.569. The fuel variants change the coefficient on the sum of absolute fuel-share differences from 0.5 to 0.25 or 1.5. Scaling and tripling the fuel term reduce MAE on this cohort. These comparisons use the same held-out simulations for every variant and do not validate a newly selected metric on independent data. We keep the production configuration.
 
 #let feature-names = (
   ("production", [Production]),
@@ -667,7 +793,7 @@ The public ComStock full baseline contains a primary HVAC-system label for each 
   placement: none,
 ) <tab:hvac-analysis>
 
-Accurate simulated HVAC labels lower MAE from 6.65 to 3.74 points in this test. The gain shrinks as labels become less accurate but remains at 50% corruption under this procedure. The result depends on the mismatch penalty and the way labels are corrupted. BERDO and assessor records lack commercial HVAC labels, and this experiment does not establish how a real label source would perform. Earlier tests of year built, wall construction, window type, and operating hours lack a recoverable protocol and were not rerun.
+Accurate simulated HVAC labels lower MAE from 6.65 to 3.74 points in this test (@tab:hvac-analysis). The gain shrinks as labels become less accurate but remains at 50% corruption under this procedure. The result depends on the mismatch penalty and the way labels are corrupted. BERDO and assessor records lack commercial HVAC labels, and this experiment does not establish how a real label source would perform. Earlier tests of year built, wall construction, window type, and operating hours lack a recoverable protocol and were not rerun.
 
 #block(breakable: false)[
   === Prediction Errors by Retrofit Option
@@ -699,7 +825,7 @@ Accurate simulated HVAC labels lower MAE from 6.65 to 3.74 points in this test. 
   ) <tab:per-upgrade-validation>
 ]
 
-Heat pump rooftop unit (RTU) options miss by 8.14--10.48 points against simulated cuts of 6.68--8.55%. The electric-backup boiler misses by 4.05 points on a 7.02% cut. VRF and geothermal have the largest errors. Individual envelope, lighting, and rooftop PV measures miss by 1.10--2.68 points, ventilation measures by 0.11--4.77, and combined Packages 2--5 by 8.64--10.57 points.
+In @tab:per-upgrade-validation, heat pump rooftop unit (RTU) options miss by 8.14--10.48 points against simulated cuts of 6.68--8.55%. The electric-backup boiler misses by 4.05 points on a 7.02% cut. VRF and geothermal have the largest errors. Individual envelope, lighting, and rooftop PV measures miss by 1.10--2.68 points, ventilation measures by 0.11--4.77, and combined Packages 2--5 by 8.64--10.57 points.
 
 == Story Estimates
 
@@ -795,8 +921,6 @@ For example, the owner's cheapest compliant option for 105302 (2--16 Tremont Str
 We independently re-ranked the final 20-year cost rows at every $k$ from 1 through 20. All 23 retrofit IDs occur across the cohort at each $k$, plus the no-retrofit baseline. Individual offices retain only applicable options under the existing rules. The audit uses the 2027--2046 horizon, the 2030 compliance milestone, projected grid factors, baseline prices, and mid installation costs, with owner and societal discount rates of 7% and 2%. The recomputed counts match the existing sensitivity figure and its $k = 20$ reference. At Tremont Street, standalone RTUs are the cheapest compliant options at $k = 3$, $4$, and $6$. The energy-recovery RTU remains cheapest from $k = 7$ through 20. At Farnsworth Street, the standalone electric-backup boiler remains cheapest at the reference setting from both perspectives.
 
 == Additional Results <sec:additional-results>
-
-How close are the matches? For the median office, its 20 matched simulations differ on average by about 32% in floor area, 23% in EUI, and 28% in stories, and 17% of their energy is in a different fuel. For the worst-matched tenth, floor area and EUI differ by 66% and 74%.
 
 Matching against all-office pooling improves MAE by 0.90 points (95% CI 0.58--1.22) and lowers error for 68.9% of the held-out simulations. Under the frozen grid factor, the owner's compliant count remains 42 of 99 when switching to AEO baseline prices. Under projected conditions, the societal count ranges from 44 to 47 across alternative price cases. Of the 71 offices with a compliant option, 21 have a break-even ACP above \$1,000 per metric ton, including six above \$10,000.
 

@@ -5,10 +5,13 @@ Run from the repository root with the project's Python environment:
 
 Use --with-hvac to read the configured public ComStock full baseline Parquet,
 or --hvac-source to use a local copy. The older HVAC procedure is unavailable.
-Outputs go to analysis_outputs/portfolio_matching_sensitivity. No production
-tables, exports, or parameters are written.
+Besides the feature and HVAC tables, it writes decision-level agreement (does matching
+put options on the correct side of the 2030 limit?) and a five-fold cross-validated choice
+of distance coefficients. Outputs go to analysis_outputs/portfolio_matching_sensitivity.
+No production tables, exports, or parameters are written.
 """
 import argparse
+import itertools
 import csv
 from pathlib import Path
 
@@ -97,6 +100,57 @@ def standardized_weights(con):
 
 def metrics(err):
     return np.array([err.mean(), np.median(err), np.quantile(err, 0.9)])
+
+
+def compliance_inputs(con, ids, config):
+    # Floor area of each held-out model, BERDO's electricity factor index in the decision
+    # year, and the office standard then, to put simulated emissions on BERDO's scale.
+    gfa = con.execute("""
+        select comstock_id, any_value(gfa_sqft) from int_comstock_models
+        where comstock_id in (select unnest(?)) group by 1 order by 1
+    """, [ids.tolist()]).fetchall()
+    if [r[0] for r in gfa] != ids.tolist():
+        raise ValueError("Floor area must cover every held-out model")
+    year = config["decision_period_start"]
+    index = con.execute(
+        "select electricity_index from int_berdo_electricity_index where year = ?", [year]
+    ).fetchall()[0][0]
+    limit = con.execute("""
+        select any_value(standard_kgco2e_sqft) from berdo_upgrade_compliance
+        where period_start = ? and building_use = 'Office'
+    """, [year]).fetchall()[0][0]
+    return np.array([r[1] for r in gfa]), index, limit
+
+
+def decision_agreement(name, ratio, baseline, upgraded, factors, gfa, index, limit):
+    # Whether matching gets the decision right, not just the size of the cut. In the
+    # decision year, with BERDO's projected electricity factor: for held-out models over
+    # the office limit with no retrofit, does the predicted intensity put each option on
+    # the same side of the limit as the simulation, and is the option predicted to cut
+    # emissions most the one that does? Cost is not compared, since the held-out models
+    # have no BERDO bills or ACPs.
+    scaled = factors.copy()
+    scaled[FUELS.index("electricity")] *= index
+    base = baseline @ scaled
+    actual = upgraded @ scaled
+    predicted = ratio @ (scaled * baseline)[:, :, None]
+    predicted = predicted[:, :, 0]
+    over = base / gfa > limit
+    act_ok = (actual / gfa[:, None] <= limit)[over]
+    pred_ok = (predicted / gfa[:, None] <= limit)[over]
+    cut = 100 * (1 - actual / base[:, None])
+    best_pred = np.argmax(-predicted, axis=1)
+    best_act = np.argmax(-actual, axis=1)
+    regret = cut[np.arange(len(cut)), best_act] - cut[np.arange(len(cut)), best_pred]
+    return (
+        name, int(over.sum()), act_ok.size,
+        round(float((act_ok == pred_ok).mean()), 6),
+        round(float(act_ok[pred_ok].mean()), 6) if pred_ok.any() else None,
+        round(float(pred_ok[act_ok].mean()), 6) if act_ok.any() else None,
+        round(float((act_ok.any(axis=1) == pred_ok.any(axis=1)).mean()), 6),
+        len(cut), round(float((best_pred == best_act).mean()), 6),
+        round(float(regret.mean()), 6), round(float(np.median(regret)), 6),
+    )
 
 
 def hvac_labels(con, path, ids):
@@ -197,6 +251,7 @@ def main():
             source = f"{config['comstock_full_dir']}/{config['comstock_county_prefix']}_upgrade0.parquet"
         labels = hvac_labels(con, source, ids) if source else None
         cost_audit(con, config, upgrades)
+        gfa, elec_index, limit = compliance_inputs(con, ids, config)
     base_ghg = baseline @ factors
     if not np.all(base_ghg > 0):
         raise ValueError("Nonpositive held-out baseline emissions")
@@ -207,7 +262,7 @@ def main():
         # Candidate IDs already ascending, so a stable sort resolves ties by ID.
         return np.argsort(np.where(eligible, d, np.inf) if rule else d, axis=1, kind="stable")
 
-    def predict(d, ordering, k, method, rule):
+    def pooled_ratio(d, ordering, k, method, rule):
         ix = ordering[:, :k]
         if rule and not np.take_along_axis(eligible, ix, axis=1).all():
             raise ValueError("Too few district-compatible neighbors")
@@ -215,9 +270,11 @@ def main():
         w = 1 / (np.take_along_axis(d, ix, axis=1) + EPS) if method == "inverse_distance" else np.ones(ns.shape)
         pooled_base = np.einsum("nk,nkf->nf", w, baseline[ns])
         pooled_upgrade = np.einsum("nk,nkuf->nuf", w, upgraded[ns])
-        ratio = np.divide(pooled_upgrade, pooled_base[:, None], out=np.ones_like(pooled_upgrade),
-                          where=pooled_base[:, None] != 0)
-        predicted = ratio @ (factors * baseline)[:, :, None]
+        return np.divide(pooled_upgrade, pooled_base[:, None], out=np.ones_like(pooled_upgrade),
+                         where=pooled_base[:, None] != 0)
+
+    def predict(d, ordering, k, method, rule):
+        predicted = pooled_ratio(d, ordering, k, method, rule) @ (factors * baseline)[:, :, None]
         return 100 * np.abs(actual - predicted[:, :, 0]) / base_ghg[:, None]
 
     ref = predict(distance, ranking(distance, production_rule), k_ref, production_weight, production_rule)
@@ -261,6 +318,61 @@ def main():
             predict(d, ranking(d, production_rule), k_ref, production_weight, production_rule))
 
     write_csv(OUT / "configuration_summary.csv", header, summary)
+
+    # Decision-level agreement: production matching against pooling every other model.
+    write_csv(OUT / "decision_agreement.csv", (
+        "matching", "models_over_limit", "over_limit_predictions", "compliance_agreement",
+        "predicted_compliant_truly_compliant", "truly_compliant_predicted_compliant",
+        "any_compliant_option_agreement", "models", "largest_cut_option_agreement",
+        "mean_regret_pp", "median_regret_pp",
+    ), [
+        decision_agreement(name, pooled_ratio(distance, ranking(distance, rule), k, method, rule),
+                           baseline, upgraded, factors, gfa, elec_index, limit)
+        for name, k, method, rule in (
+            ("production", k_ref, production_weight, production_rule),
+            ("all_offices", len(ids) - 1, "unweighted", False),
+        )
+    ])
+
+    # Out-of-sample choice of distance coefficients. Five-fold cross-validation over the
+    # held-out models: in each fold, pick the grid setting with the lowest MAE on the other
+    # four folds and score it on this one. Candidates for matching are still every other
+    # model, as in production; only the models scored differ between folds.
+    grid = [np.array(c, dtype=float) for c in itertools.product(
+        (0.5, 1, 2), (0.5, 1, 2), (0.25, 0.5, 1, 1.5, 3), (0, 0.5, 1),
+    )] + [scaling]
+    if not np.allclose(np.einsum("t,tnm->nm", np.ones(4), gaps), distance):
+        raise ValueError("Gap terms do not add up to the production distance")
+    per_model = np.array([
+        predict(d, ranking(d, production_rule), k_ref, production_weight, production_rule).mean(axis=1)
+        for d in (np.einsum("t,tnm->nm", c, gaps) for c in grid)
+    ])
+    production_ix = next(i for i, c in enumerate(grid) if np.array_equal(c, np.ones(4)))
+    rng = np.random.default_rng(args.seed)
+    folds = rng.permutation(len(ids)) % 5
+    selected_error = np.empty(len(ids))
+    fold_rows = []
+    for fold in range(5):
+        train, test = folds != fold, folds == fold
+        best = int(np.argmin(per_model[:, train].mean(axis=1)))
+        selected_error[test] = per_model[best, test]
+        fold_rows.append((fold, int(test.sum()), *grid[best].round(3),
+                          round(per_model[best, train].mean(), 6),
+                          round(per_model[best, test].mean(), 6),
+                          round(per_model[production_ix, test].mean(), 6)))
+    diff = selected_error - per_model[production_ix]
+    boot = rng.integers(0, len(ids), (2000, len(ids)))
+    low, high = np.quantile(diff[boot].mean(axis=1), [0.025, 0.975])
+    write_csv(OUT / "weight_cv_folds.csv", (
+        "fold", "models", "size_weight", "eui_weight", "fuel_term_weight", "stories_weight",
+        "train_mae_pp", "test_mae_pp", "test_production_mae_pp",
+    ), fold_rows)
+    write_csv(OUT / "weight_cv_summary.csv", (
+        "settings", "folds", "selected_mae_pp", "production_mae_pp", "difference_pp",
+        "ci95_low_pp", "ci95_high_pp", "in_sample_best_mae_pp",
+    ), [(len(grid), 5, round(selected_error.mean(), 6), round(per_model[production_ix].mean(), 6),
+         round(diff.mean(), 6), round(low, 6), round(high, 6),
+         round(per_model.mean(axis=1).min(), 6))])
     write_csv(OUT / "production_by_upgrade.csv",
               ("upgrade_id", "predictions", "mean_simulated_reduction_pct", *FIELDS),
               [(uid, len(ids), round(actual_reduction[:, i].mean(), 6), *metrics(ref[:, i]).round(6))

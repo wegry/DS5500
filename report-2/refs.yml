@@ -228,3 +228,107 @@ luddeni-office-retrofits:
   date: 2018
   serial-number:
     doi: 10.1016/j.scs.2018.05.038
+
+andrews-bps-decarbonization:
+  type: article
+  author:
+    - "Andrews, Abigail"
+    - "Jain, Rishee K."
+  title: "Evaluating building decarbonization potential in U.S. cities under emissions based building performance standards and load flexibility requirements"
+  parent:
+    type: periodical
+    title: Journal of Building Engineering
+    volume: 76
+  page-range: "107375"
+  date: 2023
+  serial-number:
+    doi: 10.1016/j.jobe.2023.107375
+
+bergfeld-dc-beps:
+  type: article
+  author:
+    - "Bergfeld, Katie"
+    - "Mathew, Paul"
+    - "Duer-Balkind, Marshall"
+    - "Perakis, James"
+    - "Noori khah, Pegah"
+    - "Walter, Travis"
+    - "Held, Andrew"
+  title: "Making Data-Driven Policy Decisions for the Nation's First Building Energy Performance Standards"
+  parent:
+    type: proceedings
+    title: ACEEE Summer Study on Energy Efficiency in Buildings
+    organization: ACEEE
+  date: 2020
+  serial-number:
+    doi: 10.20357/B7831V
+  url:
+    value: https://escholarship.org/uc/item/05m741q3
+    date: 2026-11-24
+
+parker-comstock:
+  type: report
+  author:
+    - "Parker, Andrew"
+    - "Horsey, Henry"
+    - "Dahlhausen, Matthew"
+    - "Praprost, Marlena"
+    - "CaraDonna, Christopher"
+    - "LeBar, Amy"
+    - "Klun, Lauren"
+  title: "ComStock Reference Documentation: Version 1"
+  organization: National Renewable Energy Laboratory
+  number: NREL/TP-5500-83819
+  date: 2023-03
+  serial-number:
+    doi: 10.2172/1967948
+  url:
+    value: https://www.nrel.gov/docs/fy23osti/83819.pdf
+    date: 2026-11-24
+
+reinhart-ubem-review:
+  type: article
+  author:
+    - "Reinhart, Christoph F."
+    - "Cerezo Davila, Carlos"
+  title: "Urban building energy modeling – A review of a nascent field"
+  parent:
+    type: periodical
+    title: Building and Environment
+    volume: 97
+  page-range: 196-202
+  date: 2016
+  serial-number:
+    doi: 10.1016/j.buildenv.2015.12.001
+
+cerezo-modeling-boston:
+  type: article
+  author:
+    - "Cerezo Davila, Carlos"
+    - "Reinhart, Christoph F."
+    - "Bemis, Jamie L."
+  title: "Modeling Boston: A workflow for the efficient generation and maintenance of urban building energy models from existing geospatial datasets"
+  parent:
+    type: periodical
+    title: Energy
+    volume: 117
+  page-range: 237-250
+  date: 2016
+  serial-number:
+    doi: 10.1016/j.energy.2016.10.057
+
+kesicki-macc-caution:
+  type: article
+  author:
+    - "Kesicki, Fabian"
+    - "Ekins, Paul"
+  title: "Marginal abatement cost curves: a call for caution"
+  parent:
+    type: periodical
+    title: Climate Policy
+    volume: 12
+    issue: 2
+  page-range: 219-236
+  date: 2012
+  serial-number:
+    doi: 10.1080/14693062.2011.582347

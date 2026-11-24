@@ -9,7 +9,8 @@
 2. The 20-year Monte Carlo, which stays in Python for its sampling: a zero-uncertainty
    check against dbt, then the full run with the settings below.
 3. The matching sensitivity (dbt/portfolio_matching_sensitivity.py --with-hvac): the
-   feature, HVAC-label, and per-option leave-one-out tables in Report 2's appendix.
+   feature, HVAC-label, and per-option leave-one-out tables, the decision-level agreement
+   table, and the cross-validated distance coefficients in Report 2.
 4. Report 2's figures (report-2/make_berdo_figures.py), whose annotations quote model
    results, then Report 2, compiled to check that it still builds (the PDF is not tracked).
 
