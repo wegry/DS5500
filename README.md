@@ -38,7 +38,7 @@ uv run python dbt/regenerate.py
 
 1. `dbt build` loads the data into DuckDB (`dbt/ds5500.duckdb`), runs the models and their tests, and writes the analysis CSVs to `dbt/analysis_outputs/`.
 2. The 20-year Monte Carlo, first a zero-uncertainty check against dbt, then 5,000 draws (seed 5500).
-3. The matching sensitivity tables in the Report 2 appendix (`dbt/portfolio_matching_sensitivity.py`).
+3. The matching sensitivity outputs (`dbt/portfolio_matching_sensitivity.py`): the feature, HVAC-label, and per-option tables, the decision-level agreement table, and the cross-validated choice of distance coefficients.
 4. The Report 2 figures (`report-2/make_berdo_figures.py`), then the report itself, compiled to `report-2/report 2.pdf`.
 
 Pass `--no-report` to skip compiling the report. To compile only the report from the tracked outputs, run this from the repository root:
