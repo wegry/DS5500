@@ -40,7 +40,7 @@ def cambium() -> None:
         (r["scenario"], int(r["t"]), float(r["aer_load_co2e"])) for r in rows if r["gea"] == "ISONE"
     )
     with (SEEDS / "cambium24_isone_aer.csv").open("w", newline="") as fh:
-        w = csv.writer(fh)
+        w = csv.writer(fh, lineterminator="\n")
         w.writerow(["cambium_scenario", "year", "aer_load_co2e_kg_per_mwh"])
         w.writerows(out)
     print(f"cambium24_isone_aer.csv: {len(out)} rows")
@@ -60,7 +60,7 @@ def aeo() -> None:
                         out.append((case_id.split("-")[0], fuel, int(year), round(value, 4)))
     out.sort()
     with (SEEDS / "aeo2026_ne_commercial_prices.csv").open("w", newline="") as fh:
-        w = csv.writer(fh)
+        w = csv.writer(fh, lineterminator="\n")
         w.writerow(["aeo_case", "fuel", "year", "usd2025_per_mmbtu"])
         w.writerows(out)
     print(f"aeo2026_ne_commercial_prices.csv: {len(out)} rows")

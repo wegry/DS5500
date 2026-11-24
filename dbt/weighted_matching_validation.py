@@ -19,7 +19,7 @@ EPS = 1e-6
 def write_csv(path, columns, rows):
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open('w', newline='', encoding='utf-8') as f:
-        writer = csv.writer(f)
+        writer = csv.writer(f, lineterminator='\n')
         writer.writerow(columns)
         writer.writerows(rows)
 
