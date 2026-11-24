@@ -239,7 +239,12 @@ emissions as (
         -- under the standard in the first year of the decision period (2030), as BERDO
         -- counts it; the horizon itself starts earlier, at horizon_start
         bool_and(y.berdo_ghg_kgco2e <= y.limit_kgco2e)
-            filter (where y.year = {{ var("decision_period_start") }}) as meets_standard_at_start
+            filter (where y.year = {{ var("decision_period_start") }}) as meets_standard_at_start,
+        -- the same check in the first year of each later period, for the option chosen now
+        {% for yr in var("later_period_starts") -%}
+        bool_and(y.berdo_ghg_kgco2e <= y.limit_kgco2e)
+            filter (where y.year = {{ yr }}) as meets_standard_{{ yr }}{{ "," if not loop.last }}
+        {% endfor -%}
     from yearly as y
     cross join perspectives as p
     group by {% if by_k %}y.k, {% endif %}y.berdo_id, y.upgrade_id, y.scenario, p.perspective
@@ -278,6 +283,9 @@ present_values as (
         p.discount_rate,
         pr.energy_price,
         e.meets_standard_at_start,
+        {% for yr in var("later_period_starts") -%}
+        e.meets_standard_{{ yr }},
+        {% endfor -%}
         e.years_over_limit,
         -- present value of $1 a year for n years
         (1 - power(1 + p.discount_rate, -{{ n }})) / p.discount_rate as annuity_factor,
