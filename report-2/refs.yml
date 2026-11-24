@@ -13,8 +13,8 @@ comstock:
   title: ComStock 2025 Release 3
   date: 2025-11
   url:
-    value: https://oedi-data-lake.s3.amazonaws.com/nrel-pds-building-stock/end-use-load-profiles-for-us-building-stock/2025/comstock_amy2018_release_3/
-    date: 2026-10-17
+    value: https://data.openei.org/s3_viewer?bucket=oedi-data-lake&prefix=nrel-pds-building-stock%2Fend-use-load-profiles-for-us-building-stock%2F2025%2Fcomstock_amy2018_release_3%2F
+    date: 2026-11-24
 
 atb:
   type: web
@@ -199,7 +199,7 @@ doer-oil:
   author: Massachusetts Department of Energy Resources
   title: Home heating oil price survey
   url:
-    value: https://www.mass.gov/info-details/household-heating-costs
+    value: https://www.mass.gov/info-details/a-guide-to-household-heating-costs-in-massachusetts
     date: 2026-10-28
 
 omb-m2527:
@@ -263,7 +263,7 @@ bergfeld-dc-beps:
   serial-number:
     doi: 10.20357/B7831V
   url:
-    value: https://escholarship.org/uc/item/05m741q3
+    value: https://www.osti.gov/biblio/1756403
     date: 2026-11-24
 
 parker-comstock:
