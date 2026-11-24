@@ -471,7 +471,7 @@ def main() -> None:
         office_records, intensity_count = intensity(con)
         breakeven(con)
     with (OUTPUTS / "berdo_figure_counts.csv").open("w", newline="", encoding="utf-8") as file:
-        writer = csv.writer(file)
+        writer = csv.writer(file, lineterminator="\n")
         writer.writerow(("mixed_use_offices", "office_records", "reported_intensity_offices"))
         writer.writerow((mixed_use_count, office_records, intensity_count))
     with plt.rc_context({"font.size": 9, "svg.fonttype": "path", "svg.hashsalt": "ds5500-report-2"}):

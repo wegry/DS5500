@@ -210,7 +210,7 @@ def main() -> dict:
                 "ci95_high_pp": round(boots[int(0.975 * BOOT) - 1], 2),
             })
     with (OUT / "loo_tests.csv").open("w", newline="") as fh:
-        w = csv.DictWriter(fh, fieldnames=list(rows[0]))
+        w = csv.DictWriter(fh, fieldnames=list(rows[0]), lineterminator="\n")
         w.writeheader()
         w.writerows(rows)
 
@@ -302,7 +302,7 @@ def decisions(metrics) -> None:
             build(None, None, log)
 
     with (OUT / "decisions.csv").open("w", newline="") as fh:
-        w = csv.DictWriter(fh, fieldnames=["metric", *cols])
+        w = csv.DictWriter(fh, fieldnames=["metric", *cols], lineterminator="\n")
         w.writeheader()
         w.writerows(rows)
 
@@ -329,7 +329,7 @@ def decisions(metrics) -> None:
                 "total_5yr_cost_musd": round(sum(r["total_cost_mid_usd"] for r in s) / 1e6, 2),
             })
     with (OUT / "decision_summary.csv").open("w", newline="") as fh:
-        w = csv.DictWriter(fh, fieldnames=list(summary[0]))
+        w = csv.DictWriter(fh, fieldnames=list(summary[0]), lineterminator="\n")
         w.writeheader()
         w.writerows(summary)
     print("\ndecision_summary.csv\n" + (OUT / "decision_summary.csv").read_text())

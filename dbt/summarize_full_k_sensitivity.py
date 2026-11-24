@@ -51,7 +51,7 @@ def as_bool(value: object) -> bool:
 def csv_write(name: str, rows: list[dict], columns: list[str]) -> Path:
     path = OUT / name
     with path.open("w", newline="", encoding="utf-8") as stream:
-        writer = csv.DictWriter(stream, fieldnames=columns)
+        writer = csv.DictWriter(stream, fieldnames=columns, lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
     return path
