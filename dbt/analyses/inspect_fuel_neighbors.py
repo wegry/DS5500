@@ -18,6 +18,7 @@ VALID_FUELS = {'electricity', 'natural_gas', 'oil_propane', 'district_heating', 
 SQL = """
 SELECT
     m.berdo_id,
+    b.building_address,
     m.comstock_id,
     m.match_rank,
     m.distance,
@@ -26,6 +27,16 @@ SELECT
     m.eui_gap,
     m.fuel_share_gap,
     m.stories_gap,
+    CASE
+        WHEN COALESCE(b.district_heating_kwh, 0) > 0
+          OR COALESCE(b.district_cooling_kwh, 0) > 0
+        THEN TRUE ELSE FALSE
+    END AS berdo_uses_district,
+    CASE
+        WHEN COALESCE(c.district_heating_kwh, 0) > 0
+          OR COALESCE(c.district_cooling_kwh, 0) > 0
+        THEN TRUE ELSE FALSE
+    END AS neighbor_uses_district,
     c.{fuel}_kwh AS baseline_fuel_kwh,
     b.{fuel}_kwh AS berdo_fuel_kwh,
     b.ghg_kgco2e AS berdo_total_ghg_kgco2e,
@@ -70,21 +81,88 @@ def analyze_case(con, berdo_id, fuel):
     stem = f'{berdo_id}_{fuel}'
     df.to_csv(OUT / f'{stem}_neighbors.csv', index=False)
 
-    fig, axes = plt.subplots(2, 1, figsize=(10, 7), sharex=True, layout='constrained')
-    colors = df['uses_fuel'].map({True: 'tab:blue', False: 'tab:orange'})
-    axes[0].bar(df['match_rank'], df['weight_share_pct'], color=colors)
-    axes[0].set_ylabel('Share of total match weight (%)')
-    axes[0].set_title(f'BERDO {berdo_id} — {fuel.replace("_", " ")} | coverage {coverage:.1f}%')
-    axes[1].scatter(df.loc[df['uses_fuel'], 'match_rank'], df.loc[df['uses_fuel'], 'distance'],
-                    label='Uses fuel', color='tab:blue', s=65)
-    axes[1].scatter(df.loc[~df['uses_fuel'], 'match_rank'], df.loc[~df['uses_fuel'], 'distance'],
-                    label='Does not use fuel', color='tab:orange', s=65)
-    axes[1].set_ylabel('Matching distance (lower is closer)')
-    axes[1].set_xlabel('Neighbor rank')
-    axes[1].legend()
-    axes[1].grid(alpha=0.2)
-    axes[1].set_xticks(sorted(df['match_rank'].dropna().unique()))
-    fig.savefig(OUT / f'{stem}_neighbors.png', dpi=170)
+    # Check that distance components reproduce the matching distance.
+    components = ["size_gap", "eui_gap", "fuel_share_gap", "stories_gap"]
+
+    calculated_distance = df[components].sum(axis=1)
+    max_difference = (calculated_distance - df["distance"]).abs().max()
+
+    if max_difference > 1e-5:
+        print(
+            f"WARNING: Distance components differ from total distance "
+            f"by up to {max_difference:.6f}"
+        )
+
+    # Check district-energy compatibility.
+    berdo_district = bool(df["berdo_uses_district"].iloc[0])
+    district_agreement = (
+        df["neighbor_uses_district"] == berdo_district
+    ).sum()
+
+    print(
+        f"  BERDO uses district energy: {berdo_district} | "
+        f"District-compatible neighbors: {district_agreement}/{len(df)}"
+    )
+
+    # Create one stacked distance chart per BERDO building.
+    fig, ax = plt.subplots(figsize=(12, 5.5), layout="constrained")
+
+    ranks = df["match_rank"].to_numpy()
+    bottoms = pd.Series(0.0, index=df.index)
+
+    component_labels = {
+        "size_gap": "Floor area",
+        "eui_gap": "EUI",
+        "fuel_share_gap": "Fuel shares",
+        "stories_gap": "Stories",
+    }
+
+    for component in components:
+        ax.bar(
+            ranks,
+            df[component],
+            bottom=bottoms,
+            label=component_labels[component],
+            width=0.75,
+        )
+        bottoms += df[component]
+
+    # Mark neighbors that consume the investigated fuel.
+    fuel_users = df["uses_fuel"]
+
+    ax.scatter(
+        df.loc[fuel_users, "match_rank"],
+        df.loc[fuel_users, "distance"] + 0.05,
+        marker="v",
+        color="black",
+        s=45,
+        label=f"Uses {fuel.replace('_', ' ')}",
+        zorder=5,
+    )
+
+    district_label = "Yes" if berdo_district else "No"
+
+    ax.set_title(
+        f"{df['building_address'].iloc[0] if 'building_address' in df else f'BERDO {berdo_id}'}"
+        f" — {fuel.replace('_', ' ').title()}\n"
+        f"Fuel coverage: {coverage:.1f}% | "
+        f"District energy (BERDO): {district_label} | "
+        f"Neighbors with matching district status: {district_agreement}/{len(df)}"
+    )
+
+    ax.set_xlabel("Neighbor rank")
+    ax.set_ylabel("Matching distance (lower is closer)")
+    ax.set_xticks(ranks)
+    ax.grid(axis="y", alpha=0.2)
+    ax.set_axisbelow(True)
+    ax.legend(
+        loc="upper center",
+        bbox_to_anchor=(0.5, 1.16),
+        ncol=5,
+        frameon=False,
+    )
+
+    fig.savefig(OUT / f"{stem}_neighbors.png", dpi=170)
     plt.close(fig)
 
 

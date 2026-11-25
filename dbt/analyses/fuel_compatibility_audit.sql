@@ -55,9 +55,9 @@ SELECT
     fuel,
     COUNT(*) AS matched_offices,
     COUNT(*) FILTER (WHERE uses_fuel) AS offices_using_fuel,
-    COUNT(*) FILTER (WHERE zero_matched_baseline) AS unsupported_offices,
+    COUNT(*) FILTER (WHERE zero_matched_baseline) AS zero_baseline_offices,
     ROUND(100.0 * COUNT(*) FILTER (WHERE zero_matched_baseline)
-        / NULLIF(COUNT(*) FILTER (WHERE uses_fuel), 0), 2) AS unsupported_pct_of_users,
+        / NULLIF(COUNT(*) FILTER (WHERE uses_fuel), 0), 2) AS zero_baseline_pct_of_users,
     ROUND(MAX(emissions_share_pct) FILTER (WHERE zero_matched_baseline), 2) AS max_flagged_emissions_share_pct,
     ROUND(AVG(emissions_share_pct) FILTER (WHERE zero_matched_baseline), 2) AS avg_flagged_emissions_share_pct,
     ROUND(SUM(berdo_ghg_kgco2e) FILTER (WHERE zero_matched_baseline), 2) AS unsupported_ghg_kgco2e
