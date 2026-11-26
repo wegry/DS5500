@@ -1,0 +1,15 @@
+upgrade_id,upgrade_name,projected_ghg,meets_standard,installation_usd,acp_5yr_usd,energy_5yr_usd,total_5yr_usd,cost_rank_mid
+0,No upgrade,4.55,false,0.0,124916.16,1243532.68,1368448.84,1
+48,Wall Insulation,4.28,false,75248.48,99372.09,1203701.34,1378321.91,2
+49,Roof Insulation,4.4,false,62614.73,110884.34,1222036.47,1395535.54,3
+43,LED Lighting,4.57,false,96364.39,126339.76,1208208.68,1430912.84,4
+46,Photovoltaics with 40pct Roof Coverage,4.23,false,406035.28,95446.05,1056323.63,1557804.96,5
+65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",4.08,false,468650.01,81569.28,1035812.43,1586031.72,6
+55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",2.08,true,703277.58,0.0,1110282.22,1813559.8,7
+57,"Package 4, Package 2 with Standard Performance HP RTU",2.08,true,703277.58,0.0,1110282.22,1813559.8,8
+58,"Package 5, Variable Speed HP RTU or HP Boilers + Economizer + DCV + Energy Recovery",2.08,true,830040.72,0.0,1111623.09,1941663.81,9
+52,New Windows,4.28,false,1432165.63,99591.24,1193767.22,2725524.09,10
+54,"Package 1, Wall + Roof Insulation + New Windows",3.86,false,1570028.85,60766.12,1134780.99,2765575.95,11
+56,"Package 3, Package 1 + Package 2",1.88,true,2273306.43,0.0,1019519.53,3292825.96,12
+12,VRF with DOAS,1.91,true,4281480.18,0.0,870335.84,5151816.03,13
+29,Packaged Water-to-Air Geothermal Heat Pump,3.46,false,6908626.1,23534.74,1117133.09,8049293.93,14
