@@ -1,6 +1,6 @@
 """Locator map for 24-32 Farnsworth St from OpenStreetMap standard tiles.
 
-    uv run --with pillow python presentation-2/make_map.py
+    uv run --with pillow python presentation-3/make_map.py
 """
 
 import io

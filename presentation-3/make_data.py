@@ -1,7 +1,7 @@
-"""Export the numbers Presentation 2 plots from the dbt DuckDB warehouse.
+"""Export the numbers Presentation 3 plots from the dbt DuckDB warehouse.
 
 Run from the repo root after `dbt build`:
-    uv run python presentation-2/make_data.py
+    uv run python presentation-3/make_data.py
 """
 
 import json
@@ -10,7 +10,7 @@ from pathlib import Path
 import duckdb
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / "presentation-2" / "data"
+OUT = ROOT / "presentation-3" / "data"
 CASE_ID = 106476  # 24-32 Farnsworth St, Fort Point
 
 con = duckdb.connect(str(ROOT / "dbt" / "ds5500.duckdb"), read_only=True)
