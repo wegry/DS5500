@@ -3,10 +3,10 @@
 // rebuilt here so figures and numbers come straight from the pipeline outputs.
 //
 // Build (from the repo root; --root lets the deck read dbt/ outputs and seeds):
-//   PDF : typst compile --root . presentation-2/slides.typ presentation-2/slides.pdf
+//   PDF : typst compile --root . presentation-3/slides.typ presentation-3/slides.pdf
 //   PPTX: uvx --from touying touying compile --root . --format pptx \
-//           presentation-2/slides.typ --output presentation-2/slides.pptx
-// Refresh the numbers first with `uv run python presentation-2/make_data.py`.
+//           presentation-3/slides.typ --output presentation-3/slides.pptx
+// Refresh the numbers first with `uv run python presentation-3/make_data.py`.
 //
 // The PPTX holds one rendered image per slide plus the speaker notes, so edit here,
 // not in PowerPoint. Notes are tagged with who presents: [KT], [ZW], [KL].

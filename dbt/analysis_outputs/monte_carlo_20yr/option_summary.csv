@@ -633,7 +633,7 @@ projected,financial,100436,46,Photovoltaics with 40pct Roof Coverage,0.1348,0.0,
 projected,financial,100436,48,Wall Insulation,0.0004,0.0,0.0,1427758.04,1266209.91,1609473.59
 projected,financial,100436,49,Roof Insulation,0.0,0.0,0.0,1442234.92,1270835.91,1634910.62
 projected,financial,100436,52,New Windows,0.0,0.0,0.0,2376475.61,1856911.59,2929848.04
-projected,financial,100436,54,"Package 1, Wall + Roof Insulation + New Windows",0.0,0.1354,0.0,2357382.92,1844352.87,2899727.71
+projected,financial,100436,54,"Package 1, Wall + Roof Insulation + New Windows",0.0,0.1354,0.0,2357382.92,1844352.87,2899727.72
 projected,financial,100436,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",0.0,0.9646,0.0796,1671289.71,1515948.38,1843852.82
 projected,financial,100436,56,"Package 3, Package 1 + Package 2",0.0,0.97,0.148,2632639.23,2119772.36,3173314.05
 projected,financial,100436,57,"Package 4, Package 2 with Standard Performance HP RTU",0.0,0.9646,0.0568,1697558.88,1537854.16,1874645.82
@@ -775,7 +775,7 @@ frozen,societal,100609,49,Roof Insulation,0.0,0.0202,0.0,2927652.82,2698043.36,3
 frozen,societal,100609,52,New Windows,0.0,0.6478,0.0,4753477.25,3766544.88,5806877.52
 frozen,societal,100609,54,"Package 1, Wall + Roof Insulation + New Windows",0.0,1.0,0.0,4456998.67,3474121.29,5496372.51
 frozen,societal,100609,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",0.007,1.0,0.0952,2132624.74,1938152.93,2345603.18
-frozen,societal,100609,56,"Package 3, Package 1 + Package 2",0.0,1.0,0.3554,4006693.35,3020041.41,5052411.86
+frozen,societal,100609,56,"Package 3, Package 1 + Package 2",0.0,1.0,0.3554,4006693.36,3020041.41,5052411.86
 frozen,societal,100609,57,"Package 4, Package 2 with Standard Performance HP RTU",0.0006,1.0,0.0908,2130939.87,1942822.23,2340152.88
 frozen,societal,100609,58,"Package 5, Variable Speed HP RTU or HP Boilers + Economizer + DCV + Energy Recovery",0.0296,1.0,0.1898,2070481.25,1862752.66,2279900.46
 frozen,societal,100609,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",0.0,0.2426,0.0,2937077.64,2714869.04,3170026.15
@@ -3352,7 +3352,7 @@ frozen,societal,103856,52,New Windows,0.0,0.0,0.0,2508342.42,2130382.27,2904639.
 frozen,societal,103856,54,"Package 1, Wall + Roof Insulation + New Windows",0.0,0.0362,0.0,2394844.32,2019592.39,2788365.41
 frozen,societal,103856,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",0.0222,0.9278,0.0718,1749170.29,1543793.6,1948645.88
 frozen,societal,103856,56,"Package 3, Package 1 + Package 2",0.0,0.9724,0.0518,2364368.77,1974235.3,2771401.92
-frozen,societal,103856,57,"Package 4, Package 2 with Standard Performance HP RTU",0.0,0.9396,0.023,1792532.38,1608443.79,1980282.07
+frozen,societal,103856,57,"Package 4, Package 2 with Standard Performance HP RTU",0.0,0.9396,0.023,1792532.37,1608443.79,1980282.07
 frozen,societal,103856,58,"Package 5, Variable Speed HP RTU or HP Boilers + Economizer + DCV + Energy Recovery",0.0172,0.9192,0.05,1737077.14,1542462.51,1938139.07
 frozen,societal,103856,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",0.744,0.0104,0.0,1649298.25,1530873.45,1770628.46
 projected,financial,103877,0,No upgrade,0.0,0.0,0.0,2296269.95,2024109.92,2605185.31
@@ -3997,7 +3997,7 @@ projected,societal,104156,49,Roof Insulation,0.0,0.0,0.0,3891280.69,3575936.01,4
 projected,societal,104156,52,New Windows,0.0,0.0,0.0,5654774.47,4669128.2,6693250.51
 projected,societal,104156,54,"Package 1, Wall + Roof Insulation + New Windows",0.0,0.0332,0.0,5483411.46,4507489.78,6520035.97
 projected,societal,104156,55,"Package 2, LED Lighting + Variable Speed HP RTU or HP Boilers",0.0362,0.9572,0.1416,3757329.38,3427176.56,4110690.73
-projected,societal,104156,56,"Package 3, Package 1 + Package 2",0.0,0.9638,0.2022,5418164.76,4439936.98,6458813.97
+projected,societal,104156,56,"Package 3, Package 1 + Package 2",0.0,0.9638,0.2022,5418164.75,4439936.98,6458813.97
 projected,societal,104156,57,"Package 4, Package 2 with Standard Performance HP RTU",0.0,0.9656,0.1216,3758403.47,3435349.78,4104307.85
 projected,societal,104156,58,"Package 5, Variable Speed HP RTU or HP Boilers + Economizer + DCV + Energy Recovery",0.029,0.9698,0.1626,3747959.68,3433677.52,4083103.97
 projected,societal,104156,65,"Package 12, Photovoltaics with 40pct Roof Coverage + Roof Insulation",0.8084,0.0092,0.0,3562354.13,3290137.08,3846107.29
@@ -5187,7 +5187,7 @@ frozen,financial,105159,15,"HP Boiler, Electric Backup",0.015,0.992,0.0086,10023
 frozen,financial,105159,19,Air Side Economizers for AHUs,0.0,0.0,0.0,1015817.62,893648.9,1153141.12
 frozen,financial,105159,20,Demand Control Ventilation,0.0,0.0,0.0,1041071.13,919163.87,1176447.95
 frozen,financial,105159,21,Energy Recovery for AHUs,0.062,0.0,0.0,970255.94,851218.74,1103504.64
-frozen,financial,105159,29,Packaged Water-to-Air Geothermal Heat Pump,0.0,0.7288,0.0054,6462860.52,5217819.09,7689601.09
+frozen,financial,105159,29,Packaged Water-to-Air Geothermal Heat Pump,0.0,0.7288,0.0054,6462860.53,5217819.09,7689601.09
 frozen,financial,105159,43,LED Lighting,0.0,0.0,0.0,1076994.25,948085.02,1218998.03
 frozen,financial,105159,46,Photovoltaics with 40pct Roof Coverage,0.0004,0.0,0.0,1013322.66,901033.32,1140875.19
 frozen,financial,105159,48,Wall Insulation,0.0638,0.0,0.0,973801.47,864747.94,1094124.83
